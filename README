@@ -19,3 +19,9 @@ For part 2 (3/26-4/2), please configure build path to include:
 -golden_0_2_3.jar (golden t framework)
 -jdom-1.1.2.jar   (jdom for xml parsing)
 -jaxen.jar        (xpath for jdom)
+
+there are three different main methods, and they don't connect right now. 
+CharacterEditor.zip has one, that is supposed to save player sprites. 
+LevelEditor has one, which saves "block"s (platform sprites). 
+
+The default package has one inside the "MainGame". If you want to see how the game is supposed to run a saved file, open "sample.xml" inside the "resources" folder.
