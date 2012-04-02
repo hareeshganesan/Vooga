@@ -25,12 +25,16 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 @SuppressWarnings("serial")
 public class View extends JFrame {
 
-	private static final Dimension SIZE = new Dimension(600, 600);
+	private static final Dimension SIZE = new Dimension(600, 200);
 
 	private Controller myController;
 
 	private JTextField myLevelNameInput;
+	
+	private JButton myAddImageButton;
 	private JButton myAddBlockButton;
+	private String myImagePath;
+	private JLabel myURLLabel;
 
 	private JTextField myXTextArea;
 	private JTextField myYTextArea;
@@ -66,21 +70,34 @@ public class View extends JFrame {
 		myYTextArea = new JTextField("y", 5);
 		panel.add(myXTextArea);
 		panel.add(myYTextArea);
+		
+		myImagePath = "";
+		myURLLabel = new JLabel(myImagePath);
 
-		JButton myAddBlockButton = new JButton("Add Block");
-
+		myAddImageButton = new JButton("Add Image");
+		panel.add(myAddImageButton);
+		panel.add(myURLLabel);
+		
+		myAddImageButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				myImageSelector.setFileFilter(new FileNameExtensionFilter(
+						"JPEG, PNG, GIF", "jpeg", "png", "gif"));
+				int retval = myImageSelector.showOpenDialog(null);
+				myImagePath = myImageSelector.getSelectedFile().getPath();
+				
+				myURLLabel.setText(myImagePath);
+			}
+		} );
+	
+		
+		myAddBlockButton = new JButton("Add Block");
 		myAddBlockButton.addActionListener(new ActionListener() {
 			public void actionPerformed (ActionEvent evt) {
 				myXValue = Integer.parseInt(myXTextArea.getText());
 				myYValue = Integer.parseInt(myYTextArea.getText());
-				
-				myImageSelector.setFileFilter(new FileNameExtensionFilter(
-						"JPEG, PNG, GIF", "jpeg", "png", "gif"));
-				int retval = myImageSelector.showOpenDialog(null);
-				String url = myImageSelector.getSelectedFile().getAbsolutePath();
-
+			
 				myController.addInanimateSprite(
-						new BlockSprite(), url, myXValue, myYValue);
+						new BlockSprite(), myImagePath, myXValue, myYValue);
 
 			}
 		} );
