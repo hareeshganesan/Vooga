@@ -56,8 +56,8 @@ For part 2 (3/26-4/2), please configure build path to include:
 -jdom-1.1.2.jar   (jdom for xml parsing)
 -jaxen.jar        (xpath for jdom)
 
-There are three different main methods. Run the Main inside src/LevelEditor to build a xml file with only one fighter, and the MainGame inside src/ to load a game.
+Run the Main in LevelEditor to create a xml file saving level details
+Run MainGame to load a file and play it. 
 
-If you want to see how the game is supposed to run a saved file with two fightersprites, 
-open "sample.xml" inside the "resources" folder.
-
+Please do NOT write a xml file with more or less than 2 fighter sprites, we can't account for that yet. 
+Also please write the fighter name IN ALL CAPS
