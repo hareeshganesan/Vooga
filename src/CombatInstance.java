@@ -48,7 +48,9 @@ public class CombatInstance extends GameObject
         LevelObjectsFactory lof=new LevelObjectsFactory(this);
         JFileChooser fc=new JFileChooser();
         fc.setCurrentDirectory(new File("src/resources"));
+        fc.setApproveButtonText("load game file");
         int returnVal = fc.showOpenDialog(null);
+        
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             File file = fc.getSelectedFile();
             try {
