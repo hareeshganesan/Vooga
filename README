@@ -1,6 +1,10 @@
 Vooga group - Fighting game
 
---------------------Members-----------
+
+***** PLEASE SCROLL DOWN AND READ THE 
+INSTRUCTIONS/NOTES BEFORE RUNNING CODE.*****
+
+-------------------- Members ----------------
 Peggy Li	pl59@duke.edu
 Helena Wu	hw87@duke.edu
 Wendy Yin	wty3@duke.edu
@@ -14,14 +18,49 @@ Nathan Klug	nathan.klug@duke.edu
 Tanner Schmidt	tws10@duke.edu			
 
 
+-------------- Time Spent --------------------
+
+Group Meetings:
+	Thursday, March 29, 2012	8:00 - 11:00 PM
+	Sunday, April 1, 2012		2:00 PM - 11:59 PM
+	Monday, April 2, 2012		12:00 AM - 5:00 AM
+	
+	** UTAs attended 4/1 meeting from about 3 - 7 PM.	
+
+Individual Time (outside meetings):
+	Approximately 3 hours spent per person
+	
+Total Group Time Spent = almost 150 hours 	
+
+This is pretty commensurate with how much time we expected to spend overall.
+We all knew that this would be a large and complex design project where we
+had to start from scratch and do a lot of thinking about design and organization,
+as well as coding itself. We had initially hoped that our Sunday-Monday meeting
+would end sooner than it did but did recognize the possible need for a very late
+or all-night working meeting.	
+
+
+--------------- Resources Used -----------------
+
+Java API
+Oracle tutorials
+Golden T API
+JDOM tutorials
+Google search...
+
+
+--------------- Instructions/Notes -------------
 
 For part 2 (3/26-4/2), please configure build path to include:
 -golden_0_2_3.jar (golden t framework)
 -jdom-1.1.2.jar   (jdom for xml parsing)
 -jaxen.jar        (xpath for jdom)
 
-there are three different main methods, and they don't connect right now. 
+There are three different main methods, and they don't connect right now. 
 CharacterEditor.zip has one, that is supposed to save player sprites. 
 LevelEditor has one, which saves "block"s (platform sprites). 
 
-The default package has one inside the "MainGame". If you want to see how the game is supposed to run a saved file, open "sample.xml" inside the "resources" folder.
+The default package has one inside the "MainGame". 
+If you want to see how the game is supposed to run a saved file, 
+open "sample.xml" inside the "resources" folder.
+
