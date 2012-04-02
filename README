@@ -12,3 +12,10 @@ Chen Ji		cj85@duke.edu
 -------------------- UTAs --------------------				
 Nathan Klug	nathan.klug@duke.edu
 Tanner Schmidt	tws10@duke.edu			
+
+
+
+For part 2 (3/26-4/2), please configure build path to include:
+-golden_0_2_3.jar (golden t framework)
+-jdom-1.1.2.jar   (jdom for xml parsing)
+-jaxen.jar        (xpath for jdom)
