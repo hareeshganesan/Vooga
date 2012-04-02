@@ -56,11 +56,8 @@ For part 2 (3/26-4/2), please configure build path to include:
 -jdom-1.1.2.jar   (jdom for xml parsing)
 -jaxen.jar        (xpath for jdom)
 
-There are three different main methods, and they don't connect right now. 
-CharacterEditor.zip has one, that is supposed to save player sprites. 
-LevelEditor has one, which saves "block"s (platform sprites). 
+There are three different main methods. Run the Main inside src/LevelEditor to build a xml file with only one fighter, and the MainGame inside src/ to load a game.
 
-The default package has one inside the "MainGame". 
-If you want to see how the game is supposed to run a saved file, 
+If you want to see how the game is supposed to run a saved file with two fightersprites, 
 open "sample.xml" inside the "resources" folder.
 
