@@ -14,11 +14,13 @@ public class Model {
 
 	// maps each Sprite to its corresponding image
 	private HashMap<Sprite, String> myInanimateSprites;
-
+	private HashMap<FighterSprite, String> myFighterSprites;
+	
 	public Model (Controller controller) {
 		myController = controller;
 
 		myInanimateSprites = new HashMap<Sprite, String>();
+		myFighterSprites = new HashMap<FighterSprite, String>();
 	}
 
 	public void setLevelName (String name) {
@@ -31,12 +33,19 @@ public class Model {
 
 		//System.out.println("Sprite added with image at " + url);
 	}
-
+	public void addFighterSprite(FighterSprite item, String url){
+		myFighterSprites.put(item, url);
+	}
 
 	public void save () throws FileNotFoundException {
 		if (myInanimateSprites.size() > 0) {
-			XMLWriter writer = new XMLWriter(myLevelName, myInanimateSprites);
+			if(myFighterSprites.size() >0){
+				
+			XMLWriter writer = new XMLWriter(myLevelName, myInanimateSprites, myFighterSprites);
+
 			writer.save();
+
+			}
 		}
 		
 	}
