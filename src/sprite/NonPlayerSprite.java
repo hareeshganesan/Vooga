@@ -2,6 +2,8 @@ package sprite;
 
 
 import java.awt.Graphics2D;
+
+
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +11,8 @@ import java.util.List;
 import com.golden.gamedev.object.sprite.AdvanceSprite;
 
 //default speed is 0 - stationary
+//TODO: compareto?
+//most basic sprite
 //TODO How will non-player sprites interact with physics engine?
 public abstract class NonPlayerSprite extends SpriteTemplate {
 
@@ -32,7 +36,7 @@ public abstract class NonPlayerSprite extends SpriteTemplate {
     
     public abstract void collisionAction(int otherGroupID); 
 
-    public void setSpeed(int speed) {
+    public void setSpeed(double speed) {
         mySpeed = speed;
     }
     public void setDamage(int d){
