@@ -146,6 +146,7 @@ public class View extends JFrame {
 				} catch (FileNotFoundException e) {
 					e.printStackTrace();
 				}
+				
 				System.exit(0);
 				
 			}

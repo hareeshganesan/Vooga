@@ -54,7 +54,7 @@ public class LevelObjectsFactory {
         	FighterSprite s = new FighterSprite(e.getChildText("name"),dis,0);
         	
             s.setMaxHealth(Integer.parseInt(e.getChildText("health")));
-            s.setLocation(Integer.parseInt(e.getChildText("x")), Integer.parseInt(e.getChildText("y")));
+            s.setLocation((int)Double.parseDouble(e.getChildText("x")), (int)Double.parseDouble(e.getChildText("y")));
             s.setSpeed(Double.parseDouble(e.getChildText("speed")));
             s.setImages(c.getImages(e.getChildText("img"), 1, 1));
             

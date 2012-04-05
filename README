@@ -56,8 +56,9 @@ For part 2 (3/26-4/2), please configure build path to include:
 -jdom-1.1.2.jar   (jdom for xml parsing)
 -jaxen.jar        (xpath for jdom)
 
-Run the Main in LevelEditor to create a xml file saving level details
-Run MainGame to load a file and play it. 
+Run the Main in LevelEditor to create a xml file saving level details (default saves to src/resources/ folder).
+
+Run MainGame, load a file using file chooser, and play it. 
 
 Please do NOT write a xml file with more or less than 2 fighter sprites, we can't account for that yet. 
 Also please write the fighter name IN ALL CAPS

@@ -51,7 +51,7 @@ public class XMLWriter {
 
 			XMLOutputter outputter = new XMLOutputter();
 			FileOutputStream out = new FileOutputStream(
-					new File(myFileName + ".xml"));
+					new File("src/resources/"+myFileName + ".xml"));
 
 			outputter.output(doc, out);
 		} 
