@@ -1,8 +1,8 @@
 package sprite;
 
-public class SpriteValues {
+public class SpriteValues
+{
 
-    
     //THIS MAY BE UNNECESSARY ONCE WE IMPLEMENT THE WEAPONSPRITES
     static final int LEFT = 0;
     static final int UP = 1;
@@ -12,10 +12,10 @@ public class SpriteValues {
     static final int BLOCK = 5;
     static final int NORM = 6; // no action
     //
-    
-    static final int AI_GROUP=10;
-    public static final int PLAYER_GROUP_1=11;
-    public static final int PLAYER_GROUP_2=12;
-    static final int GROUP_1_WEAPON=21;
-    
+
+    static final int AI_GROUP = 10;
+    public static final int PLAYER_GROUP_1 = 11;
+    public static final int PLAYER_GROUP_2 = 12;
+    static final int GROUP_1_WEAPON = 21;
+
 }

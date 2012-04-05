@@ -1,13 +1,13 @@
 package LevelEditor;
 
+public class Main
+{
 
+    public static void main (String[] args)
+    {
 
-public class Main {
+        Controller c = new Controller();
 
-	public static void main (String[] args){
-		
-		Controller c = new Controller();
-		
-	}
-	
+    }
+
 }

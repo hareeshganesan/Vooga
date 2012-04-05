@@ -1,1 +1,11 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><Fighers><Fighter><name>default</name><health>default</health><speed>default</speed><x>default</x><y>default</y><img>default</img></Fighter></Fighers>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Fighers>
+	<Fighter>
+		<name>default</name>
+		<health>default</health>
+		<speed>default</speed>
+		<x>default</x>
+		<y>default</y>
+		<img>default</img>
+	</Fighter>
+</Fighers>

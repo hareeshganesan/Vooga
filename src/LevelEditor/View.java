@@ -6,7 +6,6 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
-
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
@@ -16,144 +15,157 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+
 /**
- * 
- * @author Peggy Li	pl59
- *
+ * @author Peggy Li pl59
  */
 
 @SuppressWarnings("serial")
-public class View extends JFrame {
+public class View extends JFrame
+{
 
-	private static final Dimension SIZE = new Dimension(600, 200);
+    private static final Dimension SIZE = new Dimension(600, 200);
 
-	private Controller myController;
+    private Controller myController;
 
-	private JTextField myLevelNameInput;
-	
-	private JButton myAddImageButton;
-	private JButton myAddBlockButton;
-	private String myImagePath;
-	private JLabel myURLLabel;
+    private JTextField myLevelNameInput;
 
-	private JTextField myXTextArea;
-	private JTextField myYTextArea;
-	private int myXValue;
-	private int myYValue;
+    private JButton myAddImageButton;
+    private JButton myAddBlockButton;
+    private String myImagePath;
+    private JLabel myURLLabel;
 
-	private JFileChooser myImageSelector;
+    private JTextField myXTextArea;
+    private JTextField myYTextArea;
+    private int myXValue;
+    private int myYValue;
 
-	private JButton mySaveAndFinishButton;
+    private JFileChooser myImageSelector;
 
-	public View (Controller controller) {
-		myController = controller;
-
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-		add(makeLevelName(), BorderLayout.PAGE_START);
-		add(makeNewBlock(), BorderLayout.CENTER);
-		add(makeSaveAndFinishButtons(), BorderLayout.PAGE_END);
-
-		setSize(SIZE);
-		setVisible(true);
-
-		myImageSelector = new JFileChooser
-				(System.getProperties().getProperty("user.dir"));
-
-	}
+    private JButton mySaveAndFinishButton;
 
 
-	private Component makeNewBlock() {
-		JPanel panel = new JPanel();
+    public View (Controller controller)
+    {
+        myController = controller;
 
-		myXTextArea = new JTextField("x", 5);
-		myYTextArea = new JTextField("y", 5);
-		panel.add(myXTextArea);
-		panel.add(myYTextArea);
-		
-		myImagePath = "";
-		myURLLabel = new JLabel(myImagePath);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		myAddImageButton = new JButton("Add Image");
-		panel.add(myAddImageButton);
-		panel.add(myURLLabel);
-		
-		myAddImageButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
-				myImageSelector.setFileFilter(new FileNameExtensionFilter(
-						"JPEG, PNG, GIF", "jpeg", "png", "gif"));
-				int retval = myImageSelector.showOpenDialog(null);
-				myImagePath = myImageSelector.getSelectedFile().getPath();
-				
-				myURLLabel.setText(myImagePath);
-			}
-		} );
-	
-		
-		myAddBlockButton = new JButton("Add Block");
-		myAddBlockButton.addActionListener(new ActionListener() {
-			public void actionPerformed (ActionEvent evt) {
-				myXValue = Integer.parseInt(myXTextArea.getText());
-				myYValue = Integer.parseInt(myYTextArea.getText());
-			
-				myController.addInanimateSprite(
-						new BlockSprite(), myImagePath, myXValue, myYValue);
+        add(makeLevelName(), BorderLayout.PAGE_START);
+        add(makeNewBlock(), BorderLayout.CENTER);
+        add(makeSaveAndFinishButtons(), BorderLayout.PAGE_END);
 
-			}
-		} );
-		panel.add(myAddBlockButton, BorderLayout.SOUTH);
+        setSize(SIZE);
+        setVisible(true);
 
-		return panel;
-	}
+        myImageSelector =
+            new JFileChooser(System.getProperties().getProperty("user.dir"));
+
+    }
 
 
-	/**
-	 * Asks user to name level being created, which will be used to
-	 * 	name the file to which level data will be written and stored
-	 * 
-	 * Default name of "newLevel" set if no change made by user
-	 * 
-	 * @TODO: error handling if user deletes default name and fails to
-	 * 	provide a new name (e.g. empty string in text area)
-	 * 
-	 * @return name assigned to level by user
-	 */
-	private JComponent makeLevelName () {
-		JPanel panel = new JPanel();
+    private Component makeNewBlock ()
+    {
+        JPanel panel = new JPanel();
 
-		JLabel nameLabel = new JLabel ("Level Name: ");
-		panel.add(nameLabel);
+        myXTextArea = new JTextField("x", 5);
+        myYTextArea = new JTextField("y", 5);
+        panel.add(myXTextArea);
+        panel.add(myYTextArea);
 
-		myLevelNameInput = new JTextField("newLevel", 30);
-		panel.add(myLevelNameInput);
+        myImagePath = "";
+        myURLLabel = new JLabel(myImagePath);
 
-		return panel;
-	}
+        myAddImageButton = new JButton("Add Image");
+        panel.add(myAddImageButton);
+        panel.add(myURLLabel);
+
+        myAddImageButton.addActionListener(new ActionListener()
+        {
+            public void actionPerformed (ActionEvent evt)
+            {
+                myImageSelector.setFileFilter(new FileNameExtensionFilter("JPEG, PNG, GIF",
+                                                                          "jpeg",
+                                                                          "png",
+                                                                          "gif"));
+                int retval = myImageSelector.showOpenDialog(null);
+                myImagePath = myImageSelector.getSelectedFile().getPath();
+
+                myURLLabel.setText(myImagePath);
+            }
+        });
+
+        myAddBlockButton = new JButton("Add Block");
+        myAddBlockButton.addActionListener(new ActionListener()
+        {
+            public void actionPerformed (ActionEvent evt)
+            {
+                myXValue = Integer.parseInt(myXTextArea.getText());
+                myYValue = Integer.parseInt(myYTextArea.getText());
+
+                myController.addInanimateSprite(new BlockSprite(),
+                                                myImagePath,
+                                                myXValue,
+                                                myYValue);
+
+            }
+        });
+        panel.add(myAddBlockButton, BorderLayout.SOUTH);
+
+        return panel;
+    }
 
 
+    /**
+     * Asks user to name level being created, which will be used to name the
+     * file to which level data will be written and stored Default name of
+     * "newLevel" set if no change made by user
+     * 
+     * @TODO: error handling if user deletes default name and fails to provide a
+     *        new name (e.g. empty string in text area)
+     * @return name assigned to level by user
+     */
+    private JComponent makeLevelName ()
+    {
+        JPanel panel = new JPanel();
 
-	private JComponent makeSaveAndFinishButtons () {
-		JPanel panel = new JPanel();
+        JLabel nameLabel = new JLabel("Level Name: ");
+        panel.add(nameLabel);
 
-		mySaveAndFinishButton = new JButton("SAVE AND FINISH");
-		mySaveAndFinishButton.setPreferredSize(new Dimension(140, 40));
+        myLevelNameInput = new JTextField("newLevel", 30);
+        panel.add(myLevelNameInput);
 
-		mySaveAndFinishButton.addActionListener(new ActionListener() {
-			public void actionPerformed (ActionEvent evt) {
-				String levelName = myLevelNameInput.getText();
-				try {
-					myController.finish(levelName);
-				} catch (FileNotFoundException e) {
-					e.printStackTrace();
-				}
-				System.exit(0);
-				
-			}
-		});
+        return panel;
+    }
 
-		panel.add(mySaveAndFinishButton, BorderLayout.SOUTH);
-		return panel;
-	}
 
+    private JComponent makeSaveAndFinishButtons ()
+    {
+        JPanel panel = new JPanel();
+
+        mySaveAndFinishButton = new JButton("SAVE AND FINISH");
+        mySaveAndFinishButton.setPreferredSize(new Dimension(140, 40));
+
+        mySaveAndFinishButton.addActionListener(new ActionListener()
+        {
+            public void actionPerformed (ActionEvent evt)
+            {
+                String levelName = myLevelNameInput.getText();
+                try
+                {
+                    myController.finish(levelName);
+                }
+                catch (FileNotFoundException e)
+                {
+                    e.printStackTrace();
+                }
+                System.exit(0);
+
+            }
+        });
+
+        panel.add(mySaveAndFinishButton, BorderLayout.SOUTH);
+        return panel;
+    }
 
 }
