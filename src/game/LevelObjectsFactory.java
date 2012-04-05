@@ -79,8 +79,8 @@ public class LevelObjectsFactory
             playerIndex++;
 
             s.setMaxHealth(Integer.parseInt(e.getChildText("health")));
-            s.setLocation(Integer.parseInt(e.getChildText("x")),
-                          Integer.parseInt(e.getChildText("y")));
+            s.setLocation(Double.parseDouble(e.getChildText("x")),
+                          Double.parseDouble(e.getChildText("y")));
             s.setSpeed(Double.parseDouble(e.getChildText("speed")));
             s.setImages(c.getImages(e.getChildText("img"), 1, 1));
 
@@ -108,9 +108,9 @@ public class LevelObjectsFactory
         for (Element e : b)
         {
             PlatformBlock s =
-                new PlatformBlock(c.getImages(e.getChildText("img"), 1, 1));
-            s.setLocation(Integer.parseInt(e.getChildText("x")),
-                          Integer.parseInt(e.getChildText("y")));
+                new PlatformBlock(c.getImages(e.getChildText("image"), 1, 1));
+            s.setLocation(Double.parseDouble(e.getChildText("x")),
+                          Double.parseDouble(e.getChildText("y")));
             fs.add(s);
         }
         return fs;

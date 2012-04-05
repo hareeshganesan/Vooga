@@ -1,5 +1,6 @@
 package ai;
 
+import game.CombatInstance;
 import sprite.FighterSprite;
 import sprite.HealthDisplay;
 
@@ -7,9 +8,12 @@ import sprite.HealthDisplay;
 public abstract class AIAgent extends FighterSprite
 {
 
-    public AIAgent (String name, HealthDisplay display, int groupID)
+    CombatInstance myLevel;
+    
+    public AIAgent (String name, HealthDisplay display, int groupID, CombatInstance c)
     {
         super(name, display, groupID);
+        myLevel = c;
     }
     
     abstract public void update(long elapsedTime);
