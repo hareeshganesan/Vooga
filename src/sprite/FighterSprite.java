@@ -20,7 +20,7 @@ public class FighterSprite extends SpriteTemplate {
     // defaults
     private int MIN_HEALTH = 5;
     private int MAX_HEALTH = 50;
-    private double DEFAULT_SPEED = 0.1;
+    private double DEFAULT_SPEED = 0.5;
     private Point2D moveBy;
     
 
@@ -35,7 +35,7 @@ public class FighterSprite extends SpriteTemplate {
         myName = name;
         myHealth = MAX_HEALTH;
         super.setDefaultSpeed(DEFAULT_SPEED);
-        super.resetSpeed();
+//        super.resetSpeed();
         myDisplay = display;
 
         myDisplay.setStat(myName, myHealth);
@@ -103,7 +103,7 @@ public class FighterSprite extends SpriteTemplate {
     // TODO: if we rewrite other classes referencing this method, can remove
     // in favor of more control over x/y speeds separately.
     public double getSpeed() {
-        return this.getVerticalSpeed();
+        return DEFAULT_SPEED;
     }
     /**
      * should only be called if collision occurred default is to stay at old

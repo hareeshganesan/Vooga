@@ -46,7 +46,7 @@ public class XMLWriter
                 Element type = new Element("Block");
                 root.addContent(type);
 
-                Element imageURL = new Element("image");
+                Element imageURL = new Element("img");
                 imageURL.addContent(myInanimateSpriteMap.get(s));
                 type.addContent(imageURL);
 

@@ -129,7 +129,6 @@ public class CombatInstance extends GameObject
 
     }
 
-
     @Override
     public void render (Graphics2D pen)
     {

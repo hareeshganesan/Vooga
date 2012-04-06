@@ -82,6 +82,7 @@ public class LevelObjectsFactory
             s.setLocation(Double.parseDouble(e.getChildText("x")),
                           Double.parseDouble(e.getChildText("y")));
             s.setDefaultSpeed(Double.parseDouble(e.getChildText("speed")));
+            System.out.println(e.getChildText("img"));
             s.setImages(c.getImages(e.getChildText("img"), 1, 1));
 
             fs.add(s);
@@ -108,7 +109,7 @@ public class LevelObjectsFactory
         for (Element e : b)
         {
             PlatformBlock s =
-                new PlatformBlock(c.getImages(e.getChildText("image"), 1, 1));
+                new PlatformBlock(c.getImages(e.getChildText("img"), 1, 1));
             s.setLocation(Double.parseDouble(e.getChildText("x")),
                           Double.parseDouble(e.getChildText("y")));
             fs.add(s);
