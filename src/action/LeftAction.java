@@ -8,7 +8,7 @@ public class LeftAction extends MotionAction
     public LeftAction (FighterSprite fighter)
     {
         myFighter = fighter;
-        x_speed = -1;
-        y_speed = 0;
+        x_direction = -1;
+        y_direction = 0;
     }
 }

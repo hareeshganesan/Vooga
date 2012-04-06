@@ -36,7 +36,12 @@ public class InputHandler
                                                            .performAction(elapsedTime);
     }
 
-
+    /**
+     * Return the default mapping for a user player specified by the index
+     * Known Bugs: only two mappings defined so far
+     * @param i
+     * @return
+     */
     public static int[] defaultMapping (int i)
     {
         int[][] playermappings = new int[2][4];

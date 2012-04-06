@@ -8,8 +8,8 @@ public class RightAction extends MotionAction
     public RightAction (FighterSprite fighter)
     {
         myFighter = fighter;
-        x_speed = 1;
-        y_speed = 0;
+        x_direction = 1;
+        y_direction = 0;
     }
 
 }

@@ -17,8 +17,8 @@ public class BasicAIAgent extends AIAgent {
     {
         List<FighterSprite> fs = myLevel.getFighters();
         if(getCurrentLocation().distance(fs.get(0).getCurrentLocation())>40){
-            MotionAction x = new MotionAction(this, fs.get(0).getCurrentLocation());
-            x.performAction(elapsedTime);
+            MotionAction follow = new MotionAction(this, fs.get(0).getCurrentLocation());
+            follow.performAction(elapsedTime);
         }
         super.update(elapsedTime);
     }

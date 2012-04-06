@@ -37,7 +37,7 @@ public class BasicPhysicsEngine extends PhysicsEngine
         double speed = fs.getSpeed()/10;
         double x = speed*elapsed_time*x_vector;
         double y = speed*elapsed_time*y_vector;
-        fs.setNextLocation(new Point2D.Double(x, y));
+        fs.setNextLocationIncrement(new Point2D.Double(x, y));
     }
 
 }

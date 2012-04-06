@@ -3,6 +3,7 @@ package sprite;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.geom.Point2D;
+import java.awt.geom.Point2D.Double;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -49,7 +50,7 @@ public class FighterSprite extends SpriteTemplate {
     }
 
     public Point2D getCurrentLocation(){
-        return new Point2D.Double(getX(), getY());
+        return new Point2D.Double(getX()+moveBy.getX(), getY()+moveBy.getY());
     }
 
     public void addWeapon(NonPlayerSprite child) {
@@ -128,9 +129,10 @@ public class FighterSprite extends SpriteTemplate {
 
 
 
-    public void setNextLocation (Point2D nextLocation)
+    public void setNextLocationIncrement (Point2D nextLocation)
     {
-        this.moveBy = nextLocation;
+        
+        this.moveBy = new Point2D.Double(nextLocation.getX(),nextLocation.getY());
     }
 
     // DOES THIS NEED TO BE PUBLIC?
@@ -179,10 +181,10 @@ public class FighterSprite extends SpriteTemplate {
 
     public void move (double dx, double dy)
     {
-
-        Point2D finaldelta = confineBounds(dx, dy);
-        dx = finaldelta.getX();
-        dy = finaldelta.getY();
+        System.out.println(dx+" "+dy);
+        //Point2D finaldelta = confineBounds(dx, dy);
+        //dx = finaldelta.getX();
+        //dy = finaldelta.getY();
         super.move(dx, dy);
         if (dx < 0)
         {
