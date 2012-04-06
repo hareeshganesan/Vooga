@@ -14,7 +14,6 @@ public class PlatformBlock extends NonPlayerSprite
         super(b);
     }
 
-
     @Override
     public void collisionAction (int otherGroup)
     {

@@ -19,5 +19,4 @@ public class SpriteValues
     static final int NON_PLAYER = 13;
     
 
-    
 }

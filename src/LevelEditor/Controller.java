@@ -27,7 +27,6 @@ public class Controller
 
     }
 
-
     public boolean isActive ()
     {
         return isActive;

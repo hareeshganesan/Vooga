@@ -1,6 +1,9 @@
-package sprite;
+package PhysicsEngine;
 
 import java.awt.event.KeyEvent;
+
+import sprite.FighterSprite;
+
 import com.golden.gamedev.GameObject;
 
 

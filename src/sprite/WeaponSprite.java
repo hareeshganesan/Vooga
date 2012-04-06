@@ -27,7 +27,6 @@ public class WeaponSprite extends NonPlayerSprite
         setLocation(fighterX + this.getWidth(), fighterY + this.getHeight());
     }
 
-
     @Override
     protected void animationChanged (int oldStat,
                                      int oldDir,

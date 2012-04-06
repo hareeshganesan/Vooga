@@ -14,6 +14,8 @@ import org.jdom.JDOMException;
 
 import sprite.*;
 
+import PhysicsEngine.BasicPhysicsEngine;
+
 import com.golden.gamedev.GameEngine;
 import com.golden.gamedev.GameObject;
 import com.golden.gamedev.object.Background;

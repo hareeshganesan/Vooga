@@ -5,9 +5,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+
 /*
  * @author Wendy, Helena, Hareesh
  */
+
 public class FighterSprite extends SpriteTemplate {
 
     private String myName;
@@ -20,6 +22,7 @@ public class FighterSprite extends SpriteTemplate {
 
     private HealthDisplay myDisplay;
     private List<NonPlayerSprite> myWeapons;
+
 
     // values for groupID will be selectable in spriteValues
     // TODO: figure out how groupIDs will work, especially with collisions
@@ -48,7 +51,9 @@ public class FighterSprite extends SpriteTemplate {
         myWeapons.remove(child);
     }
 
-    public String getName() {
+
+    public String getName ()
+    {
         return myName;
     }
 
@@ -66,16 +71,22 @@ public class FighterSprite extends SpriteTemplate {
         myDisplay.setStat(myName, MAX_HEALTH);
     }
 
-    public int getMaxHealth() {
+
+    public int getMaxHealth ()
+    {
         return MAX_HEALTH;
     }
 
-    public void addHealth(int h) {
+
+    public void addHealth (int h)
+    {
         myHealth += h;
         wrapHealth();
     }
 
-    public int getHealth() {
+
+    public int getHealth ()
+    {
         return myHealth;
     }
 
@@ -84,7 +95,6 @@ public class FighterSprite extends SpriteTemplate {
     public double getSpeed() {
         return this.getVerticalSpeed();
     }
-
     /**
      * should only be called if collision occurred default is to stay at old
      * position, override to have new actions
@@ -106,6 +116,7 @@ public class FighterSprite extends SpriteTemplate {
         }
     }
 
+
     // DOES THIS NEED TO BE PUBLIC?
     private void changeDirection(int dir) {
         if (super.getDirection() != dir) {
@@ -116,34 +127,47 @@ public class FighterSprite extends SpriteTemplate {
         }
     }
 
-    private void wrapHealth() {
-        if (myHealth > MAX_HEALTH) {
+
+    private void wrapHealth ()
+    {
+        if (myHealth > MAX_HEALTH)
+        {
             myHealth = MAX_HEALTH;
         }
-        if (myHealth < 0) {
+        if (myHealth < 0)
+        {
             myHealth = 0;
         }
     }
 
+
     // TODO: THIS MAY CHANGE WITH CHANGING COLLISIONCHECKER
-    protected void confineBounds() {
-        if (!this.isOnScreen()) {
+    protected void confineBounds ()
+    {
+        if (!this.isOnScreen())
+        {
             this.forceX(this.getOldX());
             this.forceY(this.getOldY());
         }
     }
 
-    public void move(double dx, double dy) {
+
+    public void move (double dx, double dy)
+    {
         super.move(dx, dy);
-        if (dx < 0) {
+        if (dx < 0)
+        {
             changeDirection(SpriteValues.LEFT);
-        } else if (dx > 0) {
+        }
+        else if (dx > 0)
+        {
             changeDirection(SpriteValues.RIGHT);
         }
 
         confineBounds();
         moveWeapons(dx, dy);
     }
+
 
     // notifies observer weapons that they need to move dx, dy
     private void moveWeapons(double dx, double dy) {
@@ -152,13 +176,18 @@ public class FighterSprite extends SpriteTemplate {
         }
     }
 
-    public void render(Graphics2D g) {
+
+    public void render (Graphics2D g)
+    {
         myDisplay.render(g);
         super.render(g);
     }
 
-    public void update(long elapsedTime) {
-        if (myHealth <= 0) {
+
+    public void update (long elapsedTime)
+    {
+        if (myHealth <= 0)
+        {
             this.setActive(false); // PARENT WILL NEED TO CHECK FOR ACTIVE
         }
         myDisplay.update(elapsedTime, myHealth);

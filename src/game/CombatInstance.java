@@ -7,10 +7,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import javax.swing.JFileChooser;
 import org.jdom.JDOMException;
-import sprite.BasicPhysicsEngine;
 import sprite.FighterSprite;
 import sprite.GeneralSpriteCollision;
 import sprite.PlatformBlock;
+import PhysicsEngine.BasicPhysicsEngine;
+
 import com.golden.gamedev.GameEngine;
 import com.golden.gamedev.GameObject;
 import com.golden.gamedev.object.Background;

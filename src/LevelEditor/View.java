@@ -27,7 +27,10 @@ public class View extends JFrame {
     private Controller myController;
 
     private JTextField myLevelNameInput;
+    private JButton myAddImageButton;
     private JButton myAddBlockButton;
+    private String myImagePath;
+    private JLabel myURLLabel;
 
     private JTextField myXTextArea;
     private JTextField myYTextArea;
@@ -162,6 +165,7 @@ public class View extends JFrame {
 
         return panel;
     }
+
 
 
     /**
