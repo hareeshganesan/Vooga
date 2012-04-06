@@ -2,6 +2,7 @@ package action;
 
 import java.awt.geom.Point2D;
 import java.util.Vector;
+import sprite.FighterSprite;
 
 
 public class MotionAction extends Action
