@@ -16,7 +16,9 @@ public abstract class AIAgent extends FighterSprite
         myLevel = c;
     }
     
-    abstract public void update(long elapsedTime);
+    public void update(long elapsedTime){
+        super.update(elapsedTime);
+    }
     
     
 
