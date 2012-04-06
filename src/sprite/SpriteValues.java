@@ -8,14 +8,16 @@ public class SpriteValues
     static final int UP = 1;
     static final int RIGHT = 2;
     static final int DOWN = 3;
-    static final int PUNCH = 4;
-    static final int BLOCK = 5;
-    static final int NORM = 6; // no action
+//    static final int PUNCH = 4;
+//    static final int BLOCK = 5;
+//    static final int NORM = 6; // no action
     //
 
     static final int AI_GROUP = 10;
-    public static final int PLAYER_GROUP_1 = 11;
-    public static final int PLAYER_GROUP_2 = 12;
-    static final int GROUP_1_WEAPON = 21;
+    static final int PLAYER_GROUP_1 = 11;
+    static final int PLAYER_GROUP_2 = 12;
+    static final int NON_PLAYER = 13;
+    
 
+    
 }

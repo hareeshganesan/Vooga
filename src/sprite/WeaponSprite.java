@@ -45,8 +45,8 @@ public class WeaponSprite extends NonPlayerSprite
     public void updateLocation (double dx, double dy)
     {
         this.move(dx, dy);
-        this.fighterX += dx;
-        this.fighterY += dy;
+//        this.fighterX += dx;
+//        this.fighterY += dy;
     }
 
 

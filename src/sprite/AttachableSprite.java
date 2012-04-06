@@ -3,11 +3,12 @@ package sprite;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
-//wraps a sprite that can be used as a weapon, or as a freestanding npc
+//wraps a sprite (w/ no children) that can be used as a weapon, or as a freestanding npc
 //may also be useful for later extensions to power-ups
 public class AttachableSprite extends SpriteDecorator {
 
     FighterSprite fighter;
+    private int oldID;
 
     public AttachableSprite(NonPlayerSprite component) {
         super(component);
@@ -20,10 +21,12 @@ public class AttachableSprite extends SpriteDecorator {
 
     public void attachToFighter(FighterSprite f) {
         fighter = f;
-        fighter.addWeapon((WeaponSprite) child); //TODO: IS THIS A SAFE CAST?
+        oldID=child.getID();
+        fighter.addWeapon(child);
     }
     public void detachFromFighter(FighterSprite f){
-        fighter.removeWeapon((WeaponSprite) child);//TODO: IS THIS A SAFE CAST?
+        fighter.removeWeapon(child);//TODO
         f=null;
+        child.setID(oldID);
     }
 }

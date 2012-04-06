@@ -81,7 +81,7 @@ public class LevelObjectsFactory
             s.setMaxHealth(Integer.parseInt(e.getChildText("health")));
             s.setLocation(Double.parseDouble(e.getChildText("x")),
                           Double.parseDouble(e.getChildText("y")));
-            s.setSpeed(Double.parseDouble(e.getChildText("speed")));
+            s.setDefaultSpeed(Double.parseDouble(e.getChildText("speed")));
             s.setImages(c.getImages(e.getChildText("img"), 1, 1));
 
             fs.add(s);

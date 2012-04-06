@@ -1,6 +1,6 @@
-package sprite;
-
 /*
+ * Update changed, everything else is copy-paste from online src code
+ * 
  * Copyright (c) 2008 Golden T Studios.
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,12 +16,15 @@ package sprite;
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package sprite;
 
 // JFC
 import java.awt.Graphics2D;
 import java.util.Arrays;
 import java.util.Comparator;
 
+import com.golden.gamedev.object.Background;
+import com.golden.gamedev.object.*;
 import com.golden.gamedev.util.Utility;
 
 /**
@@ -31,13 +34,35 @@ import com.golden.gamedev.util.Utility;
  * automatically adjust the size of its sprites array.
  * <p>
  * 
- *TODO: DO I WANT TO MAKE THESE AUTOMATICALLY POPULATING ACCORDING TO SPECIAL IDS?
- *-groups: player (and their observer sprites, but it's observer), npcs, nonmoving obstacles
- *make each sprite responsible for its own collision checking every time it moves
- * 
  * <code>SpriteGroup</code> is used to store a list of sprites and also manage
  * the sprites updating, rendering, and collision check.
  * <p>
+ * 
+ * For example how to create and use sprite group :
+ * 
+ * <pre>
+ * SpriteGroup ENEMY_GROUP;
+ * 
+ * public void initResources() {
+ *  // creates the enemy sprites
+ *  Sprite asteroid = new Sprite();
+ *  Sprite asteroid2 = new Sprite();
+ *  // creates and add the sprites into enemy group
+ *  ENEMY_GROUP = new SpriteGroup(&quot;Enemy&quot;);
+ *  ENEMY_GROUP.add(asteroid);
+ *  ENEMY_GROUP.add(asteroid2);
+ * }
+ * 
+ * public void update(long elapsedTime) {
+ *  // update all enemies at once
+ *  ENEMY_GROUP.update(elapsedTime);
+ * }
+ * 
+ * public void render(Graphics2D g) {
+ *  // render all enemies at once to the screen
+ *  ENEMY_GROUP.render(g);
+ * }
+ * </pre>
  * 
  * @see com.golden.gamedev.object.PlayField
  * @see com.golden.gamedev.object.collision.CollisionGroup
@@ -95,6 +120,7 @@ public class SpriteGroup {
      * 
      * @see #add(int, Sprite)
      */
+    
     public void add(Sprite member) {
         this.sprites[this.size] = member;
         member.setBackground(this.background);
@@ -259,9 +285,9 @@ public class SpriteGroup {
      */
     public void update(long elapsedTime) {
         for (int i = 0; i < this.size; i++) {
-            if (this.sprites[i].isActive()) {
+            //lets each sprite decide whether to update rather than automatically skipping all inactives 
+            //is needed for AutomateSprite
                 this.sprites[i].update(elapsedTime);
-            }
         }
         
         if (this.scanFrequence.action(elapsedTime)) {

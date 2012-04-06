@@ -12,6 +12,7 @@ public class AutomateSprite extends SpriteDecorator{
     private double myX;
     private double myY;
     private Timer time;
+    
     public AutomateSprite(NonPlayerSprite component) {
         super(component);
     }
@@ -22,7 +23,9 @@ public class AutomateSprite extends SpriteDecorator{
 
     @Override
     public void collisionAction(int otherGroupID) {
+        if (child.getID()!=otherGroupID){
         child.setActive(false);
+        }
     }
     @Override
     public void setLocation(double xs,double ys){
@@ -31,20 +34,22 @@ public class AutomateSprite extends SpriteDecorator{
     }
 
     /**
-     * default spawn point is the original location from .setLocation
+     * default spawn point is the coordinates from .setLocation. 
      */
     public void setSpawnPoint(double x, double y){
         myX=x; myY=y;
     }
     
-    private void respawn(){
+    public void respawn(){
         child.setLocation(myX,myY);
         child.setActive(true);
     }
     
     public void update(long elapsedTime){
-        if (!child.isActive() && time.action(elapsedTime)){
+        if (!child.isActive()){
+            if ((time==null) || (time.action(elapsedTime))){
             respawn();
+            }
         }
         if (child.isActive()){ child.update(elapsedTime); }
         
