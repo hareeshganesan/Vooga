@@ -1,0 +1,7 @@
+Vooga group - fighting group
+
+Hui Gao
+
+Functionality: default camera, locked camera, floating camera. almost have zooming done.
+
+In order to run: run the main, press "1" after the load screen and select sample.xml. use arrow keys to control 1 sprite and you can see how camera interacts with the sprites depending on which camera mode is used

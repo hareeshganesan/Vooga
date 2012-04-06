@@ -1,11 +1,9 @@
 
 
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.awt.*;
+import java.awt.image.*;
+import java.io.*;
+import java.util.*;
 
 import javax.swing.JFileChooser;
 
@@ -13,6 +11,7 @@ import org.jdom.Element;
 import org.jdom.JDOMException;
 
 import sprite.*;
+import camera.*;
 
 import com.golden.gamedev.GameEngine;
 import com.golden.gamedev.GameObject;
@@ -31,9 +30,10 @@ public class CombatInstance extends GameObject
     ArrayList<PlatformBlock> platform;
     GeneralSpriteCollision temp;
     GeneralSpriteCollision p_block;
+    Camera camera;
     
     
-    Background bg;
+    CameraBackground bg;
     
     
     public CombatInstance(GameEngine engine){
@@ -64,6 +64,8 @@ public class CombatInstance extends GameObject
             }
         }
         
+        camera = new Camera(new Point(544/2,544/2), new Rectangle(100, 100));
+        
         //TODO: REMOVE HARDCODING LATER
     	GameFont font = fontManager.getFont(getImage("resources/font.png"));
     	BufferedImage HPimage = getImage("resources/frame.png");
@@ -81,14 +83,15 @@ public class CombatInstance extends GameObject
         if (back==null){
             back=DEFAULT_IMAGE;
         }
-        BufferedImage b = getImage(back);
-        bg = new ImageBackground(b);
+        BufferedImage b = getImage(back); 
+        bg = new CameraBackground(b);
         
         //TODO: FML WHY ARE WE DOING THIS
         //this is temporary fix just to make the code work, will need to overwrite later when we implement finer collision checking and physics engine
         SpriteGroup p1=new SpriteGroup("p1");
         p1.add(playerSprites.get(0));
         p1.setBackground(bg);
+                
         SpriteGroup p2=new SpriteGroup("p2");
         p2.add(playerSprites.get(1));
         p2.setBackground(bg);
@@ -114,6 +117,8 @@ public class CombatInstance extends GameObject
     @Override
     public void render (Graphics2D pen)
     {
+        camera.render(pen);
+        //bg.render(pen, camera, camera.getX(), camera.getY(), camera.getX(), camera.getY(), camera.getHeight(), camera.getWidth());
         bg.render(pen);
         for(FighterSprite sprite : playerSprites)
             sprite.render(pen);
@@ -124,7 +129,12 @@ public class CombatInstance extends GameObject
     @Override
     public void update (long elapsedTime)
     {
+        camera.update(playerSprites);
+        //System.out.println(camera.getX() + camera.getY() + camera.getHeight() + camera.getWidth());
+        //bg.setToCenter(playerSprites.get(0));
+        bg.setToCenter(camera.getX(), camera.getY(), camera.getHeight(), camera.getWidth());
         bg.update(elapsedTime);
+
         for(FighterSprite sprite: playerSprites)
             physics.update(sprite,this, elapsedTime);
         for (PlatformBlock pb:platform){
@@ -135,5 +145,7 @@ public class CombatInstance extends GameObject
         p_block.checkCollision();
         
     }
+    
+    
 
 }
