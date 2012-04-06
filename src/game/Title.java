@@ -1,6 +1,5 @@
 package game;
 
-
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
@@ -49,7 +48,7 @@ public class Title extends GameObject
     public void render (Graphics2D g)
     {
         g.drawImage(title, 0, 0, null);
-        
+
     }
 
 }

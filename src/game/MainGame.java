@@ -1,10 +1,6 @@
 package game;
 
-
-
 import java.awt.Dimension;
-
-
 import com.golden.gamedev.GameEngine;
 import com.golden.gamedev.GameLoader;
 import com.golden.gamedev.GameObject;
@@ -24,6 +20,9 @@ public class MainGame extends GameEngine
     }
 
 
+    /**
+     * Generates the correct game object based on the menu screen selected
+     */
     public GameObject getGame (int GameID)
     {
         switch (GameID)
@@ -32,15 +31,11 @@ public class MainGame extends GameEngine
                 return new Title(this);
             case GAME:
                 return new CombatInstance(this);
-            
+
         }
         return null;
     }
 
-
-    /****************************************************************************/
-    /***************************** MAIN-CLASS ***********************************/
-    /****************************************************************************/
 
     public static void main (String[] args)
     {

@@ -1,19 +1,13 @@
 package LevelEditor;
 
-import game.MainGame;
+public class Main
+{
 
-import java.awt.Dimension;
+    public static void main (String[] args)
+    {
 
-import com.golden.gamedev.GameLoader;
+        Controller c = new Controller();
 
+    }
 
-
-public class Main {
-
-	public static void main (String[] args){
-		
-		Controller c = new Controller();
-		
-	}
-	
 }
