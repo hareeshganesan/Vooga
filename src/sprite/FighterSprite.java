@@ -24,7 +24,12 @@ public class FighterSprite extends SpriteTemplate
     private Point2D moveBy;
     
 
-    private HealthDisplay myDisplay;
+    public Point2D getMoveBy() {
+		return moveBy;
+	}
+
+
+	private HealthDisplay myDisplay;
     private List<WeaponSprite> myWeapons;
 
     private HashMap<Integer, Integer> keyMap = new HashMap<Integer, Integer>();

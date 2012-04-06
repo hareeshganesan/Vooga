@@ -9,10 +9,11 @@ import java.util.Collections;
 import java.util.List;
 import javax.swing.JFileChooser;
 import org.jdom.JDOMException;
-import sprite.BasicPhysicsEngine;
 import sprite.FighterSprite;
 import sprite.GeneralSpriteCollision;
 import sprite.PlatformBlock;
+import PhysicsEngine.BasicPhysicsEngine;
+import PhysicsEngine.Collision;
 import action.Action;
 import action.DownAction;
 import com.golden.gamedev.GameEngine;
@@ -30,13 +31,15 @@ public class CombatInstance extends GameObject
     //Engines
     GameEngine myEngine;
     InputHandler myHandler;
-    BasicPhysicsEngine physics;
+//    BasicPhysicsEngine physics;
 
     //Sprites
     ArrayList<FighterSprite> playerSprites;
     ArrayList<PlatformBlock> platform;
     GeneralSpriteCollision temp;
     GeneralSpriteCollision p_block;
+    
+    Collision dongheCollision;
     
     Background bg;
 
@@ -45,7 +48,7 @@ public class CombatInstance extends GameObject
     {
         super(engine);
         myEngine = engine;
-        physics = new BasicPhysicsEngine();
+//        physics = new BasicPhysicsEngine();
         myHandler = new InputHandler();
     }
 
@@ -126,6 +129,10 @@ public class CombatInstance extends GameObject
         b1.setBackground(bg);
         p_block = new GeneralSpriteCollision();
         p_block.setCollisionGroup(ps, b1);
+        
+        
+        
+        dongheCollision=new Collision(playerSprites.get(0),playerSprites.get(1));
 
     }
 
@@ -159,9 +166,11 @@ public class CombatInstance extends GameObject
         {
             pb.update(elapsedTime);
         }
-
-        temp.checkCollision();
+        
+//        temp.checkCollision();
         p_block.checkCollision();
+        
+        dongheCollision.checkCollison();
 
     }
 

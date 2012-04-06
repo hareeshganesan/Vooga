@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Sprites>
 	<Block>
-		<image>C:\Users\Hareesh\Desktop\CS108\Vooga\src\resources\block.png</image>
+	
+	
+		<image>C:\Users\Donghe\workspace\Vooga\src\resources\block.png</image>
 		<x>200.0</x>
 		<y>200.0</y>
 	</Block>
 	<Fighter>
-		<img>C:\Users\Hareesh\Desktop\CS108\Vooga\src\resources\flame.png</img>
+		<img>C:\Users\Donghe\workspace\Vooga\src\resources\flame.png</img>
 		<x>100.0</x>
 		<y>100.0</y>
 		<health>60</health>
@@ -14,7 +16,7 @@
 		<speed>.3</speed>
 	</Fighter>
 	<Fighter>
-		<img>C:\Users\Hareesh\Desktop\CS108\Vooga\src\resources\flame.png</img>
+		<img>C:\Users\Donghe\workspace\Vooga\src\resources\flame.png</img>
 		<x>300.0</x>
 		<y>300.0</y>
 		<health>60</health>
