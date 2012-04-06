@@ -6,11 +6,22 @@ import sprite.FighterSprite;
 
 import action.MotionAction;
 
+/**
+ * 
+ * The fighting physics engine Calculation the new location of the sprite check
+ * whether there is a collision if the sprite moves in this way if there is a
+ * collision then have a collision reaction check whether there is out of bound
+ * if yes we need to make the sprite move to the bound instead of out of bound
+ * 
+ * @author Donghe
+ * 
+ */
 public class FightPhysicsEngine extends PhysicsEngine {
 
 	private final int BASE_POINT = 0;
 	private final int BOUND_X = 544;
 	private final int BOUND_Y = 544;
+	private final int SPEED_DEFALT = 10;
 
 	public FightPhysicsEngine(MotionAction motionAaction) {
 		super(motionAaction);
@@ -22,16 +33,11 @@ public class FightPhysicsEngine extends PhysicsEngine {
 
 	@Override
 	public void process(long elapsedTime) {
-		double speed = myFighterSprite.getSpeed() / 10;
+		double speed = myFighterSprite.getSpeed() / SPEED_DEFALT;
 		double x = speed * elapsedTime * myVectorX;
 		double y = speed * elapsedTime * myVectorY;
 
-		checkCollision();
 		setNextLocation(x, y);
-	}
-
-	public void checkCollision() {
-
 	}
 
 	public void setNextLocation(double x, double y) {
@@ -49,11 +55,6 @@ public class FightPhysicsEngine extends PhysicsEngine {
 
 		myFighterSprite.setNextLocation(new Point2D.Double(finalX, finalY));
 	}
-
-	// public boolean iOutBound(double x, double y) {
-	// return isOutLeft(x) || isOutRight(x) || isOutTop(y) || isOutBottom(y);
-	//
-	// }
 
 	public boolean isOutLeft(double x) {
 		return myFighterSprite.getX() + x <= BASE_POINT;

@@ -1,34 +1,42 @@
 package PhysicsEngine;
 
+import java.util.ArrayList;
+
 import sprite.FighterSprite;
 
+/**
+ * This is the basic class for collision
+ * In this class we check whether there is a collision
+ * If yes here we create an associated collision reaction type
+ * 
+ * @author Donghe
+ */
 public class Collision {
-	private final int BOUND_X = 544;
-	private final int BOUND_Y = 544;
-	private final int BASE_POINT = 0;
-
+	//the default maximum distance that we regard as a collision
+	private final int SIZE_DEFAULT = 30;
+	
+	//two fighters and the reaction list
 	private FighterSprite myFighterSpriteOne;
 	private FighterSprite myFighterSpriteTwo;
+	private ArrayList<CollisionReaction> myReactionList = new ArrayList<CollisionReaction>();
 
+	
+	
 	public Collision(FighterSprite ps1, FighterSprite ps2) {
 		myFighterSpriteOne = ps1;
 		myFighterSpriteTwo = ps2;
+		myReactionList.add(new CollisionReactionFriends());
+		myReactionList.add(new CollisionReactionEnemy());
 	}
 
+	
+	
 	public boolean isCollided() {
-		// for (int i = BASE_POINT; i < BOUND_X; i++) {
-		// for (int j = BASE_POINT; j < BOUND_Y; j++) {
-		// if (isCoverThisPoint(myFighterSpriteOne, i, j)
-		// && isCoverThisPoint(myFighterSpriteTwo, i, j))
-		// return true;
-		// }
-		// }
-
+		//is just a rough calculaition, will improve later
 		if (Math.abs(myFighterSpriteOne.getX() - myFighterSpriteTwo.getX())
 				+ Math.abs(myFighterSpriteOne.getY()
-						- myFighterSpriteTwo.getY()) < 30)
+						- myFighterSpriteTwo.getY()) < SIZE_DEFAULT)
 			return true;
-
 		return false;
 	}
 
@@ -46,16 +54,16 @@ public class Collision {
 
 	public void checkCollison() {
 		if (isCollided()) {
-			stop(myFighterSpriteOne);
-			stop(myFighterSpriteTwo);
+			for (CollisionReaction r : myReactionList) {
+				if (r.isThisComposition(myFighterSpriteOne, myFighterSpriteTwo)) {
+					CollisionReaction reaction = r.createCollisionReaction(
+							myFighterSpriteOne, myFighterSpriteTwo);
+					reaction.doThisReaction();
+				}
+			}
+			//for debug
 			System.out.println("collision");
 		}
 
-	}
-
-	public void stop(FighterSprite fighterSprite) {
-		FightPhysicsEngine fightPhysicsEngine = new FightPhysicsEngine(
-				fighterSprite);
-		fightPhysicsEngine.setNextLocation(0, 0);
 	}
 }

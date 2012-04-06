@@ -3,13 +3,16 @@ package PhysicsEngine;
 import sprite.FighterSprite;
 import action.MotionAction;
 
-import com.golden.gamedev.GameObject;
-
+/**
+ * 
+ * This is the super class of physics engine
+ * Maybe there will more children engine in the futures
+ * 
+ * @author Donghe
+ *
+ */
 public abstract class PhysicsEngine {
 
-	// abstract void update (FighterSprite sprite,
-	// GameObject game,
-	// long elapsedTime);
 	protected double myVectorX;
 	protected double myVectorY;
 	protected FighterSprite myFighterSprite;

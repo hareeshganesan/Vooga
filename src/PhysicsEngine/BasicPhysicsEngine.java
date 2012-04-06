@@ -1,13 +1,8 @@
 package PhysicsEngine;
 
-import java.awt.event.KeyEvent;
 import java.awt.geom.Point2D;
-
 import sprite.FighterSprite;
-
 import action.MotionAction;
-
-import com.golden.gamedev.GameObject;
 
 
 public class BasicPhysicsEngine extends PhysicsEngine
