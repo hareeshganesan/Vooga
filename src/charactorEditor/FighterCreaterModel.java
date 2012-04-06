@@ -1,4 +1,4 @@
-package ChrarctorEditor;
+package charactorEditor;
 import java.util.ArrayList;
 
 public class FighterCreaterModel{
@@ -15,7 +15,7 @@ public class FighterCreaterModel{
 	
     public boolean readyToCreat(){
         for (String s:Fighter.item)
-        	if(myFighter.get(s)!=null && !myFighter.get(s).equalsIgnoreCase("")) continue;
+        	if(myFighter.get(s)!=null) continue;
         	else return false;
     	return true;
     }
