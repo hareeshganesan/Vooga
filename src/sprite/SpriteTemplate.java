@@ -1,6 +1,7 @@
 package sprite;
 
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Point2D;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import com.golden.gamedev.object.sprite.AdvanceSprite;
@@ -66,7 +67,7 @@ public abstract class SpriteTemplate extends AdvanceSprite
     }
 
     // TODO: GET BOUNDS FROM WINDOW SIZE
-    protected abstract void confineBounds ();
+    protected abstract Point2D confineBounds (double dx, double dy);
 
     
 }

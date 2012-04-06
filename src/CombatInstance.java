@@ -41,7 +41,7 @@ public class CombatInstance extends GameObject
     public CombatInstance(GameEngine engine){
         super(engine);
         myEngine = engine;
-        physics = new BasicPhysicsEngine();
+        physics = new BasicPhysicsEngine(this);
     }
     
     @Override
@@ -128,7 +128,7 @@ public class CombatInstance extends GameObject
     {
         bg.update(elapsedTime);
         for(FighterSprite sprite: playerSprites)
-            physics.update(sprite,this, elapsedTime);
+            physics.update(sprite,elapsedTime);
         for (PlatformBlock pb:platform){
             pb.update(elapsedTime);
         }

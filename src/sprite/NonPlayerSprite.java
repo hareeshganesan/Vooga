@@ -1,6 +1,8 @@
 package sprite;
 
 import java.awt.Graphics2D;
+import java.awt.geom.Point2D;
+import java.awt.image.BufferedImage;
 
 
 import java.awt.image.BufferedImage;
@@ -24,20 +26,21 @@ public abstract class NonPlayerSprite extends SpriteTemplate {
     public NonPlayerSprite() {
     }
 
-    protected void confineBounds ()
+    protected Point2D confineBounds (double dx, double dy)
     {
         if (!this.isOnScreen())
         {
             this.forceX(this.getOldX());
             this.forceY(this.getOldY());
         }
+        return new Point2D.Double(dx,dy);
     }
 
     public void update (long elapsedTime)
     {
         if (this.isActive()){ //DEFAULT: DON'T UPDATE IF INACTIVE
             super.update(elapsedTime);
-            confineBounds();
+            confineBounds(DEFAULT_DAMAGE, DEFAULT_DAMAGE);
         }
     }
 }

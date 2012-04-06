@@ -1,5 +1,7 @@
 package sprite;
 
+import java.awt.geom.Point2D;
+
 /**
  * Created 4 mar
  * @author Wendy
@@ -15,8 +17,8 @@ public abstract class SpriteDecorator extends SpriteTemplate{
     
     //TODO: confineBounds may be different after physics engine...we'll see
     @Override
-    protected void confineBounds() {
-        child.confineBounds();
+    protected Point2D confineBounds (double dx, double dy) {
+        return child.confineBounds(dx, dy);
     }
 
     @Override

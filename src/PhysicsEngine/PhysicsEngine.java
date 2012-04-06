@@ -11,17 +11,18 @@ import com.golden.gamedev.object.SpriteGroup;
  */
 public abstract class PhysicsEngine {
 
-	protected int boundX;
-	protected int boundY;
-	protected GameObject myGame;
-//	protected FighterSprite myFighterSprite;
+    protected int boundX;
+    protected int boundY;
+    protected GameObject myGame;
 
-	public PhysicsEngine(GameObject game) {
-		myGame = game;
-		boundX = game.getWidth();
-		boundY = game.getHeight();
-//		myFighterSprite=fighterSprite;
-	}
+    // protected FighterSprite myFighterSprite;
 
-	public abstract void update(FighterSprite fighterSprite, long elapsedTime);
+    public PhysicsEngine(GameObject game) {
+        myGame = game;
+        boundX = game.getWidth();
+        boundY = game.getHeight();
+        // myFighterSprite=fighterSprite;
+    }
+
+    public abstract void update(FighterSprite fighterSprite, long elapsedTime);
 }

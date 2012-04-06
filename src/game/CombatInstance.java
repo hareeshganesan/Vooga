@@ -5,13 +5,16 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import javax.swing.JFileChooser;
 import org.jdom.JDOMException;
 import sprite.FighterSprite;
 import sprite.GeneralSpriteCollision;
 import sprite.PlatformBlock;
 import PhysicsEngine.BasicPhysicsEngine;
-
+import action.Action;
+import action.DownAction;
 import com.golden.gamedev.GameEngine;
 import com.golden.gamedev.GameObject;
 import com.golden.gamedev.object.Background;
@@ -34,7 +37,7 @@ public class CombatInstance extends GameObject
     ArrayList<PlatformBlock> platform;
     GeneralSpriteCollision temp;
     GeneralSpriteCollision p_block;
-
+    
     Background bg;
 
 
@@ -42,7 +45,7 @@ public class CombatInstance extends GameObject
     {
         super(engine);
         myEngine = engine;
-        physics = new BasicPhysicsEngine();
+        physics = new BasicPhysicsEngine(this);
         myHandler = new InputHandler();
     }
 
@@ -143,10 +146,15 @@ public class CombatInstance extends GameObject
     @Override
     public void update (long elapsedTime)
     {
-        myHandler.update(myEngine);
+        myHandler.update(elapsedTime, myEngine);
+
         bg.update(elapsedTime);
         for (FighterSprite sprite : playerSprites)
-            physics.update(sprite, this, elapsedTime);
+        {
+            Action gravity = new DownAction(sprite);
+            //gravity.performAction(elapsedTime / 2);
+            sprite.update(elapsedTime);
+        }
         for (PlatformBlock pb : platform)
         {
             pb.update(elapsedTime);
@@ -161,6 +169,13 @@ public class CombatInstance extends GameObject
     public InputHandler getMyHandler ()
     {
         return myHandler;
+    }
+
+
+    public List<FighterSprite> getFighters ()
+    {
+        return Collections.unmodifiableList(playerSprites);
+
     }
 
 }

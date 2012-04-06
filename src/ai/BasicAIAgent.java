@@ -1,6 +1,8 @@
 package ai;
 
+import java.util.List;
 import game.CombatInstance;
+import sprite.FighterSprite;
 import sprite.HealthDisplay;
 
 public class BasicAIAgent extends AIAgent {
@@ -11,8 +13,10 @@ public class BasicAIAgent extends AIAgent {
     }
 
     @Override
-    public void update(long elapsedTime) {
-
+    public void update (long elapsedTime)
+    {
+        List<FighterSprite> fs = myLevel.getFighters();
+        
     }
 
 }

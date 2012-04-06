@@ -29,11 +29,11 @@ public class InputHandler
      * 
      * @param engine
      */
-    public void update (GameEngine engine)
+    public void update (long elapsedTime, GameEngine engine)
     {
         for (Integer key : key_mapping.keySet())
-            if (engine.keyDown(key.intValue())) key_mapping.get(key)
-                                                           .performAction();
+            if (engine.keyPressed(key.intValue())) key_mapping.get(key)
+                                                           .performAction(elapsedTime);
     }
 
 

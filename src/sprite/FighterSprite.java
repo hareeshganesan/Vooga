@@ -1,6 +1,8 @@
 package sprite;
 
 import java.awt.Graphics2D;
+import java.awt.Point;
+import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -19,10 +21,13 @@ public class FighterSprite extends SpriteTemplate {
     private int MIN_HEALTH = 5;
     private int MAX_HEALTH = 50;
     private double DEFAULT_SPEED = 0.1;
+    private Point2D moveBy;
+    
 
     private HealthDisplay myDisplay;
     private List<NonPlayerSprite> myWeapons;
 
+    
 
     // values for groupID will be selectable in spriteValues
     // TODO: figure out how groupIDs will work, especially with collisions
@@ -37,9 +42,14 @@ public class FighterSprite extends SpriteTemplate {
         myWeapons = new ArrayList<NonPlayerSprite>();
 
         this.setID(groupID);
-
-        // set this direction to whichever direction the image originally faces
+        moveBy = new Point2D.Double();
+        
+        //set this direction to whichever direction the image originally faces
         super.setDirection(SpriteValues.RIGHT);
+    }
+
+    public Point2D getCurrentLocation(){
+        return new Point2D.Double(getX(), getY());
     }
 
     public void addWeapon(NonPlayerSprite child) {
@@ -117,6 +127,12 @@ public class FighterSprite extends SpriteTemplate {
     }
 
 
+
+    public void setNextLocation (Point2D nextLocation)
+    {
+        this.moveBy = nextLocation;
+    }
+
     // DOES THIS NEED TO BE PUBLIC?
     private void changeDirection(int dir) {
         if (super.getDirection() != dir) {
@@ -142,18 +158,31 @@ public class FighterSprite extends SpriteTemplate {
 
 
     // TODO: THIS MAY CHANGE WITH CHANGING COLLISIONCHECKER
-    protected void confineBounds ()
+    protected Point2D confineBounds (double dx, double dy)
     {
         if (!this.isOnScreen())
         {
             this.forceX(this.getOldX());
             this.forceY(this.getOldY());
         }
+        if((getX()+dx)<0)
+            dx = getX();
+        if((getX()+getWidth()/2+dx)>getBackground().getWidth())
+            dx = getBackground().getWidth()-getX()-getWidth();
+        if((getY()+dy)<0)
+            dy = getY();
+        if((getY()+getHeight()/2+dy)>getBackground().getHeight())
+            dy = getBackground().getHeight()-getY()-getHeight();
+        return new Point2D.Double(dx, dy);
     }
 
 
     public void move (double dx, double dy)
     {
+
+        Point2D finaldelta = confineBounds(dx, dy);
+        dx = finaldelta.getX();
+        dy = finaldelta.getY();
         super.move(dx, dy);
         if (dx < 0)
         {
@@ -164,7 +193,6 @@ public class FighterSprite extends SpriteTemplate {
             changeDirection(SpriteValues.RIGHT);
         }
 
-        confineBounds();
         moveWeapons(dx, dy);
     }
 
@@ -191,7 +219,8 @@ public class FighterSprite extends SpriteTemplate {
             this.setActive(false); // PARENT WILL NEED TO CHECK FOR ACTIVE
         }
         myDisplay.update(elapsedTime, myHealth);
-
+        
+        move(moveBy.getX(),moveBy.getY());
         super.update(elapsedTime);
     }
 }
