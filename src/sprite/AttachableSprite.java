@@ -5,6 +5,7 @@ import java.awt.image.BufferedImage;
 
 //wraps a sprite (w/ no children) that can be used as a weapon, or as a freestanding npc
 //may also be useful for later extensions to power-ups
+//TODO: figure out how this works. trace out rough uml before continuing
 public class AttachableSprite extends SpriteDecorator {
 
     FighterSprite fighter;

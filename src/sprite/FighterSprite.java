@@ -9,6 +9,8 @@ import java.util.List;
 
 
 /*
+ * Note: speed is used to determine distance travelled upon keypresses. getSpeed is used for this purpose
+ * To set actual sprite speed (moving w/o keypresses), call the golden t functions
  * @author Wendy, Helena, Hareesh
  */
 
