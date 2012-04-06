@@ -21,15 +21,12 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  */
 
 @SuppressWarnings("serial")
-public class View extends JFrame
-{
-
-    private static final Dimension SIZE = new Dimension(600, 200);
+public class View extends JFrame {
+	private static final Dimension SIZE = new Dimension(600, 600);
 
     private Controller myController;
 
     private JTextField myLevelNameInput;
-
     private JButton myAddImageButton;
     private JButton myAddBlockButton;
     private String myImagePath;
@@ -39,6 +36,20 @@ public class View extends JFrame
     private JTextField myYTextArea;
     private int myXValue;
     private int myYValue;
+
+    private JButton myAddFighterButton;
+    private JTextField myFighterName;
+    private JTextField myMaxHealth;
+    private JTextField mySpeed;
+    private JTextField myFighterX;
+    private JTextField myFighterY;
+    private JFileChooser myFighterImageSelector = new JFileChooser();
+
+    private String FighterName;
+    private int MaxHealth;
+    private double Speed;
+    private int FighterX;
+    private int FighterY;
 
     private JFileChooser myImageSelector;
 
@@ -53,6 +64,7 @@ public class View extends JFrame
 
         add(makeLevelName(), BorderLayout.PAGE_START);
         add(makeNewBlock(), BorderLayout.CENTER);
+        add(makeNewFighter(), BorderLayout.EAST);
         add(makeSaveAndFinishButtons(), BorderLayout.PAGE_END);
 
         setSize(SIZE);
@@ -60,6 +72,58 @@ public class View extends JFrame
 
         myImageSelector =
             new JFileChooser(System.getProperties().getProperty("user.dir"));
+        myFighterImageSelector =
+            new JFileChooser(System.getProperties().getProperty("user.dir"));
+
+    }
+
+
+    private Component makeNewFighter ()
+    {
+        JPanel fighterPanel = new JPanel();
+        myFighterName = new JTextField("fighter name", 5);
+        myMaxHealth = new JTextField("enter HP", 5);
+        mySpeed = new JTextField("enter speed", 5);
+        myFighterX = new JTextField("fighter x", 5);
+        myFighterY = new JTextField("fighter y", 5);
+        fighterPanel.add(myFighterName);
+        fighterPanel.add(myMaxHealth);
+        fighterPanel.add(mySpeed);
+        fighterPanel.add(myFighterX);
+        fighterPanel.add(myFighterY);
+
+        myAddFighterButton = new JButton("Add Fighter");
+
+        myAddFighterButton.addActionListener(new ActionListener()
+        {
+            public void actionPerformed (ActionEvent evt)
+            {
+                FighterName = myFighterName.getText();
+                MaxHealth = Integer.parseInt(myMaxHealth.getText());
+                Speed = Double.parseDouble(mySpeed.getText());
+                FighterX = Integer.parseInt(myFighterX.getText());
+                FighterY = Integer.parseInt(myFighterY.getText());
+
+                myFighterImageSelector.setFileFilter(new FileNameExtensionFilter("JPEG, PNG, GIF",
+                                                                                 "jpeg",
+                                                                                 "png",
+                                                                                 "gif"));
+                int retval = myFighterImageSelector.showOpenDialog(null);
+                String url =
+                    myFighterImageSelector.getSelectedFile().getAbsolutePath();
+
+                myController.addFighterSprite(new FighterSprite(MaxHealth,
+                                                                FighterX,
+                                                                FighterY,
+                                                                FighterName,
+                                                                Speed), url);
+
+            }
+        });
+
+        fighterPanel.add(myAddFighterButton, BorderLayout.WEST);
+
+        return fighterPanel;
 
     }
 
@@ -73,29 +137,8 @@ public class View extends JFrame
         panel.add(myXTextArea);
         panel.add(myYTextArea);
 
-        myImagePath = "";
-        myURLLabel = new JLabel(myImagePath);
+        JButton myAddBlockButton = new JButton("Add Block");
 
-        myAddImageButton = new JButton("Add Image");
-        panel.add(myAddImageButton);
-        panel.add(myURLLabel);
-
-        myAddImageButton.addActionListener(new ActionListener()
-        {
-            public void actionPerformed (ActionEvent evt)
-            {
-                myImageSelector.setFileFilter(new FileNameExtensionFilter("JPEG, PNG, GIF",
-                                                                          "jpeg",
-                                                                          "png",
-                                                                          "gif"));
-                int retval = myImageSelector.showOpenDialog(null);
-                myImagePath = myImageSelector.getSelectedFile().getPath();
-
-                myURLLabel.setText(myImagePath);
-            }
-        });
-
-        myAddBlockButton = new JButton("Add Block");
         myAddBlockButton.addActionListener(new ActionListener()
         {
             public void actionPerformed (ActionEvent evt)
@@ -103,8 +146,16 @@ public class View extends JFrame
                 myXValue = Integer.parseInt(myXTextArea.getText());
                 myYValue = Integer.parseInt(myYTextArea.getText());
 
+                myImageSelector.setFileFilter(new FileNameExtensionFilter("JPEG, PNG, GIF",
+                                                                          "jpeg",
+                                                                          "png",
+                                                                          "gif"));
+                int retval = myImageSelector.showOpenDialog(null);
+                String url =
+                    myImageSelector.getSelectedFile().getAbsolutePath();
+
                 myController.addInanimateSprite(new BlockSprite(),
-                                                myImagePath,
+                                                url,
                                                 myXValue,
                                                 myYValue);
 
@@ -114,6 +165,7 @@ public class View extends JFrame
 
         return panel;
     }
+
 
 
     /**
@@ -160,7 +212,6 @@ public class View extends JFrame
                     e.printStackTrace();
                 }
                 System.exit(0);
-
             }
         });
 

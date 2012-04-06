@@ -1,21 +1,26 @@
 package ai;
 
+import java.util.List;
+import action.MotionAction;
+import game.CombatInstance;
+import sprite.FighterSprite;
 import sprite.HealthDisplay;
 
+public class BasicAIAgent extends AIAgent {
 
-public class BasicAIAgent extends AIAgent
-{
-
-    public BasicAIAgent (String name, HealthDisplay display, int groupID)
-    {
-        super(name, display, groupID);
+    public BasicAIAgent(String name, HealthDisplay display, int groupID,
+            CombatInstance c) {
+        super(name, display, groupID, c);
     }
 
-    @Override
     public void update (long elapsedTime)
     {
-        
-        
+        List<FighterSprite> fs = myLevel.getFighters();
+        if(getCurrentLocation().distance(fs.get(0).getCurrentLocation())>40){
+            MotionAction follow = new MotionAction(this, fs.get(0).getCurrentLocation());
+            follow.performAction(elapsedTime);
+        }
+        super.update(elapsedTime);
     }
 
 }

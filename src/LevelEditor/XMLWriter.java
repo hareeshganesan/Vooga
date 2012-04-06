@@ -15,13 +15,18 @@ public class XMLWriter
 {
 
     private String myFileName;
-    private HashMap<Sprite, String> mySpriteMap;
+    private HashMap<Sprite, String> myInanimateSpriteMap;
+    private HashMap<FighterSprite, String> myFighterSpriteMap;
 
 
-    public XMLWriter (String name, HashMap<Sprite, String> sprites)
+    public XMLWriter (String name,
+                      HashMap<Sprite, String> InanimateSprites,
+                      HashMap<FighterSprite, String> fighterSprites)
     {
         myFileName = name;
-        mySpriteMap = sprites;
+        myInanimateSpriteMap = InanimateSprites;
+        myFighterSpriteMap = fighterSprites;
+
     }
 
 
@@ -36,13 +41,13 @@ public class XMLWriter
             Element root = new Element("Sprites");
             doc.setRootElement(root);
 
-            for (Sprite s : mySpriteMap.keySet())
+            for (Sprite s : myInanimateSpriteMap.keySet())
             {
                 Element type = new Element("Block");
                 root.addContent(type);
 
-                Element imageURL = new Element("image");
-                imageURL.addContent(mySpriteMap.get(s));
+                Element imageURL = new Element("img");
+                imageURL.addContent(myInanimateSpriteMap.get(s));
                 type.addContent(imageURL);
 
                 Element x = new Element("x");
@@ -55,9 +60,41 @@ public class XMLWriter
 
             }
 
+            for (FighterSprite s : myFighterSpriteMap.keySet())
+            {
+                Element type = new Element("Fighter");
+                root.addContent(type);
+
+                Element imageURL = new Element("img");
+                imageURL.addContent(myFighterSpriteMap.get(s));
+                type.addContent(imageURL);
+
+                Element x = new Element("x");
+                x.addContent(Double.toString(s.getXCoord()));
+                type.addContent(x);
+
+                Element y = new Element("y");
+                y.addContent(Double.toString(s.getYCoord()));
+                type.addContent(y);
+
+                Element MaxHealth = new Element("health");
+                MaxHealth.addContent(Integer.toString(s.getHP()));
+                type.addContent(MaxHealth);
+
+                Element Name = new Element("name");
+                Name.addContent(s.getName());
+                type.addContent(Name);
+
+                Element Speed = new Element("speed");
+                Speed.addContent(Double.toString(s.getSpeed()));
+                type.addContent(Speed);
+
+            }
+
             XMLOutputter outputter = new XMLOutputter();
             FileOutputStream out =
-                new FileOutputStream(new File(myFileName + ".xml"));
+                new FileOutputStream(new File("src/resources/" + myFileName +
+                                              ".xml"));
 
             outputter.output(doc, out);
         }

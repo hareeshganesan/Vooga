@@ -1,61 +1,67 @@
 package sprite;
 
 import java.awt.Graphics2D;
+import java.awt.Point;
+import java.awt.geom.Point2D;
+import java.awt.geom.Point2D.Double;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 
 /*
+ * Note: speed is used to determine distance travelled upon keypresses. getSpeed is used for this purpose
+ * To set actual sprite speed (moving w/o keypresses), call the golden t functions
  * @author Wendy, Helena, Hareesh
  */
-public class FighterSprite extends SpriteTemplate
-{
+
+public class FighterSprite extends SpriteTemplate {
 
     private String myName;
     private int myHealth;
-    private double mySpeed;
 
     // defaults
+    private int MIN_HEALTH = 5;
     private int MAX_HEALTH = 50;
-    private double DEFAULT_SPEED = 0.1;
+    private double DEFAULT_SPEED = 0.5;
+    private Point2D moveBy;
+    
 
     private HealthDisplay myDisplay;
-    private List<WeaponSprite> myWeapons;
+    private List<NonPlayerSprite> myWeapons;
 
-    private HashMap<Integer, Integer> keyMap = new HashMap<Integer, Integer>();
-
+    
 
     // values for groupID will be selectable in spriteValues
-    public FighterSprite (String name, HealthDisplay display, int groupID)
-    {
+    // TODO: figure out how groupIDs will work, especially with collisions
+    public FighterSprite(String name, HealthDisplay display, int groupID) {
         myName = name;
         myHealth = MAX_HEALTH;
-        mySpeed = DEFAULT_SPEED;
+        super.setDefaultSpeed(DEFAULT_SPEED);
+//        super.resetSpeed();
         myDisplay = display;
 
         myDisplay.setStat(myName, myHealth);
-        myWeapons = new ArrayList<WeaponSprite>();
-        /**
-         * TODO: remove the mapping commented code below
-         */
-//
-//        // default mapping, maybe be moved into input handler later
-//        keyMap.put(KeyEvent.VK_UP, KeyEvent.VK_UP);
-//        keyMap.put(KeyEvent.VK_DOWN, KeyEvent.VK_DOWN);
-//        keyMap.put(KeyEvent.VK_LEFT, KeyEvent.VK_LEFT);
-//        keyMap.put(KeyEvent.VK_RIGHT, KeyEvent.VK_RIGHT);
+        myWeapons = new ArrayList<NonPlayerSprite>();
 
         this.setID(groupID);
-
+        moveBy = new Point2D.Double();
+        
         //set this direction to whichever direction the image originally faces
         super.setDirection(SpriteValues.RIGHT);
     }
 
+    public Point2D getCurrentLocation(){
+        return new Point2D.Double(getX()+moveBy.getX(), getY()+moveBy.getY());
+    }
 
-    public void addWeapon (WeaponSprite w)
-    {
-        myWeapons.add(w);
+    public void addWeapon(NonPlayerSprite child) {
+        myWeapons.add(child);
+        child.setID(this.getID());
+    }
+
+    public void removeWeapon(NonPlayerSprite child) {
+        myWeapons.remove(child);
     }
 
 
@@ -64,12 +70,17 @@ public class FighterSprite extends SpriteTemplate
         return myName;
     }
 
-
-    //TODO: make these set fxns safer (check that a legit value is being passed in)
-    public void setMaxHealth (int change)
-    {
-        MAX_HEALTH = change;
-        myHealth = MAX_HEALTH;
+    /**
+     * Changes maximum health to @param change Resets to full health
+     */
+    public void setMaxHealth(int change) {
+        if (change <= MIN_HEALTH) {
+            MAX_HEALTH = MIN_HEALTH;
+            myHealth = MAX_HEALTH;
+        } else {
+            MAX_HEALTH = change;
+            myHealth = MAX_HEALTH;
+        }
         myDisplay.setStat(myName, MAX_HEALTH);
     }
 
@@ -92,58 +103,45 @@ public class FighterSprite extends SpriteTemplate
         return myHealth;
     }
 
-
-    public void setSpeed (double speed)
-    {
-        mySpeed = speed;
+    // TODO: if we rewrite other classes referencing this method, can remove
+    // in favor of more control over x/y speeds separately.
+    public double getSpeed() {
+        return DEFAULT_SPEED;
     }
-
-
-    public double getSpeed ()
-    {
-        return mySpeed;
-    }
-
-
     /**
      * should only be called if collision occurred default is to stay at old
      * position, override to have new actions
      */
-    public void collisionAction (int otherGroupID)
-    {
-        // TODO: if groupID is not same as my group id, do stuff like health
-        // reduction.
-        // if groupID is same, then...something (depends on if group memebers
-        // can hurt each other or not)
-        this.forceX(this.getOldX());
-        this.forceY(this.getOldY() - 1);
+    public void collisionAction(int otherGroupID) {
+        if (otherGroupID != this.getID()) {
+            this.forceX(this.getOldX());
+            this.forceY(this.getOldY() - 1);
+        }
     }
 
-
-    protected void animationChanged (int oldStat,
-                                     int oldDir,
-                                     int status,
-                                     int direction)
-    {
-        if ((direction == SpriteValues.LEFT) ||
-            (direction == SpriteValues.RIGHT))
-        {
-            if (this.getImages() != null)
-            {
+    protected void animationChanged(int oldStat, int oldDir, int status,
+            int direction) {
+        if ((direction == SpriteValues.LEFT)
+                || (direction == SpriteValues.RIGHT)) {
+            if (this.getImages() != null) {
                 flipImagesHoriz();
             }
         }
     }
 
 
-    // DOES THIS NEED TO BE PUBLIC?
-    private void changeDirection (int dir)
+
+    public void setNextLocationIncrement (Point2D nextLocation)
     {
-        if (super.getDirection() != dir)
-        {
+        
+        this.moveBy = new Point2D.Double(nextLocation.getX(),nextLocation.getY());
+    }
+
+    // DOES THIS NEED TO BE PUBLIC?
+    private void changeDirection(int dir) {
+        if (super.getDirection() != dir) {
             super.setDirection(dir);
-            for (WeaponSprite w : myWeapons)
-            {
+            for (NonPlayerSprite w : myWeapons) {
                 w.setDirection(dir);
             }
         }
@@ -164,18 +162,31 @@ public class FighterSprite extends SpriteTemplate
 
 
     // TODO: THIS MAY CHANGE WITH CHANGING COLLISIONCHECKER
-    protected void confineBounds ()
+    protected Point2D confineBounds (double dx, double dy)
     {
         if (!this.isOnScreen())
         {
             this.forceX(this.getOldX());
             this.forceY(this.getOldY());
         }
+        if((getX()-dx)<0)
+            dx = -getX();
+        if((getX()+getWidth()+dx)>getBackground().getWidth())
+            dx -= getY()+getHeight();
+        if((getY()+getHeight()+dy)>getBackground().getHeight())
+            dy -= getY()+getHeight();
+        if(getY()+dy<0)
+            dy = 0;
+        return new Point2D.Double(dx, dy);
     }
 
 
     public void move (double dx, double dy)
     {
+        System.out.println(dx+" "+dy);
+        //Point2D finaldelta = confineBounds(dx, dy);
+        //dx = finaldelta.getX();
+        //dy = finaldelta.getY();
         super.move(dx, dy);
         if (dx < 0)
         {
@@ -186,17 +197,14 @@ public class FighterSprite extends SpriteTemplate
             changeDirection(SpriteValues.RIGHT);
         }
 
-        confineBounds();
         moveWeapons(dx, dy);
     }
 
 
     // notifies observer weapons that they need to move dx, dy
-    private void moveWeapons (double dx, double dy)
-    {
-        for (WeaponSprite w : myWeapons)
-        {
-            w.updateLocation(dx, dy);
+    private void moveWeapons(double dx, double dy) {
+        for (NonPlayerSprite w : myWeapons) {
+            w.move(dx, dy);
         }
     }
 
@@ -215,7 +223,8 @@ public class FighterSprite extends SpriteTemplate
             this.setActive(false); // PARENT WILL NEED TO CHECK FOR ACTIVE
         }
         myDisplay.update(elapsedTime, myHealth);
-
+        
+        move(moveBy.getX(),moveBy.getY());
         super.update(elapsedTime);
     }
 }
