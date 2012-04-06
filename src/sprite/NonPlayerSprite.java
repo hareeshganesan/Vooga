@@ -1,6 +1,7 @@
 package sprite;
 
 import java.awt.Graphics2D;
+import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 
 
@@ -52,13 +53,14 @@ public abstract class NonPlayerSprite extends SpriteTemplate
     }
 
 
-    protected void confineBounds ()
+    protected Point2D confineBounds (double dx, double dy)
     {
         if (!this.isOnScreen())
         {
             this.forceX(this.getOldX());
             this.forceY(this.getOldY());
         }
+        return new Point2D.Double(dx,dy);
     }
 
 
@@ -71,7 +73,7 @@ public abstract class NonPlayerSprite extends SpriteTemplate
     public void update (long elapsedTime)
     {
         super.update(elapsedTime);
-        confineBounds();
+        confineBounds(0,0);
         //TODO QUADTREE CHECKS here?
     }
 }
