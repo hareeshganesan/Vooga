@@ -186,14 +186,14 @@ public class FighterSprite extends SpriteTemplate
             this.forceX(this.getOldX());
             this.forceY(this.getOldY());
         }
-        if((getX()+dx)<0)
-            dx = getX();
-        if((getX()+getWidth()/2+dx)>getBackground().getWidth())
-            dx = getBackground().getWidth()-getX()-getWidth();
-        if((getY()+dy)<0)
-            dy = getY();
-        if((getY()+getHeight()/2+dy)>getBackground().getHeight())
-            dy = getBackground().getHeight()-getY()-getHeight();
+        if((getX()-dx)<0)
+            dx = -getX();
+        if((getX()+getWidth()+dx)>getBackground().getWidth())
+            dx -= getY()+getHeight();
+        if((getY()+getHeight()+dy)>getBackground().getHeight())
+            dy -= getY()+getHeight();
+        if(getY()+dy<0)
+            dy = 0;
         return new Point2D.Double(dx, dy);
     }
 
