@@ -1,8 +1,6 @@
 package game;
 
 import java.awt.Graphics2D;
-import java.awt.Point;
-import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -14,11 +12,12 @@ import org.jdom.JDOMException;
 import sprite.FighterSprite;
 import sprite.GeneralSpriteCollision;
 import sprite.PlatformBlock;
-import PhysicsEngine.BasicPhysicsEngine;
 import action.Action;
 import action.DownAction;
 import camera.Camera;
-
+import PhysicsEngine.BasicPhysicsEngine;
+import action.Action;
+import action.DownAction;
 import com.golden.gamedev.GameEngine;
 import com.golden.gamedev.GameObject;
 import com.golden.gamedev.object.Background;
@@ -36,7 +35,7 @@ public class CombatInstance extends GameObject
     InputHandler myHandler;
     BasicPhysicsEngine physics;
     Camera camera;
-
+    
     //Sprites
     ArrayList<FighterSprite> playerSprites;
     ArrayList<PlatformBlock> platform;
@@ -52,7 +51,7 @@ public class CombatInstance extends GameObject
         myEngine = engine;
         physics = new BasicPhysicsEngine(this);
         myHandler = new InputHandler();
-        camera = new Camera(new Point(544/2,544/2), new Rectangle(100, 100));
+        camera = new Camera();
     }
 
 
@@ -140,7 +139,7 @@ public class CombatInstance extends GameObject
     {
         camera.render(pen);
         //bg.render(pen, camera, camera.getX(), camera.getY(), camera.getX(), camera.getY(), camera.getHeight(), camera.getWidth());
-        bg.render(pen);
+        bg.render(pen);        
         for (FighterSprite sprite : playerSprites)
             sprite.render(pen);
         for (PlatformBlock pb : platform)
@@ -155,9 +154,9 @@ public class CombatInstance extends GameObject
     {
         myHandler.update(elapsedTime, myEngine);
         camera.update(playerSprites);
-
       //bg.setToCenter(playerSprites.get(0));
         bg.setToCenter(camera.getX(), camera.getY(), camera.getHeight(), camera.getWidth());
+        myHandler.update(elapsedTime, myEngine);
         bg.update(elapsedTime);
         for (FighterSprite sprite : playerSprites)
         {

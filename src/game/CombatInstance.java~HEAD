@@ -1,19 +1,24 @@
-package main;
+package game;
 
 import java.awt.Graphics2D;
+import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import javax.swing.JFileChooser;
 import org.jdom.JDOMException;
-import sprite.BasicPhysicsEngine;
 import sprite.FighterSprite;
 import sprite.GeneralSpriteCollision;
 import sprite.PlatformBlock;
+import PhysicsEngine.BasicPhysicsEngine;
 import action.Action;
 import action.DownAction;
 import camera.Camera;
+
 import com.golden.gamedev.GameEngine;
 import com.golden.gamedev.GameObject;
 import com.golden.gamedev.object.Background;
@@ -31,13 +36,13 @@ public class CombatInstance extends GameObject
     InputHandler myHandler;
     BasicPhysicsEngine physics;
     Camera camera;
-    
+
     //Sprites
     ArrayList<FighterSprite> playerSprites;
     ArrayList<PlatformBlock> platform;
     GeneralSpriteCollision temp;
     GeneralSpriteCollision p_block;
-
+    
     Background bg;
 
 
@@ -45,9 +50,9 @@ public class CombatInstance extends GameObject
     {
         super(engine);
         myEngine = engine;
-        physics = new BasicPhysicsEngine();
+        physics = new BasicPhysicsEngine(this);
         myHandler = new InputHandler();
-        camera = new Camera();
+        camera = new Camera(new Point(544/2,544/2), new Rectangle(100, 100));
     }
 
 
@@ -130,10 +135,11 @@ public class CombatInstance extends GameObject
 
     }
 
-
     @Override
     public void render (Graphics2D pen)
     {
+        camera.render(pen);
+        //bg.render(pen, camera, camera.getX(), camera.getY(), camera.getX(), camera.getY(), camera.getHeight(), camera.getWidth());
         bg.render(pen);
         for (FighterSprite sprite : playerSprites)
             sprite.render(pen);
@@ -149,12 +155,16 @@ public class CombatInstance extends GameObject
     {
         myHandler.update(elapsedTime, myEngine);
         camera.update(playerSprites);
+
       //bg.setToCenter(playerSprites.get(0));
         bg.setToCenter(camera.getX(), camera.getY(), camera.getHeight(), camera.getWidth());
-        myHandler.update(myEngine);
         bg.update(elapsedTime);
         for (FighterSprite sprite : playerSprites)
-            physics.update(sprite, this, elapsedTime);
+        {
+            Action gravity = new DownAction(sprite);
+            //gravity.performAction(elapsedTime / 2);
+            sprite.update(elapsedTime);
+        }
         for (PlatformBlock pb : platform)
         {
             pb.update(elapsedTime);
@@ -164,7 +174,7 @@ public class CombatInstance extends GameObject
         p_block.checkCollision();
 
     }
-    
+
 
     public InputHandler getMyHandler ()
     {
@@ -172,5 +182,10 @@ public class CombatInstance extends GameObject
     }
 
 
+    public List<FighterSprite> getFighters ()
+    {
+        return Collections.unmodifiableList(playerSprites);
+
+    }
 
 }
