@@ -16,6 +16,7 @@ import action.DownAction;
 import action.LeftAction;
 import action.RightAction;
 import action.UpAction;
+import ai.BasicAIAgent;
 
 
 public class LevelObjectsFactory
@@ -86,10 +87,20 @@ public class LevelObjectsFactory
 
             fs.add(s);
         }
+        
+        fs.add(createAIFighter());
         return fs;
     }
 
 
+    private BasicAIAgent createAIFighter(){
+        BasicAIAgent ai = new BasicAIAgent("ai1", new HealthDisplay(50,50, c.getWidth()/2 -30),0,c);
+        ai.setMaxHealth(60);
+        ai.setLocation(400, 500);
+        ai.setSpeed(.3);
+        ai.setImages(c.getImages("C:\\Users\\Hareesh\\Desktop\\CS108\\Vooga\\src\\resources\\flame.png",1,1));
+        return ai;
+    }
     private void mapFighter (int playerIndex, FighterSprite s)
     {
         InputHandler h = c.getMyHandler();
