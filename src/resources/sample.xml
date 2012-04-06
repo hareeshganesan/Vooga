@@ -10,7 +10,7 @@
 <Fighter>
 <name>PLAYER2</name>
 <health>1000</health>
-<speed>0</speed>
+<speed>1</speed>
 <x>100</x>
 <y>100</y>
 <img>resources/flame.png</img>
