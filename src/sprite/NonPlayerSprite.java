@@ -67,8 +67,9 @@ public abstract class NonPlayerSprite extends SpriteTemplate {
 
     public void update (long elapsedTime)
     {
-        super.update(elapsedTime);
-        confineBounds();
-        //TODO QUADTREE CHECKS here?
+        if (this.isActive()){ //DEFAULT: DON'T UPDATE IF INACTIVE
+            super.update(elapsedTime);
+            confineBounds();
+        }
     }
 }

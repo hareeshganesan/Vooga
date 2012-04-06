@@ -8,8 +8,8 @@ public class WeaponSprite extends NonPlayerSprite
 {
 
     FighterSprite fighter;
-    double fighterX;
-    double fighterY;
+    double fighterX=0;
+    double fighterY=0;
     BufferedImage[] image;
 
 
@@ -53,25 +53,7 @@ public class WeaponSprite extends NonPlayerSprite
     @Override
     public void collisionAction (int otherGroup)
     {
-
+        //TODO
     }
 
-
-    public void update (long elapsedTime)
-    {
-        super.update(elapsedTime);
-    }
-
-
-    public void render (Graphics2D pen)
-    {
-        super.render(pen);
-    }
-
-
-    @Override
-    public void setSpeed (double speed)
-    {
-        //TODO speed is whatever the parent makes it
-    }
 }

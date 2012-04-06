@@ -17,6 +17,7 @@ public class FighterSprite extends SpriteTemplate
     private double mySpeed;
 
     // defaults
+    private int MIN_HEALTH = 5;
     private int MAX_HEALTH = 50;
     private double DEFAULT_SPEED = 0.1;
 
@@ -27,6 +28,7 @@ public class FighterSprite extends SpriteTemplate
 
 
     // values for groupID will be selectable in spriteValues
+    //TODO: figure out how groupIDs will work, especially with collisions
     public FighterSprite (String name, HealthDisplay display, int groupID)
     {
         myName = name;
@@ -36,15 +38,6 @@ public class FighterSprite extends SpriteTemplate
 
         myDisplay.setStat(myName, myHealth);
         myWeapons = new ArrayList<WeaponSprite>();
-        /**
-         * TODO: remove the mapping commented code below
-         */
-//
-//        // default mapping, maybe be moved into input handler later
-//        keyMap.put(KeyEvent.VK_UP, KeyEvent.VK_UP);
-//        keyMap.put(KeyEvent.VK_DOWN, KeyEvent.VK_DOWN);
-//        keyMap.put(KeyEvent.VK_LEFT, KeyEvent.VK_LEFT);
-//        keyMap.put(KeyEvent.VK_RIGHT, KeyEvent.VK_RIGHT);
 
         this.setID(groupID);
 
@@ -58,6 +51,10 @@ public class FighterSprite extends SpriteTemplate
         myWeapons.add(w);
     }
 
+    public void removeWeapon(WeaponSprite w) {
+        myWeapons.remove(w);
+    }
+
 
     public String getName ()
     {
@@ -65,11 +62,20 @@ public class FighterSprite extends SpriteTemplate
     }
 
 
-    //TODO: make these set fxns safer (check that a legit value is being passed in)
+    /**
+     * Changes maximum health to @param change
+     * Resets to full health
+     */
     public void setMaxHealth (int change)
     {
+        if (change<=MIN_HEALTH){
+            MAX_HEALTH=MIN_HEALTH;
+            myHealth=MAX_HEALTH;
+        }
+        else{
         MAX_HEALTH = change;
         myHealth = MAX_HEALTH;
+        }
         myDisplay.setStat(myName, MAX_HEALTH);
     }
 
@@ -218,4 +224,5 @@ public class FighterSprite extends SpriteTemplate
 
         super.update(elapsedTime);
     }
+
 }
