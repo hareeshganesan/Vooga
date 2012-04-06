@@ -2,8 +2,6 @@ package action;
 
 import java.awt.geom.Point2D;
 import java.util.Vector;
-import sprite.BasicPhysicsEngine;
-import sprite.FighterSprite;
 
 
 public class MotionAction extends Action
@@ -31,11 +29,10 @@ public class MotionAction extends Action
         y_speed = 0;
     }
 
-
     @Override
     public void performAction (long elapsed_time)
     {
-        BasicPhysicsEngine.process(myFighter, x_speed, y_speed, elapsed_time);
+        PhysicsEngine.BasicPhysicsEngine.process(myFighter, x_speed, y_speed, elapsed_time);
     }
 
 }

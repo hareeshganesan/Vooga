@@ -1,25 +1,34 @@
-package sprite;
+package PhysicsEngine;
 
 import java.awt.event.KeyEvent;
 import java.awt.geom.Point2D;
-import com.golden.gamedev.GameObject;
 
+import sprite.FighterSprite;
+
+
+import java.awt.event.KeyEvent;
+
+import com.golden.gamedev.GameObject;
 
 public class BasicPhysicsEngine extends PhysicsEngine
 {
+    public BasicPhysicsEngine(GameObject myGame) {
+        super(myGame);
+    }
+
     @Override
-    public void update (FighterSprite sprite, GameObject game, long elapsedTime)
+    public void update (FighterSprite sprite, long elapsedTime)
     {
         double speed = sprite.getSpeed();
-        if (sprite.getY() + sprite.getHeight() <= game.getHeight()) sprite.move(0,
+        if (sprite.getY() + sprite.getHeight() <= myGame.getHeight()) sprite.move(0,
                                                                                 0.05 * elapsedTime);
-        if (game.keyDown((KeyEvent.VK_DOWN))) sprite.move(0, speed *
+        if (myGame.keyDown((KeyEvent.VK_DOWN))) sprite.move(0, speed *
                                                              elapsedTime);
-        if (game.keyPressed((KeyEvent.VK_UP))) sprite.move(0, -speed *
+        if (myGame.keyPressed((KeyEvent.VK_UP))) sprite.move(0, -speed *
                                                               elapsedTime * 20);
-        if (game.keyDown((KeyEvent.VK_RIGHT))) sprite.move(speed * elapsedTime,
+        if (myGame.keyDown((KeyEvent.VK_RIGHT))) sprite.move(speed * elapsedTime,
                                                            0);
-        if (game.keyDown((KeyEvent.VK_LEFT))) sprite.move(-speed * elapsedTime,
+        if (myGame.keyDown((KeyEvent.VK_LEFT))) sprite.move(-speed * elapsedTime,
                                                           0);
 
     }

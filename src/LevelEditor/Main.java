@@ -1,7 +1,5 @@
 package LevelEditor;
 
-
-
 public class Main
 {
 

@@ -9,10 +9,10 @@ import java.util.Collections;
 import java.util.List;
 import javax.swing.JFileChooser;
 import org.jdom.JDOMException;
-import sprite.BasicPhysicsEngine;
 import sprite.FighterSprite;
 import sprite.GeneralSpriteCollision;
 import sprite.PlatformBlock;
+import PhysicsEngine.BasicPhysicsEngine;
 import action.Action;
 import action.DownAction;
 import com.golden.gamedev.GameEngine;
@@ -45,7 +45,7 @@ public class CombatInstance extends GameObject
     {
         super(engine);
         myEngine = engine;
-        physics = new BasicPhysicsEngine();
+        physics = new BasicPhysicsEngine(this);
         myHandler = new InputHandler();
     }
 
@@ -128,7 +128,6 @@ public class CombatInstance extends GameObject
         p_block.setCollisionGroup(ps, b1);
 
     }
-
 
     @Override
     public void render (Graphics2D pen)
