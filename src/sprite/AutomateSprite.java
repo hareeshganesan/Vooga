@@ -42,7 +42,6 @@ public class AutomateSprite extends SpriteDecorator{
         child.setActive(true);
     }
     
-    //TODO: will need to rewrite sprite group to allow for auto checking during updates (but no rendering)
     public void update(long elapsedTime){
         if (!child.isActive() && time.action(elapsedTime)){
             respawn();
@@ -50,14 +49,4 @@ public class AutomateSprite extends SpriteDecorator{
         if (child.isActive()){ child.update(elapsedTime); }
         
     }
-    @Override
-    protected void confineBounds() {
-        child.confineBounds();
-    }
-
-    @Override
-    public void setSpeed(double speed) {
-        child.setSpeed(speed);
-    }
-
 }
