@@ -18,7 +18,6 @@ import PhysicsEngine.BasicPhysicsEngine;
 import action.Action;
 import action.DownAction;
 import camera.Camera;
-
 import com.golden.gamedev.GameEngine;
 import com.golden.gamedev.GameObject;
 import com.golden.gamedev.object.Background;
@@ -155,7 +154,6 @@ public class CombatInstance extends GameObject
     {
         myHandler.update(elapsedTime, myEngine);
         camera.update(playerSprites);
-
       //bg.setToCenter(playerSprites.get(0));
         bg.setToCenter(camera.getX(), camera.getY(), camera.getHeight(), camera.getWidth());
         bg.update(elapsedTime);

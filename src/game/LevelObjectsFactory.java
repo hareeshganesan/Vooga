@@ -93,7 +93,6 @@ public class LevelObjectsFactory
         return fs;
     }
 
-
     private BasicAIAgent createAIFighter(){
         BasicAIAgent ai = new BasicAIAgent("ai1", new HealthDisplay(50,50, c.getWidth()/2 -30),0,c);
         ai.setMaxHealth(60);
