@@ -22,6 +22,8 @@ public class CollisionReactionFriends extends CollisionReaction {
 	public void doThisReaction() {
 		stop(myFighterSpriteOne);
 		stop(myFighterSpriteTwo);
+//		if (myFighterSpriteOne.getSpriteKind().equals(FIGHTER))
+//			((FighterSprite) myFighterSpriteOne).addHealth(-1);
 	}
 
 	@Override

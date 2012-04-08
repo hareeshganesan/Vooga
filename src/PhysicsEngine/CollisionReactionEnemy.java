@@ -1,16 +1,17 @@
 package PhysicsEngine;
 
+import sprite.FighterSprite;
 import sprite.SpriteTemplate;
 
 /**
- * Not implemented yet.
- * Would like to deal with the collision between two sprites from different group
+ * Not implemented yet. Would like to deal with the collision between two
+ * sprites from different group
  * 
  * @author Donghe
- *
+ * 
  */
-public class CollisionReactionEnemy extends CollisionReaction{
-	
+public class CollisionReactionEnemy extends CollisionReaction {
+
 	public CollisionReactionEnemy(SpriteTemplate ps1, SpriteTemplate ps2) {
 		super(ps1, ps2);
 	}
@@ -32,9 +33,11 @@ public class CollisionReactionEnemy extends CollisionReaction{
 
 	@Override
 	public void doThisReaction() {
-		if(myFighterSpriteOne.getSpriteKind().equals(FIGHTER)) stop(myFighterSpriteOne);
-		if(myFighterSpriteTwo.getSpriteKind().equals(FIGHTER)) stop(myFighterSpriteTwo);
-		
+		if (myFighterSpriteOne.getSpriteKind().equals(FIGHTER))
+			((FighterSprite) myFighterSpriteOne).addHealth(-10);
+		if (myFighterSpriteTwo.getSpriteKind().equals(FIGHTER))
+			((FighterSprite) myFighterSpriteTwo).addHealth(-100);
+
 	}
 
 	@Override
