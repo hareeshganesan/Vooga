@@ -33,6 +33,7 @@ public class CollisionReactionEnemy extends CollisionReaction {
 
 	@Override
 	public void doThisReaction() {
+		//do something for damage
 		if (myFighterSpriteOne.getSpriteKind().equals(FIGHTER))
 			((FighterSprite) myFighterSpriteOne).addHealth(-10);
 		if (myFighterSpriteTwo.getSpriteKind().equals(FIGHTER))
