@@ -45,11 +45,13 @@ public class FightPhysicsEngine extends PhysicsEngine {
 		if (isOutLeft(x))
 			finalX = -myFighterSprite.getX();
 		if (isOutRight(x))
-			finalX = BOUND_X - myFighterSprite.getX()-myFighterSprite.getWidth();
+			finalX = BOUND_X - myFighterSprite.getX()
+					- myFighterSprite.getWidth();
 		if (isOutTop(y))
 			finalY = -myFighterSprite.getY();
 		if (isOutBottom(y))
-			finalY = BOUND_Y - myFighterSprite.getY();
+			finalY = BOUND_Y - myFighterSprite.getY()
+					- myFighterSprite.getHeight();
 
 		myFighterSprite.setNextLocation(new Point2D.Double(finalX, finalY));
 
@@ -65,7 +67,7 @@ public class FightPhysicsEngine extends PhysicsEngine {
 	}
 
 	public boolean isOutRight(double x) {
-		return myFighterSprite.getX() + x +myFighterSprite.getWidth()> BOUND_X;
+		return myFighterSprite.getX() + x + myFighterSprite.getWidth() > BOUND_X;
 	}
 
 	public boolean isOutTop(double y) {
@@ -73,7 +75,7 @@ public class FightPhysicsEngine extends PhysicsEngine {
 	}
 
 	public boolean isOutBottom(double y) {
-		return myFighterSprite.getY() + y  > BOUND_Y;
+		return myFighterSprite.getY() + y + myFighterSprite.getHeight() > BOUND_Y;
 	}
 
 }

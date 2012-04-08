@@ -11,12 +11,6 @@ import sprite.SpriteTemplate;
  * @author Donghe
  */
 public class Collision {
-	// the default maximum distance that we regard as a collision
-	private final int SIZE_DEFAULT = 30;
-
-	// two fighters and the reaction list
-	// private SpriteTemplate myFighterSpriteOne;
-	// private SpriteTemplate myFighterSpriteTwo;
 	private ArrayList<CollisionReaction> myReactionList = new ArrayList<CollisionReaction>();
 	private SpriteGroupTemplate myGroupOne;
 	private SpriteGroupTemplate myGroupTwo;
@@ -36,45 +30,19 @@ public class Collision {
 		setReactionList();
 	}
 
-	// public Collision(SpriteTemplate ps1, SpriteTemplate ps2) {
-	// myFighterSpriteOne = ps1;
-	// myFighterSpriteTwo = ps2;
-	// setReactionList();
-	// }
-
 	private void setReactionList() {
 		myReactionList.add(new CollisionReactionFriends());
 		myReactionList.add(new CollisionReactionEnemy());
 		myReactionList.add(new CollisionReactionNeutral());
 	}
 
-	// public boolean isCollided() {
-	// // is just a rough calculaition, will improve later
-	// if (Math.abs(myFighterSpriteOne.getX() - myFighterSpriteTwo.getX())
-	// + Math.abs(myFighterSpriteOne.getY()
-	// - myFighterSpriteTwo.getY()) < SIZE_DEFAULT)
-	// return true;
-	// return false;
-	// }
-
 	public boolean isCollided(SpriteTemplate s1, SpriteTemplate s2) {
-		// is just a rough calculaition, will improve later
-		if (Math.abs(s1.getX() - s2.getX()) + Math.abs(s1.getY() - s2.getY()) < SIZE_DEFAULT)
-			return true;
-		return false;
+		if (s1.getX()>s2.getX()+s2.getWidth()) return false;
+		if (s1.getX()+s1.getWidth()<s2.getX()) return false;
+		if (s1.getY()>s2.getY()+s2.getHeight()) return false;
+		if (s1.getY()+s1.getHeight()<s2.getY()) return false;
+		return true;
 	}
-
-	// public boolean isCoverThisPoint(SpriteTemplate fs, int x, int y) {
-	// if (fs.getX() < x)
-	// return false;
-	// if (fs.getX() + fs.getWidth() > x)
-	// return false;
-	// if (fs.getY() < y)
-	// return false;
-	// if (fs.getY() + fs.getHealth() > y)
-	// return false;
-	// return true;
-	// }
 
 	public void checkGroupCollision() {
 		if (onlyOneGroup) {
@@ -82,7 +50,6 @@ public class Collision {
 		} else {
 			checkBetweenGroups();
 		}
-
 	}
 
 	private void checkInGroup() {
@@ -115,20 +82,4 @@ public class Collision {
 			System.out.println("collision");
 		}
 	}
-
-	// public void checkCollison() {
-	// if (isCollided()) {
-	// for (CollisionReaction r : myReactionList) {
-	// if (r.isThisComposition(myFighterSpriteOne, myFighterSpriteTwo)) {
-	// CollisionReaction reaction = r.createCollisionReaction(
-	// myFighterSpriteOne, myFighterSpriteTwo);
-	// reaction.doThisReaction();
-	// }
-	// }
-	// // for debug
-	// System.out.println("collision");
-	// }
-	//
-	// }
-
 }
