@@ -1,4 +1,5 @@
 package LevelEditor;
+
 import com.golden.gamedev.object.Sprite;
 
 
@@ -52,4 +53,5 @@ public class Controller {
 		s.setLocation(x, y);
 		myModel.addSprite(s, imageURL);
 	}
+
 }

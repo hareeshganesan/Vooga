@@ -1,4 +1,5 @@
 package LevelEditor;
+
 /**
  * 
  * @author Peggy Li / pl59 
@@ -84,4 +85,5 @@ public class XMLWriter {
 		y.addContent(Double.toString(s.getY()));
 		type.addContent(y);
 	}
+
 }

@@ -1,0 +1,83 @@
+Vooga group - Fighting game
+
+
+***** PLEASE SCROLL DOWN AND READ THE 
+INSTRUCTIONS/NOTES BEFORE RUNNING CODE.*****
+
+-------------------- Members ----------------
+Peggy Li	pl59@duke.edu
+Helena Wu	hw87@duke.edu
+Wendy Yin	wty3@duke.edu
+Hareesh Ganesan	hg30@duke.edu	
+Hui Gao		hg29@duke.edu
+Donghe Zhao	dz35@duke.edu
+Chen Ji		cj85@duke.edu
+				
+-------------------- UTAs --------------------				
+Nathan Klug	nathan.klug@duke.edu
+Tanner Schmidt	tws10@duke.edu	
+
+
+-------------- Time Spent Version 2-------------
+
+Group Meetings:
+	Wednesday, April 4, 2012	7:30 PM - 11:30 PM
+	Thursday, April 5, 2012		7:30 PM - 11:59 PM
+	Friday, April 6, 2012		12:00 AM - 1:30 AM
+	
+	** UTA attended 4/5 meeting from about ~ 8 - 8:30 PM.	
+
+Individual Time (outside meetings):
+	Approximately 3 hours spent per person
+
+Total Group Time Spent = ~ 91 hrs
+
+This is about how long we expected, considering none of us knew 
+the code was due on Friday at 8AM until Wednesday night, and several 
+of us haven't met with the UTAs to talk over version 1 as of writing this README.
+
+		
+-------------- Time Spent Version 1-------------
+
+Group Meetings:
+	Thursday, March 29, 2012	8:00 - 11:00 PM
+	Sunday, April 1, 2012		2:00 PM - 11:59 PM
+	Monday, April 2, 2012		12:00 AM - 5:00 AM
+	
+	** UTAs attended 4/1 meeting from about 3 - 7 PM.	
+
+Individual Time (outside meetings):
+	Approximately 3 hours spent per person
+	
+Total Group Time Spent = almost 150 hours 	
+
+This is pretty commensurate with how much time we expected to spend overall.
+We all knew that this would be a large and complex design project where we
+had to start from scratch and do a lot of thinking about design and organization,
+as well as coding itself. We had initially hoped that our Sunday-Monday meeting
+would end sooner than it did but did recognize the possible need for a very late
+or all-night working meeting.	
+
+
+--------------- Resources Used -----------------
+
+Java API
+Oracle tutorials
+Golden T API
+JDOM tutorials
+Google search...
+
+
+--------------- Instructions/Notes -------------
+
+For part 2 (3/26-4/2), please configure build path to include:
+-golden_0_2_3.jar (golden t framework)
+-jdom-1.1.2.jar   (jdom for xml parsing)
+-jaxen.jar        (xpath for jdom)
+
+Run the Main in LevelEditor to create a xml file saving level details (default saves to src/resources/ folder).
+
+Run MainGame, load a file using file chooser, and play it. 
+
+Please do NOT write a xml file with more or less than 2 fighter sprites, we can't account for that yet. 
+Also please write the fighter name IN ALL CAPS

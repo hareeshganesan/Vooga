@@ -1,4 +1,5 @@
 package LevelEditor;
+<<<<<<< HEAD
 /**
  * 
  * @author Peggy Li / pl59 
