@@ -1,41 +1,42 @@
 package PhysicsEngine;
 
 import sprite.FighterSprite;
-
+import sprite.SpriteTemplate;
 
 /**
  * This class deals with the collision between two sprites from the same group
  * 
  * @author Donghe
- *
+ * 
  */
 public class CollisionReactionFriends extends CollisionReaction {
 
-	public CollisionReactionFriends(FighterSprite ps1, FighterSprite ps2) {
+	public CollisionReactionFriends(SpriteTemplate ps1, SpriteTemplate ps2) {
 		super(ps1, ps2);
 	}
 
 	public CollisionReactionFriends() {
-		
+
 	}
 
 	@Override
 	public void doThisReaction() {
 		stop(myFighterSpriteOne);
-		stop(myFighterSpriteTwo);		
+		stop(myFighterSpriteTwo);
 	}
 
 	@Override
-	public boolean isThisComposition(FighterSprite ps1, FighterSprite ps2) {
-		return true;
+	public boolean isThisComposition(SpriteTemplate ps1, SpriteTemplate ps2) {
+		if (ps1.getSpriteKind().equals(FIGHTER)
+				&& ps1.getSpriteKind().equals(FIGHTER))
+			return true;
+		return false;
 	}
 
 	@Override
-	public CollisionReaction createCollisionReaction(FighterSprite ps1,
-			FighterSprite ps2) {
-		return new CollisionReactionFriends(ps1,ps2);
+	public CollisionReaction createCollisionReaction(SpriteTemplate ps1,
+			SpriteTemplate ps2) {
+		return new CollisionReactionFriends(ps1, ps2);
 	}
-	
-	
 
 }

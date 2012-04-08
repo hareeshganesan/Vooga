@@ -1,6 +1,7 @@
 package PhysicsEngine;
 
 import sprite.FighterSprite;
+import sprite.SpriteTemplate;
 import action.MotionAction;
 
 /**
@@ -15,9 +16,9 @@ public abstract class PhysicsEngine {
 
 	protected double myVectorX;
 	protected double myVectorY;
-	protected FighterSprite myFighterSprite;
+	protected SpriteTemplate myFighterSprite;
 	
-	public PhysicsEngine(FighterSprite fighterSprite){
+	public PhysicsEngine(SpriteTemplate fighterSprite){
 		myFighterSprite=fighterSprite;
 	}
 

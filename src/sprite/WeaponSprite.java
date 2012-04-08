@@ -74,4 +74,18 @@ public class WeaponSprite extends NonPlayerSprite
     {
         //TODO speed is whatever the parent makes it
     }
+
+
+	@Override
+	public double getSpeed() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+
+	@Override
+	public String getSpriteKind() {
+		// TODO Auto-generated method stub
+		return "WeaponSprite";
+	}
 }

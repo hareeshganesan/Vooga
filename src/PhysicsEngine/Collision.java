@@ -3,6 +3,7 @@ package PhysicsEngine;
 import java.util.ArrayList;
 
 import sprite.FighterSprite;
+import sprite.SpriteTemplate;
 
 /**
  * This is the basic class for collision
@@ -16,17 +17,18 @@ public class Collision {
 	private final int SIZE_DEFAULT = 30;
 	
 	//two fighters and the reaction list
-	private FighterSprite myFighterSpriteOne;
-	private FighterSprite myFighterSpriteTwo;
+	private SpriteTemplate myFighterSpriteOne;
+	private SpriteTemplate myFighterSpriteTwo;
 	private ArrayList<CollisionReaction> myReactionList = new ArrayList<CollisionReaction>();
 
 	
 	
-	public Collision(FighterSprite ps1, FighterSprite ps2) {
+	public Collision(SpriteTemplate ps1, SpriteTemplate ps2) {
 		myFighterSpriteOne = ps1;
 		myFighterSpriteTwo = ps2;
 		myReactionList.add(new CollisionReactionFriends());
 		myReactionList.add(new CollisionReactionEnemy());
+		myReactionList.add(new CollisionReactionNeutral());
 	}
 
 	
@@ -40,17 +42,17 @@ public class Collision {
 		return false;
 	}
 
-	public boolean isCoverThisPoint(FighterSprite fs, int x, int y) {
-		if (fs.getX() < x)
-			return false;
-		if (fs.getX() + fs.getWidth() > x)
-			return false;
-		if (fs.getY() < y)
-			return false;
-		if (fs.getY() + fs.getHealth() > y)
-			return false;
-		return true;
-	}
+//	public boolean isCoverThisPoint(SpriteTemplate fs, int x, int y) {
+//		if (fs.getX() < x)
+//			return false;
+//		if (fs.getX() + fs.getWidth() > x)
+//			return false;
+//		if (fs.getY() < y)
+//			return false;
+//		if (fs.getY() + fs.getHealth() > y)
+//			return false;
+//		return true;
+//	}
 
 	public void checkCollison() {
 		if (isCollided()) {

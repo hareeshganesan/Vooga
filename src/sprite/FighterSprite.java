@@ -251,4 +251,10 @@ public class FighterSprite extends SpriteTemplate
         move(moveBy.getX(),moveBy.getY());
         super.update(elapsedTime);
     }
+
+	@Override
+	public String getSpriteKind() {
+		// TODO Auto-generated method stub
+		return "FighterSprite";
+	}
 }

@@ -36,10 +36,12 @@ public class CombatInstance extends GameObject
     //Sprites
     ArrayList<FighterSprite> playerSprites;
     ArrayList<PlatformBlock> platform;
-    GeneralSpriteCollision temp;
-    GeneralSpriteCollision p_block;
+//    GeneralSpriteCollision temp;
+//    GeneralSpriteCollision p_block;
     
     Collision dongheCollision;
+    Collision dongheCollisionBlock;
+    Collision dongheCollisionBlock2;
     
     Background bg;
 
@@ -112,8 +114,8 @@ public class CombatInstance extends GameObject
         p2.add(playerSprites.get(1));
         p2.setBackground(bg);
 
-        temp = new GeneralSpriteCollision();
-        temp.setCollisionGroup(p1, p2);
+//        temp = new GeneralSpriteCollision();
+//       temp.setCollisionGroup(p1, p2);
 
         SpriteGroup b1 = new SpriteGroup("b");
         for (PlatformBlock p : platform)
@@ -127,13 +129,14 @@ public class CombatInstance extends GameObject
         }
         ps.setBackground(bg);
         b1.setBackground(bg);
-        p_block = new GeneralSpriteCollision();
-        p_block.setCollisionGroup(ps, b1);
+//        p_block = new GeneralSpriteCollision();
+//        p_block.setCollisionGroup(ps, b1);
         
-        
+         
         
         dongheCollision=new Collision(playerSprites.get(0),playerSprites.get(1));
-
+        dongheCollisionBlock=new Collision(playerSprites.get(0),platform.get(0));
+        dongheCollisionBlock2=new Collision(playerSprites.get(1),platform.get(0));
     }
 
 
@@ -168,9 +171,11 @@ public class CombatInstance extends GameObject
         }
         
 //        temp.checkCollision();
-        p_block.checkCollision();
+//        p_block.checkCollision();
         
         dongheCollision.checkCollison();
+        dongheCollisionBlock.checkCollison();
+        dongheCollisionBlock2.checkCollison();
 
     }
 

@@ -34,6 +34,20 @@ public class PlatformBlock extends NonPlayerSprite
         //do nothing, you can't move these blocks
     }
 
+
+	@Override
+	public double getSpeed() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+
+	@Override
+	public String getSpriteKind() {
+		// TODO Auto-generated method stub
+		return "PlatformBlock";
+	}
+
 //    //TODO
 //    public void render(Graphics2D g){
 //        

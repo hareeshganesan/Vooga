@@ -33,7 +33,7 @@ public class InputHandler
     {
         for (Integer key : key_mapping.keySet())
             if (engine.keyPressed(key.intValue())) key_mapping.get(key)
-                                                           .performAction(elapsedTime);
+                                                           .performAction(elapsedTime);      
     }
 
 

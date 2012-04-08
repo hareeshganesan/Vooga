@@ -1,6 +1,7 @@
 package PhysicsEngine;
 
 import sprite.FighterSprite;
+import sprite.SpriteTemplate;
 
 /**
  * Not implemented yet.
@@ -12,7 +13,7 @@ import sprite.FighterSprite;
 public class CollisionReactionEnemy extends CollisionReaction{
 
 	@Override
-	public boolean isThisComposition(FighterSprite ps1, FighterSprite ps2) {
+	public boolean isThisComposition(SpriteTemplate ps1, SpriteTemplate ps2) {
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -24,8 +25,8 @@ public class CollisionReactionEnemy extends CollisionReaction{
 	}
 
 	@Override
-	public CollisionReaction createCollisionReaction(FighterSprite ps1,
-			FighterSprite ps2) {
+	public CollisionReaction createCollisionReaction(SpriteTemplate ps1,
+			SpriteTemplate ps2) {
 		// TODO Auto-generated method stub
 		return null;
 	}
