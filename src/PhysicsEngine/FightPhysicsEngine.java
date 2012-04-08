@@ -1,10 +1,7 @@
 package PhysicsEngine;
 
 import java.awt.geom.Point2D;
-
-import sprite.FighterSprite;
 import sprite.SpriteTemplate;
-
 import action.MotionAction;
 
 /**

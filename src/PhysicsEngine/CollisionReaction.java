@@ -1,6 +1,5 @@
 package PhysicsEngine;
 
-import sprite.FighterSprite;
 import sprite.SpriteTemplate;
 
 /**
@@ -21,6 +20,7 @@ public abstract class CollisionReaction {
 	protected SpriteTemplate myFighterSpriteOne;
 	protected SpriteTemplate myFighterSpriteTwo;
 	protected FightPhysicsEngine myPhysicsEngine;
+	
 
 
 

@@ -1,6 +1,5 @@
 package PhysicsEngine;
 
-import sprite.FighterSprite;
 import sprite.SpriteTemplate;
 
 /**
