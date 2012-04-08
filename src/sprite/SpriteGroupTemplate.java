@@ -2,10 +2,8 @@ package sprite;
 
 import java.util.ArrayList;
 
-import com.golden.gamedev.object.SpriteGroup;
-
 /**
- * Better than SpriteGroup given by Golden T in our engine
+ * Better than SpriteGroup given by GoldenT in our engine
  * 
  * @author Donghe
  * 

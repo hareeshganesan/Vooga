@@ -10,24 +10,37 @@ import sprite.SpriteTemplate;
  *
  */
 public class CollisionReactionEnemy extends CollisionReaction{
+	
+	public CollisionReactionEnemy(SpriteTemplate ps1, SpriteTemplate ps2) {
+		super(ps1, ps2);
+	}
+
+	public CollisionReactionEnemy() {
+
+	}
 
 	@Override
 	public boolean isThisComposition(SpriteTemplate ps1, SpriteTemplate ps2) {
-		// TODO Auto-generated method stub
+		if (ps1.getSpriteKind().equals(FIGHTER)
+				&& ps2.getSpriteKind().equals(WEAPON))
+			return true;
+		if (ps1.getSpriteKind().equals(WEAPON)
+				&& ps2.getSpriteKind().equals(FIGHTER))
+			return true;
 		return false;
 	}
 
 	@Override
 	public void doThisReaction() {
-		// TODO Auto-generated method stub
+		if(myFighterSpriteOne.getSpriteKind().equals(FIGHTER)) stop(myFighterSpriteOne);
+		if(myFighterSpriteTwo.getSpriteKind().equals(FIGHTER)) stop(myFighterSpriteTwo);
 		
 	}
 
 	@Override
 	public CollisionReaction createCollisionReaction(SpriteTemplate ps1,
 			SpriteTemplate ps2) {
-		// TODO Auto-generated method stub
-		return null;
+		return new CollisionReactionEnemy(ps1, ps2);
 	}
 
 }
