@@ -1,5 +1,7 @@
 package sprite;
 
+import npsprite.SpriteTemplate;
+
 import com.golden.gamedev.object.Sprite;
 import com.golden.gamedev.object.collision.PreciseCollisionGroup;
 

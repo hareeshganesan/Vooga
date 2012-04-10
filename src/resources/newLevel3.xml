@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Sprites><Block><img>C:\Users\Wendy\Documents\duke\workspace108\Vooga\src\resources\block.png</img><x>50.0</x><y>100.0</y></Block><Fighter><img>C:\Users\Wendy\Documents\duke\workspace108\Vooga\src\resources\flame.png</img><x>0.0</x><y>0.0</y><health>100</health><name>PLAYER1</name><speed>0.1</speed></Fighter><Fighter><img>C:\Users\Wendy\Documents\duke\workspace108\Vooga\src\resources\flame.png</img><x>25.0</x><y>25.0</y><health>100</health><name>PLAYER2</name><speed>0.1</speed></Fighter></Sprites>

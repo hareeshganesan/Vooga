@@ -1,6 +1,9 @@
 package sprite;
 
 import java.awt.event.KeyEvent;
+
+import npsprite.FighterSprite;
+
 import com.golden.gamedev.GameObject;
 
 

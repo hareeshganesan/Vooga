@@ -1,6 +1,6 @@
 package sprite;
 
-import sprite.FighterSprite;
+import npsprite.FighterSprite;
 
 import com.golden.gamedev.GameObject;
 

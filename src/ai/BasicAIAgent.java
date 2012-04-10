@@ -1,9 +1,10 @@
 package ai;
 
 import java.util.List;
+
+import npsprite.FighterSprite;
 import action.MotionAction;
 import game.CombatInstance;
-import sprite.FighterSprite;
 import sprite.HealthDisplay;
 
 public class BasicAIAgent extends AIAgent {

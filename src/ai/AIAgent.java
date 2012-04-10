@@ -1,7 +1,7 @@
 package ai;
 
+import npsprite.FighterSprite;
 import game.CombatInstance;
-import sprite.FighterSprite;
 import sprite.HealthDisplay;
 
 

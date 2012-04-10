@@ -1,28 +1,32 @@
 package PhysicsEngine;
 
-import sprite.FighterSprite;
-import com.golden.gamedev.GameObject;
-import com.golden.gamedev.object.SpriteGroup;
+import npsprite.SpriteTemplate;
+import action.MotionAction;
 
 /**
  * 
- * @author Donghe
+ * This is the super class of physics engine
+ * Maybe there will more children engine in the futures
  * 
+ * @author Donghe
+ *
  */
 public abstract class PhysicsEngine {
 
-    protected int boundX;
-    protected int boundY;
-    protected GameObject myGame;
-
-    // protected FighterSprite myFighterSprite;
-
-    public PhysicsEngine(GameObject game) {
-        myGame = game;
-        boundX = game.getWidth();
-        boundY = game.getHeight();
-        // myFighterSprite=fighterSprite;
+    protected double myVectorX;
+    protected double myVectorY;
+    protected SpriteTemplate myFighterSprite;
+    
+    public PhysicsEngine(SpriteTemplate fighterSprite){
+        myFighterSprite=fighterSprite;
     }
 
-    public abstract void update(FighterSprite fighterSprite, long elapsedTime);
+    public PhysicsEngine(MotionAction motionAction){
+        myFighterSprite=motionAction.getFighterSprite();
+        myVectorX=motionAction.getVectorX();
+        myVectorY=motionAction.getVectorY();
+    }
+
+    public abstract void process(long elapsedTime);
+
 }

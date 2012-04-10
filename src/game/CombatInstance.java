@@ -8,10 +8,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import javax.swing.JFileChooser;
+
+import npsprite.FighterSprite;
+import npsprite.PlatformBlock;
+
 import org.jdom.JDOMException;
-import sprite.FighterSprite;
 import sprite.GeneralSpriteCollision;
-import sprite.PlatformBlock;
 import action.Action;
 import action.DownAction;
 import camera.Camera;
@@ -138,7 +140,7 @@ public class CombatInstance extends GameObject
     public void render (Graphics2D pen)
     {
         camera.render(pen);
-        //bg.render(pen, camera, camera.getX(), camera.getY(), camera.getX(), camera.getY(), camera.getHeight(), camera.getWidth());
+//        bg.render(pen, camera, camera.getX(), camera.getY(), camera.getX(), camera.getY(), camera.getHeight(), camera.getWidth());
         bg.render(pen);        
         for (FighterSprite sprite : playerSprites)
             sprite.render(pen);
