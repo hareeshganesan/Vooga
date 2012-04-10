@@ -1,4 +1,4 @@
-package LevelEditor;
+package LevelEditor1;
 
 
 import com.golden.gamedev.object.Sprite;

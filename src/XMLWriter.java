@@ -1,5 +1,3 @@
-package LevelEditor;
-
 /**
  * 
  * @author Peggy Li / pl59 
@@ -69,7 +67,7 @@ public class XMLWriter {
 	}
 
 	private void saveSprite (Sprite s, Element root) {
-		
+		System.out.println(s.getClass().getSimpleName());
 		Element type = new Element(s.getClass().getSimpleName());
 		root.addContent(type);
 
@@ -85,5 +83,4 @@ public class XMLWriter {
 		y.addContent(Double.toString(s.getY()));
 		type.addContent(y);
 	}
-
 }

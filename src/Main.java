@@ -1,4 +1,4 @@
-package LevelEditor;
+
 
 /**
  * 
@@ -8,8 +8,9 @@ package LevelEditor;
 
 public class Main {
 
-	@SuppressWarnings("unused")
 	public static void main (String[] args) {
 		Controller c = new Controller();
+		
+		c.saveAndClose("new", "");
 	}
 }
