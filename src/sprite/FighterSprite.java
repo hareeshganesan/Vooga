@@ -183,10 +183,9 @@ public class FighterSprite extends SpriteTemplate {
 
     public void move (double dx, double dy)
     {
-        System.out.println(dx+" "+dy);
-        //Point2D finaldelta = confineBounds(dx, dy);
-        //dx = finaldelta.getX();
-        //dy = finaldelta.getY();
+        Point2D finaldelta = confineBounds(dx, dy);
+        dx = finaldelta.getX();
+        dy = finaldelta.getY();
         super.move(dx, dy);
         if (dx < 0)
         {
