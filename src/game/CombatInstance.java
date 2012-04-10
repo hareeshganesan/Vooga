@@ -1,6 +1,7 @@
 package game;
 
 import java.awt.Graphics2D;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -20,6 +21,7 @@ import camera.Camera;
 import PhysicsEngine.BasicPhysicsEngine;
 import action.Action;
 import action.DownAction;
+import action.QuitAction;
 import com.golden.gamedev.GameEngine;
 import com.golden.gamedev.GameObject;
 import com.golden.gamedev.object.Background;
@@ -28,12 +30,12 @@ import com.golden.gamedev.object.SpriteGroup;
 import com.golden.gamedev.object.background.ImageBackground;
 
 
-public class CombatInstance extends GameObject
+public class CombatInstance extends GameState
 {
     private String DEFAULT_IMAGE = "resources/title.png";
 
     //Engines
-    GameEngine myEngine;
+    MainGame myEngine;
     InputHandler myHandler;
     BasicPhysicsEngine physics;
     Camera camera;
@@ -47,7 +49,7 @@ public class CombatInstance extends GameObject
     Background bg;
 
 
-    public CombatInstance (GameEngine engine)
+    public CombatInstance (MainGame engine)
     {
         super(engine);
         myEngine = engine;
@@ -65,7 +67,7 @@ public class CombatInstance extends GameObject
         fc.setCurrentDirectory(new File("src/resources"));
         fc.setApproveButtonText("load game file");
         int returnVal = fc.showOpenDialog(null);
-
+        myHandler.addKey(KeyEvent.VK_Q, new QuitAction(myEngine));
         if (returnVal == JFileChooser.APPROVE_OPTION)
         {
             File file = fc.getSelectedFile();
@@ -189,4 +191,13 @@ public class CombatInstance extends GameObject
 
     }
 
+    @Override
+    void transitionState ()
+    {
+        if(nextState != null)  
+            myEngine.nextGame = this.nextState;
+        else
+            myEngine.nextGame = this.lastState;
+        super.finish();
+    }
 }

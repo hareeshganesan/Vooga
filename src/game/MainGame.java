@@ -1,6 +1,8 @@
 package game;
 
 import java.awt.Dimension;
+import java.util.HashMap;
+import action.Action;
 import com.golden.gamedev.GameEngine;
 import com.golden.gamedev.GameLoader;
 import com.golden.gamedev.GameObject;
@@ -11,13 +13,14 @@ public class MainGame extends GameEngine
 {
 
     public static final int TITLE = 0, GAME = 1;
-
-
+    private Title home;
+    
     @SuppressWarnings("static-access")
     public void initResources ()
     {
         bsIO.setMode(bsIO.WORKING_DIRECTORY);
         nextGameID = TITLE;
+        home = new Title(this);
     }
 
 
@@ -29,7 +32,7 @@ public class MainGame extends GameEngine
         switch (GameID)
         {
             case TITLE:
-                return new Title(this);
+                return home;
             case GAME:
                 return new CombatInstance(this);
 
@@ -37,6 +40,9 @@ public class MainGame extends GameEngine
         return null;
     }
 
+    public int getMain(){
+        return TITLE;
+    }
 
     public static void main (String[] args)
     {
