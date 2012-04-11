@@ -1,7 +1,8 @@
 package action;
 
 import java.awt.geom.Point2D;
-import java.util.Vector;
+
+import PhysicsEngine.FightPhysicsEngine;
 import sprite.FighterSprite;
 
 
@@ -42,10 +43,19 @@ public class MotionAction extends Action
     @Override
     public void performAction (long elapsed_time)
     {
-        PhysicsEngine.BasicPhysicsEngine.process(myFighter,
-                                                 x_direction,
-                                                 y_direction,
-                                                 elapsed_time);
+    	 FightPhysicsEngine physicsEngine=new FightPhysicsEngine(this);
+         physicsEngine.process(elapsed_time);
     }
+    
+    public FighterSprite getFighterSprite(){
+    	return myFighter;
+    }
+    public double getVectorX(){
+    	return x_direction;
+    }
+    public double getVectorY(){
+    	return y_direction;
+    }
+
 
 }
