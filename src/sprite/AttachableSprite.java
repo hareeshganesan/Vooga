@@ -30,4 +30,10 @@ public class AttachableSprite extends SpriteDecorator {
         f=null;
         child.setID(oldID);
     }
+
+	@Override
+	public String getSpriteKind() {
+		// TODO Auto-generated method stub
+		return "AttachableSprite";
+	}
 }
