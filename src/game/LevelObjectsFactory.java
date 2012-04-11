@@ -12,10 +12,7 @@ import org.jdom.xpath.XPath;
 import sprite.FighterSprite;
 import sprite.HealthDisplay;
 import sprite.PlatformBlock;
-import action.DownAction;
-import action.LeftAction;
-import action.RightAction;
-import action.UpAction;
+import action.MotionAction;
 import ai.BasicAIAgent;
 
 
@@ -50,7 +47,7 @@ public class LevelObjectsFactory
         List<Element> fighters = findAllInstancesOfElement("Fighter");
         ArrayList<FighterSprite> fs = new ArrayList<FighterSprite>();
 
-        ArrayList<HealthDisplay> displays = new ArrayList<HealthDisplay>();
+        //ArrayList<HealthDisplay> displays = new ArrayList<HealthDisplay>();
         //TODO: resolve playerNum and playerIndex
         int playerNum = 1;
         int playerIndex = 0;
@@ -106,10 +103,10 @@ public class LevelObjectsFactory
     {
         InputHandler h = c.getMyHandler();
         int[] map = InputHandler.defaultMapping(playerIndex);
-        h.addKey(map[0], new UpAction(s));
-        h.addKey(map[1], new DownAction(s));
-        h.addKey(map[2], new LeftAction(s));
-        h.addKey(map[3], new RightAction(s));
+        h.addKey(map[0], MotionAction.UP(s));
+        h.addKey(map[1], MotionAction.DOWN(s));
+        h.addKey(map[2], MotionAction.LEFT(s));
+        h.addKey(map[3], MotionAction.RIGHT(s));
     }
 
 

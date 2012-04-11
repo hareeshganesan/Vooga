@@ -1,13 +1,15 @@
 package camera;
 
-import java.awt.*;
-import java.awt.geom.*;
-import javax.swing.*;
-
-import sprite.*;
-
-import java.util.*;
-
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Point;
+import java.awt.Rectangle;
+import java.awt.geom.AffineTransform;
+import java.util.ArrayList;
+import javax.swing.JPanel;
+import sprite.FighterSprite;
 import com.golden.gamedev.object.Sprite;
 
 public class Camera extends JPanel {

@@ -4,12 +4,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
-
-import org.jdom.*;
+import org.jdom.Document;
+import org.jdom.Element;
 import org.jdom.output.XMLOutputter;
-
 import com.golden.gamedev.object.Sprite;
 
 public class XMLWriter {

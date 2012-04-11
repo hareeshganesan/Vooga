@@ -1,6 +1,8 @@
 package game;
 
 import java.awt.Graphics2D;
+import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -15,14 +17,10 @@ import sprite.GeneralSpriteCollision;
 import sprite.PlatformBlock;
 import sprite.SpriteGroupTemplate;
 import action.Action;
-import action.DownAction;
 import camera.Camera;
 import PhysicsEngine.BasicPhysicsEngine;
 import PhysicsEngine.Collision;
-import action.Action;
-import action.DownAction;
 import action.QuitAction;
-import camera.Camera;
 import com.golden.gamedev.object.Background;
 import com.golden.gamedev.object.GameFont;
 import com.golden.gamedev.object.SpriteGroup;
@@ -44,7 +42,7 @@ public class CombatInstance extends GameState
 //    GeneralSpriteCollision temp;
 //    GeneralSpriteCollision p_block;
     
-    ArrayList<Collision> myCollisionList;
+    ArrayList<Collision> myCollisionList = new ArrayList<Collision>();
     
     Background bg;
 
