@@ -1,8 +1,6 @@
 package game;
 
 import java.awt.Graphics2D;
-import java.awt.Point;
-import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -15,7 +13,14 @@ import org.jdom.JDOMException;
 import sprite.FighterSprite;
 import sprite.GeneralSpriteCollision;
 import sprite.PlatformBlock;
+import sprite.SpriteGroupTemplate;
+import action.Action;
+import action.DownAction;
+import camera.Camera;
 import PhysicsEngine.BasicPhysicsEngine;
+import PhysicsEngine.Collision;
+import action.Action;
+import action.DownAction;
 import action.QuitAction;
 import camera.Camera;
 import com.golden.gamedev.object.Background;
@@ -31,14 +36,15 @@ public class CombatInstance extends GameState
     //Engines
     MainGame myEngine;
     InputHandler myHandler;
-    BasicPhysicsEngine physics;
     Camera camera;
     
     //Sprites
     ArrayList<FighterSprite> playerSprites;
     ArrayList<PlatformBlock> platform;
-    GeneralSpriteCollision temp;
-    GeneralSpriteCollision p_block;
+//    GeneralSpriteCollision temp;
+//    GeneralSpriteCollision p_block;
+    
+    ArrayList<Collision> myCollisionList;
     
     Background bg;
 
@@ -47,7 +53,6 @@ public class CombatInstance extends GameState
     {
         super(engine);
         myEngine = engine;
-        physics = new BasicPhysicsEngine(this);
         myHandler = new InputHandler();
         camera = new Camera(new Point(544/2,544/2), new Rectangle(100, 100));
     }
@@ -104,30 +109,39 @@ public class CombatInstance extends GameState
 
         //TODO: FML WHY ARE WE DOING THIS
         //this is temporary fix just to make the code work, will need to overwrite later when we implement finer collision checking and physics engine
-        SpriteGroup p1 = new SpriteGroup("p1");
-        p1.add(playerSprites.get(0));
-        p1.setBackground(bg);
-        SpriteGroup p2 = new SpriteGroup("p2");
-        p2.add(playerSprites.get(1));
-        p2.setBackground(bg);
+//        SpriteGroup p1 = new SpriteGroup("p1");
+//        p1.add(playerSprites.get(0));
+//        p1.setBackground(bg);
+//        SpriteGroup p2 = new SpriteGroup("p2");
+//        p2.add(playerSprites.get(1));
+//        p2.setBackground(bg);
+//
+//        temp = new GeneralSpriteCollision();
+//        temp.setCollisionGroup(p1, p2);
+//
+//        SpriteGroup b1 = new SpriteGroup("b");
+//        for (PlatformBlock p : platform)
+//        {
+//            b1.add(p);
+//        }
+//        SpriteGroup ps = new SpriteGroup("players");
+//        for (FighterSprite f : playerSprites)
+//        {
+//            ps.add(f);
+//        }
+//        ps.setBackground(bg);
+//        b1.setBackground(bg);
+//        p_block = new GeneralSpriteCollision();
+//        p_block.setCollisionGroup(ps, b1);
+        
+        SpriteGroupTemplate groupPlayer = new SpriteGroupTemplate("team1");
+		groupPlayer.addFighterSpriteArray(playerSprites);
 
-        temp = new GeneralSpriteCollision();
-        temp.setCollisionGroup(p1, p2);
+		SpriteGroupTemplate groupBlock = new SpriteGroupTemplate("team2");
+		groupBlock.addPlatformBlockArray(platform);
 
-        SpriteGroup b1 = new SpriteGroup("b");
-        for (PlatformBlock p : platform)
-        {
-            b1.add(p);
-        }
-        SpriteGroup ps = new SpriteGroup("players");
-        for (FighterSprite f : playerSprites)
-        {
-            ps.add(f);
-        }
-        ps.setBackground(bg);
-        b1.setBackground(bg);
-        p_block = new GeneralSpriteCollision();
-        p_block.setCollisionGroup(ps, b1);
+		myCollisionList.add(new Collision(groupPlayer));
+		myCollisionList.add(new Collision(groupPlayer, groupBlock));
 
     }
 
@@ -160,8 +174,12 @@ public class CombatInstance extends GameState
         for (PlatformBlock pb : platform)
             pb.update(elapsedTime);
 
-        temp.checkCollision();
-        p_block.checkCollision();
+		// temp.checkCollision();
+		// p_block.checkCollision();
+
+		for (Collision collision : myCollisionList) {
+			collision.checkGroupCollision();
+		}
 
     }
 

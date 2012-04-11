@@ -54,4 +54,10 @@ public class WeaponSprite extends NonPlayerSprite
         //TODO
     }
 
+	@Override
+	public String getSpriteKind() {
+		// TODO Auto-generated method stub
+		return "WeaponSprite";
+	}
+
 }

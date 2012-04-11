@@ -53,4 +53,10 @@ public class AutomateSprite extends SpriteDecorator{
         if (child.isActive()){ child.update(elapsedTime); }
         
     }
+
+	@Override
+	public String getSpriteKind() {
+		// TODO Auto-generated method stub
+		return "AutomateSprite";
+	}
 }
