@@ -22,9 +22,9 @@ package sprite;
 import java.awt.Graphics2D;
 import java.util.Arrays;
 import java.util.Comparator;
-
 import com.golden.gamedev.object.Background;
-import com.golden.gamedev.object.*;
+import com.golden.gamedev.object.Sprite;
+import com.golden.gamedev.object.Timer;
 import com.golden.gamedev.util.Utility;
 
 /**

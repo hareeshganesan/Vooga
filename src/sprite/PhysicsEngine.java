@@ -1,7 +1,5 @@
 package sprite;
 
-import sprite.FighterSprite;
-
 import com.golden.gamedev.GameObject;
 
 

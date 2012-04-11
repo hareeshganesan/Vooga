@@ -1,6 +1,5 @@
 package sprite;
 
-import java.awt.image.BufferedImage;
 import com.golden.gamedev.object.Timer;
 
 /**

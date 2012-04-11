@@ -1,12 +1,8 @@
 package PhysicsEngine;
 
 import java.util.ArrayList;
-
 import sprite.FighterSprite;
-
 import com.golden.gamedev.GameObject;
-import com.golden.gamedev.object.Sprite;
-import com.golden.gamedev.object.SpriteGroup;
 
 /**
  * 

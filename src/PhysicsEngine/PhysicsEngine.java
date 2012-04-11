@@ -2,7 +2,6 @@ package PhysicsEngine;
 
 import sprite.FighterSprite;
 import com.golden.gamedev.GameObject;
-import com.golden.gamedev.object.SpriteGroup;
 
 /**
  * 
