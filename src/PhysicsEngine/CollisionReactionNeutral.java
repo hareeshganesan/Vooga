@@ -21,19 +21,14 @@ public class CollisionReactionNeutral extends CollisionReaction {
 
 	@Override
 	public boolean isThisComposition(SpriteTemplate ps1, SpriteTemplate ps2) {
-		if (ps1.getSpriteKind().equals(FIGHTER)
-				&& ps2.getSpriteKind().equals(BLOCK))
-			return true;
-		if (ps1.getSpriteKind().equals(BLOCK)
-				&& ps2.getSpriteKind().equals(FIGHTER))
-			return true;
+		if(ps1.getSpriteKind().equals(BLOCK) || ps2.getSpriteKind().equals(BLOCK) ) return true;
 		return false;
 	}
 
 	@Override
 	public void doThisReaction() {
-		if(myFighterSpriteOne.getSpriteKind().equals(BLOCK)) stop(myFighterSpriteOne);
-		if(myFighterSpriteTwo.getSpriteKind().equals(BLOCK)) stop(myFighterSpriteTwo);
+		if(myFighterSpriteOne.getSpriteKind().equals(BLOCK)) rebound(myFighterSpriteTwo);
+		if(myFighterSpriteTwo.getSpriteKind().equals(BLOCK)) rebound(myFighterSpriteOne);
 
 	}
 

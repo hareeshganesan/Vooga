@@ -56,10 +56,10 @@ public class FightPhysicsEngine extends PhysicsEngine {
 		myFighterSprite.setNextLocationIncrement(new Point2D.Double(finalX, finalY));
 
 		// for debug
-		System.out.println("Left:" + myFighterSprite.getX() + "    Right:"
-				+ (myFighterSprite.getWidth() + myFighterSprite.getX())
-				+ "    Top:" + myFighterSprite.getY() + "    Bottom:"
-				+ (myFighterSprite.getHeight() + myFighterSprite.getY()));
+//		System.out.println("Left:" + myFighterSprite.getX() + "    Right:"
+//				+ (myFighterSprite.getWidth() + myFighterSprite.getX())
+//				+ "    Top:" + myFighterSprite.getY() + "    Bottom:"
+//				+ (myFighterSprite.getHeight() + myFighterSprite.getY()));
 	}
 
 	public boolean isOutLeft(double x) {
