@@ -4,89 +4,82 @@ import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
+
+import action.CollisionEvent;
 
 import sprite.HealthDisplay;
 import sprite.SpriteValues;
 
 //THIS IS A POINTER TO THE TOP OF THE TREE THAT REPRESENTS A PLAYER
-public class FighterBody{
+public class FighterBody {
 
     private String myName;
-    private double myHealth=50;
-    private Point2D moveBy;
+    private double myHealth = 50; // default placeholder
 
     private HealthDisplay myDisplay;
     NodeSprite root = null;
 
-    public FighterBody(String name,HealthDisplay display){
-        myName=name;
-        myDisplay=display;
+    private static ArrayList<CollisionEvent> myCollisions = new ArrayList<CollisionEvent>();
+
+    public FighterBody(String name, HealthDisplay display) {
+        myName = name;
+        myDisplay = display;
         myDisplay.setStat(myName, (int) myHealth);
-        moveBy = new Point2D.Double();
     }
 
-    //TODO currently used for testing, will need to implement with Point2D stuff later
-    public void move(int moveX, int moveY, NodeSprite currNode) {
-        if (currNode.getChildren().size() == 0) {
-            currNode.setPosition(moveX, moveY);
+    // TODO currently used for testing, will need to implement with Point2D
+    // stuff later
+
+    public void move(Graphics2D pen, double moveX, double moveY) {
+        if (root != null) {
+            root.render(pen, root.getX() + moveX, root.getY() + moveY, 0);
+        }
+    }
+
+    private void getHealth() {
+        if (root == null) {
+            myHealth = 0;
         } else {
-            currNode.setPosition(moveX, moveY);
-            for (NodeSprite ln : currNode.getChildren()) { //recursion
-                move(moveX, moveY, ln);
-            }
+            myHealth = root.getHealth();
         }
     }
 
-    private void getHealth(){
-        if (root==null){
-            myHealth=0;
-        }
-        else {
-            myHealth=root.getHealth();
-        }
-    }
-    
     public void add(NodeSprite child) {
-        //apparently only the first body part is root of the tree
+        // apparently only the first body part is root of the tree
         if (root == null) {
             root = child;
-//            System.out.println("root added!");
+            // System.out.println("root added!");
         } else {
-            root.addChild(child); 
+            root.addChild(child);
         }
+    }
+
+    public void addCollisionEvent(CollisionEvent c) {
+        myCollisions.add(c);
     }
 
     public void removeChild(NodeSprite child) {
-        if (child==root){
+        if (child == root) {
             root.setParent(null);
-            root=null;
-        }
-        else {
+            root = null;
+        } else {
             root.removeChild(child);
         }
     }
 
     public void render(Graphics2D pen) {
-        renderHelper(pen, root);
-        myDisplay.render(pen);
+        root.render(pen, root.getX(), root.getY(), 0);
     }
 
-    public void renderHelper(Graphics2D pen, NodeSprite currNode) {
-        if (currNode.getChildren()==null) {
-            currNode.render(pen);
-        } else {
-            currNode.render(pen);
-            for (NodeSprite ln : currNode.getChildren()) {
-                renderHelper(pen, ln);
-            }
-        }
-    }
     public void update(long elapsedTime) {
+        root.update(elapsedTime);
         getHealth();
-        if (myHealth<=0){
-            root.setActive(false); //dead, have game check for this for end of level
+        if (myHealth <= 0) {
+            root.setActive(false); // dead, have game check for this for end of
+                                   // level
         }
         myDisplay.update(elapsedTime, (int) myHealth);
     }

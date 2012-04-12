@@ -20,16 +20,14 @@ public class CollisionReactionFriends extends CollisionReaction {
 
 	@Override
 	public void doThisReaction() {
-		stop(myFighterSpriteOne);
-		stop(myFighterSpriteTwo);
-//		if (myFighterSpriteOne.getSpriteKind().equals(FIGHTER))
-//			((FighterSprite) myFighterSpriteOne).addHealth(-1);
+		rebound(myFighterSpriteTwo);
+		rebound(myFighterSpriteOne);
 	}
 
 	@Override
 	public boolean isThisComposition(SpriteTemplate ps1, SpriteTemplate ps2) {
 		if (ps1.getSpriteKind().equals(FIGHTER)
-				&& ps1.getSpriteKind().equals(FIGHTER))
+				&& ps2.getSpriteKind().equals(FIGHTER))
 			return true;
 		return false;
 	}

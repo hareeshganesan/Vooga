@@ -6,9 +6,12 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import npsprite.SpriteID.GroupID;
+
 import sprite.SpriteValues;
 
 import SpriteTree.GraphicsTest;
+import SpriteTree.LimbNode;
 
 import action.Action;
 
@@ -17,16 +20,30 @@ import com.golden.gamedev.util.ImageUtil;
 import com.golden.gamedev.object.Sprite;
 
 //The sprite for things that can overlap and own other sprites - the tree for animation
-public class NodeSprite extends SpriteTemplate implements Attachable {
+public class NodeSprite extends SpriteTemplate implements Attachable,Health,Damage {
 
-    private BufferedImage myImage;
-    private double parentDx;
-    private double parentDy;
+    private BufferedImage myCurrImage;
+    private BufferedImage myOrigImage;
+
+    private int allAngles = 0;
+    private int currAngle = 0;
+    
+    private double dx;
+    private double dy;
+    private int theta;
+    
+    // defaults
+    private int MIN_HEALTH = 1;
+    private int MAX_HEALTH = 50;
+    private double myHealth;
+
+    //TODO: do i really want all these variables? maybe further abstraction with specific body parts?
+    double DEFAULT_DAMAGE = 0;
+    private double myDamage = 0;
+    
     private NodeSprite Parent;
     private ArrayList<NodeSprite> children = new ArrayList<NodeSprite>();
-    private ArrayList<NodeSprite> childrenCopy = new ArrayList<NodeSprite>();// for
-                                                                             // getter
-
+    
     // to be implemented
     double damageMultiplier; // if this node is arm, damageMultiplier less than
                              // if node were torso
@@ -35,16 +52,26 @@ public class NodeSprite extends SpriteTemplate implements Attachable {
     private int myDirection;
     private Point2D moveBy;
 
-    public NodeSprite(NodeSprite parent, BufferedImage image, double parentX,
-            double parentY, double dx, double dy) {
-        super(image, parentX + dx, parentY + dy);
-        this.myImage = image;
+    //constructor for parent
+    public NodeSprite(BufferedImage image, double x, double y){
+        super(image, x, y);
+        this.myOrigImage = image;
+        myHealth=MAX_HEALTH;
+        myDamage=DEFAULT_DAMAGE;
+    }
+    
+    //WHAT IS BASE THETA?
+    public NodeSprite(NodeSprite parent, BufferedImage image,double dx, double dy, int baseTheta){
+        super(image,parent.getX()+dx, parent.getY()+dy);
+        this.myOrigImage= image;
         this.Parent = parent;
-        this.parentDx = dx;
-        this.parentDy = dy;
-
-        super.setDamage(damageDealt);
+        this.theta = baseTheta;
+        this.dx = dx;
+        this.dy = dy;
         moveBy = new Point2D.Double();
+        myHealth=MAX_HEALTH;
+        myDamage=DEFAULT_DAMAGE;
+    
     }
 
     public void setPosition(int moveX, int moveY) {
@@ -65,12 +92,50 @@ public class NodeSprite extends SpriteTemplate implements Attachable {
         myDirection = dir;
     }
 
-    public void addHealth(int h) {
+    public void addHealth(double h) {
         if (Parent != null) {
             Parent.addHealth(h);
         } else {
-            super.addHealth(h);
+            myHealth += h;
+            wrapHealth();
         }
+    }
+    /**
+     * Changes maximum health to @param change Resets to full health
+     */
+    public void setMaxHealth(int change) {
+        if (change <= MIN_HEALTH) {
+            MAX_HEALTH = MIN_HEALTH;
+            myHealth = MAX_HEALTH;
+        } else {
+            MAX_HEALTH = change;
+            myHealth = MAX_HEALTH;
+        }
+    }
+
+    public int getMaxHealth() {
+        return MAX_HEALTH;
+    }
+
+    private void wrapHealth() {
+        if (myHealth > MAX_HEALTH) {
+            myHealth = MAX_HEALTH;
+        }
+        if (myHealth < 0) {
+            myHealth = 0;
+        }
+    }
+
+    public double getHealth() {
+        return myHealth;
+    }
+
+    public void setDamage(double d) {
+        myDamage = d;
+    }
+
+    public double getDamage() {
+        return myDamage;
     }
 
     // TODO: implement
@@ -114,54 +179,49 @@ public class NodeSprite extends SpriteTemplate implements Attachable {
                                // FORMER PARENT...
 
     }
-
-    public ArrayList<NodeSprite> getChildren() {
-        childrenCopy.clear();
-        childrenCopy.addAll(children);
-        // Collections.copy(childrenCopy, children);
-        return childrenCopy;
+    
+    public void rotate(int dTheta)
+    {   
+        this.theta += dTheta;
     }
 
-    // TODO: ABSTRACT THIS ROTATION INTO MORE THINGS?
-    public void rotateLimb(int angle) {
-        // x and y and the coordinates of hinge
-        if (this.Parent == null) {
-            this.myImage = GraphicsTest.rotate(this.myImage, angle,
-                    this.getX(), this.getY());
-            this.setImage(this.myImage);
-        } else {
-            this.myImage = ImageUtil.rotate(this.myImage, angle);
-            this.setImage(this.myImage);
-        }
+    public void draw(double x, double y, int theta){
+        this.setX(x);
+        this.setY(y);
+        this.myCurrImage =GraphicsTest.rotate(this.myOrigImage,theta);
+        this.setImage(this.myCurrImage);
     }
 
-    public void render(Graphics2D pen) {
+    public void render(Graphics2D pen,double baseX, double baseY, int baseTheta){
+        
+        
         super.render(pen);
-    }
+        
+        double dx =Math.cos(Math.toRadians(baseTheta)) * this.dx - Math.sin(Math.toRadians(baseTheta)) * this.dy;
+        double dy =Math.sin(Math.toRadians(baseTheta)) * this.dx + Math.cos(Math.toRadians(baseTheta)) * this.dy;
 
-    public void update(long elapsedTime) {
+        
+        draw((baseX + dx), (baseY + dy),this.theta+baseTheta);
+        
+        
+        for(NodeSprite limb: this.children){
+            limb.render(pen, (baseX + dx), (baseY + dy), baseTheta);
+        }
+        
+
+    }
+    
+    public void update(long elapsedTime){
+        if (myHealth <= 0) {
+            this.setActive(false);
+        }
         super.update(elapsedTime);
     }
 
-    /*           */
-    /* Collisions */
-    /*           */
-
-    // TODO: THIS MAY CHANGE WITH CHANGING COLLISIONCHECKER
-    protected Point2D confineBounds(double dx, double dy) {
-        if (!this.isOnScreen()) {
-            this.forceX(this.getOldX());
-            this.forceY(this.getOldY());
-        }
-        if ((getX() - dx) < 0)
-            dx = -getX();
-        if ((getX() + getWidth() + dx) > getBackground().getWidth())
-            dx -= getY() + getHeight();
-        if ((getY() + getHeight() + dy) > getBackground().getHeight())
-            dy -= getY() + getHeight();
-        if (getY() + dy < 0)
-            dy = 0;
-        return new Point2D.Double(dx, dy);
+    @Override
+    public void changeGroupID(GroupID g) {
+        //TODO - save old id, switch to new one
+        //figure out how this is going to be communicated to the physics engine
     }
 
 }

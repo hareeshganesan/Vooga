@@ -34,7 +34,7 @@ public class InputHandler
         if(engine.keyDown(KeyEvent.VK_Q))
             System.out.println("hello");
         for (Integer key : key_mapping.keySet())
-            if (engine.keyPressed(key.intValue())) key_mapping.get(key)
+            if (engine.keyDown(key.intValue())) key_mapping.get(key)
                                                            .performAction(elapsedTime);
                 
     }

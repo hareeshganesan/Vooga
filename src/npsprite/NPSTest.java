@@ -34,12 +34,12 @@ public class NPSTest extends Game {
 		BufferedImage imgLLeg = GraphicsTest.loadImage("src/resources/bodyParts/leftLeg.png");
 		BufferedImage imgRLeg= GraphicsTest.loadImage("src/resources/bodyParts/rightLeg.png");
 
-		NodeSprite torso = new NodeSprite(null, imgTorso, 100,100,0,0);	
-		NodeSprite head = new NodeSprite(torso,imgHead,torso.getX(),torso.getY(),0,-(imgTorso.getHeight()/2));
-		NodeSprite LeftArm = new NodeSprite(torso,imgLArm,torso.getX(),torso.getY(),-10,+10);
-		NodeSprite RightArm = new NodeSprite(torso,imgRArm,torso.getX(),torso.getY(),torso.getWidth()-5,-10);
-		NodeSprite LeftLeg = new NodeSprite(torso,imgLLeg, torso.getX(),torso.getOldY(),0,+60);
-		NodeSprite RightLeg = new NodeSprite(torso,imgRLeg, torso.getX(),torso.getOldY(),+10,+60);
+		NodeSprite torso = new NodeSprite(imgTorso, 100,100);	
+		NodeSprite head = new NodeSprite(imgHead,torso.getX(),torso.getY());
+		NodeSprite LeftArm = new NodeSprite(imgLArm,torso.getX(),torso.getY());
+		NodeSprite RightArm = new NodeSprite(imgRArm,torso.getX(),torso.getY());
+		NodeSprite LeftLeg = new NodeSprite(imgLLeg, torso.getX(),torso.getOldY());
+		NodeSprite RightLeg = new NodeSprite(imgRLeg, torso.getX(),torso.getOldY());
 		
 
         torso.setSpriteID(SpriteValues.Id.PLAYER_1);

@@ -15,9 +15,9 @@ public abstract class CollisionEvent{
     public CollisionEvent(SpriteTemplate fighter){
         myFighter=fighter;
     }
-    public Id getSpriteID() {
-        return myFighter.getSpriteID();
-    }
+//    public Id getSpriteID() {
+//        return myFighter.getSpriteID();
+//    }
 
     public abstract void performActionBy(SpriteTemplate o);
 

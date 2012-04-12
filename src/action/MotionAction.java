@@ -1,11 +1,8 @@
 package action;
 
 import java.awt.geom.Point2D;
-
-//import npsprite.FighterSprite;
-
-import PhysicsEngine.FightPhysicsEngine;
 import sprite.FighterSprite;
+import PhysicsEngine.FightPhysicsEngine;
 
 
 /**

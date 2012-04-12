@@ -221,6 +221,7 @@ public class FighterSprite extends SpriteTemplate {
         myDisplay.update(elapsedTime, myHealth);
         
         move(moveBy.getX(),moveBy.getY());
+        moveBy.setLocation(0, 0); //moveBy only work for one time then set to zero
         super.update(elapsedTime);
     }
 
@@ -228,5 +229,9 @@ public class FighterSprite extends SpriteTemplate {
 	public String getSpriteKind() {
 		// TODO Auto-generated method stub
 		return "FighterSprite";
+	}
+	
+	public Point2D getMoveBy(){
+		return moveBy;
 	}
 }

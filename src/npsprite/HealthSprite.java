@@ -2,14 +2,21 @@ package npsprite;
 
 import java.awt.image.BufferedImage;
 
-import action.MotionAction;
+public class HealthSprite extends SpriteTemplate implements Damage{
 
-public class HealthSprite extends PlatformBlock implements PowerUp{
+    private double myDamage=5; //default
+    public HealthSprite(BufferedImage image) {
+        super(image);
+    }
 
-    public HealthSprite(BufferedImage b) {
-        super(b);
-        super.setMaxHealth(1);
-        super.setDamage(5);
+    @Override
+    public void setDamage(double d) {
+        myDamage=d;
+    }
+
+    @Override
+    public double getDamage() {
+        return myDamage;
     }
 
 }
