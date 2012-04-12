@@ -70,7 +70,7 @@ public abstract class SpriteTemplate extends AdvanceSprite
     // TODO: GET BOUNDS FROM WINDOW SIZE
     protected abstract Point2D confineBounds (double dx, double dy);
 
-	public void setNextLocationIncrement(Double double1) {
+	public void setNextLocationIncrement(Point2D nextLocation) {
 		// TODO Auto-generated method stub
 		
 	}
