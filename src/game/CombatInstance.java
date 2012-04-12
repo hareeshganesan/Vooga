@@ -13,17 +13,13 @@ import java.util.List;
 import javax.swing.JFileChooser;
 import org.jdom.JDOMException;
 import sprite.FighterSprite;
-import sprite.GeneralSpriteCollision;
 import sprite.PlatformBlock;
 import sprite.SpriteGroupTemplate;
-import action.Action;
-import camera.Camera;
-import PhysicsEngine.BasicPhysicsEngine;
 import PhysicsEngine.Collision;
 import action.QuitAction;
+import camera.Camera;
 import com.golden.gamedev.object.Background;
 import com.golden.gamedev.object.GameFont;
-import com.golden.gamedev.object.SpriteGroup;
 import com.golden.gamedev.object.background.ImageBackground;
 
 

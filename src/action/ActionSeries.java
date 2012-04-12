@@ -3,7 +3,7 @@ package action;
 import java.util.Map.Entry;
 import java.util.TreeMap;
 
-public class ActionSeries 
+public class ActionSeries extends Action
 {
 
     TreeMap<Long, Action> actionMap; 
@@ -19,7 +19,19 @@ public class ActionSeries
     
     public void performAction(long elapsedTime){
         time+=elapsedTime;
-        Entry<Long, Action> action = actionMap.floorEntry(time);
+        Entry<Long, Action> action = actionMap.ceilingEntry(time);
         action.getValue().performAction(elapsedTime);
+    }
+    
+    public boolean isDone(long elapsedTime){
+        if((time+elapsedTime)>actionMap.lastKey()){
+            time = 0;
+            return true;
+        }
+        return false;
+    }
+    
+    public void reset(){
+        time = 0;
     }
 }

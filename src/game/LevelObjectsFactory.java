@@ -13,7 +13,11 @@ import sprite.FighterSprite;
 import sprite.HealthDisplay;
 import sprite.PlatformBlock;
 import action.MotionAction;
+import ai.AIAgent;
 import ai.BasicAIAgent;
+import ai.BasicStrategyAgent;
+import ai.DefensiveStrategy;
+import ai.OffensiveStrategy;
 
 
 public class LevelObjectsFactory
@@ -86,17 +90,28 @@ public class LevelObjectsFactory
             fs.add(s);
         }
         
-        fs.add(createAIFighter());
+        fs.add(createAIStrategyFighter());
         return fs;
     }
 
 
-    private BasicAIAgent createAIFighter(){
+    private AIAgent createAIFighter(){
         BasicAIAgent ai = new BasicAIAgent("ai1", new HealthDisplay(50,50, c.getWidth()/2 -30),0,c);
         ai.setMaxHealth(60);
         ai.setLocation(400, 500);
         ai.setDefaultSpeed(.3);
         ai.setImages(c.getImages("C:\\Users\\Hareesh\\Desktop\\CS108\\Vooga\\src\\resources\\flame.png",1,1));
+        return ai;
+    }
+    private AIAgent createAIStrategyFighter(){
+        BasicStrategyAgent ai = new BasicStrategyAgent("ai1", new HealthDisplay(50,50, c.getWidth()/2 -30),0,c);
+        ai.setMaxHealth(60);
+        ai.setLocation(400, 500);
+        ai.setDefaultSpeed(.3);
+        ai.setImages(c.getImages("C:\\Users\\Hareesh\\Desktop\\CS108\\Vooga\\src\\resources\\flame.png",1,1));
+        
+        ai.addStrategy(.5, new OffensiveStrategy());
+        ai.addStrategy(.5, new DefensiveStrategy());
         return ai;
     }
     private void mapFighter (int playerIndex, FighterSprite s)
