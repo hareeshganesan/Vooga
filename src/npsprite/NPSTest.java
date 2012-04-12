@@ -6,6 +6,12 @@ import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
+import sprite.HealthDisplay;
+import sprite.SpriteValues;
+
+
+import action.CollisionEvent;
+import action.PowerUpEvent;
 
 import com.golden.gamedev.Game;
 import com.golden.gamedev.GameLoader;
@@ -15,7 +21,8 @@ import com.golden.gamedev.object.Timer;
 
 public class NPSTest extends Game {
 
-	private BodyTree myTree;
+	private FighterBody myTree;
+	private HealthSprite power;
 	
 	@Override
 	public void initResources() {
@@ -27,24 +34,31 @@ public class NPSTest extends Game {
 		BufferedImage imgLLeg = GraphicsTest.loadImage("src/resources/bodyParts/leftLeg.png");
 		BufferedImage imgRLeg= GraphicsTest.loadImage("src/resources/bodyParts/rightLeg.png");
 
-		LimbNodeCopy torso = new LimbNodeCopy(null, imgTorso, 100,100,0,0);	
-		LimbNodeCopy head = new LimbNodeCopy(torso,imgHead,torso.getX(),torso.getY(),0,-(imgTorso.getHeight()/2));
-		LimbNodeCopy LeftArm = new LimbNodeCopy(torso,imgLArm,torso.getX(),torso.getY(),-10,+10);
-		LimbNodeCopy RightArm = new LimbNodeCopy(torso,imgRArm,torso.getX(),torso.getY(),torso.getWidth()-5,-10);
-		LimbNodeCopy LeftLeg = new LimbNodeCopy(torso,imgLLeg, torso.getX(),torso.getOldY(),0,+60);
-		LimbNodeCopy RightLeg = new LimbNodeCopy(torso,imgRLeg, torso.getX(),torso.getOldY(),+10,+60);
+		NodeSprite torso = new NodeSprite(null, imgTorso, 100,100,0,0);	
+		NodeSprite head = new NodeSprite(torso,imgHead,torso.getX(),torso.getY(),0,-(imgTorso.getHeight()/2));
+		NodeSprite LeftArm = new NodeSprite(torso,imgLArm,torso.getX(),torso.getY(),-10,+10);
+		NodeSprite RightArm = new NodeSprite(torso,imgRArm,torso.getX(),torso.getY(),torso.getWidth()-5,-10);
+		NodeSprite LeftLeg = new NodeSprite(torso,imgLLeg, torso.getX(),torso.getOldY(),0,+60);
+		NodeSprite RightLeg = new NodeSprite(torso,imgRLeg, torso.getX(),torso.getOldY(),+10,+60);
 		
-		
+
+        torso.setSpriteID(SpriteValues.Id.PLAYER_1);
+        torso.addHealth(-40);
 		torso.addChild(RightLeg);
 		torso.addChild(LeftLeg);
 		torso.addChild(LeftArm);
 		torso.addChild(RightArm);
 		torso.addChild(head);
 		
-		
-		BodyTree tree = new BodyTree();
+		FighterBody tree = new FighterBody("test", new HealthDisplay(10, 10, 100));
 		tree.add(torso);
 		myTree = tree;
+		
+		
+		power=new HealthSprite(getImage("resources/block.png"));
+		power.setLocation(400, 300);
+		power.setSpriteID(SpriteValues.Id.POWER_UP);
+		power.addCollisionEvent(new PowerUpEvent(torso));
 		
 	}
 
@@ -53,13 +67,13 @@ public class NPSTest extends Game {
 		pen.setColor(Color.WHITE);
         pen.fillRect(0, 0, getWidth(), getHeight());
 		myTree.render(pen);
-		
+		power.render(pen);
 	}
 
 	@Override
 	public void update(long elapsedTime) {
 		myTree.update(elapsedTime);
-
+		power.update(elapsedTime);
 		if(keyDown(KeyEvent.VK_RIGHT)){
 			myTree.move(1,0,myTree.root);
 		}
@@ -72,9 +86,15 @@ public class NPSTest extends Game {
 		if(keyDown(KeyEvent.VK_DOWN)){
 			myTree.move(0,1,myTree.root);
 		}
-	
+        if(keyDown(KeyEvent.VK_C)){
+            fakeCollision(power,myTree.root);
+        }
 	}
 	
+	public void fakeCollision(SpriteTemplate p1, SpriteTemplate p2){
+	    p1.collisionAction(p2);
+//	    p2.collisionAction(p1);
+	}
 	 public static void main (String[] args)
 	    {
 	        GameLoader loader = new GameLoader();

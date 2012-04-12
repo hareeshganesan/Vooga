@@ -10,7 +10,8 @@ import com.golden.gamedev.object.Timer;
  * @author Wendy
  */
 //wraps a npc to allow for disappearing/reappearing after set period of time
-public class AutomateSprite extends SpriteDecorator{
+//TODO: rewrite this so that it is passed in similarly to collision events. Make sure this and collision events don't end up too spaghetti
+public class AutomateSprite{
     private double myX;
     private double myY;
     private Timer time;
@@ -23,12 +24,6 @@ public class AutomateSprite extends SpriteDecorator{
         time=new Timer(millisec);
     }
 
-    @Override
-    public void collisionAction(SpriteTemplate otherSprite) {
-        if (child.getID()!=otherSprite){
-        child.setActive(false);
-        }
-    }
     @Override
     public void setLocation(double xs,double ys){
         myX=xs; myY=ys;

@@ -5,7 +5,7 @@ import npsprite.FighterSprite;
 
 public abstract class Action
 {
-    FighterSprite myFighter;
+    sprite.FighterSprite myFighter;
 
     public abstract void performAction (long elapsedTime);
 }

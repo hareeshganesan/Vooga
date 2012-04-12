@@ -1,6 +1,8 @@
 package action;
 
-import npsprite.FighterSprite;
+import sprite.FighterSprite;
+
+//import npsprite.FighterSprite;
 
 
 public class RightAction extends MotionAction

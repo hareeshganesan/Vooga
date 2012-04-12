@@ -8,6 +8,8 @@ import javax.imageio.ImageIO;
 import javax.imageio.stream.ImageInputStream;
 import javax.swing.JFrame;
 
+import SpriteTree.JImagePanel;
+
 public class GraphicsTest {
 	BufferedImage img;
 
