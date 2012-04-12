@@ -1,11 +1,9 @@
 package camera;
 
-import java.awt.*;
-import java.awt.geom.*;
-import java.awt.image.*;
-
-import com.golden.gamedev.object.*;
-import com.golden.gamedev.object.background.*;
+import java.awt.Graphics2D;
+import java.awt.geom.AffineTransform;
+import java.awt.image.BufferedImage;
+import com.golden.gamedev.object.background.ImageBackground;
 
 public class CameraBackground extends ImageBackground{
     

@@ -1,11 +1,8 @@
 package sprite;
 
 import java.awt.Graphics2D;
-import java.awt.Point;
 import java.awt.geom.Point2D;
-import java.awt.geom.Point2D.Double;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 

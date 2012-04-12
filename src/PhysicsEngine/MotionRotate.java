@@ -2,9 +2,7 @@ package PhysicsEngine;
 
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
-
 import sprite.FighterSprite;
-
 import com.golden.gamedev.GameObject;
 import com.golden.gamedev.util.ImageUtil;
 

@@ -1,7 +1,5 @@
 package sprite;
 
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
 
 //wraps a sprite (w/ no children) that can be used as a weapon, or as a freestanding npc
 //may also be useful for later extensions to power-ups

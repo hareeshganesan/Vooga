@@ -1,7 +1,8 @@
 package game;
 
 import java.awt.Graphics2D;
-
+import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -15,19 +16,16 @@ import javax.swing.JFileChooser;
 //import npsprite.PlatformBlock;
 
 import org.jdom.JDOMException;
+
+import sprite.FighterSprite;
 import sprite.GeneralSpriteCollision;
 import sprite.PlatformBlock;
 import sprite.SpriteGroupTemplate;
 import action.Action;
-import action.DownAction;
 import camera.Camera;
 import PhysicsEngine.BasicPhysicsEngine;
 import PhysicsEngine.Collision;
-import action.Action;
-import action.DownAction;
-//import action.QuitAction;
-import com.golden.gamedev.GameEngine;
-import com.golden.gamedev.GameObject;
+import action.QuitAction;
 import com.golden.gamedev.object.Background;
 import com.golden.gamedev.object.GameFont;
 import com.golden.gamedev.object.SpriteGroup;
@@ -49,7 +47,7 @@ public class CombatInstance extends GameState
 //    GeneralSpriteCollision temp;
 //    GeneralSpriteCollision p_block;
     
-    ArrayList<Collision> myCollisionList;
+    ArrayList<Collision> myCollisionList = new ArrayList<Collision>();
     
     Background bg;
 
@@ -59,9 +57,8 @@ public class CombatInstance extends GameState
         super(engine);
         myEngine = engine;
         myHandler = new InputHandler();
-        camera = new Camera();
+        camera = new Camera(new Point(544/2,544/2), new Rectangle(100, 100));
     }
-
 
     @Override
     public void initResources ()
@@ -176,15 +173,9 @@ public class CombatInstance extends GameState
         myHandler.update(elapsedTime, myEngine);
         bg.update(elapsedTime);
         for (FighterSprite sprite : playerSprites)
-        {
-            Action gravity = new DownAction(sprite);
-            //gravity.performAction(elapsedTime / 2);
             sprite.update(elapsedTime);
-        }
         for (PlatformBlock pb : platform)
-        {
             pb.update(elapsedTime);
-        }
 
 		// temp.checkCollision();
 		// p_block.checkCollision();

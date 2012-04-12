@@ -1,8 +1,7 @@
 package PhysicsEngine;
 
 import java.awt.geom.Point2D;
-
-import npsprite.SpriteTemplate;
+import sprite.SpriteTemplate;
 import action.MotionAction;
 
 /**
@@ -17,64 +16,66 @@ import action.MotionAction;
  */
 public class FightPhysicsEngine extends PhysicsEngine {
 
-    private final int BASE_POINT = 0;
-    private final int BOUND_X = 544;
-    private final int BOUND_Y = 544;
-    private final int SPEED_DEFALT = 10;
+	private final int BASE_POINT = 0;
+	private final int BOUND_X = 544;
+	private final int BOUND_Y = 544;
+	private final int SPEED_DEFALT = 10;
 
-    public FightPhysicsEngine(MotionAction motionAaction) {
-        super(motionAaction);
-    }
+	public FightPhysicsEngine(MotionAction motionAaction) {
+		super(motionAaction);
+	}
 
-    public FightPhysicsEngine(SpriteTemplate fighterSprite) {
-        super(fighterSprite);
-    }
+	public FightPhysicsEngine(SpriteTemplate fighterSprite) {
+		super(fighterSprite);
+	}
 
-    @Override
-    public void process(long elapsedTime) {
-        double speed = myFighterSprite.getSpeed() / SPEED_DEFALT;
-        double x = speed * elapsedTime * myVectorX;
-        double y = speed * elapsedTime * myVectorY;
+	@Override
+	public void process(long elapsedTime) {
+		double speed = myFighterSprite.getSpeed() / SPEED_DEFALT;
+		double x = speed * elapsedTime * myVectorX;
+		double y = speed * elapsedTime * myVectorY;
 
-        setNextLocation(x, y);
-    }
+		setNextLocation(x, y);
+	}
 
-    public void setNextLocation(double x, double y) {
+	public void setNextLocation(double x, double y) {
 
-        double finalX = x;
-        double finalY = y;
-        if (isOutLeft(x))
-            finalX = -myFighterSprite.getX();
-        if (isOutRight(x))
-            finalX = BOUND_X - myFighterSprite.getX()-myFighterSprite.getWidth();
-        if (isOutTop(y))
-            finalY = -myFighterSprite.getY();
-        if (isOutBottom(y))
-            finalY = BOUND_Y - myFighterSprite.getY();
+		double finalX = x;
+		double finalY = y;
+		if (isOutLeft(x))
+			finalX = -myFighterSprite.getX();
+		if (isOutRight(x))
+			finalX = BOUND_X - myFighterSprite.getX()
+					- myFighterSprite.getWidth();
+		if (isOutTop(y))
+			finalY = -myFighterSprite.getY();
+		if (isOutBottom(y))
+			finalY = BOUND_Y - myFighterSprite.getY()
+					- myFighterSprite.getHeight();
 
-        myFighterSprite.setNextLocation(new Point2D.Double(finalX, finalY));
+		myFighterSprite.setNextLocationIncrement(new Point2D.Double(finalX, finalY));
 
-        // for debug
-        System.out.println("Left:" + myFighterSprite.getX() + "    Right:"
-                + (myFighterSprite.getWidth() + myFighterSprite.getX())
-                + "    Top:" + myFighterSprite.getY() + "    Bottom:"
-                + (myFighterSprite.getHeight() + myFighterSprite.getY()));
-    }
+		// for debug
+		System.out.println("Left:" + myFighterSprite.getX() + "    Right:"
+				+ (myFighterSprite.getWidth() + myFighterSprite.getX())
+				+ "    Top:" + myFighterSprite.getY() + "    Bottom:"
+				+ (myFighterSprite.getHeight() + myFighterSprite.getY()));
+	}
 
-    public boolean isOutLeft(double x) {
-        return myFighterSprite.getX() + x < BASE_POINT;
-    }
+	public boolean isOutLeft(double x) {
+		return myFighterSprite.getX() + x < BASE_POINT;
+	}
 
-    public boolean isOutRight(double x) {
-        return myFighterSprite.getX() + x +myFighterSprite.getWidth()> BOUND_X;
-    }
+	public boolean isOutRight(double x) {
+		return myFighterSprite.getX() + x + myFighterSprite.getWidth() > BOUND_X;
+	}
 
-    public boolean isOutTop(double y) {
-        return myFighterSprite.getY() + y < BASE_POINT;
-    }
+	public boolean isOutTop(double y) {
+		return myFighterSprite.getY() + y < BASE_POINT;
+	}
 
-    public boolean isOutBottom(double y) {
-        return myFighterSprite.getY() + y  > BOUND_Y;
-    }
+	public boolean isOutBottom(double y) {
+		return myFighterSprite.getY() + y + myFighterSprite.getHeight() > BOUND_Y;
+	}
 
 }

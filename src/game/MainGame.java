@@ -1,8 +1,6 @@
 package game;
 
 import java.awt.Dimension;
-import java.util.HashMap;
-import action.Action;
 import com.golden.gamedev.GameEngine;
 import com.golden.gamedev.GameLoader;
 import com.golden.gamedev.GameObject;

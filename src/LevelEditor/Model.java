@@ -2,10 +2,7 @@ package LevelEditor;
 
 import java.io.File;
 import java.util.HashMap;
-
-
 import LevelEditor1.BlockSprite;
-
 import com.golden.gamedev.object.Sprite;
 
 /**

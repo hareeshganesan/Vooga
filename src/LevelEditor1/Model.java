@@ -1,9 +1,7 @@
 package LevelEditor1;
 
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import java.util.HashMap;
-
 import com.golden.gamedev.object.Sprite;
 
 public class Model {

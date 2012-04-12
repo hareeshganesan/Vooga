@@ -1,6 +1,7 @@
 package PhysicsEngine;
 
-import npsprite.SpriteTemplate;
+
+import sprite.SpriteTemplate;
 
 /**
  * this is the super class of collision reaction
@@ -11,42 +12,41 @@ import npsprite.SpriteTemplate;
  * 
  */
 public abstract class CollisionReaction {
-    
-    private final int ZERO=0;
-    protected final String FIGHTER="FighterSprite"; 
-    protected final String BLOCK="PlatformBlock"; 
-    protected final String WEAPON="WeaponSprite"; 
+	
+	private final int ZERO=0;
+	protected final String FIGHTER="FighterSprite"; 
+	protected final String BLOCK="PlatformBlock"; 
+	protected final String WEAPON="WeaponSprite"; 
 
-    protected SpriteTemplate myFighterSpriteOne;
-    protected SpriteTemplate myFighterSpriteTwo;
-    protected FightPhysicsEngine myPhysicsEngine;
-    
+	protected SpriteTemplate myFighterSpriteOne;
+	protected SpriteTemplate myFighterSpriteTwo;
+	protected FightPhysicsEngine myPhysicsEngine;
+	
 
 
 
-    public CollisionReaction() {
-    }
+	public CollisionReaction() {
+	}
 
-    public CollisionReaction(SpriteTemplate ps1, SpriteTemplate ps2) {
-        myFighterSpriteOne = ps1;
-        myFighterSpriteTwo = ps2;
-    }
-    
-    public abstract boolean isThisComposition(SpriteTemplate ps1,
-            SpriteTemplate ps2);
+	public CollisionReaction(SpriteTemplate ps1, SpriteTemplate ps2) {
+		myFighterSpriteOne = ps1;
+		myFighterSpriteTwo = ps2;
+	}
+	
+	public abstract boolean isThisComposition(SpriteTemplate ps1,
+			SpriteTemplate ps2);
 
-    public abstract void doThisReaction();
-    
-    public abstract CollisionReaction createCollisionReaction(SpriteTemplate ps1, SpriteTemplate ps2);
+	public abstract void doThisReaction();
+	
+	public abstract CollisionReaction createCollisionReaction(SpriteTemplate ps1, SpriteTemplate ps2);
 
-    public void stop(SpriteTemplate fighterSprite) {
-        myPhysicsEngine = new FightPhysicsEngine(fighterSprite);
-        myPhysicsEngine.setNextLocation(ZERO, ZERO);
-    }
+	public void stop(SpriteTemplate fighterSprite) {
+		myPhysicsEngine = new FightPhysicsEngine(fighterSprite);
+		myPhysicsEngine.setNextLocation(ZERO, ZERO);
+	}
 
-    public void go(SpriteTemplate fighterSprite, double speedX, double speedY) {
-        myPhysicsEngine = new FightPhysicsEngine(fighterSprite);
-        myPhysicsEngine.setNextLocation(speedX, speedY);
-    }
-
+	public void go(SpriteTemplate fighterSprite, double speedX, double speedY) {
+		myPhysicsEngine = new FightPhysicsEngine(fighterSprite);
+		myPhysicsEngine.setNextLocation(speedX, speedY);
+	}
 }

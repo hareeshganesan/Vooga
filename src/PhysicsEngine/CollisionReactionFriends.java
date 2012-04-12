@@ -1,6 +1,6 @@
 package PhysicsEngine;
 
-import npsprite.SpriteTemplate;
+import sprite.SpriteTemplate;
 
 /**
  * This class deals with the collision between two sprites from the same group
@@ -10,34 +10,33 @@ import npsprite.SpriteTemplate;
  */
 public class CollisionReactionFriends extends CollisionReaction {
 
-    public CollisionReactionFriends(SpriteTemplate ps1, SpriteTemplate ps2) {
-        super(ps1, ps2);
-    }
+	public CollisionReactionFriends(SpriteTemplate ps1, SpriteTemplate ps2) {
+		super(ps1, ps2);
+	}
 
-    public CollisionReactionFriends() {
+	public CollisionReactionFriends() {
 
-    }
+	}
 
-    @Override
-    public void doThisReaction() {
-        stop(myFighterSpriteOne);
-        stop(myFighterSpriteTwo);
-//      if (myFighterSpriteOne.getSpriteKind().equals(FIGHTER))
-//          ((FighterSprite) myFighterSpriteOne).addHealth(-1);
-    }
+	@Override
+	public void doThisReaction() {
+		stop(myFighterSpriteOne);
+		stop(myFighterSpriteTwo);
+//		if (myFighterSpriteOne.getSpriteKind().equals(FIGHTER))
+//			((FighterSprite) myFighterSpriteOne).addHealth(-1);
+	}
 
-    @Override
-    public boolean isThisComposition(SpriteTemplate ps1, SpriteTemplate ps2) {
-        if (ps1.getSpriteKind().equals(FIGHTER)
-                && ps1.getSpriteKind().equals(FIGHTER))
-            return true;
-        return false;
-    }
+	@Override
+	public boolean isThisComposition(SpriteTemplate ps1, SpriteTemplate ps2) {
+		if (ps1.getSpriteKind().equals(FIGHTER)
+				&& ps1.getSpriteKind().equals(FIGHTER))
+			return true;
+		return false;
+	}
 
-    @Override
-    public CollisionReaction createCollisionReaction(SpriteTemplate ps1,
-            SpriteTemplate ps2) {
-        return new CollisionReactionFriends(ps1, ps2);
-    }
-
+	@Override
+	public CollisionReaction createCollisionReaction(SpriteTemplate ps1,
+			SpriteTemplate ps2) {
+		return new CollisionReactionFriends(ps1, ps2);
+	}
 }

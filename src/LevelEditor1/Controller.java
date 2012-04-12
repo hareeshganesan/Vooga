@@ -1,7 +1,6 @@
 package LevelEditor1;
 
 import java.io.FileNotFoundException;
-
 import com.golden.gamedev.object.Sprite;
 
 public class Controller {

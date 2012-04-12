@@ -1,7 +1,6 @@
 package action;
 
 import java.awt.geom.Point2D;
-import java.util.Vector;
 
 //import npsprite.FighterSprite;
 
@@ -22,7 +21,9 @@ public class MotionAction extends Action
     double x_direction;
     double y_direction;
 
-
+    public MotionAction(){
+        //created for subclasses
+    }
     public MotionAction (FighterSprite fighter, Point2D point)
     {
         myFighter = fighter;
@@ -35,12 +36,13 @@ public class MotionAction extends Action
 
     }
 
-
-    public MotionAction ()
+    public MotionAction (FighterSprite r, double x, double y)
     {
-        x_direction = 0;
-        y_direction = 0;
+        myFighter = r;
+        x_direction = x;
+        y_direction = y;
     }
+    
 
 
     @Override
@@ -59,6 +61,16 @@ public class MotionAction extends Action
     public double getVectorY(){
     	return y_direction;
     }
-
-
+    public static MotionAction LEFT(FighterSprite fighter){
+        return new MotionAction(fighter, -1, 0);
+    }
+    public static MotionAction RIGHT(FighterSprite fighter){
+        return new MotionAction(fighter, 1, 0);
+    }
+    public static MotionAction UP(FighterSprite fighter){
+        return new MotionAction(fighter, 0, -1);
+    }
+    public static MotionAction DOWN(FighterSprite fighter){
+        return new MotionAction(fighter, 0, 1);
+    }
 }

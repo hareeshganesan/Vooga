@@ -3,9 +3,7 @@ package SpriteTree;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
-
 import javax.imageio.ImageIO;
-import javax.imageio.stream.ImageInputStream;
 import javax.swing.JFrame;
 
 public class GraphicsTest {

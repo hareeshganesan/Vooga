@@ -1,10 +1,6 @@
 package SpriteTree;
 
 import java.awt.Graphics2D;
-import java.awt.event.KeyEvent;
-import java.awt.image.BufferedImage;
-
-import javax.swing.JFrame;
 
 public class BodyTree {
 	LimbNode root = null;
