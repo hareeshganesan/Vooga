@@ -18,8 +18,6 @@ public class FighterBody {
     private HealthDisplay myDisplay;
     NodeSprite root = null;
 
-    private static ArrayList<CollisionEvent> myCollisions = new ArrayList<CollisionEvent>();
-
     public FighterBody(String name, HealthDisplay display) {
         myName = name;
         myDisplay = display;
@@ -54,7 +52,7 @@ public class FighterBody {
     }
 
     public void addCollisionEvent(CollisionEvent c) {
-        myCollisions.add(c);
+        //this should not happen
     }
 
     public void removeChild(NodeSprite child) {
