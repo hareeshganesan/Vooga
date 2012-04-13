@@ -64,6 +64,7 @@ public class CombatInstance extends GameState
         fc.setApproveButtonText("load game file");
         int returnVal = fc.showOpenDialog(null);
         myHandler.addKey(KeyEvent.VK_Q, new QuitAction(myEngine));
+        
         if (returnVal == JFileChooser.APPROVE_OPTION)
         {
             File file = fc.getSelectedFile();
