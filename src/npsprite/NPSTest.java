@@ -30,8 +30,7 @@ public class NPSTest extends Game {
                 GroupID.UNCATEGORIZED);
         power.setLocation(400, 300);
 
-        BufferedImage imgTorso = GraphicsTest
-                .loadImage("src/resources/bodyParts/torso.png");
+        BufferedImage imgTorso = getImage("src/resources/bodyParts/torso.png");
         myTree = new NodeSprite(imgTorso, GroupID.PLAYER_1, 100, 100);
         myTree.addHealth(-25);
 
