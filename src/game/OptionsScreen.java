@@ -25,7 +25,6 @@ public class OptionsScreen extends GameState
         myBackground = background;
         optionIndex = 0;
         selected = myOptions.get(optionIndex);
-
     }
 
 
@@ -44,7 +43,7 @@ public class OptionsScreen extends GameState
         {
             if (myOptions.get(i).myName.equals(selected.myName))
             {
-                g2.drawImage(getImage("/resources/arrow.jpg"), 20, 20 + (i*30), (ImageObserver)this);
+                //g2.drawImage(getImage("/resources/arrow.jpg"), 20, 20 + (i*30), (ImageObserver)this);
             }
             g2.drawString((String)myOptions.get(i).getValue(), 100, 20 + (i*30));
         }

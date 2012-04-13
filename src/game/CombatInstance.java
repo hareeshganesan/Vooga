@@ -147,8 +147,8 @@ public class CombatInstance extends GameState
     public void render (Graphics2D pen)
     {
         camera.render(pen, bg);
-        //bg.render(pen, camera, camera.getX(), camera.getY(), camera.getX(), camera.getY(), camera.getHeight(), camera.getWidth());
-        bg.render(pen);        
+        bg.render(pen, camera, camera.getX(), camera.getY(), camera.getX(), camera.getY(), camera.getHeight(), camera.getWidth());
+        //bg.render(pen);        
         for (FighterSprite sprite : playerSprites)
             sprite.render(pen);
         for (PlatformBlock pb : platform)

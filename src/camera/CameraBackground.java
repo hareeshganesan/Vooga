@@ -21,9 +21,9 @@ public class CameraBackground extends ImageBackground{
                 (this.getHeight() / 2) - ((camera.getBounds().getHeight() * (camera.getZoom())) / 2));
         tr2.scale(this.getWidth()/522, this.getWidth()/522);
         g.setTransform(tr2);
-        //g.draw(camera.getBounds());
-        g.drawImage(this.getImage(), 0, 0, this.getWidth(), this.getHeight(), (ImageObserver)this);
-        //g.setTransform(old);
+        g.draw(camera.getBounds());
+        //g.drawImage(this.getImage(), 0, 0, this.getWidth(), this.getHeight(), (ImageObserver)this);
+        g.setTransform(old);
         super.render(g, xbg, ybg, x, y, w, h);
     }
 }
