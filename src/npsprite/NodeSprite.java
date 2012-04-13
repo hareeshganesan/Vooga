@@ -45,16 +45,18 @@ public class NodeSprite extends SpriteTemplate implements Attachable,Health,Dama
     private ArrayList<NodeSprite> children = new ArrayList<NodeSprite>();
     
     // to be implemented
-    double damageMultiplier; // if this node is arm, damageMultiplier less than
+    double damageMultiplier=1; // if this node is arm, damageMultiplier less than
                              // if node were torso
     double damageDealt = -5;
 
-    private int myDirection;
+    private int myDirection; //this may be needed later on for more refined collisionEvents
     private Point2D moveBy;
-
+    
+    private GroupID currGroupID;
+    
     //constructor for parent
-    public NodeSprite(BufferedImage image, double x, double y){
-        super(image, x, y);
+    public NodeSprite(BufferedImage image, GroupID g, double x, double y){
+        super(image,g, x, y);
         this.myOrigImage = image;
         myHealth=MAX_HEALTH;
         myDamage=DEFAULT_DAMAGE;
@@ -62,7 +64,7 @@ public class NodeSprite extends SpriteTemplate implements Attachable,Health,Dama
     
     //WHAT IS BASE THETA?
     public NodeSprite(NodeSprite parent, BufferedImage image,double dx, double dy, int baseTheta){
-        super(image,parent.getX()+dx, parent.getY()+dy);
+        super(image,parent.getGroupID(), parent.getX()+dx, parent.getY()+dy);
         this.myOrigImage= image;
         this.Parent = parent;
         this.theta = baseTheta;
@@ -72,6 +74,10 @@ public class NodeSprite extends SpriteTemplate implements Attachable,Health,Dama
         myHealth=MAX_HEALTH;
         myDamage=DEFAULT_DAMAGE;
     
+    }
+    @Override
+    protected void createSpriteID(GroupID g) {
+        myID=new SpriteID(g, health, damages, false, attaches);
     }
 
     public void setPosition(int moveX, int moveY) {
@@ -156,13 +162,25 @@ public class NodeSprite extends SpriteTemplate implements Attachable,Health,Dama
 
     protected void setParent(NodeSprite parent) {
         Parent = parent;
+        if (Parent==null){
+            currGroupID=myID.getGroupID(); //SHOULD RESET TO OLD ID
+        }
     }
 
     public void addChild(NodeSprite child) {
         child.setParent(this);
-        child.setID(this.getID());
+        child.changeGroupID(this.getGroupID());
         children.add(child);
         // System.out.println(children.size());
+    }
+
+    @Override
+    public void changeGroupID(GroupID g) {
+        currGroupID=g;
+        //figure out how this is going to be communicated to the physics engine
+    }
+    public GroupID getGroupID(){
+        return currGroupID;
     }
 
     public void removeChild(NodeSprite child) {
@@ -217,11 +235,4 @@ public class NodeSprite extends SpriteTemplate implements Attachable,Health,Dama
         }
         super.update(elapsedTime);
     }
-
-    @Override
-    public void changeGroupID(GroupID g) {
-        //TODO - save old id, switch to new one
-        //figure out how this is going to be communicated to the physics engine
-    }
-
 }

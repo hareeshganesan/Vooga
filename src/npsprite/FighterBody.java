@@ -1,17 +1,12 @@
 package npsprite;
 
 import java.awt.Graphics2D;
-import java.awt.event.KeyEvent;
-import java.awt.geom.Point2D;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-import javax.swing.JFrame;
+import events.CollisionEvent;
 
-import action.CollisionEvent;
 
 import sprite.HealthDisplay;
-import sprite.SpriteValues;
 
 //THIS IS A POINTER TO THE TOP OF THE TREE THAT REPRESENTS A PLAYER
 public class FighterBody {

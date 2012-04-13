@@ -5,100 +5,86 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
-import sprite.HealthDisplay;
-import sprite.SpriteValues;
-
-
-import action.CollisionEvent;
-import action.PowerUpEvent;
+import npsprite.SpriteID.GroupID;
 
 import com.golden.gamedev.Game;
 import com.golden.gamedev.GameLoader;
-import com.golden.gamedev.object.Background;
-import com.golden.gamedev.object.Sprite;
-import com.golden.gamedev.object.Timer;
 
+import events.*;
+
+//12 Apr - this test shows how two sprites can "collide" (press c on keyboard), leading 
+//the torso sprite to gain health and the health sprite (prototyped power-up) to disappear.
 public class NPSTest extends Game {
 
-	private FighterBody myTree;
-	private HealthSprite power;
-	
-	@Override
-	public void initResources() {
-	//	bg = new Background();
-		BufferedImage imgHead = GraphicsTest.loadImage("src/resources/bodyParts/head.png");
-		BufferedImage imgLArm = GraphicsTest.loadImage("src/resources/bodyParts/leftArm.png");
-		BufferedImage imgRArm = GraphicsTest.loadImage("src/resources/bodyParts/rightArm.png");
-		BufferedImage imgTorso = GraphicsTest.loadImage("src/resources/bodyParts/torso.png");
-		BufferedImage imgLLeg = GraphicsTest.loadImage("src/resources/bodyParts/leftLeg.png");
-		BufferedImage imgRLeg= GraphicsTest.loadImage("src/resources/bodyParts/rightLeg.png");
+    private ArrayList<SpriteTemplate> myGroups;
+    private NodeSprite myTree;
+    private HealthSprite power;
 
-		NodeSprite torso = new NodeSprite(imgTorso, 100,100);	
-		NodeSprite head = new NodeSprite(imgHead,torso.getX(),torso.getY());
-		NodeSprite LeftArm = new NodeSprite(imgLArm,torso.getX(),torso.getY());
-		NodeSprite RightArm = new NodeSprite(imgRArm,torso.getX(),torso.getY());
-		NodeSprite LeftLeg = new NodeSprite(imgLLeg, torso.getX(),torso.getOldY());
-		NodeSprite RightLeg = new NodeSprite(imgRLeg, torso.getX(),torso.getOldY());
-		
+    @Override
+    public void initResources() {
+        // bg = new Background();
 
-        torso.setSpriteID(SpriteValues.Id.PLAYER_1);
-        torso.addHealth(-40);
-		torso.addChild(RightLeg);
-		torso.addChild(LeftLeg);
-		torso.addChild(LeftArm);
-		torso.addChild(RightArm);
-		torso.addChild(head);
-		
-		FighterBody tree = new FighterBody("test", new HealthDisplay(10, 10, 100));
-		tree.add(torso);
-		myTree = tree;
-		
-		
-		power=new HealthSprite(getImage("resources/block.png"));
-		power.setLocation(400, 300);
-		power.setSpriteID(SpriteValues.Id.POWER_UP);
-		power.addCollisionEvent(new PowerUpEvent(torso));
-		
-	}
+        power = new HealthSprite(getImage("resources/block.png"),
+                GroupID.UNCATEGORIZED);
+        power.setLocation(400, 300);
 
-	@Override
-	public void render(Graphics2D pen) {
-		pen.setColor(Color.WHITE);
+        BufferedImage imgTorso = GraphicsTest
+                .loadImage("src/resources/bodyParts/torso.png");
+        myTree = new NodeSprite(imgTorso, GroupID.PLAYER_1, 100, 100);
+        myTree.addHealth(-25);
+
+        CompositeEvent pevent = new CompositeEvent(myTree);
+        pevent.addEvent(new InactiveEvent());
+        CompositeEvent tevent = new CompositeEvent(power);
+        tevent.addEvent(new HealthEvent());
+
+        power.addCollisionEvent(pevent);
+        myTree.addCollisionEvent(tevent);
+    }
+
+    @Override
+    public void render(Graphics2D pen) {
+        pen.setColor(Color.WHITE);
         pen.fillRect(0, 0, getWidth(), getHeight());
-		myTree.render(pen);
-		power.render(pen);
-	}
+        myTree.render(pen);
+        power.render(pen);
+    }
 
-	@Override
-	public void update(long elapsedTime) {
-		myTree.update(elapsedTime);
-		power.update(elapsedTime);
-		if(keyDown(KeyEvent.VK_RIGHT)){
-			myTree.move(1,0,myTree.root);
-		}
-		if(keyDown(KeyEvent.VK_LEFT)){
-			myTree.move(-1,0,myTree.root);
-		}
-		if(keyDown(KeyEvent.VK_UP)){
-			myTree.move(0,-1,myTree.root);
-		}
-		if(keyDown(KeyEvent.VK_DOWN)){
-			myTree.move(0,1,myTree.root);
-		}
-        if(keyDown(KeyEvent.VK_C)){
-            fakeCollision(power,myTree.root);
+    @Override
+    public void update(long elapsedTime) {
+        myTree.update(elapsedTime);
+        power.update(elapsedTime);
+        if (keyDown(KeyEvent.VK_RIGHT)) {
+            myTree.move(1, 0);
         }
-	}
-	
-	public void fakeCollision(SpriteTemplate p1, SpriteTemplate p2){
-	    p1.collisionAction(p2);
-//	    p2.collisionAction(p1);
-	}
-	 public static void main (String[] args)
-	    {
-	        GameLoader loader = new GameLoader();
-	        loader.setup(new NPSTest(), new Dimension(800, 600), false);
-	        loader.start();
-	    }
+        if (keyDown(KeyEvent.VK_LEFT)) {
+            myTree.move(-1, 0);
+        }
+        if (keyDown(KeyEvent.VK_UP)) {
+            myTree.move(0, -1);
+        }
+        if (keyDown(KeyEvent.VK_DOWN)) {
+            myTree.move(0, 1);
+        }
+        if (keyPressed(KeyEvent.VK_C)) {
+            fakeCollision(power, myTree);
+        }
+    }
+
+    public void fakeCollision(SpriteTemplate p1, SpriteTemplate p2) {
+        System.out.println("Health: " + myTree.getHealth());
+        System.out.println(power.isActive());
+        p1.collisionAction(p2);
+        p2.collisionAction(p1);
+        System.out.println("Health: " + myTree.getHealth());
+        System.out.println(power.isActive());
+    }
+
+    public static void main(String[] args) {
+        GameLoader loader = new GameLoader();
+        loader.setup(new NPSTest(), new Dimension(800, 600), false);
+        loader.start();
+    }
 }

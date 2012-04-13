@@ -1,87 +1,44 @@
 package npsprite;
 
 import java.awt.Graphics2D;
-import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-import sprite.SpriteValues;
-import sprite.SpriteValues.Id;
+import events.CompositeEvent;
 
-import com.golden.gamedev.object.Sprite;
+import npsprite.SpriteID.GroupID;
 
-import action.Action;
-import action.CollisionEvent;
 
+//TODO: ensure that all sprites must pass in a groupID when they're created
 //TODO: COPY AND PASTE SPRITE, REMOVE OTHER ID STUFF SO NO CONFUSION CREATED
 // all sprites in fighting game extend this template. No animation, that will be handled by spritetree
 @SuppressWarnings("serial")
-public abstract class SpriteTemplate extends Sprite{
+public abstract class SpriteTemplate extends Sprite {
+    
     double DEFAULT_SPEED = 0.1;
-
-    private int myStatus; // IS STATUS NECESSARY?
-    private ArrayList<CollisionEvent> myCollisions = new ArrayList<CollisionEvent>();
+    
+    private ArrayList<CompositeEvent> myCollisions = new ArrayList<CompositeEvent>();
     protected SpriteID myID;
 
-    public SpriteTemplate() {
+    public SpriteTemplate(GroupID g) {
         super();
+        createSpriteID(g);
     }
 
-    public SpriteTemplate(BufferedImage b) {
+    public SpriteTemplate(BufferedImage b, GroupID g) {
         super(b);
+        createSpriteID(g);
     }
 
     /**
      * Creates new Sprite with specified image and location.
      */
-    public SpriteTemplate(BufferedImage image, double d, double e) {
+    public SpriteTemplate(BufferedImage image, GroupID g, double d, double e) {
         super(image, d, e);
+        createSpriteID(g);
     }
-
-    /**
-     * If sprite moves after collision, returns a MotionAction object to the
-     * physics engine for further movement and collision checking. TODO the
-     * physics engine will have to implement this. 
-     */
-    public void collisionAction(SpriteTemplate otherSprite) {
-        // TODO: MOVE THIS INTO PHYSICS ENGINE (don't check things that overlap
-        // like fighter limbs)
-        if (!this.isActive() || !otherSprite.isActive()) {
-//            return null; //TODO STOP
-        }
-        if (otherSprite.getSpriteID() == this.getSpriteID()) {
-            // System.out.println("fail");
-//            return null; //TODO STOP
-        }
-        //
-
-        CollisionEvent act = null;
-        for (CollisionEvent c : myCollisions) {
-            if (c.getSpriteID() == otherSprite.getSpriteID()) {
-                act = c;
-                break;
-            }
-        }
-        if (act == null) {
-//            return null; //TODO STOP
-        }
-
-        act.performActionBy(this);
-//        return act.getMotion();
-    }
-
-    //TODO: figure out setting sprite ids - is it in subclasses of attachable only?
-//    public void setSpriteID(SpriteValues.Id i) {
-//        myID = i;
-//    }
-
-    public SpriteID getSpriteID() {
-        return myID;
-    }
-
-    public void addCollisionEvent(CollisionEvent c) {
-        myCollisions.add(c);
-    }
+    
+    protected abstract void createSpriteID(GroupID g);
 
     public void setDefaultSpeed(double speed) {
         DEFAULT_SPEED = speed;
@@ -98,6 +55,51 @@ public abstract class SpriteTemplate extends Sprite{
         return DEFAULT_SPEED;
     }
 
+    public SpriteID getSpriteID() { // I don't know why you would need this
+        return myID;
+    }
+
+    /* Wrapping spriteID methods for easier calling */
+    public GroupID getGroupID() {
+        return myID.getGroupID();
+    }
+    public boolean hasHealth() {
+        return myID.hasHealth();
+    }
+    public boolean doesDamage() {
+        return myID.doesDamage();
+    }
+    public boolean spawns() {
+        return myID.spawns();
+    }
+    public boolean attaches() {
+        return myID.attaches();
+    }
+
+    
+    /* COLLISION STUFF */
+    public void addCollisionEvent(CompositeEvent c) {
+        myCollisions.add(c);
+    }
+
+    /**
+     * Called when a collision between this sprite and another is detected. The
+     * physics engine will have already checked that these sprites are both
+     * active and have different groupIDs
+     */
+    public void collisionAction(SpriteTemplate otherSprite) {
+        CompositeEvent act = null;
+        for (CompositeEvent c : myCollisions) {
+            if (c.getGroupID() == otherSprite.getGroupID()) {
+                act = c;
+                break;
+            }
+        }
+        if (act != null) {
+            act.performActions(this, otherSprite);
+        }
+    }
+
 
     @Override
     public void render(Graphics2D pen) {
@@ -108,8 +110,7 @@ public abstract class SpriteTemplate extends Sprite{
 
     @Override
     public void update(long elapsedTime) {
-        if (this.isActive()) { // TODO FIGURE OUT GARBAGE COLLECTION FOR
-                               // VOLATILE SPRITES
+        if (this.isActive()) {
             super.update(elapsedTime);
         }
     }
