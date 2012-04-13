@@ -3,10 +3,8 @@ package npsprite;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-
-import events.CompositeEvent;
-
 import npsprite.SpriteID.GroupID;
+import events.CompositeEvent;
 
 
 //TODO: ensure that all sprites must pass in a groupID when they're created

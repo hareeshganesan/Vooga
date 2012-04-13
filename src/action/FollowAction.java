@@ -5,6 +5,7 @@ import sprite.FighterSprite;
 public class FollowAction extends Action
 {
     FighterSprite myEnemy;
+    FighterSprite myFighter;
 
     public FollowAction (FighterSprite fighter, FighterSprite enemy)
     {

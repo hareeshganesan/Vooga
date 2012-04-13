@@ -4,17 +4,19 @@ package levelEditor.gui;
  * @author Peggy Li (pl59)
  */
 
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.filechooser.FileNameExtensionFilter;
-
 import levelEditor.mvc.Controller;
 
+@SuppressWarnings("unused")
 public class BackgroundImageComponent {
 
 	private Controller myController;
@@ -22,6 +24,8 @@ public class BackgroundImageComponent {
 	private JButton myChooseImageButton;
 	private JFileChooser myImageChooser;
 	private String myBackgroundImageURL;
+	private JPanel myPanel;
+	private ImagePanel myImage;
 
 	public BackgroundImageComponent (Controller c) {
 		myController = c;
@@ -29,7 +33,7 @@ public class BackgroundImageComponent {
 
 
 	public JComponent create() {
-		JPanel panel = new JPanel();
+		myPanel = new JPanel();
 		initializeImageChooser();
 
 		myChooseImageButton = new JButton("Select Background Image");
@@ -37,12 +41,16 @@ public class BackgroundImageComponent {
 			public void actionPerformed(ActionEvent evt) {
 				myImageChooser.showOpenDialog(null);
 				myBackgroundImageURL = myImageChooser.getSelectedFile().getName();
-			
+				
+				
+				/*myImage = new ImagePanel(myBackgroundImageURL);
+				myPanel.add(myImage, BorderLayout.SOUTH);*/
+				
 			}
 		} );
-		panel.add(myChooseImageButton);
+		myPanel.add(myChooseImageButton);
 
-		return panel;
+		return myPanel;
 	}
 
 

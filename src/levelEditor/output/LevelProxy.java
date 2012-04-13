@@ -1,7 +1,6 @@
-package LevelEditor.output;
+package levelEditor.output;
 
 import java.util.ArrayList;
-
 import com.golden.gamedev.object.Sprite;
 
 /**
@@ -21,16 +20,21 @@ public class LevelProxy {
 	private String myBgImageURL;
 	private ArrayList<Sprite> mySprites;
 	
-	public LevelProxy (String name) {
-		myLevelName = name;
+	public LevelProxy () {
+		
 	}
-
-	
 	
 	public String getLevelName () {
 		return myLevelName;
 	}
 	
+	public void setLevelName (String name) {
+		myLevelName = name;
+	}
+	
+	public void setBackgoundImage (String url) {
+		myBgImageURL = url;
+	}
 	
 	
 	public String getWriteable () {

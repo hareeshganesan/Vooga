@@ -2,9 +2,8 @@ package charactorEditor.drag.Component;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import javax.swing.*;
-
+import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import charactorEditor.drag.AttributePane;
 
 public class AddPropertyButton extends JButton {

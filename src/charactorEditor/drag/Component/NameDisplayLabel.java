@@ -1,9 +1,7 @@
 package charactorEditor.drag.Component;
 
 import java.awt.Font;
-
 import javax.swing.JLabel;
-
 import charactorEditor.drag.AttributePane;
 
 public class NameDisplayLabel extends JLabel {

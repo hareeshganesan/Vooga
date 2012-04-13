@@ -23,8 +23,8 @@ package npsprite;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.Comparator;
-
 import com.golden.gamedev.object.Background;
+import com.golden.gamedev.object.PlayField;
 import com.golden.gamedev.object.collision.CollisionRect;
 import com.golden.gamedev.object.collision.CollisionShape;
 

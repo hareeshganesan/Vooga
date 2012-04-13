@@ -3,10 +3,6 @@ package SpriteTree;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-import java.util.Collections;
-
-import com.golden.gamedev.util.ImageUtil;
-
 import com.golden.gamedev.object.Sprite;
 
 public class LimbNode extends Sprite{

@@ -2,10 +2,8 @@ package charactorEditor.drag.Component;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
-
 import charactorEditor.drag.AttributePane;
 
 public class AddImgButton extends JButton {

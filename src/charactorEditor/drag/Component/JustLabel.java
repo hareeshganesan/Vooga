@@ -1,7 +1,6 @@
 package charactorEditor.drag.Component;
 
 import java.awt.Rectangle;
-
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 

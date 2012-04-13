@@ -1,7 +1,6 @@
 package npsprite;
 
 import java.awt.image.BufferedImage;
-
 import npsprite.SpriteID.GroupID;
 
 public class HealthSprite extends SpriteTemplate implements Damage{

@@ -118,8 +118,8 @@ public class FighterSprite extends SpriteTemplate {
 
 	public void setNextLocationIncrement(Point2D nextLocation) {
 
-		this.moveBy = new Point2D.Double(nextLocation.getX(),
-				nextLocation.getY());
+		this.moveBy = new Point2D.Double(moveBy.getX()+nextLocation.getX(),
+				moveBy.getY()+nextLocation.getY());
 	}
 
 	// DOES THIS NEED TO BE PUBLIC?
@@ -200,7 +200,6 @@ public class FighterSprite extends SpriteTemplate {
 
 	@Override
 	public String getSpriteKind() {
-		// TODO Auto-generated method stub
 		return "FighterSprite";
 	}
 

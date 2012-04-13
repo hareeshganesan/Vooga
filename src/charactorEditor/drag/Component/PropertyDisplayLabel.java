@@ -1,10 +1,8 @@
 package charactorEditor.drag.Component;
 
 import java.util.HashMap;
-
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
-
 import charactorEditor.drag.AttributePane;
 
 public class PropertyDisplayLabel extends JLabel {

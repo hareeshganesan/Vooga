@@ -17,10 +17,8 @@ public class MotionAction extends Action
 {
     double x_direction;
     double y_direction;
+    FighterSprite myFighter;
 
-    public MotionAction(){
-        //created for subclasses
-    }
     public MotionAction (FighterSprite fighter, Point2D point)
     {
         myFighter = fighter;

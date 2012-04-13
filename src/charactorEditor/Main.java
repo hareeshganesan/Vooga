@@ -1,7 +1,5 @@
 package charactorEditor;
 import java.io.FileNotFoundException;
-
-
 import charactorEditor.drag.FighterBuilder;
 
 public class Main{

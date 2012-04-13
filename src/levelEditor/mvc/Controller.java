@@ -1,4 +1,4 @@
-package LevelEditor.mvc;
+package levelEditor.mvc;
 
 /**
  * @author Peggy Li (pl59)
@@ -24,6 +24,11 @@ public class Controller {
 	
 	public boolean levelNameAvailable (String name) {
 		return myModel.verifyNameAvailable(name);
+	}
+	
+	public void saveAndClose () {
+		myModel.saveToFile();
+		myView.close();
 	}
 	
 }

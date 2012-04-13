@@ -20,6 +20,7 @@ abstract class Option
     {
         this.value = value;
     }
+    
     abstract void displayOption(GameEngine engine);
     
     

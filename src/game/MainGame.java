@@ -10,8 +10,9 @@ import com.golden.gamedev.GameObject;
 public class MainGame extends GameEngine
 {
 
-    public static final int TITLE = 0, GAME = 1;
+    public static final int TITLE = 0, GAME = 1, OPTION = 2;
     private Title home;
+    private GameState currentState;
     
     @SuppressWarnings("static-access")
     public void initResources ()
@@ -19,6 +20,7 @@ public class MainGame extends GameEngine
         bsIO.setMode(bsIO.WORKING_DIRECTORY);
         nextGameID = TITLE;
         home = new Title(this);
+        currentState = new Title(this);
     }
 
 
@@ -41,7 +43,15 @@ public class MainGame extends GameEngine
     public int getMain(){
         return TITLE;
     }
+    
+    public GameState getCurrentState() {
+        return currentState;
+    }
 
+    public void setCurrentState(GameState gs) {
+        currentState = gs;
+    }
+    
     public static void main (String[] args)
     {
         //OpenGLGameLoader game = new OpenGLGameLoader();

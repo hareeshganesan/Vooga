@@ -1,7 +1,6 @@
 package PhysicsEngine;
 
 import java.util.ArrayList;
-
 import sprite.SpriteTemplate;
 /**
  * This class deal with the collision between one sprite and a block or

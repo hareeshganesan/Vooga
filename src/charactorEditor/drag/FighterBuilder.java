@@ -1,21 +1,18 @@
 package charactorEditor.drag;
 
-import javax.imageio.ImageIO;
-import javax.swing.*;
-
-import javax.swing.event.*;
-
-import com.google.gson.Gson;
-
-import java.awt.geom.*;
-import java.awt.image.BufferedImage;
-import java.awt.*;
-
+import java.awt.BorderLayout;
+import java.awt.Cursor;
+import java.awt.geom.Point2D;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 @SuppressWarnings("serial")

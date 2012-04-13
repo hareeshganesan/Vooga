@@ -6,13 +6,12 @@ import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-
 import npsprite.SpriteID.GroupID;
-
 import com.golden.gamedev.Game;
 import com.golden.gamedev.GameLoader;
-
-import events.*;
+import events.CompositeEvent;
+import events.HealthEvent;
+import events.InactiveEvent;
 
 //12 Apr - this test shows how two sprites can "collide" (press c on keyboard), leading 
 //the torso sprite to gain health and the health sprite (prototyped power-up) to disappear.
