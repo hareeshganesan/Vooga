@@ -1,15 +1,12 @@
 package levelEditor.gui;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-
 import levelEditor.mvc.Controller;
 
 /**
@@ -18,7 +15,7 @@ import levelEditor.mvc.Controller;
 
 
 @SuppressWarnings("unused")
-public class LevelNameComponent extends AbstractViewComponent {
+public class LevelNameComponent {
 	
 	private static final int BOX_WIDTH = 12;
 
@@ -31,7 +28,6 @@ public class LevelNameComponent extends AbstractViewComponent {
 	}
 	
 	
-	@Override
 	public JComponent create() {
 		JPanel panel = new JPanel();
 		

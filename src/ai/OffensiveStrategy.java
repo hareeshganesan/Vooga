@@ -7,6 +7,12 @@ import action.Action;
 import action.ActionSeries;
 import action.FollowAction;
 
+/**
+ * The OffensiveStrategy class creates an ActionSeries where the AI will move toward a
+ * specified fighter by following it as the fighter moves for 5 seconds.
+ * 
+ * @author Hareesh
+ */
 public class OffensiveStrategy extends Strategy
 {
     CombatInstance c;

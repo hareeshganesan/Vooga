@@ -17,7 +17,7 @@ public class MotionAction extends Action
 {
     double x_direction;
     double y_direction;
-
+    FighterSprite myFighter;
 
     public MotionAction (FighterSprite fighter, Point2D point)
     {
@@ -30,7 +30,6 @@ public class MotionAction extends Action
         }
 
     }
-
 
     public MotionAction (FighterSprite r, double x, double y)
     {
@@ -57,7 +56,6 @@ public class MotionAction extends Action
     public double getVectorY(){
     	return y_direction;
     }
-
     public static MotionAction LEFT(FighterSprite fighter){
         return new MotionAction(fighter, -1, 0);
     }

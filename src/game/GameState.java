@@ -25,5 +25,5 @@ abstract public class GameState extends GameObject
         return lastState;   
     }
     
-    abstract void transitionState();
+    abstract public void transitionState();
 }

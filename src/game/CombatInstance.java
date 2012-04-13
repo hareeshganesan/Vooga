@@ -4,7 +4,6 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
-import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -18,10 +17,12 @@ import sprite.PlatformBlock;
 import sprite.SpriteGroupTemplate;
 import camera.Camera;
 import camera.CameraBackground;
+import camera.FollowCamera;
 import PhysicsEngine.Collision;
 import action.QuitAction;
 import PhysicsEngine.Collision;
 import action.QuitAction;
+import ai.AIAgent;
 import camera.Camera;
 import com.golden.gamedev.object.Background;
 import com.golden.gamedev.object.GameFont;
@@ -46,18 +47,18 @@ public class CombatInstance extends GameState
     
     CameraBackground bg;
 
+	public CombatInstance(MainGame engine) {
+		super(engine);
+		myEngine = engine;
+		myHandler = new InputHandler();
+		camera = new FollowCamera();
+	}
 
-    public CombatInstance (MainGame engine)
-    {
-        super(engine);
-        myEngine = engine;
-        myHandler = new InputHandler();
-        camera = new Camera(new Point(544/2,544/2), new Rectangle(100, 100));
-    }
+	@Override
+	public void initResources() {
 
-    @Override
-    public void initResources ()
-    {
+		nextState = (GameState) myEngine.getGame(myEngine.getMain());
+
         LevelObjectsFactory lof = new LevelObjectsFactory(this);
         JFileChooser fc = new JFileChooser();
         fc.setCurrentDirectory(new File("src/resources"));
@@ -132,7 +133,7 @@ public class CombatInstance extends GameState
 //        p_block = new GeneralSpriteCollision();
 //        p_block.setCollisionGroup(ps, b1);
         
-        SpriteGroupTemplate groupPlayer = new SpriteGroupTemplate("team1");
+		SpriteGroupTemplate groupPlayer = new SpriteGroupTemplate("team1");
 		groupPlayer.addFighterSpriteArray(playerSprites);
 
 		SpriteGroupTemplate groupBlock = new SpriteGroupTemplate("team2");
@@ -149,14 +150,14 @@ public class CombatInstance extends GameState
         camera.render(pen, bg);
         bg.render(pen, camera, camera.getX(), camera.getY(), camera.getX(), camera.getY(), camera.getHeight(), camera.getWidth());
         //bg.render(pen);        
-        for (FighterSprite sprite : playerSprites)
-            sprite.render(pen);
-        for (PlatformBlock pb : platform)
-        {
-            pb.render(pen);
-        }
-    }   
-
+		
+		bg.render(pen);
+		for (FighterSprite sprite : playerSprites)
+			sprite.render(pen);
+		for (PlatformBlock pb : platform) {
+			pb.render(pen);
+		}
+	}
 
     @Override
     public void update (long elapsedTime)
@@ -166,38 +167,38 @@ public class CombatInstance extends GameState
         myHandler.update(elapsedTime, myEngine);
         bg.update(elapsedTime);
         
-        for (Collision collision : myCollisionList) {
+		for(FighterSprite sprite : playerSprites){
+		    if(sprite.getSpriteKind().contains("AI")){
+		        AIAgent ai = (AIAgent) sprite;
+		        ai.calculateLocation(elapsedTime);
+		    }
+		        
+		}
+		for (Collision collision : myCollisionList) {
 			collision.checkGroupCollision();
 		}
 
-        for (FighterSprite sprite : playerSprites){
-        	sprite.update(elapsedTime);
-        }
-                  	
-        for (PlatformBlock pb : platform)
-            pb.update(elapsedTime);
+		for (FighterSprite sprite : playerSprites) {
+			sprite.update(elapsedTime);
+		}
 
-		// temp.checkCollision();
-		// p_block.checkCollision();
-
-		
-    }
+		for (PlatformBlock pb : platform)
+			pb.update(elapsedTime);
 
 
-    public InputHandler getMyHandler ()
-    {
-        return myHandler;
-    }
+	}
 
+	public InputHandler getMyHandler() {
+		return myHandler;
+	}
 
-    public List<FighterSprite> getFighters ()
-    {
-        return Collections.unmodifiableList(playerSprites);
+	public List<FighterSprite> getFighters() {
+		return Collections.unmodifiableList(playerSprites);
 
-    }
+	}
 
     @Override
-    void transitionState ()
+    public void transitionState ()
     {
         if(nextState != null)  
             myEngine.nextGame = this.nextState;

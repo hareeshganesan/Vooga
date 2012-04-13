@@ -89,7 +89,7 @@ public class OptionsScreen extends GameState
 
 
     @Override
-    void transitionState ()
+    public void transitionState ()
     {
         myEngine.setCurrentState(this.nextState);
         

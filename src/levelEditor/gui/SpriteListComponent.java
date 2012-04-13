@@ -4,8 +4,6 @@ package levelEditor.gui;
 import javax.swing.JComponent;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
-
-
 import levelEditor.mvc.Controller;
 
 /**
@@ -13,7 +11,7 @@ import levelEditor.mvc.Controller;
  */
 
 
-public class SpriteListComponent extends AbstractViewComponent {
+public class SpriteListComponent {
 
 	private Controller myController;
 	

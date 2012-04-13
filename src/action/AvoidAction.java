@@ -7,7 +7,7 @@ import sprite.FighterSprite;
 public class AvoidAction extends Action
 {
     FighterSprite myEnemy;
-
+    FighterSprite myFighter;
 
     public AvoidAction (FighterSprite fighter, FighterSprite enemy)
     {
@@ -22,8 +22,8 @@ public class AvoidAction extends Action
         double dist =
             myFighter.getCurrentLocation()
                      .distance(myEnemy.getCurrentLocation());
-        double x_direction = -(myEnemy.getX() - myFighter.getX()) / dist;
-        double y_direction = -(myEnemy.getY() - myFighter.getY()) / dist;
+        double x_direction = -(myEnemy.getX() - myFighter.getX());
+        double y_direction = -(myEnemy.getY() - myFighter.getY());
         if (dist < 200)
         {
             MotionAction f =
