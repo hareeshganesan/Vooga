@@ -1,4 +1,4 @@
-package LevelEditor.gui;
+package levelEditor.gui;
 
 /**
  * @author Peggy Li (pl59)
@@ -9,7 +9,7 @@ import java.awt.BorderLayout;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 
-import LevelEditor.mvc.Controller;
+import levelEditor.mvc.Controller;
 
 public class LevelSetupComponent {
 

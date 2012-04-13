@@ -112,7 +112,7 @@ public class LevelObjectsFactory
         ai.setMaxHealth(60);
         ai.setLocation(400, 500);
         ai.setDefaultSpeed(.3);
-        ai.setImages(c.getImages("C:\\Users\\Hareesh\\Desktop\\CS108\\Vooga\\src\\resources\\flame.png",1,1));
+        ai.setImages(c.getImages("resources\\flame.png",1,1));
         
         ai.addStrategy(.5, new OffensiveStrategy());
         ai.addStrategy(1, new DefensiveStrategy());

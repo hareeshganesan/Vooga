@@ -1,4 +1,4 @@
-package LevelEditor.gui;
+package levelEditor.gui;
 
 /**
  * @author Peggy Li (pl59)
@@ -13,7 +13,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import LevelEditor.mvc.Controller;
+import levelEditor.mvc.Controller;
 
 public class BackgroundImageComponent extends AbstractViewComponent {
 

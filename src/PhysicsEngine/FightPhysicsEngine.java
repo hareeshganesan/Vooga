@@ -43,23 +43,22 @@ public class FightPhysicsEngine extends PhysicsEngine {
 		double finalX = x;
 		double finalY = y;
 		if (isOutLeft(x))
-			finalX = -myFighterSprite.getX();
+			finalX = 10;
 		if (isOutRight(x))
-			finalX = BOUND_X - myFighterSprite.getX()
-					- myFighterSprite.getWidth();
+			finalX = -10;
 		if (isOutTop(y))
-			finalY = -myFighterSprite.getY();
+			finalY = 10;
 		if (isOutBottom(y))
-			finalY = BOUND_Y - myFighterSprite.getY()
-					- myFighterSprite.getHeight();
+			finalY = -10;
 
-		myFighterSprite.setNextLocationIncrement(new Point2D.Double(finalX, finalY));
+		myFighterSprite.setNextLocationIncrement(new Point2D.Double(finalX,
+				finalY));
 
 		// for debug
-//		System.out.println("Left:" + myFighterSprite.getX() + "    Right:"
-//				+ (myFighterSprite.getWidth() + myFighterSprite.getX())
-//				+ "    Top:" + myFighterSprite.getY() + "    Bottom:"
-//				+ (myFighterSprite.getHeight() + myFighterSprite.getY()));
+		// System.out.println("Left:" + myFighterSprite.getX() + "    Right:"
+		// + (myFighterSprite.getWidth() + myFighterSprite.getX())
+		// + "    Top:" + myFighterSprite.getY() + "    Bottom:"
+		// + (myFighterSprite.getHeight() + myFighterSprite.getY()));
 	}
 
 	public boolean isOutLeft(double x) {

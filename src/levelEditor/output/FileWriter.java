@@ -1,4 +1,4 @@
-package LevelEditor.output;
+package levelEditor.output;
 
 import java.io.File;
 import java.io.FileNotFoundException;

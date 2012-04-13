@@ -1,4 +1,4 @@
-package LevelEditor.gui;
+package levelEditor.gui;
 
 /**
  * @author Peggy Li (pl59)

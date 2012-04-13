@@ -1,4 +1,4 @@
-package LevelEditor.gui;
+package levelEditor.gui;
 
 
 public class VisualComponent {

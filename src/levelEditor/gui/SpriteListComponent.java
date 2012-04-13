@@ -1,4 +1,4 @@
-package LevelEditor.gui;
+package levelEditor.gui;
 
 
 import javax.swing.JComponent;
@@ -6,7 +6,7 @@ import javax.swing.JList;
 import javax.swing.JScrollPane;
 
 
-import LevelEditor.mvc.Controller;
+import levelEditor.mvc.Controller;
 
 /**
  * @author Peggy Li

@@ -1,4 +1,4 @@
-package LevelEditor.mvc;
+package levelEditor.mvc;
 
 import java.util.ArrayList;
 
