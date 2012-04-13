@@ -4,6 +4,7 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
+import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -19,6 +20,12 @@ import camera.Camera;
 import camera.CameraBackground;
 import PhysicsEngine.Collision;
 import action.QuitAction;
+import PhysicsEngine.Collision;
+import action.QuitAction;
+import camera.Camera;
+import com.golden.gamedev.object.Background;
+import com.golden.gamedev.object.GameFont;
+import com.golden.gamedev.object.background.ImageBackground;
 
 public class CombatInstance extends GameState
 {
@@ -158,18 +165,22 @@ public class CombatInstance extends GameState
         camera.update(playerSprites, bg);
         myHandler.update(elapsedTime, myEngine);
         bg.update(elapsedTime);
-        for (FighterSprite sprite : playerSprites)
-            sprite.update(elapsedTime);
+        
+        for (Collision collision : myCollisionList) {
+			collision.checkGroupCollision();
+		}
+
+        for (FighterSprite sprite : playerSprites){
+        	sprite.update(elapsedTime);
+        }
+                  	
         for (PlatformBlock pb : platform)
             pb.update(elapsedTime);
 
 		// temp.checkCollision();
 		// p_block.checkCollision();
 
-		for (Collision collision : myCollisionList) {
-			collision.checkGroupCollision();
-		}
-
+		
     }
 
 

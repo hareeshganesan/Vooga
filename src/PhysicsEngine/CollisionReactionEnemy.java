@@ -1,6 +1,7 @@
 package PhysicsEngine;
 
-import sprite.FighterSprite;
+import java.util.ArrayList;
+
 import sprite.SpriteTemplate;
 
 /**
@@ -11,6 +12,7 @@ import sprite.SpriteTemplate;
  * 
  */
 public class CollisionReactionEnemy extends CollisionReaction {
+	private ArrayList<ReactionStep> myReactionStepList=new ArrayList<ReactionStep>();
 
 	public CollisionReactionEnemy(SpriteTemplate ps1, SpriteTemplate ps2) {
 		super(ps1, ps2);
@@ -34,12 +36,19 @@ public class CollisionReactionEnemy extends CollisionReaction {
 	@Override
 	public void doThisReaction() {
 		//do something for damage
+		for(ReactionStep step:myReactionStepList){
+			step.act(myFighterSpriteOne,myFighterSpriteTwo);
+		}
 	}
 
 	@Override
 	public CollisionReaction createCollisionReaction(SpriteTemplate ps1,
 			SpriteTemplate ps2) {
 		return new CollisionReactionEnemy(ps1, ps2);
+	}
+	
+	public void addReactionStep(ReactionStep step){
+		myReactionStepList.add(step);
 	}
 
 }
