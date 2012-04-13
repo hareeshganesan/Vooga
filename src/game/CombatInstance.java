@@ -53,6 +53,7 @@ public class CombatInstance extends GameState
         myEngine = engine;
         myHandler = new InputHandler();
         camera = new Camera(new Point(544/2,544/2), new Rectangle(100, 100));
+        nextState = (GameState) engine.getGame(engine.TITLE);
     }
 
     @Override
@@ -172,8 +173,14 @@ public class CombatInstance extends GameState
 
     }
 
+    public void finish(){
+        
+        transitionState();
+        super.finish();
+        
+    }
     @Override
-    void transitionState ()
+    public void transitionState ()
     {
         if(nextState != null)  
             myEngine.nextGame = this.nextState;
