@@ -89,7 +89,7 @@ public class LevelObjectsFactory
             s.setLocation(Double.parseDouble(e.getChildText("x")),
                           Double.parseDouble(e.getChildText("y")));
             s.setDefaultSpeed(Double.parseDouble(e.getChildText("speed")));
-            s.setImage(c.getImage(e.getChildText("img")));
+            s.setImages(c.getImages(e.getChildText("img"),1,1));
 
             fs.add(s);
         }
@@ -104,7 +104,7 @@ public class LevelObjectsFactory
         ai.setMaxHealth(60);
         ai.setLocation(400, 500);
         ai.setDefaultSpeed(.3);
-        ai.setImage(c.getImage("resources/flame.png"));
+        ai.setImages(c.getImages("resources/flame.png",1,1));
         return ai;
     }
     private AIAgent createAIStrategyFighter(){
