@@ -1,0 +1,12 @@
+intermed2-wty3-commits guide
+
+what have I done this week? I'm not too sure, it's running into the stuff I did last week. 
+
+I started a new package to work on integrating with Helena's sprite tree. It's called npsprite. I don't remember which commit it was.
+
+I also worked on collisionEvents. It's not very well done right now, the original plan was to work with static methods
+https://github.com/hareeshganesan/Vooga/commit/06ebe53514c30107ebc361b8433326b1aca64962
+
+
+Fixed a very small bug in the LevelObjectsFactory and in Helena's tester. To be fair, I think I might have created the bug in the maingame in the first place, before I created the npsprite package
+https://github.com/hareeshganesan/Vooga/commit/784e57d08841c5ef70805a179263e800135357e7
