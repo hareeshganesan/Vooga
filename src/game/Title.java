@@ -9,7 +9,7 @@ import com.golden.gamedev.GameObject;
 import com.golden.gamedev.object.GameFont;
 
 
-public class Title extends GameObject
+public class Title extends GameState
 {
     GameFont font;
 
@@ -49,6 +49,13 @@ public class Title extends GameObject
     {
         g.drawImage(title, 0, 0, null);
 
+    }
+
+
+    @Override
+    void transitionState() {
+        // TODO Auto-generated method stub
+        
     }
 
 }

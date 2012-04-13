@@ -96,7 +96,7 @@ public class LevelObjectsFactory
         ai.setMaxHealth(60);
         ai.setLocation(400, 500);
         ai.setDefaultSpeed(.3);
-        ai.setImages(c.getImages("C:\\Users\\Hareesh\\Desktop\\CS108\\Vooga\\src\\resources\\flame.png",1,1));
+        ai.setImages(c.getImages("resources\\flame.png",1,1));
         return ai;
     }
     private void mapFighter (int playerIndex, FighterSprite s)

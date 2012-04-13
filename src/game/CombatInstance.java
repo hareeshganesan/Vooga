@@ -13,19 +13,12 @@ import java.util.List;
 import javax.swing.JFileChooser;
 import org.jdom.JDOMException;
 import sprite.FighterSprite;
-import sprite.GeneralSpriteCollision;
 import sprite.PlatformBlock;
 import sprite.SpriteGroupTemplate;
-import action.Action;
 import camera.Camera;
-import PhysicsEngine.BasicPhysicsEngine;
+import camera.CameraBackground;
 import PhysicsEngine.Collision;
 import action.QuitAction;
-import com.golden.gamedev.object.Background;
-import com.golden.gamedev.object.GameFont;
-import com.golden.gamedev.object.SpriteGroup;
-import com.golden.gamedev.object.background.ImageBackground;
-
 
 public class CombatInstance extends GameState
 {
@@ -44,7 +37,7 @@ public class CombatInstance extends GameState
     
     ArrayList<Collision> myCollisionList = new ArrayList<Collision>();
     
-    Background bg;
+    CameraBackground bg;
 
 
     public CombatInstance (MainGame engine)
@@ -82,8 +75,8 @@ public class CombatInstance extends GameState
         }
 
         //TODO: REMOVE HARDCODING LATER
-        GameFont font = fontManager.getFont(getImage("resources/font.png"));
-        BufferedImage HPimage = getImage("resources/frame.png");
+        //GameFont font = fontManager.getFont(getImage("resources/font.png"));
+        //BufferedImage HPimage = getImage("resources/frame.png");
 //    	HealthDisplay display = new HealthDisplay(returnVal, returnVal, returnVal);
         //
         //TODO: MAKE IT SO DIFFERENT FIGHTERS CAN HAVE DIFFERENT DISPLAYS?
@@ -103,7 +96,7 @@ public class CombatInstance extends GameState
             back = DEFAULT_IMAGE;
         }
         BufferedImage b = getImage(back);
-        bg = new ImageBackground(b);
+        bg = new CameraBackground(b);
 
         //TODO: FML WHY ARE WE DOING THIS
         //this is temporary fix just to make the code work, will need to overwrite later when we implement finer collision checking and physics engine
@@ -146,7 +139,7 @@ public class CombatInstance extends GameState
     @Override
     public void render (Graphics2D pen)
     {
-        camera.render(pen);
+        camera.render(pen, bg);
         //bg.render(pen, camera, camera.getX(), camera.getY(), camera.getX(), camera.getY(), camera.getHeight(), camera.getWidth());
         bg.render(pen);        
         for (FighterSprite sprite : playerSprites)
@@ -155,16 +148,14 @@ public class CombatInstance extends GameState
         {
             pb.render(pen);
         }
-    }
+    }   
 
 
     @Override
     public void update (long elapsedTime)
     {
         myHandler.update(elapsedTime, myEngine);
-        camera.update(playerSprites);
-      //bg.setToCenter(playerSprites.get(0));
-        bg.setToCenter(camera.getX(), camera.getY(), camera.getHeight(), camera.getWidth());
+        camera.update(playerSprites, bg);
         myHandler.update(elapsedTime, myEngine);
         bg.update(elapsedTime);
         for (FighterSprite sprite : playerSprites)

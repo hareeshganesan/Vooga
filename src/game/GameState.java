@@ -13,5 +13,17 @@ abstract public class GameState extends GameObject
         super(arg0);
     }
     
+    public void setNextState(GameState next) {
+        nextState = next;
+    }
+    
+    public GameState getNextState() {
+        return nextState;
+    }
+    
+    public GameState getLastState() {
+        return lastState;   
+    }
+    
     abstract void transitionState();
 }
