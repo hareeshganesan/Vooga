@@ -39,7 +39,7 @@ public class TesterMain extends Game {
 		BufferedImage imgRL = GraphicsTest.loadImage("src/resources/bodyParts/limb.png");
 		
 
-		BufferedImage imgLRL = GraphicsTest.loadImage("src/resources/bodyParts/nLimb.png");
+		BufferedImage imgLRL = GraphicsTest.loadImage("src/resources/bodyParts/limb.png");
 		
 		LimbNode torso = new LimbNode("torso",imgT, this.getWidth()/2, this.getHeight()/2);
 		LimbNode head = new LimbNode("head",torso,imgH, torso.getWidth()/3,-5,0);
