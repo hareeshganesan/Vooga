@@ -1,4 +1,4 @@
-package levelEditor.output;
+package LevelEditor.output;
 
 import java.util.ArrayList;
 

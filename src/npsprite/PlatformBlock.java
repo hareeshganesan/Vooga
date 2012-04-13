@@ -5,7 +5,6 @@ import java.awt.image.BufferedImage;
 import npsprite.SpriteID.GroupID;
 
 public class PlatformBlock extends SpriteTemplate{
-    //default speed is 0
 
     public PlatformBlock (BufferedImage b)
     {
@@ -15,6 +14,9 @@ public class PlatformBlock extends SpriteTemplate{
     @Override
     protected void createSpriteID(GroupID g) { //UM...
         myID=new SpriteID(SpriteID.GroupID.PLATFORM, false, false, false, false);
+    }
+    public void update(long elapsedTime){
+        //don't bother, it doesn't move
     }
 
 }

@@ -1,11 +1,9 @@
-package levelEditor.gui;
-
+package LevelEditor.gui;
 
 public class VisualComponent {
 
-	public VisualComponent () {
-		
-	}
-	
-	
+    public VisualComponent() {
+
+    }
+
 }

@@ -11,6 +11,8 @@ import com.golden.gamedev.object.Sprite;
 
 public class LimbNode extends Sprite{
 	
+	private String myName;
+	
 	private BufferedImage myCurrImage;
 	private BufferedImage myOrigImage;
 	
@@ -29,14 +31,29 @@ public class LimbNode extends Sprite{
 	double damageMultiplier;
 	double damageDealt;
 	
-	//constructor for parent
-	public LimbNode(BufferedImage image, double x, double y){
+	//constructor for root node who doesn't have a parent 
+	public LimbNode(String name, BufferedImage image, double x, double y){
 		super(image, x, y);
+		this.myName = name;
 		this.myOrigImage = image;
 	}
 	
-	public LimbNode(LimbNode parent, BufferedImage image,double dx, double dy, int baseTheta){
+	public LimbNode copy(LimbNode other){
+		return new LimbNode(other.myName,other.Parent,other.getImage(),other.dx,other.dy,other.theta);
+		
+	}
+	
+	public String getName(){
+		return this.myName;
+	}
+	
+	
+	public ArrayList<LimbNode> getChildren(){
+		return this.children;
+	}
+	public LimbNode(String name, LimbNode parent, BufferedImage image,double dx, double dy, int baseTheta){
 		super(image,parent.getX()+dx, parent.getY()+dy);
+		this.myName = name;
 		this.myOrigImage= image;
 		this.Parent = parent;
 		this.theta = baseTheta;
@@ -60,7 +77,7 @@ public class LimbNode extends Sprite{
 	public void draw(double x, double y, int theta){
 		this.setX(x);
 		this.setY(y);
-	    this.myCurrImage =GraphicsTest.rotate(this.myOrigImage,theta);
+		this.myCurrImage =GraphicsTest.rotate(this.myOrigImage,theta);
 		this.setImage(this.myCurrImage);
 	}
 
@@ -86,6 +103,13 @@ public class LimbNode extends Sprite{
 	public void update(long elapsedTime){
 
 		super.update(elapsedTime);
+	}
+	
+	public void print(){
+		System.out.println(this.Parent);
+		System.out.println(this.dx);
+		System.out.println(this.dy);
+		System.out.println(this.theta);
 	}
 	
 }

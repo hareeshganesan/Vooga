@@ -19,6 +19,6 @@ public class GeneralSpriteCollision extends PreciseCollisionGroup
     {
         SpriteTemplate p1 = (SpriteTemplate) s1;
         SpriteTemplate p2 = (SpriteTemplate) s2;
-        p1.collisionAction(p2); //TODO: ORDERING
+        p1.collisionAction(p2);
     }
 }

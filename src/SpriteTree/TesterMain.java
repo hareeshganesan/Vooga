@@ -19,12 +19,18 @@ public class TesterMain extends Game {
 	private LimbNode lowerLeg;
 	private int sw = 0;
 	
-	private int currTime =0;
-	private Animation animation = new DemoAniOne(currTime);
+	private LimbNode movingLeg;
+	private LimbNode movingLowerLeg;
 
+	
+	private int currTime =0;
+	private Animation animation;
+	
+	
 	@Override
 	public void initResources() {
-	
+		animation = new DemoAniProxy(currTime);
+		
 		BufferedImage imgH = GraphicsTest.loadImage("src/resources/bodyParts/circle.png");
 		BufferedImage imgT = GraphicsTest.loadImage("src/resources/bodyParts/limb.png");
 		BufferedImage imgLA = GraphicsTest.loadImage("src/resources/bodyParts/limb.png");
@@ -34,22 +40,21 @@ public class TesterMain extends Game {
 		
 
 		BufferedImage imgLRL = GraphicsTest.loadImage("src/resources/bodyParts/nLimb.png");
-
 		
-		LimbNode torso = new LimbNode(imgT, this.getWidth()/2, this.getHeight()/2);
-		LimbNode head = new LimbNode(torso,imgH, torso.getWidth()/3,-5,0);
-		LimbNode LeftArm = new LimbNode(torso,imgLA, -15,0,45);		
-		LimbNode RightArm = new LimbNode(torso,imgRA, 15,0,-45);
-		LimbNode LeftLeg = new LimbNode(torso,imgLL, -15,torso.getHeight()/2,45);
-		LimbNode RightLeg= new LimbNode(torso,imgRL, 15,torso.getHeight()/2,-45);
+		LimbNode torso = new LimbNode("torso",imgT, this.getWidth()/2, this.getHeight()/2);
+		LimbNode head = new LimbNode("head",torso,imgH, torso.getWidth()/3,-5,0);
+		LimbNode LeftArm = new LimbNode("LeftArm",torso,imgLA, -15,0,45);		
+		LimbNode RightArm = new LimbNode("RightArm",torso,imgRA, 15,0,-45);
+		LimbNode LeftLeg = new LimbNode("LeftLeg",torso,imgLL, -15,torso.getHeight()/2,45);
+		LimbNode RightLeg= new LimbNode("RightLeg",torso,imgRL, 15,torso.getHeight()/2,-45);
 		
-		LimbNode LRightLeg = new LimbNode(RightLeg, imgLRL, 0, RightLeg.getHeight()/2, 45);
+		LimbNode LRightLeg = new LimbNode("LRightLeg",RightLeg, imgLRL, 0, RightLeg.getHeight()/2, 45);
 		RightLeg.addChild(LRightLeg);
 		
 		
-		leg = RightLeg;
-		lowerLeg = LRightLeg;
-		
+		movingLeg = RightLeg;
+		movingLowerLeg = LRightLeg;
+
 		
 		torso.addChild(LeftLeg);
 		torso.addChild(RightLeg);
@@ -58,7 +63,6 @@ public class TesterMain extends Game {
 		torso.addChild(head);
 		
 		myTree = new BodyTree(torso);
-		
 		
 
 	}
@@ -97,30 +101,18 @@ public class TesterMain extends Game {
 	@Override
 	public void update(long elapsedTime) {
 		currTime +=1;
-		//animation begins, extract into methods?
-//		if(currTime<=40){
-//			leg.rotate(-1);
-//			lowerLeg.rotate(2);
-//		}
-//		if(currTime>40 && currTime <=80){
-//			lowerLeg.rotate(-4);
-//		}
-//		if(currTime>80 && currTime<=120){
-//			lowerLeg.rotate(4);
-//
-//		}
-//		if(currTime >120 && currTime<=160){
-//			leg.rotate(1);
-//			lowerLeg.rotate(-2);
-
-//		}	
-		//animation ends
 		
-		this.animation.animate(leg, lowerLeg);
-		
+	if(this.animation.getStatus()==true){
+		this.animation.setCurrentTime(currTime);
+		this.animation.animate(movingLeg, movingLowerLeg);
+	}
+	
+	if(this.animation.getStatus()==false){
+		currTime = 0;
+	}
 		
 		if(keyDown(KeyEvent.VK_LEFT)){
-			myTree.move(myPen,-1, 0);
+			myTree.move(myPen,-1, 0); 
 		}
 		if(keyDown(KeyEvent.VK_RIGHT)){
 			myTree.move(myPen,1, 0);
@@ -133,11 +125,10 @@ public class TesterMain extends Game {
 		}
 		
 		if(keyDown(KeyEvent.VK_SPACE)){
-			this.animation = new DemoAniOne(currTime);
+			this.animation.activateAnimation();
 
 		}
 		
-
 		
 	
 	}

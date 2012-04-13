@@ -1,6 +1,7 @@
 package npsprite;
 
 import java.awt.Graphics2D;
+import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
 import events.CollisionEvent;
@@ -77,6 +78,18 @@ public class FighterBody {
                                    // level
         }
         myDisplay.update(elapsedTime, (int) myHealth);
+    }
+
+    
+    /* Wrapped for input handler */
+    public Point2D getCurrentLocation() {
+        return root.getCurrentLocation();
+    }
+    public double getX() {
+        return root.getX();
+    }
+    public double getY() {
+        return root.getY();
     }
 
 }

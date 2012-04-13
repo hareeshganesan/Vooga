@@ -4,20 +4,12 @@ import java.awt.Graphics2D;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-import java.util.Collections;
 
 import npsprite.SpriteID.GroupID;
 
 import sprite.SpriteValues;
 
 import SpriteTree.GraphicsTest;
-import SpriteTree.LimbNode;
-
-import action.Action;
-
-import com.golden.gamedev.util.ImageUtil;
-
-import com.golden.gamedev.object.Sprite;
 
 //The sprite for things that can overlap and own other sprites - the tree for animation
 public class NodeSprite extends SpriteTemplate implements Attachable,Health,Damage {

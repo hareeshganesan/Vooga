@@ -36,7 +36,7 @@ public class NPSTest extends Game {
         myTree.addHealth(-25);
 
         CompositeEvent pevent = new CompositeEvent(myTree);
-        pevent.addEvent(new InactiveEvent());
+        pevent.addEvent(new InactiveEvent());//TODO: SHOULD I CHANGE THESE INTO STATIC? IT'S A CLASS WRAPPING A SINGLE METHOD ONLY
         CompositeEvent tevent = new CompositeEvent(power);
         tevent.addEvent(new HealthEvent());
 

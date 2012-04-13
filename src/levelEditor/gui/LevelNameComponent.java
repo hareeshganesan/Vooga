@@ -18,7 +18,7 @@ import levelEditor.mvc.Controller;
 
 
 @SuppressWarnings("unused")
-public class LevelNameComponent extends AbstractViewComponent {
+public class LevelNameComponent {
 	
 	private static final int BOX_WIDTH = 12;
 
@@ -31,7 +31,6 @@ public class LevelNameComponent extends AbstractViewComponent {
 	}
 	
 	
-	@Override
 	public JComponent create() {
 		JPanel panel = new JPanel();
 		
