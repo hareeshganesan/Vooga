@@ -15,7 +15,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import levelEditor.mvc.Controller;
 
-public class BackgroundImageComponent extends AbstractViewComponent {
+public class BackgroundImageComponent {
 
 	private Controller myController;
 
@@ -28,7 +28,6 @@ public class BackgroundImageComponent extends AbstractViewComponent {
 	}
 
 
-	@Override
 	public JComponent create() {
 		JPanel panel = new JPanel();
 		initializeImageChooser();

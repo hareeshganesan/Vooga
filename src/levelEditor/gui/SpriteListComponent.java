@@ -13,7 +13,7 @@ import levelEditor.mvc.Controller;
  */
 
 
-public class SpriteListComponent extends AbstractViewComponent {
+public class SpriteListComponent {
 
 	private Controller myController;
 	
