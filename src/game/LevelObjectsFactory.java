@@ -4,11 +4,16 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+//import npsprite.FighterSprite;
+//import npsprite.PlatformBlock;
+
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
 import org.jdom.xpath.XPath;
+
 import sprite.FighterSprite;
 import sprite.HealthDisplay;
 import sprite.PlatformBlock;
@@ -84,8 +89,7 @@ public class LevelObjectsFactory
             s.setLocation(Double.parseDouble(e.getChildText("x")),
                           Double.parseDouble(e.getChildText("y")));
             s.setDefaultSpeed(Double.parseDouble(e.getChildText("speed")));
-            System.out.println(e.getChildText("img"));
-            s.setImages(c.getImages(e.getChildText("img"), 1, 1));
+            s.setImage(c.getImage(e.getChildText("img")));
 
             fs.add(s);
         }
@@ -100,7 +104,7 @@ public class LevelObjectsFactory
         ai.setMaxHealth(60);
         ai.setLocation(400, 500);
         ai.setDefaultSpeed(.3);
-        ai.setImages(c.getImages("resources\\flame.png",1,1));
+        ai.setImage(c.getImage("resources/flame.png"));
         return ai;
     }
     private AIAgent createAIStrategyFighter(){

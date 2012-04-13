@@ -42,6 +42,7 @@ public class CollisionReactionFriends extends CollisionReaction {
 			SpriteTemplate ps2) {
 		return new CollisionReactionFriends(ps1, ps2);
 	}
+
 	
 	public void addReactionStep(ReactionStep step){
 		myReactionStepList.add(step);

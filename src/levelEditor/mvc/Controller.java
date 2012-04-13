@@ -1,4 +1,4 @@
-package levelEditor.mvc;
+package LevelEditor.mvc;
 
 /**
  * @author Peggy Li (pl59)
