@@ -4,12 +4,15 @@ import game.CombatInstance;
 import sprite.FighterSprite;
 import action.ActionSeries;
 
+
+/**
+ * A strategy must implement a method to generate an action series that can be
+ * executed by the AI Agent calling it.
+ * 
+ * @author Hareesh
+ */
 abstract class Strategy
 {
 
-    ActionSeries generateAction (CombatInstance c, FighterSprite f)
-    {
-        // TODO Auto-generated method stub
-        return null;
-    }
+    abstract ActionSeries generateAction (CombatInstance c, FighterSprite f);
 }

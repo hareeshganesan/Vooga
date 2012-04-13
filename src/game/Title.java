@@ -5,11 +5,10 @@ import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import com.golden.gamedev.GameEngine;
-import com.golden.gamedev.GameObject;
 import com.golden.gamedev.object.GameFont;
 
 
-public class Title extends GameObject
+public class Title extends GameState
 {
     GameFont font;
 
@@ -49,6 +48,14 @@ public class Title extends GameObject
     {
         g.drawImage(title, 0, 0, null);
 
+    }
+
+
+    @Override
+
+    public void transitionState ()
+    {
+        
     }
 
 }

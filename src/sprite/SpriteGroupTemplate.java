@@ -2,6 +2,10 @@ package sprite;
 
 import java.util.ArrayList;
 
+//import npsprite.FighterSprite;
+//import npsprite.PlatformBlock;
+//import npsprite.SpriteTemplate;
+
 /**
  * Better than SpriteGroup given by GoldenT in our engine
  * 

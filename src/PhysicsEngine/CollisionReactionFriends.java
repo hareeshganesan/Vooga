@@ -1,7 +1,6 @@
 package PhysicsEngine;
 
 import java.util.ArrayList;
-
 import sprite.SpriteTemplate;
 
 /**
@@ -15,6 +14,7 @@ public class CollisionReactionFriends extends CollisionReaction {
 
 	public CollisionReactionFriends(SpriteTemplate ps1, SpriteTemplate ps2){
 		super(ps1,ps2);
+		myReactionStepList.add(new ReactionStepPunch());
 		myReactionStepList.add(new ReactionStepPush());
 	}
 
@@ -42,6 +42,7 @@ public class CollisionReactionFriends extends CollisionReaction {
 			SpriteTemplate ps2) {
 		return new CollisionReactionFriends(ps1, ps2);
 	}
+
 	
 	public void addReactionStep(ReactionStep step){
 		myReactionStepList.add(step);

@@ -1,5 +1,6 @@
 package action;
 
+import game.GameState;
 import game.MainGame;
 
 public class QuitAction extends Action
@@ -12,7 +13,8 @@ public class QuitAction extends Action
     @Override
     public void performAction (long elapsedTime)
     {
-        myEngine.getCurrentGame().finish();
+        GameState m = ((GameState) myEngine.getCurrentGame());
+        m.transitionState();
     }
 
 }

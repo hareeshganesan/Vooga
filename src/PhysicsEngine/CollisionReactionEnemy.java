@@ -1,7 +1,6 @@
 package PhysicsEngine;
 
 import java.util.ArrayList;
-
 import sprite.SpriteTemplate;
 
 /**
@@ -46,6 +45,7 @@ public class CollisionReactionEnemy extends CollisionReaction {
 			SpriteTemplate ps2) {
 		return new CollisionReactionEnemy(ps1, ps2);
 	}
+
 	
 	public void addReactionStep(ReactionStep step){
 		myReactionStepList.add(step);

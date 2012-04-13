@@ -84,8 +84,7 @@ public class LevelObjectsFactory
             s.setLocation(Double.parseDouble(e.getChildText("x")),
                           Double.parseDouble(e.getChildText("y")));
             s.setDefaultSpeed(Double.parseDouble(e.getChildText("speed")));
-            System.out.println(e.getChildText("img"));
-            s.setImages(c.getImages(e.getChildText("img"), 1, 1));
+            s.setImages(c.getImages(e.getChildText("img"),1,1));
 
             fs.add(s);
         }
@@ -100,7 +99,7 @@ public class LevelObjectsFactory
         ai.setMaxHealth(60);
         ai.setLocation(400, 500);
         ai.setDefaultSpeed(.3);
-        ai.setImages(c.getImages("resources\\flame.png",1,1));
+        ai.setImages(c.getImages("resources/flame.png",1,1));
         return ai;
     }
     private AIAgent createAIStrategyFighter(){
@@ -110,8 +109,8 @@ public class LevelObjectsFactory
         ai.setDefaultSpeed(.3);
         ai.setImages(c.getImages("resources\\flame.png",1,1));
         
-        ai.addStrategy(.5, new OffensiveStrategy());
-        ai.addStrategy(1, new DefensiveStrategy());
+        ai.addStrategy(1, new OffensiveStrategy());
+        ai.addStrategy(.5, new DefensiveStrategy());
         return ai;
     }
     private void mapFighter (int playerIndex, FighterSprite s)

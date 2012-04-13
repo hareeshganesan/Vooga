@@ -10,7 +10,6 @@ import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.MatteBorder;
 
-
 import levelEditor.mvc.Controller;
 
 /**
