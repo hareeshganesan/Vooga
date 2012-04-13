@@ -1,8 +1,7 @@
 package PhysicsEngine;
 
-import java.awt.event.KeyEvent;
-
 import game.CombatInstance;
+import java.awt.event.KeyEvent;
 import sprite.FighterSprite;
 import sprite.SpriteTemplate;
 

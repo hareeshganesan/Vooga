@@ -1,7 +1,6 @@
 package charactorEditor.drag.Component;
 
 import javax.swing.JComboBox;
-
 import charactorEditor.drag.AttributePane;
 
 public class PropertySelectCombo extends JComboBox {

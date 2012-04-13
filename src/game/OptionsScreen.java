@@ -47,7 +47,7 @@ public class OptionsScreen extends GameState
 
 
     @Override
-    void transitionState ()
+    public void transitionState ()
     {
         // TODO Auto-generated method stub
         

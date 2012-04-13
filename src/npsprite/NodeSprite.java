@@ -4,11 +4,8 @@ import java.awt.Graphics2D;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-
 import npsprite.SpriteID.GroupID;
-
 import sprite.SpriteValues;
-
 import SpriteTree.GraphicsTest;
 
 //The sprite for things that can overlap and own other sprites - the tree for animation

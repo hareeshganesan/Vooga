@@ -4,16 +4,11 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-//import npsprite.FighterSprite;
-//import npsprite.PlatformBlock;
-
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
 import org.jdom.xpath.XPath;
-
 import sprite.FighterSprite;
 import sprite.HealthDisplay;
 import sprite.PlatformBlock;
@@ -114,8 +109,8 @@ public class LevelObjectsFactory
         ai.setDefaultSpeed(.3);
         ai.setImages(c.getImages("resources\\flame.png",1,1));
         
-        ai.addStrategy(.5, new OffensiveStrategy());
-        ai.addStrategy(1, new DefensiveStrategy());
+        ai.addStrategy(1, new OffensiveStrategy());
+        ai.addStrategy(.5, new DefensiveStrategy());
         return ai;
     }
     private void mapFighter (int playerIndex, FighterSprite s)

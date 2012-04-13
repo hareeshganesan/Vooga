@@ -4,8 +4,6 @@ package levelEditor.gui;
 import javax.swing.JComponent;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
-
-
 import levelEditor.mvc.Controller;
 
 /**

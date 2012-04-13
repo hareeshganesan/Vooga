@@ -5,12 +5,8 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
-
 import com.golden.gamedev.Game;
 import com.golden.gamedev.GameLoader;
-import com.golden.gamedev.object.Background;
-import com.golden.gamedev.object.Sprite;
-import com.golden.gamedev.object.Timer;
 
 public class TesterMain extends Game {
 	private BodyTree myTree;

@@ -1,7 +1,6 @@
-package LevelEditor.mvc;
+package levelEditor.mvc;
 
 import java.util.ArrayList;
-
 import com.golden.gamedev.object.Sprite;
 
 

@@ -1,7 +1,6 @@
 package PhysicsEngine;
 
 import java.awt.geom.Point2D;
-
 import sprite.FighterSprite;
 import sprite.SpriteTemplate;
 
@@ -24,6 +23,7 @@ public class ReactionStepRebound extends ReactionStep {
 	private void rebound(SpriteTemplate fighterSprite) {
 		double x = 0;
 		double y = 0;
+		System.out.println("rebound");
 		Point2D p = ((FighterSprite) fighterSprite).getMoveBy();
 		if (p.getX() > 0)
 			x = -reboundDistance;

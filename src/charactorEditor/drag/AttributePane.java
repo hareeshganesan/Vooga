@@ -1,23 +1,19 @@
 package charactorEditor.drag;
 
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
-import java.awt.Shape;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-import java.io.File;
-import java.io.IOException;
-import java.util.HashMap;
-
-import javax.swing.*;
-
-import charactorEditor.Writer;
-import charactorEditor.drag.Component.*;
+import javax.swing.JPanel;
+import charactorEditor.drag.Component.AddImgButton;
+import charactorEditor.drag.Component.AddPropertyButton;
+import charactorEditor.drag.Component.JustLabel;
+import charactorEditor.drag.Component.LoadButton;
+import charactorEditor.drag.Component.NameDisplayLabel;
+import charactorEditor.drag.Component.PropertyDisplayLabel;
+import charactorEditor.drag.Component.PropertySelectCombo;
+import charactorEditor.drag.Component.SaveButton;
+import charactorEditor.drag.Component.SetMyComponentTextField;
 
 public class AttributePane extends JPanel {
 	/**

@@ -13,5 +13,5 @@ abstract public class GameState extends GameObject
         super(arg0);
     }
     
-    abstract void transitionState();
+    abstract public void transitionState();
 }

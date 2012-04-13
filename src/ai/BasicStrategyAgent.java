@@ -32,16 +32,14 @@ public class BasicStrategyAgent extends AIAgent
     }
 
 
-    public void update (long elapsedTime)
+    public void calculateLocation (long elapsedTime)
     {
         if (currentAction == null || currentAction.isDone(elapsedTime))
         {
             currentAction = getAction();
         }
         currentAction.performAction(elapsedTime);
-        super.update(elapsedTime);
     }
-
 
     private ActionSeries getAction ()
     {

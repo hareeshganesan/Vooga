@@ -27,10 +27,15 @@ public abstract class AIAgent extends FighterSprite
         myLevel = c;
     }
 
-
+    abstract public void calculateLocation(long elapsedTime);
+    
     public void update (long elapsedTime)
     {
         super.update(elapsedTime);
+    }
+    
+    public String getSpriteKind(){
+        return "AI FighterSprite";
     }
 
 }

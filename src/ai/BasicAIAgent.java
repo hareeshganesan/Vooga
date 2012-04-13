@@ -5,7 +5,6 @@ import java.util.List;
 import sprite.FighterSprite;
 import sprite.HealthDisplay;
 import action.FollowAction;
-import action.MotionAction;
 
 
 /**
@@ -26,7 +25,7 @@ public class BasicAIAgent extends AIAgent
     }
 
 
-    public void update (long elapsedTime)
+    public void calculateLocation (long elapsedTime)
     {
         List<FighterSprite> fs = myLevel.getFighters();
         if (getCurrentLocation().distance(fs.get(0).getCurrentLocation()) > 40)
@@ -34,7 +33,6 @@ public class BasicAIAgent extends AIAgent
             FollowAction follow = new FollowAction(this, fs.get(0));
             follow.performAction(elapsedTime);
         }
-        super.update(elapsedTime);
     }
 
 }

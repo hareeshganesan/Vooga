@@ -1,6 +1,5 @@
 package action;
 
-import sprite.FighterSprite;
 
 //import npsprite.FighterSprite;
 

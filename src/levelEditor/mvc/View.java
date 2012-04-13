@@ -1,11 +1,9 @@
-package LevelEditor.mvc;
+package levelEditor.mvc;
 
 import java.awt.Dimension;
-
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-
-import LevelEditor.gui.LevelSetupComponent;
+import levelEditor.gui.LevelSetupComponent;
 
 
 

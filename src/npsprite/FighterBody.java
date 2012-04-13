@@ -2,12 +2,8 @@ package npsprite;
 
 import java.awt.Graphics2D;
 import java.awt.geom.Point2D;
-import java.util.ArrayList;
-
-import events.CollisionEvent;
-
-
 import sprite.HealthDisplay;
+import events.CollisionEvent;
 
 //THIS IS A POINTER TO THE TOP OF THE TREE THAT REPRESENTS A PLAYER
 public class FighterBody {
