@@ -1,11 +1,14 @@
 package levelEditor.mvc;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import levelEditor.gui.LevelSetupComponent;
+import levelEditor.gui.SaveLevelComponent;
+import levelEditor.gui.SpriteListComponent;
 
 /**
  * @author Peggy Li (pl59)
@@ -15,7 +18,7 @@ import levelEditor.gui.LevelSetupComponent;
 @SuppressWarnings({"serial"})
 public class View extends JFrame {
 
-	private static final Dimension SIZE = new Dimension(600, 600);
+	private static final Dimension SIZE = new Dimension(600, 200);
 	
 	private Controller myController;
 	
@@ -24,8 +27,20 @@ public class View extends JFrame {
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		// add children components
-		add (new LevelSetupComponent(myController).create());
+		// NORTH
+		add (new LevelSetupComponent(myController).create(), BorderLayout.NORTH);
+		
+		// SOUTH
+		add (new SaveLevelComponent(myController).create(), BorderLayout.SOUTH);
+		
+		// WEST
+		add (new SpriteListComponent(myController).create(), BorderLayout.WEST);
+		
+		// EAST
+		
+		// CENTER
+		
+		
 		
 		setSize(SIZE);
 		setVisible(true);

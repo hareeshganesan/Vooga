@@ -2,6 +2,8 @@ package levelEditor.mvc;
 
 import java.util.ArrayList;
 
+import levelEditor.output.LevelProxy;
+
 import com.golden.gamedev.object.Sprite;
 
 
@@ -14,6 +16,8 @@ import com.golden.gamedev.object.Sprite;
 public class Model {
 
 	private Controller myController;
+	
+	private LevelProxy myLevel;
 	
 	private ArrayList<Sprite> mySprites;
 	
@@ -39,6 +43,12 @@ public class Model {
 		
 	}
 	
+	/**
+	 * @TODO implement
+	 */
+	public void saveToFile () {
+		
+	}
 	
 	
 	/* =================================== INPUT CHECKING METHODS =================================== */
@@ -57,9 +67,20 @@ public class Model {
 	 * Checks whether a new Sprite can be placed at location (x, y)
 	 * 	e.g. there is not already a Sprite at that location
 	 * 		or within _____ distance
+	 * @return if location conflict occurs
 	 */
 	public boolean findLocationConflict (int x, int y, int radius) {
-		
+		for (Sprite s : mySprites) {
+			double xSquared = Math.pow(s.getX() - x, 2);
+			double ySquared = Math.pow(s.getY() - y, 2);
+			if (Math.sqrt(xSquared + ySquared) > radius) {
+				myController.displayMessageToUser(String.format(
+						"Sprite already exists within %d of location (%d, %d)", 
+						radius, x, y));
+				return true;
+			}
+		}
 		return false;
 	}
+	
 }

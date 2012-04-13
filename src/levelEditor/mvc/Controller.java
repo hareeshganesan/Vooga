@@ -26,4 +26,9 @@ public class Controller {
 		return myModel.verifyNameAvailable(name);
 	}
 	
+	public void saveAndClose () {
+		myModel.saveToFile();
+		myView.close();
+	}
+	
 }

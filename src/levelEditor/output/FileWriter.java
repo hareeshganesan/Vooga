@@ -17,10 +17,6 @@ public class FileWriter {
 		myLevel = level;
 	}
 	
-	
-	
-	
-	
 	public String getFileName () {
 		return myLevel.getLevelName();
 	}
@@ -35,5 +31,7 @@ public class FileWriter {
 			e.printStackTrace();
 		}
 	}
+	
+	
 	
 }
