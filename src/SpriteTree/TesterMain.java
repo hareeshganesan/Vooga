@@ -5,68 +5,110 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
+
 import com.golden.gamedev.Game;
 import com.golden.gamedev.GameLoader;
+import com.golden.gamedev.object.Background;
+import com.golden.gamedev.object.Sprite;
+import com.golden.gamedev.object.Timer;
 
 public class TesterMain extends Game {
-
 	private BodyTree myTree;
+	
+	private Graphics2D myPen;
+	private LimbNode movingLeg;
+	private LimbNode movingLowerLeg;
+
+	
+	private int currTime =0;
+	private Animation animation;
+	
 	
 	@Override
 	public void initResources() {
-	//	bg = new Background();
-		BufferedImage imgHead = GraphicsTest.loadImage("src/resources/bodyParts/head.png");
-		BufferedImage imgLArm = GraphicsTest.loadImage("src/resources/bodyParts/leftArm.png");
-		BufferedImage imgRArm = GraphicsTest.loadImage("src/resources/bodyParts/rightArm.png");
-		BufferedImage imgTorso = GraphicsTest.loadImage("src/resources/bodyParts/torso.png");
-		BufferedImage imgLLeg = GraphicsTest.loadImage("src/resources/bodyParts/leftLeg.png");
-		BufferedImage imgRLeg= GraphicsTest.loadImage("src/resources/bodyParts/rightLeg.png");
+		animation = new DemoAniProxy(currTime);
+		
+		BufferedImage imgH = GraphicsTest.loadImage("src/resources/bodyParts/circle.png");
+		BufferedImage imgT = GraphicsTest.loadImage("src/resources/bodyParts/limb.png");
+		BufferedImage imgLA = GraphicsTest.loadImage("src/resources/bodyParts/limb.png");
+		BufferedImage imgRA = GraphicsTest.loadImage("src/resources/bodyParts/limb.png");
+		BufferedImage imgLL = GraphicsTest.loadImage("src/resources/bodyParts/limb.png");
+		BufferedImage imgRL = GraphicsTest.loadImage("src/resources/bodyParts/limb.png");
+		
 
-		LimbNode torso = new LimbNode(null, imgTorso, 100,100,0,0);	
-		LimbNode head = new LimbNode(torso,imgHead,torso.getX(),torso.getY(),0,-(imgTorso.getHeight()/2));
-		LimbNode LeftArm = new LimbNode(torso,imgLArm,torso.getX(),torso.getY(),-10,+10);
-		LimbNode RightArm = new LimbNode(torso,imgRArm,torso.getX(),torso.getY(),torso.getWidth()-5,-10);
-		LimbNode LeftLeg = new LimbNode(torso,imgLLeg, torso.getX(),torso.getOldY(),0,+60);
-		LimbNode RightLeg = new LimbNode(torso,imgRLeg, torso.getX(),torso.getOldY(),+10,+60);
+		BufferedImage imgLRL = GraphicsTest.loadImage("src/resources/bodyParts/nLimb.png");
+
+		
+		LimbNode torso = new LimbNode("torso",imgT, this.getWidth()/2, this.getHeight()/2);
+		LimbNode head = new LimbNode("head",torso,imgH, torso.getWidth()/3,-5,0);
+		LimbNode LeftArm = new LimbNode("LeftArm",torso,imgLA, -15,0,45);		
+		LimbNode RightArm = new LimbNode("RightArm",torso,imgRA, 15,0,-45);
+		LimbNode LeftLeg = new LimbNode("LeftLeg",torso,imgLL, -15,torso.getHeight()/2,45);
+		LimbNode RightLeg= new LimbNode("RightLeg",torso,imgRL, 15,torso.getHeight()/2,-45);
+		
+		LimbNode LRightLeg = new LimbNode("LRightLeg",RightLeg, imgLRL, 0, RightLeg.getHeight()/2, 45);
+		RightLeg.addChild(LRightLeg);
 		
 		
-		torso.addChild(RightLeg);
+		movingLeg = RightLeg;
+		movingLowerLeg = LRightLeg;
+
+		
 		torso.addChild(LeftLeg);
-		torso.addChild(LeftArm);
+		torso.addChild(RightLeg);
 		torso.addChild(RightArm);
+		torso.addChild(LeftArm);
 		torso.addChild(head);
 		
+		myTree = new BodyTree(torso);
 		
-		BodyTree tree = new BodyTree();
-		tree.add(torso);
-		myTree = tree;
-		
+
+
 	}
 
+	
 	@Override
 	public void render(Graphics2D pen) {
 		pen.setColor(Color.WHITE);
         pen.fillRect(0, 0, getWidth(), getHeight());
-		myTree.render(pen);
-		
+        myPen = pen;
+        myTree.render(pen);
 	}
 
 	@Override
 	public void update(long elapsedTime) {
-		myTree.update(elapsedTime);
-
-		if(keyDown(KeyEvent.VK_RIGHT)){
-			myTree.move(1,0,myTree.root);
-		}
+		currTime +=1;
+		
+		
+	if(this.animation.getStatus()==true){
+		this.animation.setCurrentTime(currTime);
+		this.animation.animate(movingLeg, movingLowerLeg);
+	}
+	
+	if(this.animation.getStatus()==false){
+		currTime = 0;
+	}
+		
 		if(keyDown(KeyEvent.VK_LEFT)){
-			myTree.move(-1,0,myTree.root);
+			myTree.move(myPen,-1, 0); 
+		}
+		if(keyDown(KeyEvent.VK_RIGHT)){
+			myTree.move(myPen,1, 0);
 		}
 		if(keyDown(KeyEvent.VK_UP)){
-			myTree.move(0,-1,myTree.root);
+			myTree.move(myPen,0, -1);
 		}
 		if(keyDown(KeyEvent.VK_DOWN)){
-			myTree.move(0,1,myTree.root);
+			myTree.move(myPen,0, 1);
 		}
+		
+		if(keyDown(KeyEvent.VK_SPACE)){
+			this.animation.activateAnimation();
+
+		}
+		
+
+		
 	
 	}
 	
