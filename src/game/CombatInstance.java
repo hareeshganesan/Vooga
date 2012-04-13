@@ -36,8 +36,6 @@ public class CombatInstance extends GameState
     //Sprites
     ArrayList<FighterSprite> playerSprites;
     ArrayList<PlatformBlock> platform;
-//    GeneralSpriteCollision temp;
-//    GeneralSpriteCollision p_block;
     
     ArrayList<Collision> myCollisionList = new ArrayList<Collision>();
     
@@ -102,33 +100,6 @@ public class CombatInstance extends GameState
         BufferedImage b = getImage(back);
         bg = new ImageBackground(b);
 
-        //TODO: FML WHY ARE WE DOING THIS
-        //this is temporary fix just to make the code work, will need to overwrite later when we implement finer collision checking and physics engine
-//        SpriteGroup p1 = new SpriteGroup("p1");
-//        p1.add(playerSprites.get(0));
-//        p1.setBackground(bg);
-//        SpriteGroup p2 = new SpriteGroup("p2");
-//        p2.add(playerSprites.get(1));
-//        p2.setBackground(bg);
-//
-//        temp = new GeneralSpriteCollision();
-//        temp.setCollisionGroup(p1, p2);
-//
-//        SpriteGroup b1 = new SpriteGroup("b");
-//        for (PlatformBlock p : platform)
-//        {
-//            b1.add(p);
-//        }
-//        SpriteGroup ps = new SpriteGroup("players");
-//        for (FighterSprite f : playerSprites)
-//        {
-//            ps.add(f);
-//        }
-//        ps.setBackground(bg);
-//        b1.setBackground(bg);
-//        p_block = new GeneralSpriteCollision();
-//        p_block.setCollisionGroup(ps, b1);
-        
         SpriteGroupTemplate groupPlayer = new SpriteGroupTemplate("team1");
 		groupPlayer.addFighterSpriteArray(playerSprites);
 
