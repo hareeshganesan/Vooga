@@ -10,7 +10,7 @@ public class ReactionStepPush extends ReactionStep{
 	public void act(SpriteTemplate ps1, SpriteTemplate ps2) {
 		Point2D p1 = ((FighterSprite) ps1).getMoveBy();
 		Point2D p2 = ((FighterSprite) ps2).getMoveBy();
-		
+
 
 		// if( (ps1.getX()<ps2.getX() && p1.getX()>0 && p2.getX()<=0)
 		// || (ps1.getX()>ps2.getX() && p1.getX()<=0 && p2.getX()>0)
@@ -27,7 +27,7 @@ public class ReactionStepPush extends ReactionStep{
 
 		myPhysicsEngine = new FightPhysicsEngine(ps2);
 		myPhysicsEngine.setNextLocation(-30, -30);
-		
+
 	}
 
 }

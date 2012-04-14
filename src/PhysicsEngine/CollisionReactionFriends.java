@@ -15,7 +15,7 @@ public class CollisionReactionFriends extends CollisionReaction {
 	public CollisionReactionFriends(SpriteTemplate ps1, SpriteTemplate ps2){
 		super(ps1,ps2);
 		myReactionStepList.add(new ReactionStepPunch());
-//		myReactionStepList.add(new ReactionStepPush());
+		myReactionStepList.add(new ReactionStepPush());
 	}
 
 	public CollisionReactionFriends() {
