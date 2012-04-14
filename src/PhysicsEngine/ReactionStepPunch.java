@@ -11,10 +11,10 @@ public class ReactionStepPunch extends ReactionStep {
 	public void act(SpriteTemplate ps1, SpriteTemplate ps2) {
 		FighterSprite f1=(FighterSprite) ps1;
 		FighterSprite f2=(FighterSprite) ps2;
-		if(CombatInstance.myEngine.keyDown(KeyEvent.VK_E)){
+//		if(CombatInstance.myEngine.keyDown(KeyEvent.VK_E)){
 			punch(f1);
 			punch(f2);
-		}
+//		}
 		
 	}
 	
