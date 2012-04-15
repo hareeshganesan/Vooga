@@ -102,8 +102,8 @@ public class CombatInstance extends GameState {
 		// CollisonKind later)
 		//
 		// CollisionKind means the particular kind of the collison
-		// CollisionKindFriends is used when collision happens between two
-		// FighterSprites
+		// CollisionKindFriends is used when collision happens between 
+		// FighterSprites or AI 
 		// CollisionKindEnemy is used when collision happens between one
 		// FighterSprite and one WeaponSprite
 		// CollisionKindNeutral is used when collision happens if there is a

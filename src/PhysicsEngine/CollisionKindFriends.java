@@ -18,8 +18,8 @@ public CollisionKindFriends(ArrayList<Reaction> reactionSteps) {
 
 	@Override
 	public boolean isThisKind(SpriteTemplate ps1, SpriteTemplate ps2) {
-		if (ps1.getSpriteKind().equals(FIGHTER)
-				&& ps2.getSpriteKind().equals(FIGHTER))
+		if ((ps1.getSpriteKind().equals(FIGHTER) || ps1.getSpriteKind().contains("AI"))
+				&& (ps2.getSpriteKind().equals(FIGHTER) || ps2.getSpriteKind().contains("AI")))
 			return true;
 		return false;
 	}
