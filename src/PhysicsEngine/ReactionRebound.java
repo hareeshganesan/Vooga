@@ -4,11 +4,11 @@ import java.awt.geom.Point2D;
 import sprite.FighterSprite;
 import sprite.SpriteTemplate;
 
-public class ReactionStepRebound extends ReactionStep {
+public class ReactionRebound extends Reaction {
 	private final String BLOCK = "PlatformBlock";
 	private double reboundDistance;
 	
-	public ReactionStepRebound(Double distance){
+	public ReactionRebound(Double distance){
 		reboundDistance=distance;
 	}
 	

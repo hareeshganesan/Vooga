@@ -2,7 +2,7 @@ package PhysicsEngine;
 
 import sprite.SpriteTemplate;
 
-public class ReactionStepStop extends ReactionStep{
+public class ReactionStop extends Reaction{
 
 	@Override
 	public void act(SpriteTemplate ps1, SpriteTemplate ps2) {

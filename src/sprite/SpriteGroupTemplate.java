@@ -61,4 +61,9 @@ public class SpriteGroupTemplate {
 			mySpriteGourp.add(s);
 		}
 	}
+	
+	public void addSpriteGroup(SpriteGroupTemplate group){
+		ArrayList<SpriteTemplate> spriteGourp = group.getSpriteArray();
+		mySpriteGourp.addAll(spriteGourp);
+	}
 }

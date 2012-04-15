@@ -3,7 +3,7 @@ package PhysicsEngine;
 import sprite.FighterSprite;
 import sprite.SpriteTemplate;
 
-public class ReactionStepPunch extends ReactionStep {
+public class ReactionPunch extends Reaction {
 	
 	@Override
 	public void act(SpriteTemplate ps1, SpriteTemplate ps2) {
