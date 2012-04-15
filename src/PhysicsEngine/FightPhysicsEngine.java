@@ -35,10 +35,10 @@ public class FightPhysicsEngine extends PhysicsEngine {
 		double x = speed * elapsedTime * myVectorX;
 		double y = speed * elapsedTime * myVectorY;
 
-		setNextLocation(x, y);
+		setNextLocationIncrement(x, y);
 	}
 
-	public void setNextLocation(double x, double y) {
+	public void setNextLocationIncrement(double x, double y) {
 
 		double finalX = x;
 		double finalY = y;

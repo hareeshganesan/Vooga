@@ -23,6 +23,7 @@ import PhysicsEngine.CollisionKindFriends;
 import PhysicsEngine.CollisionKindNeutral;
 import PhysicsEngine.Reaction;
 import PhysicsEngine.ReactionPunch;
+import PhysicsEngine.ReactionPush;
 import PhysicsEngine.ReactionRebound;
 import action.QuitAction;
 import ai.AIAgent;
@@ -120,7 +121,7 @@ public class CombatInstance extends GameState {
 
 		ArrayList<CollisionKind> CollisionkindList = new ArrayList<CollisionKind>();
 		ArrayList<Reaction> reaction1 = new ArrayList<Reaction>();
-		reaction1.add(new ReactionPunch());
+		reaction1.add(new ReactionPush());
 		ArrayList<Reaction> reaction2 = new ArrayList<Reaction>();
 		ArrayList<Reaction> reaction3 = new ArrayList<Reaction>();
 		reaction3.add(new ReactionRebound(20.0));

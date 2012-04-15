@@ -14,7 +14,10 @@ public abstract class SpriteTemplate extends AdvanceSprite
     double DEFAULT_SPEED = 0;
     double DEFAULT_DAMAGE = 0;
     
+    protected Point2D moveBy;
+    
     private double myDamage;
+    private boolean myCollisionStatus=false;
 
     public SpriteTemplate ()
     {
@@ -70,13 +73,35 @@ public abstract class SpriteTemplate extends AdvanceSprite
     protected abstract Point2D confineBounds (double dx, double dy);
 
 	public void setNextLocationIncrement(Point2D nextLocation) {
-		// TODO Auto-generated method stub
+		if(!myCollisionStatus){
+			this.moveBy = new Point2D.Double(moveBy.getX()+nextLocation.getX(),
+				moveBy.getY()+nextLocation.getY());
+			
+		}else{
+			moveBy=nextLocation;
+		}
 		
+		
+	}
+	
+	public Point2D getCurrentLocation() {
+		return new Point2D.Double(getX() + moveBy.getX(), getY()
+				+ moveBy.getY());
 	}
 	
 	public double getSpeed(){
 		return 0;
 	}
 
-	public abstract String getSpriteKind();   
+	public abstract String getSpriteKind(); 
+	
+	public void setCollisionStatus(boolean b){
+		myCollisionStatus=b;
+	}
+	
+	public Point2D getMoveBy() {
+		return moveBy;
+	}
+	
+	
 }

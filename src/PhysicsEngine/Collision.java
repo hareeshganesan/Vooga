@@ -42,9 +42,11 @@ public class Collision {
 
 	private void checkEachCollision(SpriteTemplate s1, SpriteTemplate s2) {
 		if (isCollided(s1, s2)) {
+			s1.setCollisionStatus(true);
+			s2.setCollisionStatus(true);
 			for (CollisionKind r : myReactionList) {
 				if (r.isThisKind(s1, s2)) {
-					r.doThisReaction(s1,s2);
+					r.doThisReaction(s1,s2);	
 				}
 			}
 			// for debug

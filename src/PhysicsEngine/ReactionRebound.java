@@ -35,7 +35,7 @@ public class ReactionRebound extends Reaction {
 			y = reboundDistance;
 
 		myPhysicsEngine = new FightPhysicsEngine(fighterSprite);
-		myPhysicsEngine.setNextLocation(x, y);
+		myPhysicsEngine.setNextLocationIncrement(x, y);
 	}
 
 }
