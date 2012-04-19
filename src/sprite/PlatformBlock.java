@@ -4,6 +4,11 @@ import java.awt.image.BufferedImage;
 
 
 // for demo game. Sample block that doesn't move/react
+/**
+ * @deprecated hasn't been deprecated yet since this class doesn't do anything, but might as well get used to 
+ * npsprite package
+ */
+@Deprecated
 public class PlatformBlock extends NonPlayerSprite
 {
 

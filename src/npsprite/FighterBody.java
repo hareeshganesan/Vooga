@@ -2,10 +2,13 @@ package npsprite;
 
 import java.awt.Graphics2D;
 import java.awt.geom.Point2D;
+import java.util.HashMap;
+
 import sprite.HealthDisplay;
 import events.CollisionEvent;
 
 //THIS IS A POINTER TO THE TOP OF THE TREE THAT REPRESENTS A PLAYER
+//TODO: wait for helena to fix the mapping
 public class FighterBody {
 
     private String myName;
@@ -14,12 +17,38 @@ public class FighterBody {
     private HealthDisplay myDisplay;
     NodeSprite root = null;
 
+    private HashMap<String,NodeSprite> map ;
+    
     public FighterBody(String name, HealthDisplay display) {
         myName = name;
         myDisplay = display;
         myDisplay.setStat(myName, (int) myHealth);
+
+        map= new HashMap<String,NodeSprite>();
+    }
+    public FighterBody(LimbSprite root,String name, HealthDisplay display) {
+        this.root=root;
+        myName = name;
+        myDisplay = display;
+        myDisplay.setStat(myName, (int) myHealth);
+
+        map= new HashMap<String,NodeSprite>();
+        createMap(this.root);
     }
 
+    public void createMap(NodeSprite currNode){
+        if(!map.containsKey(currNode.getName())){
+            map.put(currNode.getName(), currNode);
+        }
+        for(LimbSprite limb:currNode.getChildren()){
+            createMap(limb); //TODO: SHOULD THEY HAVE NAMES? OR GO OFF OF IDS?
+        }
+    }
+
+    
+    public LimbSprite getNode(String name){
+        return map.get(name);
+    }
     // TODO currently used for testing, will need to implement with Point2D
     // stuff later
 
@@ -40,8 +69,9 @@ public class FighterBody {
     public void add(NodeSprite child) {
         // apparently only the first body part is root of the tree
         if (root == null) {
+            root.setParent(this);
             root = child;
-            // System.out.println("root added!");
+            createMap(this.root);
         } else {
             root.addChild(child);
         }

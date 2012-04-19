@@ -8,6 +8,11 @@ import com.golden.gamedev.object.sprite.AdvanceSprite;
 
 
 // all sprites in fighting game extend this template
+/**
+ * @Deprecated start moving to npsprite
+ */
+
+@Deprecated
 public abstract class SpriteTemplate extends AdvanceSprite
 {
     // defaults

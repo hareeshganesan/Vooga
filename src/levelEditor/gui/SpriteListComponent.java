@@ -1,6 +1,5 @@
 package levelEditor.gui;
 
-
 import java.awt.Color;
 import java.awt.Font;
 
@@ -19,27 +18,23 @@ import levelEditor.mvc.Controller;
 @SuppressWarnings("unused")
 public class SpriteListComponent {
 
-	private Controller myController;
-	
-	private final static String[] myNames = {"Fire", "5x Power-Up", "10x Power-Up", "Shield", "Sword", "Block", "Wall"};
-	
-	public SpriteListComponent (Controller c) {
-		myController = c;
-	}
-	
-	public JComponent create() {
-		JList list = new JList(myNames);
-		
-		JScrollPane scroll = new JScrollPane(list);
-		scroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.
-				HORIZONTAL_SCROLLBAR_NEVER);
-		scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.
-				VERTICAL_SCROLLBAR_AS_NEEDED);
-		
-		return scroll;
-	}
-	
-	
-	
-	
+    private Controller myController;
+
+    private final static String[] myNames = { "Fire", "5x Power-Up",
+            "10x Power-Up", "Shield", "Sword", "Block", "Wall" };
+
+    public SpriteListComponent(Controller c) {
+        myController = c;
+    }
+
+    public JComponent create() {
+        JList list = new JList(myNames);
+
+        JScrollPane scroll = new JScrollPane(list);
+        scroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+
+        return scroll;
+    }
+
 }

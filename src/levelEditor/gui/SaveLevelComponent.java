@@ -15,34 +15,34 @@ import levelEditor.mvc.Controller;
 
 public class SaveLevelComponent {
 
-	private Controller myController;
+    private Controller myController;
 
-	private JButton mySaveButton;
+    private JButton mySaveButton;
 
-	public SaveLevelComponent (Controller c) {
-		myController = c;
-	}
+    public SaveLevelComponent(Controller c) {
+        myController = c;
+    }
 
-	public JComponent create() {
-		JPanel panel = new JPanel();
+    public JComponent create() {
+        JPanel panel = new JPanel();
 
-		mySaveButton = new JButton("SAVE LEVEL");
-		mySaveButton.setSize(48, 12);
-		mySaveButton.setToolTipText("Click to save level to file.");
+        mySaveButton = new JButton("SAVE LEVEL");
+        mySaveButton.setSize(48, 12);
+        mySaveButton.setToolTipText("Click to save level to file.");
 
-		mySaveButton.addActionListener(new ActionListener() {
+        mySaveButton.addActionListener(new ActionListener() {
 
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				myController.displayMessageToUser("Saving to file...");
-				myController.saveAndClose();
-			}
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                myController.displayMessageToUser("Saving to file...");
+                myController.saveAndClose();
+            }
 
-		});
+        });
 
-		panel.add(mySaveButton);
+        panel.add(mySaveButton);
 
-		return panel;
-	}
+        return panel;
+    }
 
 }
