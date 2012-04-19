@@ -39,10 +39,4 @@ public class CameraSprite extends SpriteTemplate{
         // TODO Auto-generated method stub
         return null;
     }
-
-    @Override
-    public String getSpriteKind() {
-        // TODO Auto-generated method stub
-        return null;
-    }
 }

@@ -188,11 +188,4 @@ public class FighterSprite extends SpriteTemplate {
 		setCollisionStatus(false);							// zero
 		super.update(elapsedTime);
 	}
-
-	@Override
-	public String getSpriteKind() {
-		return "FighterSprite";
-	}
-
-
 }

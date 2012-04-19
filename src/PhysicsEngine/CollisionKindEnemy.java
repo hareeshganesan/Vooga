@@ -19,11 +19,9 @@ public class CollisionKindEnemy extends CollisionKind {
 
 	@Override
 	public boolean isThisKind(SpriteTemplate ps1, SpriteTemplate ps2) {
-		if (ps1.getSpriteKind().equals(FIGHTER)
-				&& ps2.getSpriteKind().equals(WEAPON))
+		if (belongFighterSprite(ps1) && isWeaponSprite(ps2))
 			return true;
-		if (ps1.getSpriteKind().equals(WEAPON)
-				&& ps2.getSpriteKind().equals(FIGHTER))
+		if (belongFighterSprite(ps2) && isWeaponSprite(ps1))
 			return true;
 		return false;
 	}

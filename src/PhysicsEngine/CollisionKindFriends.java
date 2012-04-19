@@ -12,17 +12,15 @@ import sprite.SpriteTemplate;
  */
 public class CollisionKindFriends extends CollisionKind {
 
-public CollisionKindFriends(ArrayList<Reaction> reactionSteps) {
+	public CollisionKindFriends(ArrayList<Reaction> reactionSteps) {
 		super(reactionSteps);
 	}
 
 	@Override
 	public boolean isThisKind(SpriteTemplate ps1, SpriteTemplate ps2) {
-		if ((ps1.getSpriteKind().equals(FIGHTER) || ps1.getSpriteKind().contains("AI"))
-				&& (ps2.getSpriteKind().equals(FIGHTER) || ps2.getSpriteKind().contains("AI")))
+		if (belongFighterSprite(ps1) && belongFighterSprite(ps2))
 			return true;
 		return false;
 	}
-	
 
 }

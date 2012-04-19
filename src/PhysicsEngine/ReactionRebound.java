@@ -2,10 +2,10 @@ package PhysicsEngine;
 
 import java.awt.geom.Point2D;
 import sprite.FighterSprite;
+import sprite.PlatformBlock;
 import sprite.SpriteTemplate;
 
 public class ReactionRebound extends Reaction {
-	private final String BLOCK = "PlatformBlock";
 	private double reboundDistance;
 	
 	public ReactionRebound(Double distance){
@@ -15,8 +15,8 @@ public class ReactionRebound extends Reaction {
 	
 	@Override
 	public void act(SpriteTemplate ps1, SpriteTemplate ps2) {
-		if(ps1.getSpriteKind().equals(BLOCK)) rebound(ps2);
-		if(ps2.getSpriteKind().equals(BLOCK)) rebound(ps1);
+		if(ps1.getClass().equals(PlatformBlock.class)) rebound(ps2);
+		if(ps2.getClass().equals(PlatformBlock.class)) rebound(ps1);
 		
 	}
 	

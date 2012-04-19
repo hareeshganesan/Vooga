@@ -156,7 +156,7 @@ public class CombatInstance extends GameState {
 		bg.update(elapsedTime);
 
 		for (FighterSprite sprite : playerSprites) {
-			if (sprite.getSpriteKind().contains("AI")) {
+			if (AIAgent.class.isAssignableFrom(sprite.getClass())) {
 				AIAgent ai = (AIAgent) sprite;
 				ai.calculateLocation(elapsedTime);
 			}

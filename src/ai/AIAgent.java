@@ -33,9 +33,4 @@ public abstract class AIAgent extends FighterSprite
     {
         super.update(elapsedTime);
     }
-    
-    public String getSpriteKind(){
-        return "AI FighterSprite";
-    }
-
 }

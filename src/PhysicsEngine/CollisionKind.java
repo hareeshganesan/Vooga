@@ -1,7 +1,10 @@
 package PhysicsEngine;
-import java.util.ArrayList;
 
+import java.util.ArrayList;
+import sprite.FighterSprite;
+import sprite.PlatformBlock;
 import sprite.SpriteTemplate;
+import sprite.WeaponSprite;
 
 /**
  * this is the super class of collision reaction it includes the methods of
@@ -13,35 +16,45 @@ import sprite.SpriteTemplate;
  */
 public abstract class CollisionKind {
 
-	protected final String FIGHTER = "FighterSprite";
-	protected final String BLOCK = "PlatformBlock";
-	protected final String WEAPON = "WeaponSprite";
-	
-	protected ArrayList<Reaction> myReactions=new ArrayList<Reaction>();
-	
-	public CollisionKind(ArrayList<Reaction> reactions){
-		myReactions=reactions;
+	protected ArrayList<Reaction> myReactions = new ArrayList<Reaction>();
+
+	public CollisionKind(ArrayList<Reaction> reactions) {
+		myReactions = reactions;
 	}
-	
-	public CollisionKind(Reaction reaction){
+
+	public CollisionKind(Reaction reaction) {
 		myReactions.add(reaction);
 	}
 
-	public abstract boolean isThisKind(SpriteTemplate ps1,
-			SpriteTemplate ps2);
-	
+	public abstract boolean isThisKind(SpriteTemplate ps1, SpriteTemplate ps2);
+
 	public void doThisReaction(SpriteTemplate ps1, SpriteTemplate ps2) {
-		for(Reaction reaction:myReactions){
-			reaction.act(ps1,ps2);
+		// Wendy can untoggle these two lines if your code is ready
+		// ps1.collisionAction(ps2);
+		// ps2.collisionAction(ps1);
+		for (Reaction reaction : myReactions) {
+			reaction.act(ps1, ps2);
 		}
 	}
-	
-	public void addReaction(Reaction reaction){
+
+	public void addReaction(Reaction reaction) {
 		myReactions.add(reaction);
 	}
-	
-	public void removeReaction(Reaction reaction){
+
+	public void removeReaction(Reaction reaction) {
 		myReactions.remove(reaction);
 	}
-
+	
+	protected boolean isPlatformBlock(SpriteTemplate s){
+		return s.getClass().equals(PlatformBlock.class);
+	}
+	
+	protected boolean belongFighterSprite(SpriteTemplate s){
+		return FighterSprite.class.isAssignableFrom(s.getClass());
+	}
+	
+	protected boolean isWeaponSprite(SpriteTemplate s){
+		return s.getClass().equals(WeaponSprite.class);
+	}
+	
 }

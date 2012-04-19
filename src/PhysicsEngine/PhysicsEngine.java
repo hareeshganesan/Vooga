@@ -4,18 +4,8 @@ import sprite.SpriteTemplate;
 import action.MotionAction;
 
 /**
- * 
-<<<<<<< HEAD
  * This is the super class of physics engine
  * Maybe there will more children engine in the futures
-=======
- * This is the super
- * 
- * class of physics engine Maybe there will more children engine in the futures
- * 
- * @author Donghe
->>>>>>> 0463ade3db276a4e544cfa075112a8f31f56fcfc
- * 
  * @author Donghe
  *
  */
@@ -34,7 +24,6 @@ public abstract class PhysicsEngine {
 
 		myFighterSprite = motionAction.getFighterSprite();
 		myVectorX = motionAction.getVectorX();
-
 		myVectorY = motionAction.getVectorY();
 	}
 

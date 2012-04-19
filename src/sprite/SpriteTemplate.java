@@ -93,8 +93,6 @@ public abstract class SpriteTemplate extends AdvanceSprite
 		return 0;
 	}
 
-	public abstract String getSpriteKind(); 
-	
 	public void setCollisionStatus(boolean b){
 		myCollisionStatus=b;
 	}
