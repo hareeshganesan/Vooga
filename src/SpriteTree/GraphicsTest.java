@@ -11,31 +11,39 @@ import javax.swing.JFrame;
 
 import com.golden.gamedev.util.ImageUtil;
 
-public class GraphicsTest {
-	BufferedImage img;
 
-	public static BufferedImage loadImage(String ref){
-		BufferedImage img = null;
-		try{
-			img = ImageIO.read(new File(ref));
-		}catch(Exception e)
-		{
-			e.printStackTrace();
-		}
-		return img;
-	}
-	
+public class GraphicsTest
+{
+    BufferedImage img;
 
-	public void loadAndDisplayImage(JFrame frame){
-		BufferedImage loadImg = loadImage("src/resources/bodyParts/head.png");
-		//this.img = rotate(loadImg,100);
-		
-		frame.setBounds(0,0, this.img.getWidth(),this.img.getHeight());
-		JImagePanel panel = new JImagePanel(this.img,0,0);
-		frame.add(panel);
-		frame.setVisible(true);
-	}
-	
+
+    public static BufferedImage loadImage (String ref)
+    {
+        BufferedImage img = null;
+        try
+        {
+            img = ImageIO.read(new File(ref));
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return img;
+    }
+
+
+    public void loadAndDisplayImage (JFrame frame)
+    {
+        BufferedImage loadImg = loadImage("src/resources/bodyParts/head.png");
+        //this.img = rotate(loadImg,100);
+
+        frame.setBounds(0, 0, this.img.getWidth(), this.img.getHeight());
+        JImagePanel panel = new JImagePanel(this.img, 0, 0);
+        frame.add(panel);
+        frame.setVisible(true);
+    }
+
+
 //	public static BufferedImage rotate(BufferedImage img, int angle, double x, double y){
 //		int w = img.getWidth();
 //		int h = img.getHeight();

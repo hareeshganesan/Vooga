@@ -1,8 +1,9 @@
 package npsprite;
 
 /**
- * For keeping track of a sprite's additional characteristics
- * Just a data class for now, subclass if you want to add more stuff
+ * For keeping track of a sprite's additional characteristics Just a data class
+ * for now, subclass if you want to add more stuff
+ * 
  * @author Wendy
  * @deprecated only used for interfaces, interfaces are deprecated now
  */
@@ -18,34 +19,56 @@ public class SpriteID {
     private boolean spawns;
     private boolean attachable;
 
+
     /**
-     * @param group - group ID (sprites in same group will not be checked for collisions by physics engine?)
+     * @param group - group ID (sprites in same group will not be checked for
+     *            collisions by physics engine?)
      * @param health - true if sprite has health
-     * @param damages - true if sprite can damage/heal other sprites (damages will be - values, heals + values)
+     * @param damages - true if sprite can damage/heal other sprites (damages
+     *            will be - values, heals + values)
      * @param spawns - true if sprite can spawn other sprites
      * @param attaches - true if sprite can attach as child to other sprites
      */
-    public SpriteID(GroupID group, boolean health, boolean damages,
-            boolean spawns, boolean attaches) {
+    public SpriteID (GroupID group,
+                     boolean health,
+                     boolean damages,
+                     boolean spawns,
+                     boolean attaches)
+    {
         groupID = group;
         hasHealth = health;
         doesDamage = damages;
         this.spawns = spawns;
         attachable = attaches;
     }
-    public GroupID getGroupID(){
+
+
+    public GroupID getGroupID ()
+    {
         return groupID;
     }
-    public boolean hasHealth(){
+
+
+    public boolean hasHealth ()
+    {
         return hasHealth;
     }
-    public boolean doesDamage(){
+
+
+    public boolean doesDamage ()
+    {
         return doesDamage;
     }
-    public boolean spawns(){
+
+
+    public boolean spawns ()
+    {
         return spawns;
     }
-    public boolean attaches(){
+
+
+    public boolean attaches ()
+    {
         return attachable;
     }
 

@@ -36,30 +36,38 @@ public class NodeSprite extends SpriteTemplate{
         this.setY(this.getY() + moveY);
     }
 
+
     // TODO: implement
     // for the connections with physics engine
-    public Point2D getCurrentLocation() {
-        return new Point2D.Double(getX() + moveBy.getX(), getY()
-                + moveBy.getY());
+    public Point2D getCurrentLocation ()
+    {
+        return new Point2D.Double(getX() + moveBy.getX(), getY() +
+                                                          moveBy.getY());
     }
 
-    public void setNextLocationIncrement(Point2D nextLocation) {
-        this.moveBy = new Point2D.Double(nextLocation.getX(),
-                nextLocation.getY());
+
+    public void setNextLocationIncrement (Point2D nextLocation)
+    {
+        this.moveBy =
+            new Point2D.Double(nextLocation.getX(), nextLocation.getY());
     }
+
 
     /*          */
     /* TREE AREA */
     /*          */
 
-    protected void setParent(NodeSprite parent) {
+    protected void setParent (NodeSprite parent)
+    {
         Parent = parent;
         if (Parent==null){
             currGroupID=myID;
         }
     }
 
-    public void addChild(NodeSprite child) {
+
+    public void addChild (NodeSprite child)
+    {
         child.setParent(this);
         child.changeGroupID(this.getGroupID());
         children.add(child);
@@ -75,11 +83,17 @@ public class NodeSprite extends SpriteTemplate{
         return currGroupID;
     }
 
-    public void removeChild(NodeSprite child) {
-        if (children == null) {
+
+    public void removeChild (NodeSprite child)
+    {
+        if (children == null)
+        {
             // do nothing
-        } else if (!children.contains(child)) {
-            for (NodeSprite c : children) {
+        }
+        else if (!children.contains(child))
+        {
+            for (NodeSprite c : children)
+            {
                 c.removeChild(child);
             }
         }

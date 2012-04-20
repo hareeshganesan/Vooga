@@ -1,13 +1,10 @@
 package camera;
 
-import java.awt.*;
-import java.awt.geom.*;
-import java.awt.image.*;
-
+import java.awt.Graphics2D;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.Point2D;
 import sprite.SpriteTemplate;
 
-import com.golden.gamedev.object.*;
-import com.golden.gamedev.object.background.*;
 
 @SuppressWarnings("serial")
 public class CameraSprite extends SpriteTemplate{
@@ -23,10 +20,12 @@ public class CameraSprite extends SpriteTemplate{
         //        (camera.getHeight() / 2) - (camera.getBounds().getHeight() / 2));
         
         tr2.scale((double)Camera.CANVAS_WIDTH/camera.getWidth(), (double)Camera.CANVAS_HEIGHT/camera.getWidth());
+ 
         g.setTransform(tr2);
         sprite.render(g);
         g.setTransform(old);
     }
+
 
     @Override
     public void collisionAction(int otherGroupID) {
@@ -34,8 +33,10 @@ public class CameraSprite extends SpriteTemplate{
         
     }
 
+
     @Override
     protected Point2D confineBounds(double dx, double dy) {
         return this.confineBounds(dx, dy);
+
     }
 }

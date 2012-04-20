@@ -6,11 +6,12 @@ import npsprite.FighterBody;
 //import sprite.FighterSprite;
 
 
-public class AvoidAction extends Action
+public class AvoidAction implements Action
 {
     FighterBody myEnemy;
     FighterBody myFighter;
-
+    boolean done;
+    
     public AvoidAction (FighterBody fighter, FighterBody enemy)
     {
         myFighter = fighter;
@@ -33,6 +34,14 @@ public class AvoidAction extends Action
                                                                y_direction));
             f.performAction(elapsedTime);
         }
+        done = true;
+    }
+
+
+    @Override
+    public boolean isDone (long elapsedTime)
+    {
+        return done;
     }
 
 }

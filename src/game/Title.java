@@ -52,10 +52,9 @@ public class Title extends GameState
 
 
     @Override
-
     public void transitionState ()
     {
-        
+
     }
 
 }

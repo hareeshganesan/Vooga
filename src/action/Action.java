@@ -1,10 +1,12 @@
 package action;
 
+// import npsprite.FighterSprite;
 
-//import npsprite.FighterSprite;
-
-
-public abstract class Action
+public interface Action
 {
+
     public abstract void performAction (long elapsedTime);
+
+
+    public boolean isDone (long elapsedTime);
 }

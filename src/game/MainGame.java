@@ -6,14 +6,14 @@ import com.golden.gamedev.GameLoader;
 import com.golden.gamedev.GameObject;
 
 
-
 public class MainGame extends GameEngine
 {
 
     public static final int TITLE = 0, GAME = 1, OPTION = 2;
     private Title home;
     private GameState currentState;
-    
+
+
     @SuppressWarnings("static-access")
     public void initResources ()
     {
@@ -40,18 +40,25 @@ public class MainGame extends GameEngine
         return null;
     }
 
-    public int getMain(){
+
+    public int getMain ()
+    {
         return TITLE;
     }
-    
-    public GameState getCurrentState() {
+
+
+    public GameState getCurrentState ()
+    {
         return currentState;
     }
 
-    public void setCurrentState(GameState gs) {
+
+    public void setCurrentState (GameState gs)
+    {
         currentState = gs;
     }
-    
+
+
     public static void main (String[] args)
     {
         //OpenGLGameLoader game = new OpenGLGameLoader();

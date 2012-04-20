@@ -8,8 +8,8 @@ public class WeaponSprite extends NonPlayerSprite
 {
 
     FighterSprite fighter;
-    double fighterX=0;
-    double fighterY=0;
+    double fighterX = 0;
+    double fighterY = 0;
     BufferedImage[] image;
 
 
@@ -26,6 +26,7 @@ public class WeaponSprite extends NonPlayerSprite
 
         setLocation(fighterX + this.getWidth(), fighterY + this.getHeight());
     }
+
 
     @Override
     protected void animationChanged (int oldStat,

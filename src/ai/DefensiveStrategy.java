@@ -1,32 +1,57 @@
 package ai;
 
+import npsprite.FighterBody;
 import game.CombatInstance;
-import java.util.TreeMap;
 import sprite.FighterSprite;
-import action.Action;
-import action.ActionSeries;
 import action.AvoidAction;
 
 
 /**
- * The DefensiveStrategy class creates an ActionSeries where the AI will avoid a
- * specified fighter by moving in the opposite direction from that fighter
- * within a certain range for 5 seconds.
+ * The DefensiveStrategy class creates an ActionSeries where the AI will move
+ * toward a specified fighter by following it as the fighter moves for 5
+ * seconds.
  * 
  * @author Hareesh
  */
 public class DefensiveStrategy extends Strategy
 {
-    CombatInstance c;
+
+    public DefensiveStrategy (FighterBody ai, CombatInstance ci)
+    {
+        super(ai, ci);
+
+    }
 
 
     @Override
-    ActionSeries generateAction (CombatInstance c, FighterSprite f)
+    public void initializeGoals ()
     {
-        System.out.println("away");
-        TreeMap<Long, Action> defenseLoop = new TreeMap<Long, Action>();
-        defenseLoop.put((long) 5000, new AvoidAction(f, c.getFighters().get(1)));
+        goals.add(new AvoidGoal(myFighter, c.getFighters().get(0)));
 
-        return new ActionSeries(defenseLoop);
     }
+
+    private class AvoidGoal extends Goal
+    {
+        FighterBody myFighter;
+        FighterBody myEnemy;
+
+
+        public AvoidGoal (FighterBody me, FighterBody enemy)
+        {
+            super(new AvoidAction(me, enemy), 10000);
+            myFighter = me;
+            myEnemy = enemy;
+        }
+
+
+        @Override
+        void updateGoalState ()
+        {
+            if (myFighter.getCurrentLocation()
+                         .distance(myEnemy.getCurrentLocation()) > 200) done =
+                true;
+        }
+
+    }
+
 }

@@ -12,13 +12,13 @@ import npsprite.NodeSprite;
 import npsprite.PlatformBlock;
 import npsprite.SpriteTemplate;
 
+
 /**
  * this is the super class of collision reaction it includes the methods of
  * finding the specific reaction, creating reaction and doing the reaction also
  * it has some basic step of reaction, such as stop and go
  * 
  * @author Donghe
- * 
  */
 public abstract class CollisionKind {
 

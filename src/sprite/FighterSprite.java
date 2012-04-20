@@ -160,44 +160,59 @@ public class FighterSprite extends SpriteTemplate {
 //		Point2D finaldelta = confineBounds(dx, dy);
 //		dx = finaldelta.getX();
 //		dy = finaldelta.getY();
-		super.move(dx, dy);
-		if (dx < 0) {
-			changeDirection(SpriteValues.LEFT);
-		} else if (dx > 0) {
-			changeDirection(SpriteValues.RIGHT);
-		}
-		moveWeapons(dx, dy);
-	}
+        super.move(dx, dy);
+        if (dx < 0)
+        {
+            changeDirection(SpriteValues.LEFT);
+        }
+        else if (dx > 0)
+        {
+            changeDirection(SpriteValues.RIGHT);
+        }
+        moveWeapons(dx, dy);
+    }
 
-	// notifies observer weapons that they need to move dx, dy
-	private void moveWeapons(double dx, double dy) {
-		for (NonPlayerSprite w : myWeapons) {
-			w.move(dx, dy);
-		}
-	}
 
-	public void render(Graphics2D g) {
-		myDisplay.render(g);
-		super.render(g);
-	}
+    // notifies observer weapons that they need to move dx, dy
+    private void moveWeapons (double dx, double dy)
+    {
+        for (NonPlayerSprite w : myWeapons)
+        {
+            w.move(dx, dy);
+        }
+    }
 
-	public void update(long elapsedTime) {
-		if (myHealth <= 0) {
-			this.setActive(false); // PARENT WILL NEED TO CHECK FOR ACTIVE
-		}
-		myDisplay.update(elapsedTime, myHealth);
 
-		move(moveBy.getX(), moveBy.getY());
-		moveBy.setLocation(0, 0); // moveBy only work for one time then set to
-		setCollisionStatus(false);							// zero
-		super.update(elapsedTime);
-	}
-	
-	public void setMass(double mass){
-		myMass=mass;
-	}
-	
-	public double getMass(){
-		return myMass;
-	}
+    public void render (Graphics2D g)
+    {
+        myDisplay.render(g);
+        super.render(g);
+    }
+
+
+    public void update (long elapsedTime)
+    {
+        if (myHealth <= 0)
+        {
+            this.setActive(false); // PARENT WILL NEED TO CHECK FOR ACTIVE
+        }
+        myDisplay.update(elapsedTime, myHealth);
+
+        move(moveBy.getX(), moveBy.getY());
+        moveBy.setLocation(0, 0); // moveBy only work for one time then set to
+        setCollisionStatus(false); // zero
+        super.update(elapsedTime);
+    }
+
+
+    public void setMass (double mass)
+    {
+        myMass = mass;
+    }
+
+
+    public double getMass ()
+    {
+        return myMass;
+    }
 }

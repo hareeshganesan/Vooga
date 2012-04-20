@@ -16,6 +16,7 @@ import action.FollowAction;
  * 
  * @author Hareesh
  */
+@SuppressWarnings("serial")
 public class BasicAIAgent extends AIAgent
 {
 
@@ -25,14 +26,6 @@ public class BasicAIAgent extends AIAgent
                          CombatInstance c)
     {
         super(name, root,display, groupID, c);
-    }
-
-    public BasicAIAgent (String name,
-                         HealthDisplay display,
-                         int groupID,
-                         CombatInstance c)
-    {
-        super(name, display, groupID, c);
     }
 
 

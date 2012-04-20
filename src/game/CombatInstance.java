@@ -257,6 +257,10 @@ import PhysicsEngine.ReactionPush;
 import PhysicsEngine.ReactionRebound;
 import action.QuitAction;
 import ai.AIAgent;
+import camera.Camera;
+import camera.CameraBackground;
+import camera.FollowCamera;
+
 
 public class CombatInstance extends GameState {
     private String DEFAULT_IMAGE = "resources/title.png";

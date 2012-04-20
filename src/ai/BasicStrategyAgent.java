@@ -2,8 +2,9 @@ package ai;
 
 import game.CombatInstance;
 import java.util.TreeMap;
+import npsprite.LimbSprite;
 import sprite.HealthDisplay;
-import action.ActionSeries;
+import action.Action;
 
 
 /**
@@ -15,20 +16,20 @@ import action.ActionSeries;
  * 
  * @author Hareesh
  */
+@SuppressWarnings("serial")
 public class BasicStrategyAgent extends AIAgent
 {
 
-    ActionSeries currentAction;
+    Action currentAction;
+    Strategy strat;
     TreeMap<Double, Strategy> strategies = new TreeMap<Double, Strategy>();
 
-
-    public BasicStrategyAgent (String name,
-                               HealthDisplay display,
-                               int groupID,
-                               CombatInstance c)
+    public BasicStrategyAgent (String name,LimbSprite root,
+                         HealthDisplay display,
+                         int groupID,
+                         CombatInstance c)
     {
-        super(name, display, groupID, c);
-
+        super(name, root,display, groupID, c);
     }
 
 
@@ -41,12 +42,24 @@ public class BasicStrategyAgent extends AIAgent
         currentAction.performAction(elapsedTime);
     }
 
-    private ActionSeries getAction ()
+
+    protected Strategy selectRandomStrategy ()
     {
         double random = Math.random();
-        return strategies.ceilingEntry(random)
-                         .getValue()
-                         .generateAction(this.myLevel, this);
+        return strategies.ceilingEntry(random).getValue();
+    }
+
+
+    private Action getAction ()
+    {
+        if (strat == null || strat.isComplete())
+        {
+            strat = selectRandomStrategy();
+            strat.initializeGoals();
+            System.out.println(strat.getClass().getName());
+        }
+        return strat.generateAction(myLevel, this);
+
     }
 
 
