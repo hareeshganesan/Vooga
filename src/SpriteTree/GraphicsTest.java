@@ -46,7 +46,7 @@ public class GraphicsTest {
 //		return dimg;
 //	}
 	
-	  public static BufferedImage rotate(BufferedImage src, int angle) {
+	  public static BufferedImage rotate(BufferedImage src, double angle) {
           int w = src.getWidth(), h = src.getHeight(), transparency = src
                   .getColorModel().getTransparency();
           
@@ -56,7 +56,7 @@ public class GraphicsTest {
           Graphics2D g = image.createGraphics();
           g.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
                   RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-          g.rotate(Math.toRadians(angle), w/2, h/2);
+          g.rotate(Math.toRadians(angle),  w/2, h/2);
           g.drawImage(src, 0, 0, null);
           g.dispose();
           
