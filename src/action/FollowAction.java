@@ -1,16 +1,16 @@
 package action;
 
-import sprite.FighterSprite;
+import npsprite.FighterBody;
+
+//import sprite.FighterSprite;
 
 
 public class FollowAction implements Action
 {
-    FighterSprite myEnemy;
-    FighterSprite myFighter;
-    boolean done;
+    FighterBody myEnemy;
+    FighterBody myFighter;
 
-
-    public FollowAction (FighterSprite fighter, FighterSprite enemy)
+    public FollowAction (FighterBody fighter, FighterBody enemy)
     {
         myFighter = fighter;
         myEnemy = enemy;

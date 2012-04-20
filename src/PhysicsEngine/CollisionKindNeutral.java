@@ -1,7 +1,9 @@
 package PhysicsEngine;
 
 import java.util.ArrayList;
-import sprite.SpriteTemplate;
+//import sprite.SpriteTemplate;
+
+import npsprite.SpriteTemplate;
 
 
 /**

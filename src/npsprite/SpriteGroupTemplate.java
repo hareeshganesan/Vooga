@@ -1,22 +1,16 @@
-package sprite;
+package npsprite;
 
 import java.util.ArrayList;
 
-
-// import npsprite.FighterSprite;
-// import npsprite.PlatformBlock;
-// import npsprite.SpriteTemplate;
-
-
 /**
  * Better than SpriteGroup given by GoldenT in our engine
-
  * 
  * @author Donghe
+ * 
  */
-@Deprecated
 public class SpriteGroupTemplate {
-	private ArrayList<SpriteTemplate> mySpriteGourp = new ArrayList<SpriteTemplate>();
+	private ArrayList<SpriteTemplate> mySpriteGroup = new ArrayList<SpriteTemplate>();
+	
 	private String myName;
 
 	public SpriteGroupTemplate(String groupName) {
@@ -24,19 +18,19 @@ public class SpriteGroupTemplate {
 	}
 
 	public void addSpriteTemplate(SpriteTemplate s) {
-		mySpriteGourp.add(s);
+		mySpriteGroup.add(s);
 	}
 
 	public SpriteTemplate getSprite(int index) {
-		return mySpriteGourp.get(index);
+		return mySpriteGroup.get(index);
 	}
 
 	public void removeSpriteTemplate(int index) {
-		mySpriteGourp.remove(index);
+		mySpriteGroup.remove(index);
 	}
 
 	public int getSize() {
-		return mySpriteGourp.size();
+		return mySpriteGroup.size();
 	}
 
 	public String getGroupName() {
@@ -44,29 +38,32 @@ public class SpriteGroupTemplate {
 	}
 
 	public ArrayList<SpriteTemplate> getSpriteArray() {
-		return mySpriteGourp;
+		return mySpriteGroup;
 	}
 
+	//TODO: figure out how to make more defaulted for nodesprites too
 	public void addSpriteArray(ArrayList<SpriteTemplate> group) {
 		for (SpriteTemplate s : group) {
-			mySpriteGourp.add(s);
+			mySpriteGroup.add(s);
 		}
 	}
 	
-	public void addFighterSpriteArray(ArrayList<FighterSprite> group) {
-		for (FighterSprite s : group) {
-			mySpriteGourp.add(s);
+	public void addFighterSpriteArray(ArrayList<FighterBody> group) {
+		for (FighterBody s : group) {
+		    for (NodeSprite n:s.getBodyParts()){
+	            mySpriteGroup.add(n);
+		    }
 		}
 	}
 	
 	public void addPlatformBlockArray(ArrayList<PlatformBlock> group) {
 		for (PlatformBlock s : group) {
-			mySpriteGourp.add(s);
+			mySpriteGroup.add(s);
 		}
 	}
 	
 	public void addSpriteGroup(SpriteGroupTemplate group){
-		ArrayList<SpriteTemplate> spriteGourp = group.getSpriteArray();
-		mySpriteGourp.addAll(spriteGourp);
+		ArrayList<SpriteTemplate> spriteGroup = group.getSpriteArray();
+		mySpriteGroup.addAll(spriteGroup);
 	}
 }

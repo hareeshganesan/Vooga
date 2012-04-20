@@ -1,6 +1,8 @@
 package PhysicsEngine;
 
-import sprite.SpriteTemplate;
+import npsprite.SpriteTemplate;
+
+//import sprite.SpriteTemplate;
 
 
 public class ReactionStop extends Reaction

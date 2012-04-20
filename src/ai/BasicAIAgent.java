@@ -2,6 +2,9 @@ package ai;
 
 import game.CombatInstance;
 import java.util.List;
+
+import npsprite.FighterBody;
+import npsprite.LimbSprite;
 import sprite.FighterSprite;
 import sprite.HealthDisplay;
 import action.FollowAction;
@@ -17,6 +20,14 @@ import action.FollowAction;
 public class BasicAIAgent extends AIAgent
 {
 
+    public BasicAIAgent (String name,LimbSprite root,
+                         HealthDisplay display,
+                         int groupID,
+                         CombatInstance c)
+    {
+        super(name, root,display, groupID, c);
+    }
+
     public BasicAIAgent (String name,
                          HealthDisplay display,
                          int groupID,
@@ -28,7 +39,7 @@ public class BasicAIAgent extends AIAgent
 
     public void calculateLocation (long elapsedTime)
     {
-        List<FighterSprite> fs = myLevel.getFighters();
+        List<FighterBody> fs = myLevel.getFighters();
         if (getCurrentLocation().distance(fs.get(0).getCurrentLocation()) > 40)
         {
             FollowAction follow = new FollowAction(this, fs.get(0));

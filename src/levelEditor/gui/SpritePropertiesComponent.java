@@ -4,20 +4,15 @@ package levelEditor.gui;
  * @author Peggy Li (pl59)
  */
 
-public class SpritePropertiesComponent
-{
+public class SpritePropertiesComponent {
 
     private boolean isVisible;
 
-
-    public SpritePropertiesComponent ()
-    {
+    public SpritePropertiesComponent() {
 
     }
 
-
-    public void setVisible (boolean b)
-    {
+    public void setVisible(boolean b) {
         isVisible = b;
     }
 

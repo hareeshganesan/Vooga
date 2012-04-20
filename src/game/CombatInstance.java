@@ -9,10 +9,22 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import javax.swing.JFileChooser;
+
+import npsprite.FighterBody;
+import npsprite.GroupID;
+import npsprite.NodeSprite;
+import npsprite.PlatformBlock;
+import npsprite.SpriteTemplate;
+
 import org.jdom.JDOMException;
-import sprite.FighterSprite;
-import sprite.PlatformBlock;
-import sprite.SpriteGroupTemplate;
+//import sprite.FighterSprite;
+//import sprite.PlatformBlock;
+//import sprite.SpriteGroupTemplate;
+import npsprite.SpriteGroupTemplate;
+import camera.Camera;
+import camera.CameraBackground;
+import camera.FollowCamera;
+import events.HealthEvent;
 import PhysicsEngine.Collision;
 import PhysicsEngine.CollisionKind;
 import PhysicsEngine.CollisionKindEnemy;
@@ -28,8 +40,7 @@ import camera.CameraBackground;
 import camera.FollowCamera;
 
 
-public class CombatInstance extends GameState
-{
+public class CombatInstance extends GameState {
     private String DEFAULT_IMAGE = "resources/title.png";
 
     // Engines
@@ -38,27 +49,27 @@ public class CombatInstance extends GameState
     Camera camera;
 
     // Sprites
-    ArrayList<FighterSprite> playerSprites;
+    // ArrayList<FighterSprite> playerSprites;
+    // ArrayList<PlatformBlock> platform;
+    ArrayList<FighterBody> playerSprites;
     ArrayList<PlatformBlock> platform;
+    ArrayList<SpriteTemplate> spawns;
 
     // Collision
     private Collision myCollision;
+    private SpriteGroupTemplate groupSprite;
 
     CameraBackground bg;
 
-
-    public CombatInstance (MainGame engine)
-    {
+    public CombatInstance(MainGame engine) {
         super(engine);
         myEngine = engine;
         myHandler = new InputHandler();
         camera = new FollowCamera();
     }
 
-
     @Override
-    public void initResources ()
-    {
+    public void initResources() {
 
         nextState = (GameState) myEngine.getGame(myEngine.getMain());
 
@@ -68,19 +79,13 @@ public class CombatInstance extends GameState
         fc.setApproveButtonText("load game file");
         int returnVal = fc.showOpenDialog(null);
         myHandler.addKey(KeyEvent.VK_Q, new QuitAction(myEngine));
-        if (returnVal == JFileChooser.APPROVE_OPTION)
-        {
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
             File file = fc.getSelectedFile();
-            try
-            {
+            try {
                 lof.parseFile(file);
-            }
-            catch (IOException e)
-            {
+            } catch (IOException e) {
                 e.printStackTrace();
-            }
-            catch (JDOMException e)
-            {
+            } catch (JDOMException e) {
                 e.printStackTrace();
             }
         }
@@ -92,19 +97,15 @@ public class CombatInstance extends GameState
         // returnVal);
         //
         // TODO: MAKE IT SO DIFFERENT FIGHTERS CAN HAVE DIFFERENT DISPLAYS?
-        try
-        {
-            playerSprites = lof.createFighters();
-            platform = lof.createBlocks();
-        }
-        catch (JDOMException e)
-        {
+        try {
+            playerSprites = lof.createNPFighters();
+            platform = lof.createNPBlocks();
+        } catch (JDOMException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
         String back = lof.getBackground();
-        if (back == null)
-        {
+        if (back == null) {
             back = DEFAULT_IMAGE;
         }
         BufferedImage b = getImage(back);
@@ -117,8 +118,8 @@ public class CombatInstance extends GameState
         // CollisonKind later)
         //
         // CollisionKind means the particular kind of the collison
-        // CollisionKindFriends is used when collision happens between 
-        // FighterSprites or AI 
+        // CollisionKindFriends is used when collision happens between
+        // FighterSprites or AI
         // CollisionKindEnemy is used when collision happens between one
         // FighterSprite and one WeaponSprite
         // CollisionKindNeutral is used when collision happens if there is a
@@ -130,58 +131,55 @@ public class CombatInstance extends GameState
         // you can create any new concrete CollisionKind or concrete Reaction
         // then add it into myCollision
 
-        SpriteGroupTemplate groupSprite = new SpriteGroupTemplate("team");
+        groupSprite = new SpriteGroupTemplate("team");
         groupSprite.addFighterSpriteArray(playerSprites);
         groupSprite.addPlatformBlockArray(platform);
         playerSprites.get(0).setMass(200.0);
 
-        ArrayList<CollisionKind> CollisionkindList =
-            new ArrayList<CollisionKind>();
-        CollisionkindList.add(new CollisionKindFriends(new ReactionMomentumConservation()));
+        ArrayList<CollisionKind> CollisionkindList = new ArrayList<CollisionKind>();
+        CollisionkindList.add(new CollisionKindFriends(
+                new ReactionMomentumConservation()));
         CollisionkindList.add(new CollisionKindEnemy(new ReactionPush()));
         CollisionkindList.add(new CollisionKindNeutral(new ReactionRebound()));
 
         myCollision = new Collision(groupSprite, CollisionkindList);
 
     }
-
+    //TODO: remove hard-coding, this is for testing on newsample.xml 
+    private void addCollisionActions(){
+        for (FighterBody f:playerSprites){
+            for (NodeSprite n:f.getBodyParts()){
+                n.addCollisionEvent(GroupID.POWER_UP, new HealthEvent());
+            }
+        }
+        
+        
+    }
 
     @Override
-    public void render (Graphics2D pen)
-    {
+    public void render(Graphics2D pen) {
         camera.render(pen, bg);
-        bg.render(pen,
-                  camera,
-                  camera.getX(),
-                  camera.getY(),
-                  camera.getX(),
-                  camera.getY(),
-                  camera.getHeight(),
-                  camera.getWidth());
+        bg.render(pen, camera, camera.getX(), camera.getY(), camera.getX(),
+                camera.getY(), camera.getHeight(), camera.getWidth());
         // bg.render(pen);
 
         bg.render(pen);
-        for (FighterSprite sprite : playerSprites)
+        for (FighterBody sprite : playerSprites)
             sprite.render(pen);
-        for (PlatformBlock pb : platform)
-        {
+        for (PlatformBlock pb : platform) {
             pb.render(pen);
         }
     }
 
-
     @Override
-    public void update (long elapsedTime)
-    {
+    public void update(long elapsedTime) {
         myHandler.update(elapsedTime, myEngine);
-        camera.update(playerSprites, bg);
+//        camera.update(playerSprites, bg);
         myHandler.update(elapsedTime, myEngine);
         bg.update(elapsedTime);
 
-        for (FighterSprite sprite : playerSprites)
-        {
-            if (AIAgent.class.isAssignableFrom(sprite.getClass()))
-            {
+        for (FighterBody sprite : playerSprites) {
+            if (AIAgent.class.isAssignableFrom(sprite.getClass())) {
                 AIAgent ai = (AIAgent) sprite;
                 ai.calculateLocation(elapsedTime);
             }
@@ -189,8 +187,7 @@ public class CombatInstance extends GameState
 
         myCollision.checkGroupCollision();
 
-        for (FighterSprite sprite : playerSprites)
-        {
+        for (FighterBody sprite : playerSprites) {
             sprite.update(elapsedTime);
         }
 
@@ -199,25 +196,31 @@ public class CombatInstance extends GameState
 
     }
 
-
-    public InputHandler getMyHandler ()
-    {
+    public InputHandler getMyHandler() {
         return myHandler;
     }
 
-
-    public List<FighterSprite> getFighters ()
-    {
+    public List<FighterBody> getFighters() {
         return Collections.unmodifiableList(playerSprites);
 
     }
 
-
     @Override
-    public void transitionState ()
-    {
-        if (nextState != null) myEngine.nextGame = this.nextState;
-        else myEngine.nextGame = this.lastState;
+    public void transitionState() {
+        if (nextState != null)
+            myEngine.nextGame = this.nextState;
+        else
+            myEngine.nextGame = this.lastState;
         super.finish();
+    }
+
+    /*
+     * TODO IT'D BE A LOT EASIER FOR THE SPRITE TO ADD ITSELF TO A GROUP
+     * (depending on groupID) INSIDE OF THE SPAWNS-PROPERTY, AND HAVE COLLISIONS
+     * AUTOMATICALLY UPDATE ITSELF
+     */
+    public void addSprite(SpriteTemplate s) {
+        spawns.add(s);
+        groupSprite.addSpriteTemplate(s);
     }
 }

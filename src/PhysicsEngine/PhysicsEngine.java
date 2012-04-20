@@ -1,6 +1,7 @@
 package PhysicsEngine;
 
-import sprite.SpriteTemplate;
+//import sprite.SpriteTemplate;
+import npsprite.SpriteTemplate;
 import action.MotionAction;
 
 
@@ -33,6 +34,10 @@ public abstract class PhysicsEngine
         myVectorY = motionAction.getVectorY();
     }
 
+		myFighterSprite = motionAction.getFighterBody();
+		myVectorX = motionAction.getVectorX();
+		myVectorY = motionAction.getVectorY();
+	}
 
     public abstract void process (long elapsedTime);
 }

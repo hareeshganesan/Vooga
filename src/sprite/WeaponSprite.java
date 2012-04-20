@@ -3,6 +3,7 @@ package sprite;
 import java.awt.image.BufferedImage;
 
 
+@Deprecated
 public class WeaponSprite extends NonPlayerSprite
 {
 

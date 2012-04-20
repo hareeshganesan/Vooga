@@ -1,7 +1,9 @@
 package action;
 
 import java.awt.geom.Point2D;
-import sprite.FighterSprite;
+
+import npsprite.FighterBody;
+//import sprite.FighterSprite;
 import PhysicsEngine.FightPhysicsEngine;
 
 
@@ -17,11 +19,9 @@ public class MotionAction implements Action
 {
     double x_direction;
     double y_direction;
-    FighterSprite myFighter;
-    boolean done;
+    FighterBody myFighter;
 
-
-    public MotionAction (FighterSprite fighter, Point2D point)
+    public MotionAction (FighterBody fighter, Point2D point)
     {
         myFighter = fighter;
         double dist = myFighter.getCurrentLocation().distance(point);
@@ -33,8 +33,7 @@ public class MotionAction implements Action
 
     }
 
-
-    public MotionAction (FighterSprite r, double x, double y)
+    public MotionAction (FighterBody r, double x, double y)
     {
         myFighter = r;
         x_direction = x;
@@ -49,17 +48,9 @@ public class MotionAction implements Action
         physicsEngine.process(elapsed_time);
         done = true;
     }
-
-
-    public boolean isDone (long elapsedTime)
-    {
-        return done;
-    }
-
-
-    public FighterSprite getFighterSprite ()
-    {
-        return myFighter;
+    
+    public FighterBody getFighterBody(){
+    	return myFighter;
     }
 
 
@@ -73,28 +64,16 @@ public class MotionAction implements Action
     {
         return y_direction;
     }
-
-
-    public static MotionAction LEFT (FighterSprite fighter)
-    {
+    public static MotionAction LEFT(FighterBody fighter){
         return new MotionAction(fighter, -1, 0);
     }
-
-
-    public static MotionAction RIGHT (FighterSprite fighter)
-    {
+    public static MotionAction RIGHT(FighterBody fighter){
         return new MotionAction(fighter, 1, 0);
     }
-
-
-    public static MotionAction UP (FighterSprite fighter)
-    {
+    public static MotionAction UP(FighterBody fighter){
         return new MotionAction(fighter, 0, -1);
     }
-
-
-    public static MotionAction DOWN (FighterSprite fighter)
-    {
+    public static MotionAction DOWN(FighterBody fighter){
         return new MotionAction(fighter, 0, 1);
     }
 

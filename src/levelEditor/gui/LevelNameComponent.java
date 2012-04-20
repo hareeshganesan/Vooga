@@ -15,37 +15,29 @@ import levelEditor.mvc.Controller;
  */
 
 @SuppressWarnings("unused")
-public class LevelNameComponent
-{
+public class LevelNameComponent {
 
     private static final int BOX_WIDTH = 12;
 
     private Controller myController;
     private JTextField myLevelName;
 
-
-    public LevelNameComponent (Controller c)
-    {
+    public LevelNameComponent(Controller c) {
         myController = c;
     }
 
-
-    public JComponent create ()
-    {
+    public JComponent create() {
         JPanel panel = new JPanel();
 
         JLabel nameLabel = new JLabel("Level Name: ");
         panel.add(nameLabel, BorderLayout.WEST);
 
         myLevelName = new JTextField("new_level", BOX_WIDTH);
-        myLevelName.addActionListener(new ActionListener()
-        {
+        myLevelName.addActionListener(new ActionListener() {
 
-            public void actionPerformed (ActionEvent e)
-            {
+            public void actionPerformed(ActionEvent e) {
                 String name = myLevelName.getText();
-                if (!myController.levelNameAvailable(name))
-                {
+                if (!myController.levelNameAvailable(name)) {
 
                     System.out.println(name + " is already taken");
 

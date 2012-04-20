@@ -5,6 +5,7 @@ import com.golden.gamedev.object.GameFont;
 import com.golden.gamedev.object.Timer;
 
 
+@Deprecated
 public class BattleTimer
 {
     GameFont font;

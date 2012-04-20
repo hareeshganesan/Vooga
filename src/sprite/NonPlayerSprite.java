@@ -4,12 +4,13 @@ import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 
 
-// default speed is 0 - stationary
-// TODO: compareto?
-// most basic sprite
-// TODO How will non-player sprites interact with physics engine?
-public abstract class NonPlayerSprite extends SpriteTemplate
-{
+//default speed is 0 - stationary
+//TODO: compareto?
+//most basic sprite
+//TODO How will non-player sprites interact with physics engine?
+
+@Deprecated
+public abstract class NonPlayerSprite extends SpriteTemplate {
 
     //is this necessary?
     protected boolean isHit;

@@ -5,11 +5,11 @@ package npsprite;
  * for now, subclass if you want to add more stuff
  * 
  * @author Wendy
+ * @deprecated only used for interfaces, interfaces are deprecated now
  */
-public class SpriteID
-{
-    public enum GroupID
-    {
+@Deprecated
+public class SpriteID {
+    public enum GroupID {
         PLAYER_1, PLAYER_2, PLAYER_AI, PLATFORM, POWER_UP, UNCATEGORIZED
     }
 
