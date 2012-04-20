@@ -10,7 +10,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.PriorityQueue;
 
-
 public class Animation {
 	private ArrayList<Motion> myActiveMotions;
 	private HashMap<Long, Motion> mySequence; // long => start time of animation

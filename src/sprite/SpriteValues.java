@@ -14,9 +14,9 @@ public class SpriteValues
 //    static final int NORM = 6; // no action
     //
 
-    public enum Id{
+    public enum Id
+    {
         PLAYER_1, PLAYER_2, POWER_UP, NEUTRAL
     }
-    
 
 }

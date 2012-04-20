@@ -4,6 +4,7 @@ import npsprite.SpriteTemplate;
 import npsprite.properties.DamageProperty;
 import npsprite.properties.HealthProperty;
 
+
 /**
  * This event involves removing/adding health according to other sprite's
  * "damage" field, if it has one

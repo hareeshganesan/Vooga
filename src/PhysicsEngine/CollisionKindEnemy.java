@@ -6,12 +6,12 @@ import npsprite.SpriteTemplate;
 
 //import sprite.SpriteTemplate;
 
+
 /**
  * Not implemented yet. Would like to deal with the collision between two
  * sprites from different group
  * 
  * @author Donghe
- * 
  */
 public class CollisionKindEnemy extends CollisionKind {
 

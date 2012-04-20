@@ -19,11 +19,13 @@ public class PlatformBlock extends NonPlayerSprite
         super(b);
     }
 
+
     @Override
     public void collisionAction (int otherGroup)
     {
         //do nothing
     }
+
 
     public void move (double dx, double dy)
     {

@@ -26,6 +26,7 @@ import ai.BasicAIAgent;
 import ai.BasicStrategyAgent;
 import ai.DefensiveStrategy;
 import ai.OffensiveStrategy;
+import ai.SituationalStrategyAgent;
 
 
 public class LevelObjectsFactory
@@ -96,82 +97,30 @@ public class LevelObjectsFactory
             fs.add(tree);
         }
         
-//        fs.add(createAIFighter());
+        fs.add(createAIStrategyFighter());
         return fs;
     }
 
-//    @Deprecated
-//    public ArrayList<FighterSprite> createFighters () throws JDOMException
-//    {
-//        List<Element> fighters = findAllInstancesOfElement("Fighter");
-//        ArrayList<FighterSprite> fs = new ArrayList<FighterSprite>();
-//
-//        //ArrayList<HealthDisplay> displays = new ArrayList<HealthDisplay>();
-//        //TODO: resolve playerNum and playerIndex
-//        int playerNum = 1;
-//        int playerIndex = 0;
-//        //so far, only handles two player displays
-//        for (Element e : fighters)
-//        {
-//            HealthDisplay dis;
-//            if (playerNum == 1)
-//            {
-//                //display bar for the first player
-//                dis = new HealthDisplay(10, 10, c.getWidth() / 2 - 30);
-//
-//                playerNum += 1;
-//
-//            }
-//            else
-//            {
-//                dis =
-//                    new HealthDisplay((c.getWidth() / 2),
-//                                      10,
-//                                      c.getWidth() / 2 - 30);
-//            }
-//
-//            FighterSprite s = new FighterSprite(e.getChildText("name"), dis, 0);
-//
-//            mapFighter(playerIndex, s);
-//            playerIndex++;
-//
-//            s.setMaxHealth(Integer.parseInt(e.getChildText("health")));
-//            s.setLocation(Double.parseDouble(e.getChildText("x")),
-//                          Double.parseDouble(e.getChildText("y")));
-//            s.setDefaultSpeed(Double.parseDouble(e.getChildText("speed")));
-//            s.setImages(c.getImages(e.getChildText("img"),1,1));
-//
-//            fs.add(s);
-//        }
-//        
-//        fs.add(createAIStrategyFighter());
-//        return fs;
-//    }
-
-
     private AIAgent createAIFighter(){
-        BasicAIAgent ai = new BasicAIAgent("ai1", new HealthDisplay(50,50, c.getWidth()/2 -30),0,c);
-        LimbSprite body=new LimbSprite("ai1",
-                c.getImage("resources/flame.png"),
-                GroupID.PLAYER_AI, 400, 500);
+        LimbSprite body=new LimbSprite("ai1body",
+                                       c.getImage("resources/flame.png"),
+                                       GroupID.PLAYER_AI, 400, 500);
+        BasicAIAgent ai = new BasicAIAgent("ai1main",body, new HealthDisplay(50,50, c.getWidth()/2 -30),0,c);
+        
         ai.setRoot(body);
         return ai;
     }
     
-//    @Deprecated
-//    private AIAgent createAIStrategyFighter(){
-//        BasicStrategyAgent ai = new BasicStrategyAgent("ai1", new HealthDisplay(50,50, c.getWidth()/2 -30),0,c);
-//        ai.setMaxHealth(60);
-//        ai.setLocation(400, 500);
-//        ai.setDefaultSpeed(.3);
-//        ai.setImages(c.getImages("resources\\flame.png",1,1));
-//        
-//        ai.addStrategy(1, new OffensiveStrategy());
-//        ai.addStrategy(.5, new DefensiveStrategy());
-//        return ai;
-//    }
+    private AIAgent createAIStrategyFighter(){
+        LimbSprite body=new LimbSprite("ai2body",
+                                       c.getImage("resources/flame.png"),
+                                       GroupID.PLAYER_AI, 400, 500);
+        BasicStrategyAgent ai = new SituationalStrategyAgent("ai2main",body, new HealthDisplay(50,50, c.getWidth()/2 -30),0,c);
 
-    //TODO - actions
+        ai.setRoot(body);
+        return ai;
+    }
+
     private void mapFighter (int playerIndex, FighterBody s)
     {
         InputHandler h = c.getMyHandler();
@@ -182,16 +131,6 @@ public class LevelObjectsFactory
         h.addKey(map[3], MotionAction.RIGHT(s));
     }
 
-//    @Deprecated
-//    private void mapFighter (int playerIndex, FighterSprite s)
-//    {
-//        InputHandler h = c.getMyHandler();
-//        int[] map = InputHandler.defaultMapping(playerIndex);
-//        h.addKey(map[0], MotionAction.UP(s));
-//        h.addKey(map[1], MotionAction.DOWN(s));
-//        h.addKey(map[2], MotionAction.LEFT(s));
-//        h.addKey(map[3], MotionAction.RIGHT(s));
-//    }
 
     public ArrayList<PlatformBlock> createNPBlocks () throws JDOMException
     {

@@ -15,12 +15,13 @@ import PhysicsEngine.FightPhysicsEngine;
  * 
  * @author Hareesh
  */
-public class MotionAction extends Action
+public class MotionAction implements Action
 {
     double x_direction;
     double y_direction;
     FighterBody myFighter;
-
+    boolean done;
+    
     public MotionAction (FighterBody fighter, Point2D point)
     {
         myFighter = fighter;
@@ -39,24 +40,30 @@ public class MotionAction extends Action
         x_direction = x;
         y_direction = y;
     }
-    
 
 
     @Override
     public void performAction (long elapsed_time)
     {
-    	 FightPhysicsEngine physicsEngine=new FightPhysicsEngine(this);
-         physicsEngine.process(elapsed_time);
+        FightPhysicsEngine physicsEngine = new FightPhysicsEngine(this);
+        physicsEngine.process(elapsed_time);
+        done = true;
     }
     
     public FighterBody getFighterBody(){
     	return myFighter;
     }
-    public double getVectorX(){
-    	return x_direction;
+
+
+    public double getVectorX ()
+    {
+        return x_direction;
     }
-    public double getVectorY(){
-    	return y_direction;
+
+
+    public double getVectorY ()
+    {
+        return y_direction;
     }
     public static MotionAction LEFT(FighterBody fighter){
         return new MotionAction(fighter, -1, 0);
@@ -70,4 +77,11 @@ public class MotionAction extends Action
     public static MotionAction DOWN(FighterBody fighter){
         return new MotionAction(fighter, 0, 1);
     }
+
+    @Override
+    public boolean isDone (long elapsedTime)
+    {
+        return done;
+    }
+
 }

@@ -152,7 +152,9 @@ public class FighterBody extends SpriteTemplate{
         myDisplay.render(pen);
     }
 
-    public void update(long elapsedTime) {
+
+    public void update (long elapsedTime)
+    {
         root.update(elapsedTime);
         if (getHealth() <= 0) {
             root.setActive(false); // dead, have game check for this for end of

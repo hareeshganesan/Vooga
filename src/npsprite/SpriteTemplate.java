@@ -27,7 +27,9 @@ public class SpriteTemplate extends Sprite implements Cloneable{
     private boolean myCollisionStatus=false;
     protected Point2D moveBy=new Point2D.Double();
 
-    public SpriteTemplate(GroupID g) {
+
+    public SpriteTemplate (GroupID g)
+    {
         super();
         myID=g;
     }
@@ -38,7 +40,8 @@ public class SpriteTemplate extends Sprite implements Cloneable{
     /**
      * Creates new Sprite with specified image and location.
      */
-    public SpriteTemplate(BufferedImage image, GroupID g, double d, double e) {
+    public SpriteTemplate (BufferedImage image, GroupID g, double d, double e)
+    {
         super(image, d, e);
         myID=g;
     }
@@ -137,13 +140,15 @@ public class SpriteTemplate extends Sprite implements Cloneable{
 
     
     @Override
-    public void render(Graphics2D pen) {
-        if (this.isActive()) {
+    public void render (Graphics2D pen)
+    {
+        if (this.isActive())
+        {
             super.render(pen);
         }
     }
 
-    @Override
+
     public void update(long elapsedTime) {
         if (this.isActive()) {
 //            if (moveBy.getX()!=0 || moveBy.getY()!=0){

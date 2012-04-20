@@ -2,7 +2,9 @@ package events;
 
 import npsprite.SpriteTemplate;
 
-public class InactiveEvent extends CollisionEvent{
+
+public class InactiveEvent extends CollisionEvent
+{
     @Override
     public void performAction(SpriteTemplate me, SpriteTemplate o) {
         System.out.println("inactivating: "+me);

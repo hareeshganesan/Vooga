@@ -2,9 +2,10 @@ package sprite;
 
 import java.util.ArrayList;
 
-//import npsprite.FighterSprite;
-//import npsprite.PlatformBlock;
-//import npsprite.SpriteTemplate;
+
+// import npsprite.FighterSprite;
+// import npsprite.PlatformBlock;
+// import npsprite.SpriteTemplate;
 
 
 /**
@@ -12,7 +13,6 @@ import java.util.ArrayList;
 
  * 
  * @author Donghe
- * 
  */
 @Deprecated
 public class SpriteGroupTemplate {

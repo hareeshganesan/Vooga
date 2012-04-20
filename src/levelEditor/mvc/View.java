@@ -7,6 +7,7 @@ import javax.swing.JOptionPane;
 import levelEditor.gui.LevelSetupComponent;
 import levelEditor.gui.SaveLevelComponent;
 import levelEditor.gui.SpriteListComponent;
+import levelEditor.gui.VisualComponent;
 
 
 
@@ -19,7 +20,7 @@ import levelEditor.gui.SpriteListComponent;
 @SuppressWarnings({"serial"})
 public class View extends JFrame {
 
-	private static final Dimension SIZE = new Dimension(600, 200);
+	private static final Dimension SIZE = new Dimension(600, 600);
 	
 	private Controller myController;
 	
@@ -40,10 +41,13 @@ public class View extends JFrame {
 		// EAST
 		
 		// CENTER
-		
+		add (new VisualComponent(this.getGraphics()), BorderLayout.CENTER);
 		
 		
 		setSize(SIZE);
+		//set pop-up window centered relative to screen
+		setLocationRelativeTo(null);
+		
 		setVisible(true);
 	}
 	

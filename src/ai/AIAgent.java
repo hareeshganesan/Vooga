@@ -30,17 +30,10 @@ public abstract class AIAgent extends FighterBody
         myLevel = c;
     }
 
-    public AIAgent (String name,
-                    HealthDisplay display,
-                    int groupID,
-                    CombatInstance c)
-    {
-        super(null, name, display);
-        myLevel = c;
-    }
 
-    abstract public void calculateLocation(long elapsedTime);
-    
+    abstract public void calculateLocation (long elapsedTime);
+
+
     public void update (long elapsedTime)
     {
         super.update(elapsedTime);

@@ -71,16 +71,23 @@ public class SpriteClassFinder {
 			className = className.substring(lastBackslash + 1, lastPeriod);
 		
 			try {
-				Class c = Class.forName(url.toURI().toString(), true, loader);
+				//Class c = Class.forName(url.toURI().toString(), true, null);
+				
+				
+				Class c = Class.forName(className);
+				ClassLoader load = null;
+				System.out.println(load == null);
 				
 				mySpriteClasses.add(Class.forName(url.toString()));
+				//System.out.println(mySpriteClasses.size() + " classes found");
 			} catch (ClassNotFoundException e) {
 				System.out.println(e.getCause());
 				e.printStackTrace();
 			} 
-			catch (URISyntaxException e) {
+	
+			/*catch (URISyntaxException e) {
 				e.printStackTrace();
-			}
+			}*/
 			
 		}
 	}

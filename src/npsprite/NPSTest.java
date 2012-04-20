@@ -29,12 +29,15 @@ public class NPSTest extends Game {
     private HealthSprite power;
     private Graphics2D myPen;
 
+
     @Override
-    public void initResources() {
+    public void initResources ()
+    {
         // bg = new Background();
 
-        power = new HealthSprite(getImage("resources/block.png"),
-                GroupID.UNCATEGORIZED);
+        power =
+            new HealthSprite(getImage("resources/block.png"),
+                             GroupID.UNCATEGORIZED);
         power.setLocation(400, 300);
 
         BufferedImage imgTorso = getImage("src/resources/bodyParts/torso.png");
@@ -53,6 +56,7 @@ public class NPSTest extends Game {
         ((HealthProperty) myTree.getHealthProperty()).addHealth(-25);
     }
 
+
     @Override
     public void render(Graphics2D pen) {
         myPen=pen;
@@ -62,8 +66,10 @@ public class NPSTest extends Game {
         power.render(pen);
     }
 
+
     @Override
-    public void update(long elapsedTime) {
+    public void update (long elapsedTime)
+    {
         myTree.update(elapsedTime);
         power.update(elapsedTime);if(keyDown(KeyEvent.VK_LEFT)){
             myTree.move(myPen,-1, 0); 
@@ -92,7 +98,9 @@ public class NPSTest extends Game {
         System.out.println(power.isActive());
     }
 
-    public static void main(String[] args) {
+
+    public static void main (String[] args)
+    {
         GameLoader loader = new GameLoader();
         loader.setup(new NPSTest(), new Dimension(800, 600), false);
         loader.start();

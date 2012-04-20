@@ -6,15 +6,14 @@ import npsprite.SpriteTemplate;
 //import sprite.SpriteTemplate;
 import action.MotionAction;
 
+
 /**
- * 
  * The fighting physics engine Calculation the new location of the sprite check
  * whether there is a collision if the sprite moves in this way if there is a
  * collision then have a collision reaction check whether there is out of bound
  * if yes we need to make the sprite move to the bound instead of out of bound
  * 
  * @author Donghe
- * 
  */
 public class FightPhysicsEngine extends PhysicsEngine {
 

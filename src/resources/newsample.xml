@@ -3,7 +3,7 @@
 <name>torso</name>
 <id>PLAYER_1</id>
 <health>500</health>
-<speed>0.1</speed>
+<speed>0.2</speed>
 <x>0</x>
 <y>0</y>
 <img>resources/flame.png</img>
