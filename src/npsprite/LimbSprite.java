@@ -15,7 +15,7 @@ import npsprite.properties.PropertyObject;
 
 //for limb nodes on fighter sprites only
 public class LimbSprite extends NodeSprite{
-    protected static FighterBody myPointer;
+    protected FighterBody myPointer;
     
     private BufferedImage myCurrImage;
     protected BufferedImage myOrigImage;
@@ -33,17 +33,30 @@ public class LimbSprite extends NodeSprite{
     double damageMultiplier=1; // if this node is arm, damageMultiplier less than
                              // if node were torso
 
-
-    public LimbSprite(String name, BufferedImage image, GroupID g, double x, double y,int baseTheta){
+    /**
+     * constructor for the torso (stored as root under fighterbody)
+     */
+    public LimbSprite(String name, BufferedImage image, GroupID g, double x, double y){
         super(image,g,x,y);
         this.myName = name;
         this.myOrigImage = image;
-        this.theta = baseTheta;
-        this.dx = x;
-        this.dy = y;
+//        this.theta = baseTheta;
+//        this.dx = x;
+//        this.dy = y;
         
         this.addProperty(DamageProperty.getName(),new DamageProperty(DAMAGE_DEALT*damageMultiplier));
     }
+    
+    /**
+     * constructor for non-root limbs
+     * @param name
+     * @param image
+     * @param parent
+     * @param g
+     * @param x
+     * @param y
+     * @param baseTheta
+     */
     public LimbSprite(String name, BufferedImage image, NodeSprite parent,GroupID g, double x, double y,int baseTheta){
         super(image,parent.getGroupID(), parent.getX()+x, parent.getY()+y);
         this.myName = name;
@@ -108,7 +121,6 @@ public class LimbSprite extends NodeSprite{
     }
 
     public void render(Graphics2D pen,double baseX, double baseY, int baseTheta){
-        
         super.render(pen);
         
         double dx =Math.cos(Math.toRadians(baseTheta)) * this.dx - Math.sin(Math.toRadians(baseTheta)) * this.dy;
@@ -119,5 +131,9 @@ public class LimbSprite extends NodeSprite{
         for(NodeSprite limb: this.children){
             ((LimbSprite)limb).render(pen, (baseX + dx), (baseY + dy), baseTheta);
         }
+    }
+
+    public FighterBody getMyPointer() {
+        return myPointer;
     }
 }

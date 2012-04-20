@@ -1,5 +1,8 @@
 package PhysicsEngine;
-import sprite.SpriteTemplate;
+
+import npsprite.SpriteTemplate;
+
+//import sprite.SpriteTemplate;
 
 public  abstract class  Reaction {
 	protected FightPhysicsEngine myPhysicsEngine;

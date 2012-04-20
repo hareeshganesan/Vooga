@@ -1,8 +1,11 @@
 package PhysicsEngine;
 
 import java.util.ArrayList;
-import sprite.SpriteGroupTemplate;
-import sprite.SpriteTemplate;
+//import sprite.SpriteGroupTemplate;
+//import sprite.SpriteTemplate;
+
+import npsprite.SpriteGroupTemplate;
+import npsprite.SpriteTemplate;
 
 /**
  * This is the basic class for collision In this class we check whether there is

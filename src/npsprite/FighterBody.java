@@ -16,19 +16,21 @@ import events.CollisionEvent;
 
 //THIS IS A POINTER TO THE TOP OF THE TREE THAT REPRESENTS A PLAYER
 //TODO: reorganize, make it subclass of spritetemplate?
-public class FighterBody {
+public class FighterBody extends SpriteTemplate{
 
     private String myName;
     private HealthProperty myHealth; // default placeholder
     private DirectionProperty myDirection;
-    private double myMass; 
     
     private HealthDisplay myDisplay;
     LimbSprite root; //root must be a limb
+    
+    private Graphics2D myPen;
 
     private HashMap<String, NodeSprite> myMap;
 
     public FighterBody(LimbSprite root, String name, HealthDisplay display) {
+        super(root.getGroupID());
         this.root = root;
         root.setFighter(this);
         myName = name;
@@ -62,20 +64,15 @@ public class FighterBody {
 
     public void move(Graphics2D pen, double moveX, double moveY) {
         if (root != null) {
+//            System.out.println(moveX+" "+moveY);
             root.render(pen, root.getX() + moveX, root.getY() + moveY, 0);
         }
-
+        
         if (moveX < 0) {
             myDirection.setDirection(SpriteValues.LEFT);
         } else if (moveY > 0) {
             myDirection.setDirection(SpriteValues.RIGHT);
         }
-    }
-    public void setMass(double mass){
-        myMass=mass;
-    }
-    public double getMass(){
-        return myMass;
     }
     
     public void setHealth(double h){
@@ -106,6 +103,10 @@ public class FighterBody {
         return root.getY();
     }
 
+    public void setRoot(LimbSprite root){
+        this.root=root;
+        root.setFighter(this);
+    }
     public LimbSprite getRoot() {
         return root;
     }
@@ -144,7 +145,9 @@ public class FighterBody {
     }
 
 
+    @Override
     public void render(Graphics2D pen) {
+        myPen=pen;
         root.render(pen, root.getX(), root.getY(), 0);
         myDisplay.render(pen);
     }
@@ -155,7 +158,14 @@ public class FighterBody {
             root.setActive(false); // dead, have game check for this for end of
                                    // level
         }
+
         myDisplay.update(elapsedTime, (int) getHealth());
+        if (moveBy.getX()!=0 || moveBy.getY()!=0){
+            move(myPen, moveBy.getX(), moveBy.getY());
+        }
+        moveBy.setLocation(0, 0); // moveBy only work for one time then set to
+        setCollisionStatus(false); // zero
+        super.update(elapsedTime);
     }
 
 

@@ -1,7 +1,9 @@
 package PhysicsEngine;
 
 import java.awt.geom.Point2D;
-import sprite.SpriteTemplate;
+
+import npsprite.SpriteTemplate;
+//import sprite.SpriteTemplate;
 import action.MotionAction;
 
 /**
@@ -51,6 +53,7 @@ public class FightPhysicsEngine extends PhysicsEngine {
 		if (isOutBottom(y))
 			finalY = -10;
 
+//		System.out.println(finalX+","+finalY);
 		myFighterSprite.setNextLocationIncrement(new Point2D.Double(finalX,
 				finalY));
 

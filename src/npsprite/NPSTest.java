@@ -27,6 +27,7 @@ public class NPSTest extends Game {
     private ArrayList<SpriteTemplate> myGroups;
     private FighterBody myTree;
     private HealthSprite power;
+    private Graphics2D myPen;
 
     @Override
     public void initResources() {
@@ -38,7 +39,7 @@ public class NPSTest extends Game {
 
         BufferedImage imgTorso = getImage("src/resources/bodyParts/torso.png");
         LimbSprite torso = new LimbSprite("torso", imgTorso, GroupID.PLAYER_1,
-                5, 5, 0);
+                50,50);
 
         InactiveEvent pevent = new InactiveEvent();// TODO: SHOULD I CHANGE
                                                    // THESE INTO STATIC? IT'S A
@@ -54,6 +55,7 @@ public class NPSTest extends Game {
 
     @Override
     public void render(Graphics2D pen) {
+        myPen=pen;
         pen.setColor(Color.WHITE);
         pen.fillRect(0, 0, getWidth(), getHeight());
         myTree.render(pen);
@@ -63,19 +65,19 @@ public class NPSTest extends Game {
     @Override
     public void update(long elapsedTime) {
         myTree.update(elapsedTime);
-        power.update(elapsedTime);
-        // if (keyDown(KeyEvent.VK_RIGHT)) {
-        // myTree.move(1, 0);
-        // }
-        // if (keyDown(KeyEvent.VK_LEFT)) {
-        // myTree.move(-1, 0);
-        // }
-        // if (keyDown(KeyEvent.VK_UP)) {
-        // myTree.move(0, -1);
-        // }
-        // if (keyDown(KeyEvent.VK_DOWN)) {
-        // myTree.move(0, 1);
-        // }
+        power.update(elapsedTime);if(keyDown(KeyEvent.VK_LEFT)){
+            myTree.move(myPen,-1, 0); 
+        }
+        if(keyDown(KeyEvent.VK_RIGHT)){
+            myTree.move(myPen,1, 0);
+        }
+        if(keyDown(KeyEvent.VK_UP)){
+            myTree.move(myPen,0, -1);
+        }
+        if(keyDown(KeyEvent.VK_DOWN)){
+            myTree.move(myPen,0, 1);
+        }
+        
         if (keyPressed(KeyEvent.VK_C)) {
             fakeCollision(power, myTree);
         }

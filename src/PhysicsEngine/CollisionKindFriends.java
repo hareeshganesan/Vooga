@@ -2,7 +2,9 @@ package PhysicsEngine;
 
 import java.util.ArrayList;
 
-import sprite.SpriteTemplate;
+import npsprite.SpriteTemplate;
+
+//import sprite.SpriteTemplate;
 
 /**
  * This class deals with the collision between two sprites from the same group

@@ -2,8 +2,11 @@ package PhysicsEngine;
 
 import java.awt.geom.Point2D;
 
-import sprite.FighterSprite;
-import sprite.SpriteTemplate;
+import npsprite.FighterBody;
+import npsprite.SpriteTemplate;
+
+//import sprite.FighterSprite;
+//import sprite.SpriteTemplate;
 
 public class ReactionMomentumConservation extends Reaction{
 
@@ -34,8 +37,8 @@ public class ReactionMomentumConservation extends Reaction{
 	
 	private double getMass(SpriteTemplate ps1){
 		double m=0;
-		if(FighterSprite.class.isAssignableFrom(ps1.getClass())){
-			m=((FighterSprite) ps1).getMass();
+		if(FighterBody.class.isAssignableFrom(ps1.getClass())){
+			m=((FighterBody) ps1).getMass();
 		}
 		return m;
 	}

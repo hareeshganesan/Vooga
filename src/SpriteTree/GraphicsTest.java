@@ -4,8 +4,12 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.File;
+
 import javax.imageio.ImageIO;
+import javax.imageio.stream.ImageInputStream;
 import javax.swing.JFrame;
+
+
 import com.golden.gamedev.util.ImageUtil;
 
 public class GraphicsTest {
@@ -43,7 +47,7 @@ public class GraphicsTest {
 //		return dimg;
 //	}
 	
-	  public static BufferedImage rotate(BufferedImage src, int angle) {
+	  public static BufferedImage rotate(BufferedImage src, double angle) {
           int w = src.getWidth(), h = src.getHeight(), transparency = src
                   .getColorModel().getTransparency();
           

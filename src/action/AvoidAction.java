@@ -1,15 +1,17 @@
 package action;
 
 import java.awt.geom.Point2D;
-import sprite.FighterSprite;
+
+import npsprite.FighterBody;
+//import sprite.FighterSprite;
 
 
 public class AvoidAction extends Action
 {
-    FighterSprite myEnemy;
-    FighterSprite myFighter;
+    FighterBody myEnemy;
+    FighterBody myFighter;
 
-    public AvoidAction (FighterSprite fighter, FighterSprite enemy)
+    public AvoidAction (FighterBody fighter, FighterBody enemy)
     {
         myFighter = fighter;
         myEnemy = enemy;

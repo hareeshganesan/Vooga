@@ -25,7 +25,7 @@ public class SpriteTemplate extends Sprite implements Cloneable{
     
 
     private boolean myCollisionStatus=false;
-    protected Point2D moveBy;
+    protected Point2D moveBy=new Point2D.Double();
 
     public SpriteTemplate(GroupID g) {
         super();
@@ -116,7 +116,6 @@ public class SpriteTemplate extends Sprite implements Cloneable{
     
 
     /* PHYSICS ENGINE MOVEMENT */
-    //from deprecated sprite package, for physics engine
     public void setNextLocationIncrement(Point2D nextLocation) {
         if(!myCollisionStatus){
             this.moveBy = new Point2D.Double(moveBy.getX()+nextLocation.getX(),
