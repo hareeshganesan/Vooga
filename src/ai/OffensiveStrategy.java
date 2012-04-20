@@ -1,7 +1,7 @@
 package ai;
 
+import npsprite.FighterBody;
 import game.CombatInstance;
-import sprite.FighterSprite;
 import action.FollowAction;
 
 
@@ -15,7 +15,7 @@ import action.FollowAction;
 public class OffensiveStrategy extends Strategy
 {
 
-    public OffensiveStrategy (FighterSprite ai, CombatInstance ci)
+    public OffensiveStrategy (FighterBody ai, CombatInstance ci)
     {
         super(ai, ci);
     }
@@ -30,11 +30,11 @@ public class OffensiveStrategy extends Strategy
 
     private class FollowGoal extends Goal
     {
-        FighterSprite myFighter;
-        FighterSprite myEnemy;
+        FighterBody myFighter;
+        FighterBody myEnemy;
 
 
-        public FollowGoal (FighterSprite me, FighterSprite enemy)
+        public FollowGoal (FighterBody me, FighterBody enemy)
         {
             super(new FollowAction(me, enemy), 10000);
             myFighter = me;

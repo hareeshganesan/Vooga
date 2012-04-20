@@ -28,14 +28,6 @@ public class BasicAIAgent extends AIAgent
         super(name, root,display, groupID, c);
     }
 
-    public BasicAIAgent (String name,
-                         HealthDisplay display,
-                         int groupID,
-                         CombatInstance c)
-    {
-        super(name, display, groupID, c);
-    }
-
 
     public void calculateLocation (long elapsedTime)
     {

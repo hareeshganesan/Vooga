@@ -20,7 +20,8 @@ public class MotionAction implements Action
     double x_direction;
     double y_direction;
     FighterBody myFighter;
-
+    boolean done;
+    
     public MotionAction (FighterBody fighter, Point2D point)
     {
         myFighter = fighter;
@@ -75,6 +76,12 @@ public class MotionAction implements Action
     }
     public static MotionAction DOWN(FighterBody fighter){
         return new MotionAction(fighter, 0, 1);
+    }
+
+    @Override
+    public boolean isDone (long elapsedTime)
+    {
+        return done;
     }
 
 }

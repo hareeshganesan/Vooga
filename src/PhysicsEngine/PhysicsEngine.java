@@ -28,12 +28,6 @@ public abstract class PhysicsEngine
 
     public PhysicsEngine (MotionAction motionAction)
     {
-
-        myFighterSprite = motionAction.getFighterSprite();
-        myVectorX = motionAction.getVectorX();
-        myVectorY = motionAction.getVectorY();
-    }
-
 		myFighterSprite = motionAction.getFighterBody();
 		myVectorX = motionAction.getVectorX();
 		myVectorY = motionAction.getVectorY();

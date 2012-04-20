@@ -2,7 +2,7 @@ package ai;
 
 import game.CombatInstance;
 import java.util.ArrayList;
-import sprite.FighterSprite;
+import npsprite.FighterBody;
 import action.Action;
 
 
@@ -13,10 +13,10 @@ abstract class Strategy
     protected ArrayList<Goal> goals;
     private boolean done;
     protected CombatInstance c;
-    protected FighterSprite myFighter;
+    protected FighterBody myFighter;
 
 
-    public Strategy (FighterSprite ai, CombatInstance ci)
+    public Strategy (FighterBody ai, CombatInstance ci)
     {
         c = ci;
         myFighter = ai;
@@ -24,7 +24,7 @@ abstract class Strategy
     }
 
 
-    public Action generateAction (CombatInstance c, FighterSprite f)
+    public Action generateAction (CombatInstance c, FighterBody f)
     {
 
         Goal nextGoal = goals.get(index);

@@ -9,7 +9,8 @@ public class FollowAction implements Action
 {
     FighterBody myEnemy;
     FighterBody myFighter;
-
+    boolean done;
+    
     public FollowAction (FighterBody fighter, FighterBody enemy)
     {
         myFighter = fighter;

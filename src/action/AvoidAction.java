@@ -10,7 +10,8 @@ public class AvoidAction implements Action
 {
     FighterBody myEnemy;
     FighterBody myFighter;
-
+    boolean done;
+    
     public AvoidAction (FighterBody fighter, FighterBody enemy)
     {
         myFighter = fighter;

@@ -7,7 +7,6 @@ import java.util.Map;
 import java.util.PriorityQueue;
 
 
-import sun.tools.tree.ThisExpression;
 
 public class Animation {
 	private ArrayList<Motion> myActiveMotions;

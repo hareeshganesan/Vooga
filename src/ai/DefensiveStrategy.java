@@ -1,5 +1,6 @@
 package ai;
 
+import npsprite.FighterBody;
 import game.CombatInstance;
 import sprite.FighterSprite;
 import action.AvoidAction;
@@ -15,7 +16,7 @@ import action.AvoidAction;
 public class DefensiveStrategy extends Strategy
 {
 
-    public DefensiveStrategy (FighterSprite ai, CombatInstance ci)
+    public DefensiveStrategy (FighterBody ai, CombatInstance ci)
     {
         super(ai, ci);
 
@@ -31,11 +32,11 @@ public class DefensiveStrategy extends Strategy
 
     private class AvoidGoal extends Goal
     {
-        FighterSprite myFighter;
-        FighterSprite myEnemy;
+        FighterBody myFighter;
+        FighterBody myEnemy;
 
 
-        public AvoidGoal (FighterSprite me, FighterSprite enemy)
+        public AvoidGoal (FighterBody me, FighterBody enemy)
         {
             super(new AvoidAction(me, enemy), 10000);
             myFighter = me;
