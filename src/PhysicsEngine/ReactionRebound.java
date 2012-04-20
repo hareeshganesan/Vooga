@@ -1,13 +1,9 @@
 package PhysicsEngine;
 
 import java.awt.geom.Point2D;
-
-import npsprite.FighterBody;
 import npsprite.PlatformBlock;
 import npsprite.SpriteTemplate;
-//import sprite.FighterSprite;
-//import sprite.PlatformBlock;
-//import sprite.SpriteTemplate;
+
 
 public class ReactionRebound extends Reaction {
 

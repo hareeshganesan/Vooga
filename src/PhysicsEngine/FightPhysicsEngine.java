@@ -21,6 +21,7 @@ public class FightPhysicsEngine extends PhysicsEngine {
 	private final int SPEED_DEFALT = 10;
 	private double jump = 100;
 	private double backgroundFactor = 1;
+	private double outBoundDistance = 10;
 
 	public FightPhysicsEngine(MotionAction motionAaction) {
 		super(motionAaction);
@@ -52,11 +53,11 @@ public class FightPhysicsEngine extends PhysicsEngine {
 //		}
 
 		if (isOutLeft(x))
-			finalX = 10;
+			finalX = outBoundDistance;
 		if (isOutRight(x))
-			finalX = -10;
+			finalX = -outBoundDistance;
 		if (isOutTop(y))
-			finalY = 10;
+			finalY = outBoundDistance;
 		if (isOutBottom(y))
 			finalY = BOUND_Y - myFighterSprite.getY()
 					- myFighterSprite.getHeight();
@@ -93,6 +94,10 @@ public class FightPhysicsEngine extends PhysicsEngine {
 
 	public void setBackgroundFactor(double b) {
 		backgroundFactor = b;
+	}
+	
+	public void setOutBoundDistance(double b){
+		outBoundDistance=b;
 	}
 
 }
