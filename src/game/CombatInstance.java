@@ -244,6 +244,7 @@ import org.jdom.JDOMException;
 import npsprite.SpriteGroupTemplate;
 import camera.Camera;
 import camera.CameraBackground;
+import camera.CameraUtility;
 import camera.FollowCamera;
 import events.HealthEvent;
 import events.InactiveEvent;
@@ -257,9 +258,7 @@ import PhysicsEngine.ReactionPush;
 import PhysicsEngine.ReactionRebound;
 import action.QuitAction;
 import ai.AIAgent;
-import camera.Camera;
-import camera.CameraBackground;
-import camera.FollowCamera;
+import camera.*;
 
 
 public class CombatInstance extends GameState {
@@ -269,6 +268,7 @@ public class CombatInstance extends GameState {
     MainGame myEngine;
     InputHandler myHandler;
     Camera camera;
+    CameraUtility cameraUtility;
 
     // Sprites
     // ArrayList<FighterSprite> playerSprites;
@@ -283,12 +283,14 @@ public class CombatInstance extends GameState {
     private SpriteGroupTemplate groupSprite;
 
     CameraBackground bg;
+    CameraSprite cs;
 
     public CombatInstance(MainGame engine) {
         super(engine);
         myEngine = engine;
         myHandler = new InputHandler();
-        camera = new FollowCamera();
+        camera = new FloatingCamera();
+        cameraUtility = new CameraUtility();
     }
 
     @Override
@@ -334,6 +336,7 @@ public class CombatInstance extends GameState {
         }
         BufferedImage b = getImage(back);
         bg = new CameraBackground(b);
+        cs = new CameraSprite(null);
 
         // Collision setting:
         // collision is created by passing in:
@@ -394,9 +397,11 @@ public class CombatInstance extends GameState {
 
         bg.render(pen);
         for (FighterBody sprite : playerSprites)
-            sprite.render(pen);
+            cs.render(pen, sprite, camera);
+            //sprite.render(pen);
         for (PlatformBlock pb : platform) {
-            pb.render(pen);
+            cs.render(pen, pb, camera);
+            //pb.render(pen);
         }
 //        for (SpriteTemplate p : powerups) {
 //            p.render(pen);
@@ -407,7 +412,7 @@ public class CombatInstance extends GameState {
     @Override
     public void update(long elapsedTime) {
         myHandler.update(elapsedTime, myEngine);
-        // camera.update(playerSprites, bg);
+        camera.update(playerSprites, bg);
         myHandler.update(elapsedTime, myEngine);
         bg.update(elapsedTime);
 

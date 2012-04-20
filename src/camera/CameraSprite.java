@@ -2,15 +2,16 @@ package camera;
 
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
-import java.awt.geom.Point2D;
-import sprite.SpriteTemplate;
+
+import npsprite.GroupID;
+import npsprite.SpriteTemplate;
 
 
 @SuppressWarnings("serial")
 public class CameraSprite extends SpriteTemplate{
         
-    public CameraSprite(){
-        super();
+    public CameraSprite(GroupID myID){
+        super(myID);
     }
     
     public void render(Graphics2D g, SpriteTemplate sprite, Camera camera) {
@@ -24,19 +25,5 @@ public class CameraSprite extends SpriteTemplate{
         g.setTransform(tr2);
         sprite.render(g);
         g.setTransform(old);
-    }
-
-
-    @Override
-    public void collisionAction(int otherGroupID) {
-        this.collisionAction(otherGroupID);
-        
-    }
-
-
-    @Override
-    protected Point2D confineBounds(double dx, double dy) {
-        return this.confineBounds(dx, dy);
-
     }
 }
