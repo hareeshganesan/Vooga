@@ -1,9 +1,7 @@
 package PhysicsEngine;
 
 import java.awt.geom.Point2D;
-
 import npsprite.SpriteTemplate;
-//import sprite.SpriteTemplate;
 import action.MotionAction;
 
 
@@ -21,6 +19,8 @@ public class FightPhysicsEngine extends PhysicsEngine {
 	private final int BOUND_X = 544;
 	private final int BOUND_Y = 544;
 	private final int SPEED_DEFALT = 10;
+	private double jump = 100;
+	private double backgroundFactor = 1;
 
 	public FightPhysicsEngine(MotionAction motionAaction) {
 		super(motionAaction);
@@ -41,8 +41,16 @@ public class FightPhysicsEngine extends PhysicsEngine {
 
 	public void setNextLocationIncrement(double x, double y) {
 
-		double finalX = x;
-		double finalY = y;
+		double finalX = x * backgroundFactor;
+		double finalY = y * backgroundFactor;
+//		if (myVectorY < 0) {
+//			if (myFighterSprite.getY() + myFighterSprite.getHeight() < BOUND_Y ) {
+//				finalY = 0;
+//			} else {
+//				finalY = jump * finalY;
+//			}
+//		}
+
 		if (isOutLeft(x))
 			finalX = 10;
 		if (isOutRight(x))
@@ -50,9 +58,9 @@ public class FightPhysicsEngine extends PhysicsEngine {
 		if (isOutTop(y))
 			finalY = 10;
 		if (isOutBottom(y))
-			finalY = -10;
+			finalY = BOUND_Y - myFighterSprite.getY()
+					- myFighterSprite.getHeight();
 
-//		System.out.println(finalX+","+finalY);
 		myFighterSprite.setNextLocationIncrement(new Point2D.Double(finalX,
 				finalY));
 
@@ -77,6 +85,14 @@ public class FightPhysicsEngine extends PhysicsEngine {
 
 	public boolean isOutBottom(double y) {
 		return myFighterSprite.getY() + y + myFighterSprite.getHeight() > BOUND_Y;
+	}
+	
+	public void setJump(double j) {
+		jump = j;
+	}
+
+	public void setBackgroundFactor(double b) {
+		backgroundFactor = b;
 	}
 
 }

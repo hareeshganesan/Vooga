@@ -3,7 +3,7 @@ package camera;
 import java.awt.Graphics;
 import java.util.ArrayList;
 
-import sprite.FighterSprite;
+import npsprite.FighterBody;
 
 public class VerticalScrollingCamera extends Camera{
     
@@ -12,7 +12,7 @@ public class VerticalScrollingCamera extends Camera{
     }
     
     @Override
-    public void update(ArrayList<FighterSprite> playerSprites, CameraBackground bg) {
+    public void update(ArrayList<FighterBody> playerSprites, CameraBackground bg) {
         super.update(playerSprites, bg);       
         bg.setToCenter(0, this.getY(), this.getHeight(), this.getWidth());
     }

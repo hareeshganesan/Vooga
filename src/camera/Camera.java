@@ -9,7 +9,8 @@ import java.awt.Rectangle;
 import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 import javax.swing.JPanel;
-import sprite.FighterSprite;
+
+import npsprite.FighterBody;
 import com.golden.gamedev.object.Sprite;
 
 
@@ -89,12 +90,12 @@ public class Camera extends JPanel {
     }
 
 
-    public void calculateNewCenter (ArrayList<FighterSprite> sprites)
+    public void calculateNewCenter (ArrayList<FighterBody> sprites)
     {
         double averageX = 0;
         double averageY = 0;
 
-        for (Sprite s : sprites)
+        for (FighterBody s : sprites)
         {
             averageX += s.getX();
             averageY += s.getY();
@@ -107,7 +108,7 @@ public class Camera extends JPanel {
     }
 
 
-    public void calculateNewBounds (ArrayList<FighterSprite> sprites)
+    public void calculateNewBounds (ArrayList<FighterBody> sprites)
     {
         double distanceX = center.x - sprites.get(0).getX();
         double distanceY = center.y - sprites.get(0).getY();
@@ -142,7 +143,7 @@ public class Camera extends JPanel {
     }
 
 
-    public void update (ArrayList<FighterSprite> playerSprites,
+    public void update(ArrayList<FighterBody> playerSprites,
                         CameraBackground bg)
     {
         calculateNewCenter(playerSprites);
