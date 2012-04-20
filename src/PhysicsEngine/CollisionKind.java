@@ -42,6 +42,12 @@ public abstract class CollisionKind {
 		 ps1.collisionAction(ps2);
 		 ps2.collisionAction(ps1);
 		for (Reaction reaction : myReactions) {
+		    if (belongFighterSprite(ps1)){
+		        ps1=((LimbSprite)ps1).getMyPointer();
+		    }
+            if (belongFighterSprite(ps2)){
+                ps2=((LimbSprite)ps2).getMyPointer();
+            }
 			reaction.act(ps1, ps2);
 		}
 	}

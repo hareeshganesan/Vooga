@@ -10,6 +10,7 @@ import npsprite.GroupID;
 import npsprite.HealthSprite;
 import npsprite.LimbSprite;
 import npsprite.PlatformBlock;
+import npsprite.SpriteTemplate;
 
 import org.jdom.Document;
 import org.jdom.Element;
@@ -87,7 +88,6 @@ public class LevelObjectsFactory
             
             FighterBody tree= new FighterBody(s, e.getChildText("name"), dis);
             tree.setHealth(Integer.parseInt(e.getChildText("health")));
-            
             mapFighter(playerIndex, tree);
             playerIndex++;
 
@@ -208,18 +208,19 @@ public class LevelObjectsFactory
         return fs;
     }
     //TODO: MAKE BETTER 
-    public ArrayList<HealthSprite> createPowerUps () throws JDOMException
+    public ArrayList<SpriteTemplate> createPowerUps () throws JDOMException
     {
         List<Element> b = findAllInstancesOfElement("Power");
-        ArrayList<HealthSprite> fs = new ArrayList<HealthSprite>();
+        ArrayList<SpriteTemplate> fs = new ArrayList<SpriteTemplate>();
         for (Element e : b)
         {
+            System.out.println("create power");
             HealthSprite s =
                 new HealthSprite(c.getImage(e.getChildText("img")), 
-                        GroupID.getIdFromString(e.getChildText("id")));
+                        GroupID.getIdFromString(e.getChildText("id")),
+                        Integer.parseInt(e.getChildText("damage")));
             s.setLocation(Double.parseDouble(e.getChildText("x")),
                           Double.parseDouble(e.getChildText("y")));
-            fs.add(s);
         }
         return fs;
     }
