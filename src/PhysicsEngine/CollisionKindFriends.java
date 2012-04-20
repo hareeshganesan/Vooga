@@ -15,6 +15,13 @@ public class CollisionKindFriends extends CollisionKind {
 	public CollisionKindFriends(ArrayList<Reaction> reactionSteps) {
 		super(reactionSteps);
 	}
+	
+	public CollisionKindFriends(Reaction reaction) {
+		super(reaction);
+	}
+	
+	public CollisionKindFriends() {
+	}
 
 	@Override
 	public boolean isThisKind(SpriteTemplate ps1, SpriteTemplate ps2) {

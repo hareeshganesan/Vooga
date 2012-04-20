@@ -25,6 +25,9 @@ public abstract class CollisionKind {
 	public CollisionKind(Reaction reaction) {
 		myReactions.add(reaction);
 	}
+	
+	public CollisionKind() {
+	}
 
 	public abstract boolean isThisKind(SpriteTemplate ps1, SpriteTemplate ps2);
 
@@ -43,6 +46,15 @@ public abstract class CollisionKind {
 
 	public void removeReaction(Reaction reaction) {
 		myReactions.remove(reaction);
+	}
+	
+	public void setReaction(Reaction reaction){
+		myReactions = new ArrayList<Reaction>();
+		myReactions.add(reaction);
+	}
+	
+	public void setReaction(ArrayList<Reaction> reactions){
+		myReactions = reactions;
 	}
 	
 	protected boolean isPlatformBlock(SpriteTemplate s){
