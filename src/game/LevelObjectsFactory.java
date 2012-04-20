@@ -4,6 +4,11 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import npsprite.FighterBody;
+import npsprite.GroupID;
+import npsprite.LimbSprite;
+
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.JDOMException;
@@ -45,7 +50,55 @@ public class LevelObjectsFactory
         root = getRoot(xmlFile);
     }
 
+    public ArrayList<FighterBody> createNPFighters () throws JDOMException
+    {
+        List<Element> fighters = findAllInstancesOfElement("Fighter");
+        ArrayList<FighterBody> fs = new ArrayList<FighterBody>();
 
+        int playerNum = 1;
+        int playerIndex = 0;
+        //so far, only handles two player displays
+        for (Element e : fighters)
+        {
+            HealthDisplay dis;
+            if (playerNum == 1)
+            {
+                //display bar for the first player
+                dis = new HealthDisplay(10, 10, c.getWidth() / 2 - 30);
+
+                playerNum += 1;
+
+            }
+            else
+            {
+                dis =
+                    new HealthDisplay((c.getWidth() / 2),
+                                      10,
+                                      c.getWidth() / 2 - 30);
+            }
+            LimbSprite s=new LimbSprite(e.getChildText("name"), 
+                    c.getImage(e.getChildText("img")), 
+                    GroupID.getIdFromString(e.getChildText("id")),
+                    Double.parseDouble(e.getChildText("x")), 
+                    Double.parseDouble(e.getChildText("y")),
+                    0); //OMG WTF BBQ
+            
+            FighterBody tree= new FighterBody(s, e.getChildText("name"), dis);
+            tree.setHealth(Integer.parseInt(e.getChildText("health")));
+            
+            mapFighter(playerIndex, s);
+            playerIndex++;
+
+            s.setDefaultSpeed(Double.parseDouble(e.getChildText("speed")));
+
+            fs.add(tree);
+        }
+        
+        fs.add(createAIStrategyFighter());
+        return fs;
+    }
+
+    @Deprecated
     public ArrayList<FighterSprite> createFighters () throws JDOMException
     {
         List<Element> fighters = findAllInstancesOfElement("Fighter");
@@ -113,6 +166,19 @@ public class LevelObjectsFactory
         ai.addStrategy(.5, new DefensiveStrategy());
         return ai;
     }
+
+    //TODO - actions
+    private void mapFighter (int playerIndex, FighterBody s)
+    {
+        InputHandler h = c.getMyHandler();
+        int[] map = InputHandler.defaultMapping(playerIndex);
+        h.addKey(map[0], MotionAction.UP(s));
+        h.addKey(map[1], MotionAction.DOWN(s));
+        h.addKey(map[2], MotionAction.LEFT(s));
+        h.addKey(map[3], MotionAction.RIGHT(s));
+    }
+
+    
     private void mapFighter (int playerIndex, FighterSprite s)
     {
         InputHandler h = c.getMyHandler();

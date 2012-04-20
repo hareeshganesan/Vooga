@@ -24,12 +24,14 @@ public class SpawnsProperty extends PropertyObject{
     public SpawnsProperty(CombatInstance c){
         myGame=c;
     }
+    
     //TODO for testing, delete later
-
     private SpriteGroup myOgame;
+    
     public SpawnsProperty(SpriteGroup g){
         myOgame=g;
     }
+    //
     
     public void spawnSprites(int number, SpriteTemplate s, List<Point2D>locations){
         int i=0;
@@ -37,14 +39,12 @@ public class SpawnsProperty extends PropertyObject{
             SpriteTemplate newsprite=s.clone();
             Point2D loc=locations.get(i);
             newsprite.setLocation(loc.getX(),loc.getY());
-            
+            myGame.addSprite(newsprite);
 
-            myOgame.add(newsprite);
+//            myOgame.add(newsprite);
             i++;
             
         }
-        //TODO: HOW DO I SHOVE IT INTO THE GAME? THRU GROUPS?
-        
     }
 
     public static String getName(){

@@ -26,7 +26,6 @@ public class PropertiesTest {
         
         PropertyObject ps=t.getProperty("spawns");
         
-        
         List<Point2D> locations=new ArrayList<Point2D>();
         locations.add(new Point2D.Double(50,75));
         locations.add(new Point2D.Double(100,100));

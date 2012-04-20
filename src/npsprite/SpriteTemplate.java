@@ -6,8 +6,6 @@ import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
-import com.golden.gamedev.object.Sprite;
-
 import npsprite.properties.PropertyObject;
 import events.CollisionEvent;
 
@@ -18,9 +16,9 @@ public class SpriteTemplate extends Sprite implements Cloneable{
     
     //distance moved=default speed*elapsedTime
     double defaultSpeed = 0.1;
+    double myMass=20;
     
     private HashMap<String,PropertyObject> myProperties = new HashMap<String,PropertyObject>();
-    
     private HashMap<GroupID,CollisionEvent> myCollisions = new HashMap<GroupID,CollisionEvent>();
     
     protected GroupID myID;
@@ -53,12 +51,6 @@ public class SpriteTemplate extends Sprite implements Cloneable{
      */
     @SuppressWarnings("unchecked")
     public SpriteTemplate clone(){
-//        try {
-//            Object copy=super.clone();
-//        } catch (CloneNotSupportedException e) {
-//            e.printStackTrace();
-//            throw new Error("Unable to clone sprite");
-//        }
         SpriteTemplate c=new SpriteTemplate(myID);
         c.addCollisionEvents((HashMap<GroupID, CollisionEvent>) myCollisions.clone()); //TODO: SHALLOW CLONE FOR THIS is okay, right?
         HashMap<String, PropertyObject> newProperties=new HashMap<String, PropertyObject>();
@@ -76,6 +68,14 @@ public class SpriteTemplate extends Sprite implements Cloneable{
     public double getSpeed() {
         return defaultSpeed;
     }
+    /* MASS - each sprite has a default mass of 50, used in physics engine */
+    public void setMass(double mass){
+        myMass=mass;
+    }
+    public double getMass(){
+        return myMass;
+    }
+    
     /* PROPERTIES STUFF */
     public void addProperty(String name,PropertyObject p){
         myProperties.put(name, p);
@@ -103,6 +103,7 @@ public class SpriteTemplate extends Sprite implements Cloneable{
      * active and have different groupIDs
      */
     public void collisionAction(SpriteTemplate otherSprite) {
+        
         CollisionEvent act=myCollisions.get(otherSprite.getGroupID());
         if (act != null) {
             act.performAction(this, otherSprite);

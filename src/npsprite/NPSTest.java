@@ -6,19 +6,26 @@ import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-import npsprite.SpriteID.GroupID;
+
+import npsprite.properties.HealthProperty;
+
+import sprite.HealthDisplay;
+
 import com.golden.gamedev.Game;
 import com.golden.gamedev.GameLoader;
 import events.CompositeEvent;
 import events.HealthEvent;
 import events.InactiveEvent;
 
-//12 Apr - this test shows how two sprites can "collide" (press c on keyboard), leading 
+//this test shows how two sprites can "collide" (press c on keyboard), leading 
 //the torso sprite to gain health and the health sprite (prototyped power-up) to disappear.
+
+//known issues: if you set the location of the torso sprite anywhere but 0,0 
+//it flies off the screen
 public class NPSTest extends Game {
 
     private ArrayList<SpriteTemplate> myGroups;
-    private NodeSprite myTree;
+    private FighterBody myTree;
     private HealthSprite power;
 
     @Override
@@ -30,16 +37,19 @@ public class NPSTest extends Game {
         power.setLocation(400, 300);
 
         BufferedImage imgTorso = getImage("src/resources/bodyParts/torso.png");
-        myTree = new NodeSprite(imgTorso, GroupID.PLAYER_1, 100, 100);
-        myTree.addHealth(-25);
+        LimbSprite torso = new LimbSprite("torso", imgTorso, GroupID.PLAYER_1,
+                5, 5, 0);
 
-        CompositeEvent pevent = new CompositeEvent(myTree);
-        pevent.addEvent(new InactiveEvent());//TODO: SHOULD I CHANGE THESE INTO STATIC? IT'S A CLASS WRAPPING A SINGLE METHOD ONLY
-        CompositeEvent tevent = new CompositeEvent(power);
-        tevent.addEvent(new HealthEvent());
+        InactiveEvent pevent = new InactiveEvent();// TODO: SHOULD I CHANGE
+                                                   // THESE INTO STATIC? IT'S A
+                                                   // CLASS WRAPPING A SINGLE
+                                                   // METHOD ONLY
+        HealthEvent tevent = new HealthEvent();
 
-        power.addCollisionEvent(pevent);
-        myTree.addCollisionEvent(tevent);
+        power.addCollisionEvent(GroupID.PLAYER_1, pevent);
+        torso.addCollisionEvent(GroupID.UNCATEGORIZED, tevent);
+        myTree = new FighterBody(torso, "fighter", new HealthDisplay(10, 20, 200));
+        ((HealthProperty) myTree.getHealthProperty()).addHealth(-25);
     }
 
     @Override
@@ -54,28 +64,28 @@ public class NPSTest extends Game {
     public void update(long elapsedTime) {
         myTree.update(elapsedTime);
         power.update(elapsedTime);
-        if (keyDown(KeyEvent.VK_RIGHT)) {
-            myTree.move(1, 0);
-        }
-        if (keyDown(KeyEvent.VK_LEFT)) {
-            myTree.move(-1, 0);
-        }
-        if (keyDown(KeyEvent.VK_UP)) {
-            myTree.move(0, -1);
-        }
-        if (keyDown(KeyEvent.VK_DOWN)) {
-            myTree.move(0, 1);
-        }
+        // if (keyDown(KeyEvent.VK_RIGHT)) {
+        // myTree.move(1, 0);
+        // }
+        // if (keyDown(KeyEvent.VK_LEFT)) {
+        // myTree.move(-1, 0);
+        // }
+        // if (keyDown(KeyEvent.VK_UP)) {
+        // myTree.move(0, -1);
+        // }
+        // if (keyDown(KeyEvent.VK_DOWN)) {
+        // myTree.move(0, 1);
+        // }
         if (keyPressed(KeyEvent.VK_C)) {
             fakeCollision(power, myTree);
         }
     }
 
-    public void fakeCollision(SpriteTemplate p1, SpriteTemplate p2) {
+    public void fakeCollision(SpriteTemplate p1, FighterBody myTree) {
         System.out.println("Health: " + myTree.getHealth());
         System.out.println(power.isActive());
-        p1.collisionAction(p2);
-        p2.collisionAction(p1);
+        p1.collisionAction(myTree.getRoot());
+        myTree.getRoot().collisionAction(p1);
         System.out.println("Health: " + myTree.getHealth());
         System.out.println(power.isActive());
     }

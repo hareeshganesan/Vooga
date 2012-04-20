@@ -3,6 +3,7 @@ package npsprite.properties;
 public class DamageProperty extends PropertyObject{
     static final String NAME="damage";
     private double damage;
+    
     public DamageProperty(double damage){
         this.damage=damage;
     }
