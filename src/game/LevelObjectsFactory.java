@@ -18,6 +18,7 @@ import ai.BasicAIAgent;
 import ai.BasicStrategyAgent;
 import ai.DefensiveStrategy;
 import ai.OffensiveStrategy;
+import ai.SituationalStrategyAgent;
 
 
 public class LevelObjectsFactory
@@ -84,35 +85,51 @@ public class LevelObjectsFactory
             s.setLocation(Double.parseDouble(e.getChildText("x")),
                           Double.parseDouble(e.getChildText("y")));
             s.setDefaultSpeed(Double.parseDouble(e.getChildText("speed")));
-            s.setImages(c.getImages(e.getChildText("img"),1,1));
+            s.setImages(c.getImages(e.getChildText("img"), 1, 1));
 
             fs.add(s);
         }
-        
+
         fs.add(createAIStrategyFighter());
         return fs;
     }
 
 
-    private AIAgent createAIFighter(){
-        BasicAIAgent ai = new BasicAIAgent("ai1", new HealthDisplay(50,50, c.getWidth()/2 -30),0,c);
+    private AIAgent createAIFighter ()
+    {
+        BasicAIAgent ai =
+            new BasicAIAgent("ai1",
+                             new HealthDisplay(50, 50, c.getWidth() / 2 - 30),
+                             0,
+                             c);
         ai.setMaxHealth(60);
         ai.setLocation(400, 500);
         ai.setDefaultSpeed(.3);
-        ai.setImages(c.getImages("resources/flame.png",1,1));
+        ai.setImages(c.getImages("resources/flame.png", 1, 1));
         return ai;
     }
-    private AIAgent createAIStrategyFighter(){
-        BasicStrategyAgent ai = new BasicStrategyAgent("ai1", new HealthDisplay(50,50, c.getWidth()/2 -30),0,c);
+
+
+    private AIAgent createAIStrategyFighter ()
+    {
+        BasicStrategyAgent ai =
+            new SituationalStrategyAgent("ai1",
+                                   new HealthDisplay(50,
+                                                     50,
+                                                     c.getWidth() / 2 - 30),
+                                   0,
+                                   c);
         ai.setMaxHealth(60);
         ai.setLocation(400, 500);
         ai.setDefaultSpeed(.3);
-        ai.setImages(c.getImages("resources\\flame.png",1,1));
-        
-        ai.addStrategy(1, new OffensiveStrategy());
-        ai.addStrategy(.5, new DefensiveStrategy());
+        ai.setImages(c.getImages("resources\\flame.png", 1, 1));
+
+        ai.addStrategy(1, new OffensiveStrategy(ai, c));
+        ai.addStrategy(.5, new DefensiveStrategy(ai, c));
         return ai;
     }
+
+
     private void mapFighter (int playerIndex, FighterSprite s)
     {
         InputHandler h = c.getMyHandler();

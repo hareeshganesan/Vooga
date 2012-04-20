@@ -9,33 +9,49 @@ import javax.swing.JFileChooser;
 import charactorEditor.Writer;
 import charactorEditor.drag.AttributePane;
 
-public class SaveButton extends JButton{
-	private AttributePane outer;
-	public SaveButton(AttributePane e){
-		super("save");
-		outer=e;
-		setBounds(4, 190, 70, 20);
-		addActionListener(new ActionListener(){
 
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try {
-					save();
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}
-				outer.update();
-			}});
-		outer.add(this);
-		
-	}
-	private void save() throws IOException{
-		JFileChooser fc = new JFileChooser(".");
-		
-		int returnVal =fc.showSaveDialog(null);
-		if (returnVal == JFileChooser.APPROVE_OPTION) {
-			File file = fc.getSelectedFile();
-			Writer.write(outer.outerFighterBuilder.componentList,file.toString());
-		}
-	}
+public class SaveButton extends JButton
+{
+    private AttributePane outer;
+
+
+    public SaveButton (AttributePane e)
+    {
+        super("save");
+        outer = e;
+        setBounds(4, 190, 70, 20);
+        addActionListener(new ActionListener()
+        {
+
+            @Override
+            public void actionPerformed (ActionEvent e)
+            {
+                try
+                {
+                    save();
+                }
+                catch (IOException e1)
+                {
+                    e1.printStackTrace();
+                }
+                outer.update();
+            }
+        });
+        outer.add(this);
+
+    }
+
+
+    private void save () throws IOException
+    {
+        JFileChooser fc = new JFileChooser(".");
+
+        int returnVal = fc.showSaveDialog(null);
+        if (returnVal == JFileChooser.APPROVE_OPTION)
+        {
+            File file = fc.getSelectedFile();
+            Writer.write(outer.outerFighterBuilder.componentList,
+                         file.toString());
+        }
+    }
 }

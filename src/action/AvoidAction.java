@@ -4,10 +4,12 @@ import java.awt.geom.Point2D;
 import sprite.FighterSprite;
 
 
-public class AvoidAction extends Action
+public class AvoidAction implements Action
 {
     FighterSprite myEnemy;
     FighterSprite myFighter;
+    boolean done;
+
 
     public AvoidAction (FighterSprite fighter, FighterSprite enemy)
     {
@@ -31,6 +33,14 @@ public class AvoidAction extends Action
                                                                y_direction));
             f.performAction(elapsedTime);
         }
+        done = true;
+    }
+
+
+    @Override
+    public boolean isDone (long elapsedTime)
+    {
+        return done;
     }
 
 }

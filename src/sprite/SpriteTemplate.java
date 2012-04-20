@@ -13,21 +13,24 @@ public abstract class SpriteTemplate extends AdvanceSprite
     // defaults
     double DEFAULT_SPEED = 0;
     double DEFAULT_DAMAGE = 0;
-    
+
     protected Point2D moveBy;
-    
+
     private double myDamage;
-    private boolean myCollisionStatus=false;
+    private boolean myCollisionStatus = false;
+
 
     public SpriteTemplate ()
     {
         super();
     }
 
+
     public SpriteTemplate (BufferedImage[] b)
     {
         super(b);
     }
+
 
     //flip horizontally, does this need to be public?
     protected void flipImagesHoriz ()
@@ -49,57 +52,77 @@ public abstract class SpriteTemplate extends AdvanceSprite
 
     public abstract void collisionAction (int otherGroupID);
 
-    public void setDefaultSpeed (double speed){
-        DEFAULT_SPEED=speed;
+
+    public void setDefaultSpeed (double speed)
+    {
+        DEFAULT_SPEED = speed;
     }
+
+
     /**
      * speed reset to default value, same for x and y directions for now
      */
-    public void resetSpeed(){
+    public void resetSpeed ()
+    {
         this.setSpeed(DEFAULT_SPEED, DEFAULT_SPEED);
     }
 
-    
+
     public void setDamage (double d)
     {
         myDamage = d;
     }
+
+
     public double getDamage ()
     {
         return myDamage;
     }
 
+
     // TODO: GET BOUNDS FROM WINDOW SIZE
     protected abstract Point2D confineBounds (double dx, double dy);
 
-	public void setNextLocationIncrement(Point2D nextLocation) {
-		if(!myCollisionStatus){
-			this.moveBy = new Point2D.Double(moveBy.getX()+nextLocation.getX(),
-				moveBy.getY()+nextLocation.getY());
-			
-		}else{
-			moveBy=nextLocation;
-		}
-		
-		
-	}
-	
-	public Point2D getCurrentLocation() {
-		return new Point2D.Double(getX() + moveBy.getX(), getY()
-				+ moveBy.getY());
-	}
-	
-	public double getSpeed(){
-		return 0;
-	}
 
-	public void setCollisionStatus(boolean b){
-		myCollisionStatus=b;
-	}
-	
-	public Point2D getMoveBy() {
-		return moveBy;
-	}
-	
-	
+    public void setNextLocationIncrement (Point2D nextLocation)
+    {
+        if (!myCollisionStatus)
+        {
+            this.moveBy =
+                new Point2D.Double(moveBy.getX() + nextLocation.getX(),
+                                   moveBy.getY() + nextLocation.getY());
+
+        }
+        else
+        {
+            moveBy = nextLocation;
+        }
+
+    }
+
+
+    public Point2D getCurrentLocation ()
+    {
+        return new Point2D.Double(getX() + moveBy.getX(), getY() +
+                                                          moveBy.getY());
+    }
+
+
+    public double getSpeed ()
+    {
+        return 0;
+    }
+
+
+    public void setCollisionStatus (boolean b)
+    {
+        myCollisionStatus = b;
+    }
+
+
+    public Point2D getMoveBy ()
+    {
+        return moveBy;
+    }
+
 }

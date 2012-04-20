@@ -1,18 +1,50 @@
 package ai;
 
 import game.CombatInstance;
+import java.util.ArrayList;
 import sprite.FighterSprite;
-import action.ActionSeries;
+import action.Action;
 
 
-/**
- * A strategy must implement a method to generate an action series that can be
- * executed by the AI Agent calling it.
- * 
- * @author Hareesh
- */
 abstract class Strategy
 {
 
-    abstract ActionSeries generateAction (CombatInstance c, FighterSprite f);
+    private int index;
+    protected ArrayList<Goal> goals;
+    private boolean done;
+    protected CombatInstance c;
+    protected FighterSprite myFighter;
+
+
+    public Strategy (FighterSprite ai, CombatInstance ci)
+    {
+        c = ci;
+        myFighter = ai;
+        goals = new ArrayList<Goal>();
+    }
+
+
+    public Action generateAction (CombatInstance c, FighterSprite f)
+    {
+
+        Goal nextGoal = goals.get(index);
+        index++;
+        if (index == goals.size()) done = true;
+        return nextGoal;
+    }
+
+
+    abstract public void initializeGoals ();
+
+
+    /**
+     * Specify success condition for the strategy and move on. Failure in any
+     * goal can result in this being set to done.
+     * 
+     * @return
+     */
+    public boolean isComplete ()
+    {
+        return done;
+    }
 }

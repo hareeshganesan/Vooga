@@ -13,11 +13,13 @@ import PhysicsEngine.FightPhysicsEngine;
  * 
  * @author Hareesh
  */
-public class MotionAction extends Action
+public class MotionAction implements Action
 {
     double x_direction;
     double y_direction;
     FighterSprite myFighter;
+    boolean done;
+
 
     public MotionAction (FighterSprite fighter, Point2D point)
     {
@@ -31,41 +33,69 @@ public class MotionAction extends Action
 
     }
 
+
     public MotionAction (FighterSprite r, double x, double y)
     {
         myFighter = r;
         x_direction = x;
         y_direction = y;
     }
-    
 
 
     @Override
     public void performAction (long elapsed_time)
     {
-    	 FightPhysicsEngine physicsEngine=new FightPhysicsEngine(this);
-         physicsEngine.process(elapsed_time);
+        FightPhysicsEngine physicsEngine = new FightPhysicsEngine(this);
+        physicsEngine.process(elapsed_time);
+        done = true;
     }
-    
-    public FighterSprite getFighterSprite(){
-    	return myFighter;
+
+
+    public boolean isDone (long elapsedTime)
+    {
+        return done;
     }
-    public double getVectorX(){
-    	return x_direction;
+
+
+    public FighterSprite getFighterSprite ()
+    {
+        return myFighter;
     }
-    public double getVectorY(){
-    	return y_direction;
+
+
+    public double getVectorX ()
+    {
+        return x_direction;
     }
-    public static MotionAction LEFT(FighterSprite fighter){
+
+
+    public double getVectorY ()
+    {
+        return y_direction;
+    }
+
+
+    public static MotionAction LEFT (FighterSprite fighter)
+    {
         return new MotionAction(fighter, -1, 0);
     }
-    public static MotionAction RIGHT(FighterSprite fighter){
+
+
+    public static MotionAction RIGHT (FighterSprite fighter)
+    {
         return new MotionAction(fighter, 1, 0);
     }
-    public static MotionAction UP(FighterSprite fighter){
+
+
+    public static MotionAction UP (FighterSprite fighter)
+    {
         return new MotionAction(fighter, 0, -1);
     }
-    public static MotionAction DOWN(FighterSprite fighter){
+
+
+    public static MotionAction DOWN (FighterSprite fighter)
+    {
         return new MotionAction(fighter, 0, 1);
     }
+
 }

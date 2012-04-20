@@ -6,43 +6,49 @@ package levelEditor.gui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
-
 import levelEditor.mvc.Controller;
 
-public class SaveLevelComponent {
 
-	private Controller myController;
+public class SaveLevelComponent
+{
 
-	private JButton mySaveButton;
+    private Controller myController;
 
-	public SaveLevelComponent (Controller c) {
-		myController = c;
-	}
+    private JButton mySaveButton;
 
-	public JComponent create() {
-		JPanel panel = new JPanel();
 
-		mySaveButton = new JButton("SAVE LEVEL");
-		mySaveButton.setSize(48, 12);
-		mySaveButton.setToolTipText("Click to save level to file.");
+    public SaveLevelComponent (Controller c)
+    {
+        myController = c;
+    }
 
-		mySaveButton.addActionListener(new ActionListener() {
 
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				myController.displayMessageToUser("Saving to file...");
-				myController.saveAndClose();
-			}
+    public JComponent create ()
+    {
+        JPanel panel = new JPanel();
 
-		});
+        mySaveButton = new JButton("SAVE LEVEL");
+        mySaveButton.setSize(48, 12);
+        mySaveButton.setToolTipText("Click to save level to file.");
 
-		panel.add(mySaveButton);
+        mySaveButton.addActionListener(new ActionListener()
+        {
 
-		return panel;
-	}
+            @Override
+            public void actionPerformed (ActionEvent arg0)
+            {
+                myController.displayMessageToUser("Saving to file...");
+                myController.saveAndClose();
+            }
+
+        });
+
+        panel.add(mySaveButton);
+
+        return panel;
+    }
 
 }

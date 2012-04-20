@@ -4,14 +4,15 @@ package levelEditor.mvc;
  * @author Peggy Li (pl59)
  */
 
-public class Main {
+public class Main
+{
 
-	@SuppressWarnings("unused")
-	public static void main (String[] args) {
+    @SuppressWarnings("unused")
+    public static void main (String[] args)
+    {
 
-		// Launches View (GUI) 
-		Controller c = new Controller();
-		
-	
-	}
+        // Launches View (GUI) 
+        Controller c = new Controller();
+
+    }
 }

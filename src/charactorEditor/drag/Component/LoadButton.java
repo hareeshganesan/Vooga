@@ -9,31 +9,48 @@ import javax.swing.JFileChooser;
 import charactorEditor.Loader;
 import charactorEditor.drag.AttributePane;
 
-public class LoadButton extends JButton{
-	AttributePane outer;
-	public LoadButton(AttributePane outer){
-		super("load");
-		this.outer=outer;
-		setBounds(outer.mySaveButton.getX()+outer.mySaveButton.getWidth()+10,outer.mySaveButton.getY(),70,20);
-	    addActionListener(new ActionListener(){
 
-			@Override
-			public void actionPerformed(ActionEvent e) {
-                  try {
-					load();
-				} catch (FileNotFoundException e1) {
-					e1.printStackTrace();
-				}
-			}});
-		outer.add(this);
-	}
-	private void load() throws FileNotFoundException{
-	JFileChooser fc = new JFileChooser(".");
-		
-		int returnVal =fc.showOpenDialog(null);
-		if (returnVal == JFileChooser.APPROVE_OPTION) {
-			File file = fc.getSelectedFile();
-			outer.outerFighterBuilder.componentList= Loader.load(file.toString());
-		}
-	}
+public class LoadButton extends JButton
+{
+    AttributePane outer;
+
+
+    public LoadButton (AttributePane outer)
+    {
+        super("load");
+        this.outer = outer;
+        setBounds(outer.mySaveButton.getX() + outer.mySaveButton.getWidth() +
+                  10, outer.mySaveButton.getY(), 70, 20);
+        addActionListener(new ActionListener()
+        {
+
+            @Override
+            public void actionPerformed (ActionEvent e)
+            {
+                try
+                {
+                    load();
+                }
+                catch (FileNotFoundException e1)
+                {
+                    e1.printStackTrace();
+                }
+            }
+        });
+        outer.add(this);
+    }
+
+
+    private void load () throws FileNotFoundException
+    {
+        JFileChooser fc = new JFileChooser(".");
+
+        int returnVal = fc.showOpenDialog(null);
+        if (returnVal == JFileChooser.APPROVE_OPTION)
+        {
+            File file = fc.getSelectedFile();
+            outer.outerFighterBuilder.componentList =
+                Loader.load(file.toString());
+        }
+    }
 }

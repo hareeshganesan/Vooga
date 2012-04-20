@@ -13,6 +13,7 @@ import action.FollowAction;
  * 
  * @author Hareesh
  */
+@SuppressWarnings("serial")
 public class BasicAIAgent extends AIAgent
 {
 

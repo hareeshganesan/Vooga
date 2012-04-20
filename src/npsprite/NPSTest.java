@@ -13,20 +13,27 @@ import events.CompositeEvent;
 import events.HealthEvent;
 import events.InactiveEvent;
 
-//12 Apr - this test shows how two sprites can "collide" (press c on keyboard), leading 
-//the torso sprite to gain health and the health sprite (prototyped power-up) to disappear.
-public class NPSTest extends Game {
+
+// 12 Apr - this test shows how two sprites can "collide" (press c on keyboard),
+// leading
+// the torso sprite to gain health and the health sprite (prototyped power-up)
+// to disappear.
+public class NPSTest extends Game
+{
 
     private ArrayList<SpriteTemplate> myGroups;
     private NodeSprite myTree;
     private HealthSprite power;
 
+
     @Override
-    public void initResources() {
+    public void initResources ()
+    {
         // bg = new Background();
 
-        power = new HealthSprite(getImage("resources/block.png"),
-                GroupID.UNCATEGORIZED);
+        power =
+            new HealthSprite(getImage("resources/block.png"),
+                             GroupID.UNCATEGORIZED);
         power.setLocation(400, 300);
 
         BufferedImage imgTorso = getImage("src/resources/bodyParts/torso.png");
@@ -42,36 +49,47 @@ public class NPSTest extends Game {
         myTree.addCollisionEvent(tevent);
     }
 
+
     @Override
-    public void render(Graphics2D pen) {
+    public void render (Graphics2D pen)
+    {
         pen.setColor(Color.WHITE);
         pen.fillRect(0, 0, getWidth(), getHeight());
         myTree.render(pen);
         power.render(pen);
     }
 
+
     @Override
-    public void update(long elapsedTime) {
+    public void update (long elapsedTime)
+    {
         myTree.update(elapsedTime);
         power.update(elapsedTime);
-        if (keyDown(KeyEvent.VK_RIGHT)) {
+        if (keyDown(KeyEvent.VK_RIGHT))
+        {
             myTree.move(1, 0);
         }
-        if (keyDown(KeyEvent.VK_LEFT)) {
+        if (keyDown(KeyEvent.VK_LEFT))
+        {
             myTree.move(-1, 0);
         }
-        if (keyDown(KeyEvent.VK_UP)) {
+        if (keyDown(KeyEvent.VK_UP))
+        {
             myTree.move(0, -1);
         }
-        if (keyDown(KeyEvent.VK_DOWN)) {
+        if (keyDown(KeyEvent.VK_DOWN))
+        {
             myTree.move(0, 1);
         }
-        if (keyPressed(KeyEvent.VK_C)) {
+        if (keyPressed(KeyEvent.VK_C))
+        {
             fakeCollision(power, myTree);
         }
     }
 
-    public void fakeCollision(SpriteTemplate p1, SpriteTemplate p2) {
+
+    public void fakeCollision (SpriteTemplate p1, SpriteTemplate p2)
+    {
         System.out.println("Health: " + myTree.getHealth());
         System.out.println(power.isActive());
         p1.collisionAction(p2);
@@ -80,7 +98,9 @@ public class NPSTest extends Game {
         System.out.println(power.isActive());
     }
 
-    public static void main(String[] args) {
+
+    public static void main (String[] args)
+    {
         GameLoader loader = new GameLoader();
         loader.setup(new NPSTest(), new Dimension(800, 600), false);
         loader.start();

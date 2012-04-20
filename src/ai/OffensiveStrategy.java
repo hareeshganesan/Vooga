@@ -1,28 +1,55 @@
 package ai;
 
 import game.CombatInstance;
-import java.util.TreeMap;
 import sprite.FighterSprite;
-import action.Action;
-import action.ActionSeries;
 import action.FollowAction;
 
+
 /**
- * The OffensiveStrategy class creates an ActionSeries where the AI will move toward a
- * specified fighter by following it as the fighter moves for 5 seconds.
+ * The OffensiveStrategy class creates an ActionSeries where the AI will move
+ * toward a specified fighter by following it as the fighter moves for 5
+ * seconds.
  * 
  * @author Hareesh
  */
 public class OffensiveStrategy extends Strategy
 {
-    CombatInstance c;
+
+    public OffensiveStrategy (FighterSprite ai, CombatInstance ci)
+    {
+        super(ai, ci);
+    }
+
 
     @Override
-    ActionSeries generateAction (CombatInstance c, FighterSprite f)
+    public void initializeGoals ()
     {
-        System.out.println("toward");
-        TreeMap<Long, Action> offenseLoop = new TreeMap<Long, Action>();
-        offenseLoop.put((long) 5000, new FollowAction(f, c.getFighters().get(1)));
-        return new ActionSeries(offenseLoop);
+        goals.add(new FollowGoal(myFighter, c.getFighters().get(0)));
+
     }
+
+    private class FollowGoal extends Goal
+    {
+        FighterSprite myFighter;
+        FighterSprite myEnemy;
+
+
+        public FollowGoal (FighterSprite me, FighterSprite enemy)
+        {
+            super(new FollowAction(me, enemy), 10000);
+            myFighter = me;
+            myEnemy = enemy;
+        }
+
+
+        @Override
+        void updateGoalState ()
+        {
+            if (myFighter.getCurrentLocation()
+                         .distance(myEnemy.getCurrentLocation()) < 70) done =
+                true;
+        }
+
+    }
+
 }

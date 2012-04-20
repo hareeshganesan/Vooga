@@ -12,6 +12,7 @@ import sprite.HealthDisplay;
  * 
  * @author Hareesh
  */
+@SuppressWarnings("serial")
 public abstract class AIAgent extends FighterSprite
 {
 
@@ -27,8 +28,10 @@ public abstract class AIAgent extends FighterSprite
         myLevel = c;
     }
 
-    abstract public void calculateLocation(long elapsedTime);
-    
+
+    abstract public void calculateLocation (long elapsedTime);
+
+
     public void update (long elapsedTime)
     {
         super.update(elapsedTime);

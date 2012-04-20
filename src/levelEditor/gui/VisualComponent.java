@@ -1,8 +1,10 @@
 package levelEditor.gui;
 
-public class VisualComponent {
+public class VisualComponent
+{
 
-    public VisualComponent() {
+    public VisualComponent ()
+    {
 
     }
 

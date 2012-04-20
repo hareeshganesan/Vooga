@@ -3,7 +3,7 @@ package ai;
 import game.CombatInstance;
 import java.util.TreeMap;
 import sprite.HealthDisplay;
-import action.ActionSeries;
+import action.Action;
 
 
 /**
@@ -15,10 +15,12 @@ import action.ActionSeries;
  * 
  * @author Hareesh
  */
+@SuppressWarnings("serial")
 public class BasicStrategyAgent extends AIAgent
 {
 
-    ActionSeries currentAction;
+    Action currentAction;
+    Strategy strat;
     TreeMap<Double, Strategy> strategies = new TreeMap<Double, Strategy>();
 
 
@@ -41,12 +43,24 @@ public class BasicStrategyAgent extends AIAgent
         currentAction.performAction(elapsedTime);
     }
 
-    private ActionSeries getAction ()
+
+    protected Strategy selectRandomStrategy ()
     {
         double random = Math.random();
-        return strategies.ceilingEntry(random)
-                         .getValue()
-                         .generateAction(this.myLevel, this);
+        return strategies.ceilingEntry(random).getValue();
+    }
+
+
+    private Action getAction ()
+    {
+        if (strat == null || strat.isComplete())
+        {
+            strat = selectRandomStrategy();
+            strat.initializeGoals();
+            System.out.println(strat.getClass().getName());
+        }
+        return strat.generateAction(myLevel, this);
+
     }
 
 

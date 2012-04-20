@@ -31,17 +31,18 @@ public class InputHandler
      */
     public void update (long elapsedTime, GameEngine engine)
     {
-        if(engine.keyDown(KeyEvent.VK_Q))
-            System.out.println("hello");
+        if (engine.keyDown(KeyEvent.VK_Q)) System.out.println("hello");
         for (Integer key : key_mapping.keySet())
-            if (engine.keyDown(key.intValue())) 
-                key_mapping.get(key).performAction(elapsedTime);
-                
+            if (engine.keyDown(key.intValue())) key_mapping.get(key)
+                                                           .performAction(elapsedTime);
+
     }
 
+
     /**
-     * Return the default mapping for a user player specified by the index
-     * Known Bugs: only two mappings defined so far
+     * Return the default mapping for a user player specified by the index Known
+     * Bugs: only two mappings defined so far
+     * 
      * @param i
      * @return
      */
