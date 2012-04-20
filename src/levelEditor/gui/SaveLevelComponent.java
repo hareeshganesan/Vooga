@@ -6,11 +6,9 @@ package levelEditor.gui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
-
 import levelEditor.mvc.Controller;
 
 public class SaveLevelComponent {
@@ -29,20 +27,19 @@ public class SaveLevelComponent {
 		mySaveButton = new JButton("SAVE LEVEL");
 		mySaveButton.setSize(48, 12);
 		mySaveButton.setToolTipText("Click to save level to file.");
-
-		mySaveButton.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				myController.displayMessageToUser("Saving to file...");
-				myController.saveAndClose();
-			}
-
-		});
+		mySaveButton.addActionListener(new SaveActionListener());
 
 		panel.add(mySaveButton);
-
 		return panel;
 	}
 
+	private class SaveActionListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			myController.displayMessageToUser("Saving to file...");
+			myController.saveAndClose();
+		}
+	}
+	
 }

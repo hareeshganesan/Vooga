@@ -21,7 +21,8 @@ public class SpriteListComponent {
 
 	private Controller myController;
 	
-	private final static String[] myNames = {"Fire", "5x Power-Up", "10x Power-Up", "Shield", "Sword", "Block", "Wall"};
+	private final static String[] myNames = 
+		{"Fire", "5x Power-Up", "10x Power-Up", "Shield", "Sword", "Block", "Wall"};
 	
 	public SpriteListComponent (Controller c) {
 		myController = c;
@@ -35,6 +36,7 @@ public class SpriteListComponent {
 				HORIZONTAL_SCROLLBAR_NEVER);
 		scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.
 				VERTICAL_SCROLLBAR_AS_NEEDED);
+		scroll.setSize(100, 100);
 		
 		return scroll;
 	}

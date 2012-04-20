@@ -7,6 +7,7 @@ package levelEditor.gui;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -16,35 +17,43 @@ import javax.swing.JPanel;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import levelEditor.mvc.Controller;
 
-@SuppressWarnings("unused")
-public class BackgroundImageComponent {
+@SuppressWarnings({ "unused", "serial" })
+public class BackgroundImageComponent extends JPanel {
 
 	private Controller myController;
-
+	
+	private JPanel myPanel;
 	private JButton myChooseImageButton;
 	private JFileChooser myImageChooser;
+	
+	private File myBackgroundImage;
 	private String myBackgroundImageURL;
-	private JPanel myPanel;
-	private ImagePanel myImage;
+	private JLabel myImageURLLabel;
+	
+	VisualComponent image;
 
 	public BackgroundImageComponent (Controller c) {
 		myController = c;
+		
+		setVisible(true);
 	}
 
 
 	public JComponent create() {
 		myPanel = new JPanel();
+		//image = new VisualComponent();
+		//myPanel.add(image, BorderLayout.CENTER);
+		
 		initializeImageChooser();
 
 		myChooseImageButton = new JButton("Select Background Image");
 		myChooseImageButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				myImageChooser.showOpenDialog(null);
-				myBackgroundImageURL = myImageChooser.getSelectedFile().getName();
+				//myBackgroundImageURL = myImageChooser.getSelectedFile().getName();
+				myBackgroundImage = myImageChooser.getSelectedFile();
 				
-				
-				/*myImage = new ImagePanel(myBackgroundImageURL);
-				myPanel.add(myImage, BorderLayout.SOUTH);*/
+				// image.showImage(myBackgroundImage);
 				
 			}
 		} );

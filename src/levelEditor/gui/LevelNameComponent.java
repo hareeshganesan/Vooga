@@ -14,7 +14,6 @@ import levelEditor.mvc.Controller;
  */
 
 
-@SuppressWarnings("unused")
 public class LevelNameComponent {
 	
 	private static final int BOX_WIDTH = 12;
@@ -39,11 +38,13 @@ public class LevelNameComponent {
 			
 			public void actionPerformed(ActionEvent e) {
 				String name = myLevelName.getText();
+				
+				/*
 				if ( !myController.levelNameAvailable(name)) {
 					
 					System.out.println(name + " is already taken");
 					
-				}
+				}*/
 			}
 		});
 		

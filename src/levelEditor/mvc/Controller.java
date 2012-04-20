@@ -26,6 +26,10 @@ public class Controller {
 		return myModel.verifyNameAvailable(name);
 	}
 	
+	public void setLevelName (String name) {
+	}
+	
+	
 	public void saveAndClose () {
 		myModel.saveToFile();
 		myView.close();
