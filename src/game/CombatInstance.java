@@ -232,6 +232,7 @@ import javax.swing.JFileChooser;
 
 import npsprite.FighterBody;
 import npsprite.GroupID;
+import npsprite.HealthSprite;
 import npsprite.NodeSprite;
 import npsprite.PlatformBlock;
 import npsprite.SpriteTemplate;
@@ -245,6 +246,7 @@ import camera.Camera;
 import camera.CameraBackground;
 import camera.FollowCamera;
 import events.HealthEvent;
+import events.InactiveEvent;
 import PhysicsEngine.Collision;
 import PhysicsEngine.CollisionKind;
 import PhysicsEngine.CollisionKindEnemy;
@@ -270,6 +272,7 @@ public class CombatInstance extends GameState {
     ArrayList<FighterBody> playerSprites;
     ArrayList<PlatformBlock> platform;
     ArrayList<SpriteTemplate> spawns;
+//    ArrayList<SpriteTemplate> powerups;
 
     // Collision
     private Collision myCollision;
@@ -316,6 +319,7 @@ public class CombatInstance extends GameState {
         try {
             playerSprites = lof.createNPFighters();
             platform = lof.createNPBlocks();
+//            powerups=lof.createPowerUps();
         } catch (JDOMException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -350,6 +354,7 @@ public class CombatInstance extends GameState {
         groupSprite = new SpriteGroupTemplate("team");
         groupSprite.addFighterSpriteArray(playerSprites);
         groupSprite.addPlatformBlockArray(platform);
+//        groupSprite.addSpriteArray(powerups);
         playerSprites.get(0).setMass(200.0);
 
         ArrayList<CollisionKind> CollisionkindList = new ArrayList<CollisionKind>();
@@ -361,15 +366,19 @@ public class CombatInstance extends GameState {
         myCollision = new Collision(groupSprite, CollisionkindList);
 
     }
-    //TODO: remove hard-coding, this is for testing on newsample.xml 
-    private void addCollisionActions(){
-        for (FighterBody f:playerSprites){
-            for (NodeSprite n:f.getBodyParts()){
+
+    // TODO: remove hard-coding, this is for testing on newsample.xml
+    private void addCollisionActions() {
+        for (FighterBody f : playerSprites) {
+            for (NodeSprite n : f.getBodyParts()) {
                 n.addCollisionEvent(GroupID.POWER_UP, new HealthEvent());
             }
         }
-        
-        
+//        for (SpriteTemplate f : powerups) {
+//            f.addCollisionEvent(GroupID.PLAYER_1, new InactiveEvent());
+//            f.addCollisionEvent(GroupID.PLAYER_2, new InactiveEvent());
+//        }
+
     }
 
     @Override
@@ -385,12 +394,16 @@ public class CombatInstance extends GameState {
         for (PlatformBlock pb : platform) {
             pb.render(pen);
         }
+//        for (SpriteTemplate p : powerups) {
+//            p.render(pen);
+//        }
+        
     }
 
     @Override
     public void update(long elapsedTime) {
         myHandler.update(elapsedTime, myEngine);
-        //camera.update(playerSprites, bg);
+        // camera.update(playerSprites, bg);
         myHandler.update(elapsedTime, myEngine);
         bg.update(elapsedTime);
 
@@ -410,6 +423,9 @@ public class CombatInstance extends GameState {
         for (PlatformBlock pb : platform)
             pb.update(elapsedTime);
 
+//        for (SpriteTemplate sprite : powerups) {
+//            sprite.update(elapsedTime);
+//        }
     }
 
     public InputHandler getMyHandler() {

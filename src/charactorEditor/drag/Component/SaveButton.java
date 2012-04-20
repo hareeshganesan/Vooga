@@ -4,11 +4,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
-import javax.swing.JButton;
-import javax.swing.JFileChooser;
+
+import javax.swing.*;
+
 import charactorEditor.Writer;
 import charactorEditor.drag.AttributePane;
 
+@SuppressWarnings("serial")
 public class SaveButton extends JButton{
 	private AttributePane outer;
 	public SaveButton(AttributePane e){

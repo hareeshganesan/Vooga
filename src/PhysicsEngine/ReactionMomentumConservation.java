@@ -12,6 +12,7 @@ public class ReactionMomentumConservation extends Reaction{
 
 	@Override
 	public void act(SpriteTemplate ps1, SpriteTemplate ps2) {
+//	    System.out.println("do this rxnmconserv");
 		Point2D p1 = ps1.getMoveBy();
 		Point2D p2 = ps2.getMoveBy();
 		
@@ -36,11 +37,12 @@ public class ReactionMomentumConservation extends Reaction{
 	}
 	
 	private double getMass(SpriteTemplate ps1){
-		double m=0;
-		if(FighterBody.class.isAssignableFrom(ps1.getClass())){
-			m=((FighterBody) ps1).getMass();
-		}
-		return m;
+//		double m=0;
+//		if(FighterBody.class.isAssignableFrom(ps1.getClass())){
+//			m=((FighterBody) ps1).getMass();
+//		}
+//		return m;
+        return ps1.getMass();
 	}
 
 }

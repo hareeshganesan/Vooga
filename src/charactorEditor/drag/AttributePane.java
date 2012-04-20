@@ -4,16 +4,10 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
-import javax.swing.JPanel;
-import charactorEditor.drag.Component.AddImgButton;
-import charactorEditor.drag.Component.AddPropertyButton;
-import charactorEditor.drag.Component.JustLabel;
-import charactorEditor.drag.Component.LoadButton;
-import charactorEditor.drag.Component.NameDisplayLabel;
-import charactorEditor.drag.Component.PropertyDisplayLabel;
-import charactorEditor.drag.Component.PropertySelectCombo;
-import charactorEditor.drag.Component.SaveButton;
-import charactorEditor.drag.Component.SetMyComponentTextField;
+
+import javax.swing.*;
+
+import charactorEditor.drag.Component.*;
 
 public class AttributePane extends JPanel {
 	/**
@@ -34,6 +28,7 @@ public class AttributePane extends JPanel {
 	public PropertySelectCombo myPropertySelectCombo =new PropertySelectCombo(this);
 	private AddImgButton myAddImgButton = new AddImgButton(this);
 	public SaveButton mySaveButton = new SaveButton(this);
+	@SuppressWarnings("unused")
 	private LoadButton myLoadButton = new LoadButton(this);
 	public FighterBuilder outerFighterBuilder;
 	Graphics2D g;
