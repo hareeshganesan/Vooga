@@ -15,6 +15,7 @@ public class FighterSprite extends SpriteTemplate {
 
 	private String myName;
 	private int myHealth;
+	private double myMass=100.0;
 
 	// defaults
 	private int MIN_HEALTH = 5;
@@ -187,5 +188,13 @@ public class FighterSprite extends SpriteTemplate {
 		moveBy.setLocation(0, 0); // moveBy only work for one time then set to
 		setCollisionStatus(false);							// zero
 		super.update(elapsedTime);
+	}
+	
+	public void setMass(double mass){
+		myMass=mass;
+	}
+	
+	public double getMass(){
+		return myMass;
 	}
 }

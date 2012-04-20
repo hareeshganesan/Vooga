@@ -14,8 +14,9 @@ public class Collision {
 	private ArrayList<CollisionKind> myReactionList = new ArrayList<CollisionKind>();
 	private SpriteGroupTemplate myGroup;
 	
-	public Collision(SpriteGroupTemplate group, CollisionKind kind){
+	public Collision(SpriteGroupTemplate group,CollisionKind kind){
 		myReactionList.add(kind);
+		myGroup = group;
 	}
 
 	public Collision(SpriteGroupTemplate group, ArrayList<CollisionKind> KindList) {

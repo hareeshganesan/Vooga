@@ -21,8 +21,7 @@ import PhysicsEngine.CollisionKind;
 import PhysicsEngine.CollisionKindEnemy;
 import PhysicsEngine.CollisionKindFriends;
 import PhysicsEngine.CollisionKindNeutral;
-import PhysicsEngine.Reaction;
-import PhysicsEngine.ReactionPunch;
+import PhysicsEngine.ReactionMomentumConservation;
 import PhysicsEngine.ReactionPush;
 import PhysicsEngine.ReactionRebound;
 import action.QuitAction;
@@ -118,18 +117,14 @@ public class CombatInstance extends GameState {
 		SpriteGroupTemplate groupSprite = new SpriteGroupTemplate("team");
 		groupSprite.addFighterSpriteArray(playerSprites);
 		groupSprite.addPlatformBlockArray(platform);
+		playerSprites.get(0).setMass(200.0);
 
 		ArrayList<CollisionKind> CollisionkindList = new ArrayList<CollisionKind>();
-		ArrayList<Reaction> reaction1 = new ArrayList<Reaction>();
-		reaction1.add(new ReactionPush());
-		ArrayList<Reaction> reaction2 = new ArrayList<Reaction>();
-		ArrayList<Reaction> reaction3 = new ArrayList<Reaction>();
-		reaction3.add(new ReactionRebound(20.0));
-		CollisionkindList.add(new CollisionKindFriends(reaction1));
-		CollisionkindList.add(new CollisionKindEnemy(reaction2));
-		CollisionkindList.add(new CollisionKindNeutral(reaction3));
+		CollisionkindList.add(new CollisionKindFriends(new ReactionMomentumConservation()));
+		CollisionkindList.add(new CollisionKindEnemy(new ReactionPush()));
+		CollisionkindList.add(new CollisionKindNeutral(new ReactionRebound()));
 
-		myCollision = new Collision(groupSprite, CollisionkindList);
+		myCollision = new Collision(groupSprite,CollisionkindList);
 
 	}
 
