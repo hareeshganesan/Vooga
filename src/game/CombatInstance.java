@@ -17,7 +17,12 @@ import sprite.PlatformBlock;
 import sprite.SpriteGroupTemplate;
 import camera.Camera;
 import camera.CameraBackground;
+import camera.CameraSprite;
+import camera.CameraUtility;
+import camera.FloatingCamera;
 import camera.FollowCamera;
+import camera.HorizontalScrollingCamera;
+import camera.VerticalScrollingCamera;
 import PhysicsEngine.Collision;
 import action.QuitAction;
 import PhysicsEngine.Collision;
@@ -36,6 +41,7 @@ public class CombatInstance extends GameState
     MainGame myEngine;
     InputHandler myHandler;
     Camera camera;
+    CameraUtility cameraUtility;
     
     //Sprites
     ArrayList<FighterSprite> playerSprites;
@@ -46,12 +52,14 @@ public class CombatInstance extends GameState
     ArrayList<Collision> myCollisionList = new ArrayList<Collision>();
     
     CameraBackground bg;
+    CameraSprite cs;
 
 	public CombatInstance(MainGame engine) {
 		super(engine);
 		myEngine = engine;
 		myHandler = new InputHandler();
-		camera = new FollowCamera();
+		camera = new VerticalScrollingCamera();
+		cameraUtility = new CameraUtility();
 	}
 
 	@Override
@@ -105,6 +113,7 @@ public class CombatInstance extends GameState
         }
         BufferedImage b = getImage(back);
         bg = new CameraBackground(b);
+        cs = new CameraSprite();
 
         //TODO: FML WHY ARE WE DOING THIS
         //this is temporary fix just to make the code work, will need to overwrite later when we implement finer collision checking and physics engine
@@ -148,14 +157,16 @@ public class CombatInstance extends GameState
     public void render (Graphics2D pen)
     {
         camera.render(pen, bg);
-        bg.render(pen, camera, camera.getX(), camera.getY(), camera.getX(), camera.getY(), camera.getHeight(), camera.getWidth());
-        //bg.render(pen);        
+        //bg.render(pen, camera, camera.getX(), camera.getY(), camera.getX(), camera.getY(), camera.getHeight(), camera.getWidth());
+        bg.render(pen);        
 		
-		bg.render(pen);
-		for (FighterSprite sprite : playerSprites)
-			sprite.render(pen);
+		for (FighterSprite sprite : playerSprites){
+		    cs.render(pen, sprite, camera);
+			//sprite.render(pen);
+		}
 		for (PlatformBlock pb : platform) {
-			pb.render(pen);
+		    cs.render(pen, pb, camera);
+			//pb.render(pen);
 		}
 	}
 

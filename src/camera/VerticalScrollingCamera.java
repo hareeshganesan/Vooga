@@ -5,16 +5,16 @@ import java.util.ArrayList;
 
 import sprite.FighterSprite;
 
-public class FloatingCamera extends Camera{
+public class VerticalScrollingCamera extends Camera{
     
-    public FloatingCamera() {
+    public VerticalScrollingCamera() {
         super();
     }
     
     @Override
     public void update(ArrayList<FighterSprite> playerSprites, CameraBackground bg) {
-        bg.setToCenter(this.getX(), this.getY(), this.getHeight(), this.getWidth());
         super.update(playerSprites, bg);       
+        bg.setToCenter(0, this.getY(), this.getHeight(), this.getWidth());
     }
     
     public void render(Graphics g1, CameraBackground bg) {

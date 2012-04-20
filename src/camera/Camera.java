@@ -12,6 +12,11 @@ import com.golden.gamedev.object.Sprite;
 
 @SuppressWarnings("serial")
 public class Camera extends JPanel {
+    
+    public static final int X_OFFSET = 20;
+    public static final int Y_OFFSET = 20;
+    public static final int CANVAS_HEIGHT = 522;
+    public static final int CANVAS_WIDTH = 522;
 
     Point center;
     Point position = new Point(0, 0);
@@ -31,11 +36,14 @@ public class Camera extends JPanel {
         this.bounds = new Rectangle(200,200);
     }
     
-
-
     public Camera(Point center, Rectangle bounds) {
         this.center = center;
         this.bounds = bounds;
+    }
+    
+    public Camera(int x, int y) {
+        this.center = new Point(0,0);
+        this.bounds = new Rectangle(x,y);
     }
 
     public int getX() {
@@ -84,15 +92,14 @@ public class Camera extends JPanel {
         double radius = Math.sqrt(Math.pow(distanceX, 2)
                 + Math.pow(distanceY, 2));
 
-        bounds.x = (int) (center.x - radius - 20);
-        bounds.y = (int) (center.y - radius - 20);
-        bounds.height = (int) (bounds.y + 2 * radius + 40);
-        bounds.width = (int) (bounds.x + 2 * radius + 40);
+        bounds.x = (int) (center.x - radius - X_OFFSET);
+        bounds.y = (int) (center.y - radius - Y_OFFSET);
+        bounds.height = (int) (bounds.y + 2 * (radius + X_OFFSET));
+        bounds.width = (int) (bounds.x + 2 * (radius + Y_OFFSET));
     }
 
     private void changeZoom(double zoom){
-        this.zoom = 544/bounds.height;
-        //this.zoom = zoom;
+        this.zoom = zoom;
     }
     
     public double getZoom() {
@@ -109,15 +116,14 @@ public class Camera extends JPanel {
     public void update(ArrayList<FighterSprite> playerSprites, CameraBackground bg) {
         calculateNewCenter(playerSprites);
         calculateNewBounds(playerSprites);
-        changeZoom(0);        
+        changeZoom(bg.getX());        
     }
     
     public void render(Graphics g1, CameraBackground bg) {
-        super.paintComponent(g1);
         Rectangle r = new Rectangle(5, 5, getWidth() - 10, getHeight() - 10);
         Graphics2D g = (Graphics2D) g1;
         g.setColor(Color.BLACK);
-        g.setBackground(Color.RED);
+        g.draw(r);
         AffineTransform old = g.getTransform();
         AffineTransform tr2 = new AffineTransform(old);
         tr2.translate((this.getWidth() / 2) - (r.getWidth() * (zoom)) / 2,
@@ -125,10 +131,13 @@ public class Camera extends JPanel {
 
         tr2.scale(zoom, zoom);
         g.setTransform(tr2);
+        
         g.draw(r);
         g.setTransform(old);
+        super.paintComponent(g1);
+
     }
-//
+
 //    public static void main(String[] args) {
 //        JOptionPane.showMessageDialog(null, new Camera());
 //    }
