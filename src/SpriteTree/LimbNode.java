@@ -3,6 +3,10 @@ package SpriteTree;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Collections;
+
+import com.golden.gamedev.util.ImageUtil;
+
 import com.golden.gamedev.object.Sprite;
 
 public class LimbNode extends Sprite{
@@ -12,13 +16,11 @@ public class LimbNode extends Sprite{
 	private BufferedImage myCurrImage;
 	private BufferedImage myOrigImage;
 	
-	private int allAngles = 0;
-	private int currAngle = 0;
-	
 	
 	private double dx;
 	private double dy;
-	private int theta;
+	private double defaultTheta;
+	private double mutableTheta;
 	private LimbNode Parent;
 	
 	private ArrayList<LimbNode> children = new ArrayList<LimbNode>();
@@ -33,51 +35,60 @@ public class LimbNode extends Sprite{
 		this.myName = name;
 		this.myOrigImage = image;
 	}
+	//constructor for limbs
 	
-	public LimbNode copy(LimbNode other){
-		return new LimbNode(other.myName,other.Parent,other.getImage(),other.dx,other.dy,other.theta);
-		
-	}
-	
-	public String getName(){
-		return this.myName;
-	}
-	
-	
-	public ArrayList<LimbNode> getChildren(){
-		return this.children;
-	}
 	public LimbNode(String name, LimbNode parent, BufferedImage image,double dx, double dy, int baseTheta){
 		super(image,parent.getX()+dx, parent.getY()+dy);
 		this.myName = name;
 		this.myOrigImage= image;
 		this.Parent = parent;
-		this.theta = baseTheta;
+		this.mutableTheta = baseTheta;
+		this.defaultTheta  = baseTheta;
 		this.dx = dx;
 		this.dy = dy;
 	
 	}
 	
-	public void rotate(int dTheta)
+	
+	public String getName(){
+		return this.myName;
+	}
+	
+	public double getTheta(){
+		return this.mutableTheta;
+	}
+	public double getDefaultTheta(){
+		return this.defaultTheta;
+	}
+
+	public void setTheta(double expTheta){
+		this.mutableTheta = expTheta;
+	}
+
+	
+	public ArrayList<LimbNode> getChildren(){
+		return this.children;
+	}
+	
+	public void rotate(double dTheta)
 	{	
-		this.theta += dTheta;
+		this.mutableTheta += dTheta;
 		
 	}
 	
 	
 	public void addChild(LimbNode child){
-		
 		children.add(child);
 		
 	}
-	public void draw(double x, double y, int theta){
+	public void draw(double x, double y, double theta){
 		this.setX(x);
 		this.setY(y);
 		this.myCurrImage =GraphicsTest.rotate(this.myOrigImage,theta);
 		this.setImage(this.myCurrImage);
 	}
 
-	public void render(Graphics2D pen,double baseX, double baseY, int baseTheta){
+	public void render(Graphics2D pen,double baseX, double baseY, double baseTheta){
 		
 		
 		super.render(pen);
@@ -86,11 +97,11 @@ public class LimbNode extends Sprite{
 		double dy =Math.sin(Math.toRadians(baseTheta)) * this.dx + Math.cos(Math.toRadians(baseTheta)) * this.dy;
 
 		
-		draw((baseX + dx), (baseY + dy),this.theta+baseTheta);
+		draw((baseX + dx), (baseY + dy),this.mutableTheta+baseTheta);
 		
 		
 		for(LimbNode limb: this.children){
-			limb.render(pen, (baseX + dx), (baseY + dy), this.theta+baseTheta);
+			limb.render(pen, (baseX + dx), (baseY + dy), this.mutableTheta+baseTheta);
 		}
 		
 
@@ -105,7 +116,7 @@ public class LimbNode extends Sprite{
 		System.out.println(this.Parent);
 		System.out.println(this.dx);
 		System.out.println(this.dy);
-		System.out.println(this.theta);
+		System.out.println(this.mutableTheta);
 	}
 	
 }

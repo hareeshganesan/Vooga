@@ -6,12 +6,15 @@ import java.util.ArrayList;
 //import npsprite.PlatformBlock;
 //import npsprite.SpriteTemplate;
 
+
 /**
  * Better than SpriteGroup given by GoldenT in our engine
+
  * 
  * @author Donghe
  * 
  */
+@Deprecated
 public class SpriteGroupTemplate {
 	private ArrayList<SpriteTemplate> mySpriteGourp = new ArrayList<SpriteTemplate>();
 	private String myName;

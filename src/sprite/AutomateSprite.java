@@ -7,6 +7,8 @@ import com.golden.gamedev.object.Timer;
  * @author Wendy
  */
 //wraps a npc to allow for disappearing/reappearing after set period of time
+
+@Deprecated
 public class AutomateSprite extends SpriteDecorator{
     private double myX;
     private double myY;

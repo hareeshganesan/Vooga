@@ -2,7 +2,9 @@ package PhysicsEngine;
 
 import java.util.ArrayList;
 
-import sprite.SpriteTemplate;
+import npsprite.SpriteTemplate;
+
+//import sprite.SpriteTemplate;
 
 /**
  * This class deals with the collision between two sprites from the same group
@@ -25,8 +27,11 @@ public class CollisionKindFriends extends CollisionKind {
 
 	@Override
 	public boolean isThisKind(SpriteTemplate ps1, SpriteTemplate ps2) {
-		if (belongFighterSprite(ps1) && belongFighterSprite(ps2))
-			return true;
+//	    System.out.println(ps1.getGroupID()+","+ps2.getGroupID());
+		if (belongFighterSprite(ps1) && belongFighterSprite(ps2)){
+//            System.out.println("found kind friend");
+            return true;
+		}
 		return false;
 	}
 

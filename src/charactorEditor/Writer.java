@@ -3,6 +3,7 @@ package charactorEditor;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+
 import com.google.gson.Gson;
 
 public class Writer {

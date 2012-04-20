@@ -4,10 +4,13 @@ import java.awt.geom.Point2D;
 
 /**
  * Created 4 mar
+
  * @author Wendy
  * Quite a bit of overhead, may have to abandon the strict pattern decorator
  * maybe visitor?
  */
+
+@Deprecated
 public abstract class SpriteDecorator extends SpriteTemplate{
     protected NonPlayerSprite child;
     public SpriteDecorator(NonPlayerSprite component){

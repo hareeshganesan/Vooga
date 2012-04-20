@@ -4,6 +4,8 @@ import java.awt.image.BufferedImage;
 
 
 //sample subclass
+
+@Deprecated
 public class LandmineBlock extends NonPlayerSprite
 {
     private int xradius;

@@ -1,6 +1,5 @@
 package levelEditor.gui;
 
-
 import java.awt.Color;
 import java.awt.Font;
 
@@ -40,8 +39,6 @@ public class SpriteListComponent {
 		
 		return scroll;
 	}
-	
-	
-	
-	
+
 }
+	

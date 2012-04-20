@@ -1,6 +1,7 @@
 package PhysicsEngine;
 
-import sprite.SpriteTemplate;
+//import sprite.SpriteTemplate;
+import npsprite.SpriteTemplate;
 import action.MotionAction;
 
 /**
@@ -22,7 +23,7 @@ public abstract class PhysicsEngine {
 
 	public PhysicsEngine(MotionAction motionAction) {
 
-		myFighterSprite = motionAction.getFighterSprite();
+		myFighterSprite = motionAction.getFighterBody();
 		myVectorX = motionAction.getVectorX();
 		myVectorY = motionAction.getVectorY();
 	}

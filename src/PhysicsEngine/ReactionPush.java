@@ -1,7 +1,9 @@
 package PhysicsEngine;
 
 import java.awt.geom.Point2D;
-import sprite.SpriteTemplate;
+
+import npsprite.SpriteTemplate;
+//import sprite.SpriteTemplate;
 
 public class ReactionPush extends Reaction {
 

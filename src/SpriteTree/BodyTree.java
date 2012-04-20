@@ -1,11 +1,18 @@
 package SpriteTree;
 
 import java.awt.Graphics2D;
+
+import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
 import java.util.HashMap;
+
+import javax.swing.JFrame;
+
 
 public class BodyTree {
 	private LimbNode root;
 	private HashMap<String,LimbNode> map ;
+	
 	
 	
 	public BodyTree (LimbNode root){
@@ -15,6 +22,7 @@ public class BodyTree {
 		
 	}
 	
+
 	public void createMap(LimbNode currNode){
 		if(!map.containsKey(currNode.getName())){
 			map.put(currNode.getName(), currNode);
@@ -22,6 +30,10 @@ public class BodyTree {
 		for(LimbNode limb:currNode.getChildren()){
 			createMap(limb);
 		}
+	}
+	
+	public HashMap<String, LimbNode> getMap(){
+		return map;
 	}
 	
 	public LimbNode getNode(String name){

@@ -1,9 +1,13 @@
 package PhysicsEngine;
 
 import java.awt.geom.Point2D;
-import sprite.FighterSprite;
-import sprite.PlatformBlock;
-import sprite.SpriteTemplate;
+
+import npsprite.FighterBody;
+import npsprite.PlatformBlock;
+import npsprite.SpriteTemplate;
+//import sprite.FighterSprite;
+//import sprite.PlatformBlock;
+//import sprite.SpriteTemplate;
 
 public class ReactionRebound extends Reaction {
 
@@ -18,7 +22,7 @@ public class ReactionRebound extends Reaction {
 	}
 
 	private void rebound(SpriteTemplate fighterSprite) {
-		Point2D p = ((FighterSprite) fighterSprite).getMoveBy();
+		Point2D p =  fighterSprite.getMoveBy();
 		double x = -p.getX()*5;
 		double y = -p.getY()*5;
 

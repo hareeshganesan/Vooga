@@ -20,6 +20,7 @@ import levelEditor.mvc.Controller;
 @SuppressWarnings({ "unused", "serial" })
 public class BackgroundImageComponent extends JPanel {
 
+	
 	private Controller myController;
 	
 	private JPanel myPanel;
@@ -37,7 +38,7 @@ public class BackgroundImageComponent extends JPanel {
 		
 		setVisible(true);
 	}
-
+	
 
 	public JComponent create() {
 		myPanel = new JPanel();
@@ -59,15 +60,14 @@ public class BackgroundImageComponent extends JPanel {
 		} );
 		myPanel.add(myChooseImageButton);
 
-		return myPanel;
-	}
+        return myPanel;
+    }
 
-
-	private void initializeImageChooser () {
-		myImageChooser = new JFileChooser
-				(System.getProperties().getProperty("user.dir"));
-		myImageChooser.setFileFilter(new FileNameExtensionFilter(
-				"JPEG, PNG, GIF", "jpeg", "png", "gif", "jpg"));
-	}
+    private void initializeImageChooser() {
+        myImageChooser = new JFileChooser(System.getProperties().getProperty(
+                "user.dir"));
+        myImageChooser.setFileFilter(new FileNameExtensionFilter(
+                "JPEG, PNG, GIF", "jpeg", "png", "gif", "jpg"));
+    }
 
 }

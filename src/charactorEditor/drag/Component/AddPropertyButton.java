@@ -2,10 +2,12 @@ package charactorEditor.drag.Component;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JButton;
-import javax.swing.JOptionPane;
+
+import javax.swing.*;
+
 import charactorEditor.drag.AttributePane;
 
+@SuppressWarnings("serial")
 public class AddPropertyButton extends JButton {
 	private AttributePane outer;
 

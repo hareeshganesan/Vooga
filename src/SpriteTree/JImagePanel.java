@@ -2,6 +2,7 @@ package SpriteTree;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+
 import javax.swing.JPanel;
 
 public class JImagePanel extends JPanel {

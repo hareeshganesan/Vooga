@@ -1,9 +1,16 @@
 package events;
 
 import java.util.ArrayList;
-import npsprite.SpriteID.GroupID;
+
+import npsprite.GroupID;
 import npsprite.SpriteTemplate;
 
+/**
+ * Deprecated for now, may be back in different form later on
+ * @author Wendy
+ *
+ */
+@Deprecated 
 public class CompositeEvent {
     private GroupID groupID; //the groupID you want to match against
     private ArrayList<CollisionEvent> events;

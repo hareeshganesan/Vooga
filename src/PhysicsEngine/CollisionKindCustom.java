@@ -2,7 +2,9 @@ package PhysicsEngine;
 
 import java.util.ArrayList;
 
-import sprite.SpriteTemplate;
+import npsprite.SpriteTemplate;
+
+//import sprite.SpriteTemplate;
 
 public class CollisionKindCustom extends CollisionKind {
 
