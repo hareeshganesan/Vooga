@@ -4,13 +4,12 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 
-import levelEditor.mvc.LevelObject;
 
 /**
  * @author Peggy Li
  */
 
-
+@SuppressWarnings("unused")
 public class Generic {
 
 	private LevelObject myLevel;

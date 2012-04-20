@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+
+import levelEditor.gui.BackgroundPane;
 import levelEditor.gui.LevelSetupComponent;
 import levelEditor.gui.SaveLevelComponent;
 import levelEditor.gui.SpriteListComponent;
@@ -41,7 +43,7 @@ public class View extends JFrame {
 		// EAST
 		
 		// CENTER
-		add (new VisualComponent(this.getGraphics()), BorderLayout.CENTER);
+		add (new BackgroundPane("src/resources/flame.png").showImage(), BorderLayout.CENTER);
 		
 		
 		setSize(SIZE);
