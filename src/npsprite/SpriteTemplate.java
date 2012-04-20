@@ -1,106 +1,140 @@
 package npsprite;
 
 import java.awt.Graphics2D;
+import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map.Entry;
 
-import events.CompositeEvent;
+import npsprite.properties.PropertyObject;
+import events.CollisionEvent;
 
-import npsprite.SpriteID.GroupID;
 
-
-//TODO: ensure that all sprites must pass in a groupID when they're created
-//TODO: COPY AND PASTE SPRITE, REMOVE OTHER ID STUFF SO NO CONFUSION CREATED
-// all sprites in fighting game extend this template. No animation, that will be handled by spritetree
+// all sprites in fighting game extend this template. 
 @SuppressWarnings("serial")
-public abstract class SpriteTemplate extends Sprite {
+public class SpriteTemplate extends Sprite implements Cloneable{
     
-    double DEFAULT_SPEED = 0.1;
+    //distance moved=default speed*elapsedTime
+    double defaultSpeed = 0.1;
+    double myMass=20;
     
-    private ArrayList<CompositeEvent> myCollisions = new ArrayList<CompositeEvent>();
-    protected SpriteID myID;
+    private HashMap<String,PropertyObject> myProperties = new HashMap<String,PropertyObject>();
+    private HashMap<GroupID,CollisionEvent> myCollisions = new HashMap<GroupID,CollisionEvent>();
+    
+    protected GroupID myID;
+    
+
+    private boolean myCollisionStatus=false;
+    protected Point2D moveBy=new Point2D.Double();
 
     public SpriteTemplate(GroupID g) {
         super();
-        createSpriteID(g);
+        myID=g;
     }
-
     public SpriteTemplate(BufferedImage b, GroupID g) {
         super(b);
-        createSpriteID(g);
+        myID=g;
     }
-
     /**
      * Creates new Sprite with specified image and location.
      */
     public SpriteTemplate(BufferedImage image, GroupID g, double d, double e) {
         super(image, d, e);
-        createSpriteID(g);
+        myID=g;
     }
     
-    protected abstract void createSpriteID(GroupID g);
-
-    public void setDefaultSpeed(double speed) {
-        DEFAULT_SPEED = speed;
-    }
-
-    /**
-     * speed reset to default value, same for x and y directions for now
-     */
-    public void resetSpeed() {
-        this.setSpeed(DEFAULT_SPEED, DEFAULT_SPEED);
-    }
-
-    public double getSpeed() {
-        return DEFAULT_SPEED;
-    }
-
-    public SpriteID getSpriteID() { // I don't know why you would need this
+    public GroupID getGroupID() {
         return myID;
     }
-
-    /* Wrapping spriteID methods for easier calling */
-    public GroupID getGroupID() {
-        return myID.getGroupID();
-    }
-    public boolean hasHealth() {
-        return myID.hasHealth();
-    }
-    public boolean doesDamage() {
-        return myID.doesDamage();
-    }
-    public boolean spawns() {
-        return myID.spawns();
-    }
-    public boolean attaches() {
-        return myID.attaches();
+    /**
+     * create a new instance of this sprite, with same properties/collisions
+     */
+    @SuppressWarnings("unchecked")
+    public SpriteTemplate clone(){
+        SpriteTemplate c=new SpriteTemplate(myID);
+        c.addCollisionEvents((HashMap<GroupID, CollisionEvent>) myCollisions.clone()); //TODO: SHALLOW CLONE FOR THIS is okay, right?
+        HashMap<String, PropertyObject> newProperties=new HashMap<String, PropertyObject>();
+        for (Entry<String, PropertyObject> e:myProperties.entrySet()){
+            newProperties.put(e.getKey(), e.getValue().clone());
+        }
+        c.addProperties(newProperties);
+        return c;
     }
 
+    /* SPEED STUFF */
+    public void setDefaultSpeed(double speed) {
+        defaultSpeed = speed;
+    }
+    public double getSpeed() {
+        return defaultSpeed;
+    }
+    /* MASS - each sprite has a default mass of 50, used in physics engine */
+    public void setMass(double mass){
+        myMass=mass;
+    }
+    public double getMass(){
+        return myMass;
+    }
     
-    /* COLLISION STUFF */
-    public void addCollisionEvent(CompositeEvent c) {
-        myCollisions.add(c);
+    /* PROPERTIES STUFF */
+    public void addProperty(String name,PropertyObject p){
+        myProperties.put(name, p);
+    }
+    public void addProperties(HashMap<String,PropertyObject>e){
+        myProperties.putAll(e);
+    }
+    public boolean hasProperty(String name){
+        return myProperties.containsKey(name);
+    }
+    public PropertyObject getProperty(String name){
+        return myProperties.get(name);
     }
 
+    /* COLLISION STUFF */
+    public void addCollisionEvent(GroupID g,CollisionEvent c) {
+        myCollisions.put(g, c);
+    }
+    public void addCollisionEvents(HashMap<GroupID,CollisionEvent>e) {
+        myCollisions.putAll(e);
+    }
     /**
      * Called when a collision between this sprite and another is detected. The
      * physics engine will have already checked that these sprites are both
      * active and have different groupIDs
      */
     public void collisionAction(SpriteTemplate otherSprite) {
-        CompositeEvent act = null;
-        for (CompositeEvent c : myCollisions) {
-            if (c.getGroupID() == otherSprite.getGroupID()) {
-                act = c;
-                break;
-            }
-        }
+        
+        CollisionEvent act=myCollisions.get(otherSprite.getGroupID());
         if (act != null) {
-            act.performActions(this, otherSprite);
+            act.performAction(this, otherSprite);
         }
     }
 
+    public void setCollisionStatus(boolean b){
+        myCollisionStatus=b;
+    }
+    
 
+    /* PHYSICS ENGINE MOVEMENT */
+    public void setNextLocationIncrement(Point2D nextLocation) {
+        if(!myCollisionStatus){
+            this.moveBy = new Point2D.Double(moveBy.getX()+nextLocation.getX(),
+                moveBy.getY()+nextLocation.getY());
+            
+        }else{
+            moveBy=nextLocation;
+        }
+    }
+    public Point2D getCurrentLocation() {
+        return new Point2D.Double(getX() + moveBy.getX(), getY()
+                + moveBy.getY());
+    }
+    public Point2D getMoveBy() {
+        return moveBy;
+    }
+    
+
+    
     @Override
     public void render(Graphics2D pen) {
         if (this.isActive()) {

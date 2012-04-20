@@ -3,6 +3,7 @@ package sprite;
 import java.awt.image.BufferedImage;
 
 
+@Deprecated
 public class WeaponSprite extends NonPlayerSprite
 {
 
@@ -53,11 +54,5 @@ public class WeaponSprite extends NonPlayerSprite
     {
         //TODO
     }
-
-	@Override
-	public String getSpriteKind() {
-		// TODO Auto-generated method stub
-		return "WeaponSprite";
-	}
 
 }

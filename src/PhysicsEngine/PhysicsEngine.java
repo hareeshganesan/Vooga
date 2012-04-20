@@ -1,21 +1,12 @@
 package PhysicsEngine;
 
-import sprite.SpriteTemplate;
+//import sprite.SpriteTemplate;
+import npsprite.SpriteTemplate;
 import action.MotionAction;
 
 /**
- * 
-<<<<<<< HEAD
  * This is the super class of physics engine
  * Maybe there will more children engine in the futures
-=======
- * This is the super
- * 
- * class of physics engine Maybe there will more children engine in the futures
- * 
- * @author Donghe
->>>>>>> 0463ade3db276a4e544cfa075112a8f31f56fcfc
- * 
  * @author Donghe
  *
  */
@@ -32,9 +23,8 @@ public abstract class PhysicsEngine {
 
 	public PhysicsEngine(MotionAction motionAction) {
 
-		myFighterSprite = motionAction.getFighterSprite();
+		myFighterSprite = motionAction.getFighterBody();
 		myVectorX = motionAction.getVectorX();
-
 		myVectorY = motionAction.getVectorY();
 	}
 

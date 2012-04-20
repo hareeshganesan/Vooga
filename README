@@ -17,6 +17,18 @@ Chen Ji		cj85@duke.edu
 Nathan Klug	nathan.klug@duke.edu
 Tanner Schmidt	tws10@duke.edu	
 
+-------------- Time Spend Version 3-------------
+
+Group Meetings:
+	Sunday, April 8, 2012		3:00 PM - 6:30 PM
+	Wednesday, April 11, 2012	7:30 PM - 11:00 PM
+	Thursday, April 12, 2012	7:30 PM - 11:59 PM
+	Friday, April 13, 2012		12:00 AM - 12:30 AM
+
+Individual Time (outside meetings):
+	Approximately 4 hours spent per person
+
+Total Group Time Spent = ~ 112 hrs
 
 -------------- Time Spent Version 2-------------
 
@@ -70,14 +82,16 @@ Google search...
 
 --------------- Instructions/Notes -------------
 
-For part 2 (3/26-4/2), please configure build path to include:
+For part 3 (4/13), please configure build path to include:
 -golden_0_2_3.jar (golden t framework)
 -jdom-1.1.2.jar   (jdom for xml parsing)
 -jaxen.jar        (xpath for jdom)
++gson-2.1.jar
+
 
 Run the Main in LevelEditor to create a xml file saving level details (default saves to src/resources/ folder).
 
-Run MainGame, load a file using file chooser, and play it. 
+Run MainGame, load a file using file chooser (press 1), and play it. 
 
 Please do NOT write a xml file with more or less than 2 fighter sprites, we can't account for that yet. 
 Also please write the fighter name IN ALL CAPS

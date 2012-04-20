@@ -1,24 +1,27 @@
 package charactorEditor.drag;
 
+import java.awt.Graphics2D;
 import java.awt.geom.*;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 
+import SpriteTree.LimbNode;
+
 public class MyComponent {
-	int id = 0;
-	int sortID = 1;
+	int sortID = 0;
 	public String text = null;
 	public File img = null;
 	public int sort = -1;
 	Rectangle2D.Double border = null;
-	Point2D.Double point = null;
 	Rectangle2D.Double dragSize = null;
 	private HashMap<String, String> properties = new HashMap<String, String>();
+	MyComponent parent = null;
+	ArrayList<MyComponent> children = new ArrayList<MyComponent>();
+	private LimbNode myLimbNode;
 
-	MyComponent(Point2D.Double p, int theSort, int ID, FighterBuilder out) {
-		point = p;
+	MyComponent(Point2D.Double p, int theSort) {
 		sort = theSort;
-		id = ID;
 		border = new Rectangle2D.Double(p.getX() - 20, p.getY() - 10, 40, 20);
 		dragSize = new Rectangle2D.Double(border.getMaxX() - 10,
 				border.getMaxY() - 10, 10, 10);
@@ -28,7 +31,7 @@ public class MyComponent {
 		text = t;
 	}
 
-	void setLocation(Point2D p) {
+	void setLocation(Point2D p, int indicator) {
 		double x = p.getX();
 		double y = p.getY();
 		double w = border.getWidth();
@@ -41,7 +44,7 @@ public class MyComponent {
 		if (t2 % 10 == 5) {
 			t2 += 5;
 		}
-		border.setFrame(x - t1, y - t2, w, h);
+		border.setFrame(x - t1 * indicator, y - t2 * indicator, w, h);
 		dragSize = new Rectangle2D.Double(border.getMaxX() - 10,
 				border.getMaxY() - 10, 10, 10);
 	}
@@ -71,4 +74,27 @@ public class MyComponent {
 		if (properties.keySet().contains(key))
 			properties.remove(key);
 	}
+
+	public void draw(Graphics2D g) {
+		if (children.size() != 0) {
+			for (MyComponent c : children) {
+				g.drawLine((int) border.getCenterX(),
+						(int) border.getCenterY(), (int) c.border.getCenterX(),
+						(int) c.border.getCenterY());
+				c.draw(g);
+			}
+		}
+	}
+
+	public void getOutofTree() {
+		if (parent != null) {
+			if (children.size() != 0)
+				for (MyComponent m : children) {
+					parent.children.add(m);
+					m.parent = parent;
+				}
+			parent.children.remove(this);
+		}
+	}
+
 }

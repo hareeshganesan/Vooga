@@ -1,7 +1,9 @@
 package PhysicsEngine;
 
 import java.awt.geom.Point2D;
-import sprite.FighterSprite;
+
+import npsprite.FighterBody;
+//import sprite.FighterSprite;
 import action.MotionAction;
 
 public class BasicPhysicsEngine extends PhysicsEngine {
@@ -29,7 +31,7 @@ public class BasicPhysicsEngine extends PhysicsEngine {
 		// TODO Auto-generated constructor stub
 	}
 
-	public static void process(FighterSprite fs, double x_vector,
+	public static void process(FighterBody fs, double x_vector,
 			double y_vector, long elapsed_time) {
 		double speed = fs.getSpeed() / 10;
 		double x = speed * elapsed_time * x_vector;

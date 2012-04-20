@@ -1,17 +1,16 @@
 package camera;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Point;
-import java.awt.Rectangle;
-import java.awt.geom.AffineTransform;
-import java.util.ArrayList;
-import javax.swing.JPanel;
-import sprite.FighterSprite;
+import java.awt.*;
+import java.awt.geom.*;
+import javax.swing.*;
+
+import sprite.*;
+
+import java.util.*;
+
 import com.golden.gamedev.object.Sprite;
 
+@SuppressWarnings("serial")
 public class Camera extends JPanel {
 
     Point center;
@@ -28,6 +27,8 @@ public class Camera extends JPanel {
         setOpaque(true);
         setBackground(Color.WHITE);
         setPreferredSize(new Dimension(200, 200));
+        this.center = new Point(0,0);
+        this.bounds = new Rectangle(200,200);
     }
     
 
@@ -105,15 +106,13 @@ public class Camera extends JPanel {
                 (int) sprite.getY() + sprite.getHeight() / 2));
     }
     
-    public void update(ArrayList<FighterSprite> playerSprites) {
+    public void update(ArrayList<FighterSprite> playerSprites, CameraBackground bg) {
         calculateNewCenter(playerSprites);
         calculateNewBounds(playerSprites);
-        changeZoom(0);
-
-        
+        changeZoom(0);        
     }
     
-    public void render(Graphics g1) {
+    public void render(Graphics g1, CameraBackground bg) {
         super.paintComponent(g1);
         Rectangle r = new Rectangle(5, 5, getWidth() - 10, getHeight() - 10);
         Graphics2D g = (Graphics2D) g1;
@@ -128,7 +127,6 @@ public class Camera extends JPanel {
         g.setTransform(tr2);
         g.draw(r);
         g.setTransform(old);
-        
     }
 //
 //    public static void main(String[] args) {

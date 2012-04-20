@@ -5,23 +5,26 @@ import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
 
-/*
+/**
  * Note: speed is used to determine distance travelled upon keypresses. getSpeed is used for this purpose
+
  * To set actual sprite speed (moving w/o keypresses), call the golden t functions
  * @author Wendy, Helena, Hareesh
+ * 
+ * @deprecated use npsprite package
  */
-
+@Deprecated
 public class FighterSprite extends SpriteTemplate {
 
 	private String myName;
 	private int myHealth;
+	private double myMass=100.0;
 
 	// defaults
 	private int MIN_HEALTH = 5;
 	private int MAX_HEALTH = 50;
 	private double DEFAULT_SPEED = 0.5;
-	private Point2D moveBy;
-
+	
 	private HealthDisplay myDisplay;
 	private List<NonPlayerSprite> myWeapons;
 
@@ -44,10 +47,7 @@ public class FighterSprite extends SpriteTemplate {
 		super.setDirection(SpriteValues.RIGHT);
 	}
 
-	public Point2D getCurrentLocation() {
-		return new Point2D.Double(getX() + moveBy.getX(), getY()
-				+ moveBy.getY());
-	}
+
 
 	public void addWeapon(NonPlayerSprite child) {
 		myWeapons.add(child);
@@ -116,11 +116,7 @@ public class FighterSprite extends SpriteTemplate {
 		}
 	}
 
-	public void setNextLocationIncrement(Point2D nextLocation) {
 
-		this.moveBy = new Point2D.Double(nextLocation.getX(),
-				nextLocation.getY());
-	}
 
 	// DOES THIS NEED TO BE PUBLIC?
 	private void changeDirection(int dir) {
@@ -161,16 +157,15 @@ public class FighterSprite extends SpriteTemplate {
 	}
 
 	public void move(double dx, double dy) {
-		Point2D finaldelta = confineBounds(dx, dy);
-		dx = finaldelta.getX();
-		dy = finaldelta.getY();
+//		Point2D finaldelta = confineBounds(dx, dy);
+//		dx = finaldelta.getX();
+//		dy = finaldelta.getY();
 		super.move(dx, dy);
 		if (dx < 0) {
 			changeDirection(SpriteValues.LEFT);
 		} else if (dx > 0) {
 			changeDirection(SpriteValues.RIGHT);
 		}
-
 		moveWeapons(dx, dy);
 	}
 
@@ -194,17 +189,15 @@ public class FighterSprite extends SpriteTemplate {
 
 		move(moveBy.getX(), moveBy.getY());
 		moveBy.setLocation(0, 0); // moveBy only work for one time then set to
-									// zero
+		setCollisionStatus(false);							// zero
 		super.update(elapsedTime);
 	}
-
-	@Override
-	public String getSpriteKind() {
-		// TODO Auto-generated method stub
-		return "FighterSprite";
+	
+	public void setMass(double mass){
+		myMass=mass;
 	}
-
-	public Point2D getMoveBy() {
-		return moveBy;
+	
+	public double getMass(){
+		return myMass;
 	}
 }

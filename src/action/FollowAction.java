@@ -1,12 +1,15 @@
 package action;
 
-import sprite.FighterSprite;
+import npsprite.FighterBody;
+
+//import sprite.FighterSprite;
 
 public class FollowAction extends Action
 {
-    FighterSprite myEnemy;
+    FighterBody myEnemy;
+    FighterBody myFighter;
 
-    public FollowAction (FighterSprite fighter, FighterSprite enemy)
+    public FollowAction (FighterBody fighter, FighterBody enemy)
     {
         myFighter = fighter;
         myEnemy = enemy;

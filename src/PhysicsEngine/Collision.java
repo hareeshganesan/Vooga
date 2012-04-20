@@ -1,8 +1,11 @@
 package PhysicsEngine;
 
 import java.util.ArrayList;
-import sprite.SpriteGroupTemplate;
-import sprite.SpriteTemplate;
+//import sprite.SpriteGroupTemplate;
+//import sprite.SpriteTemplate;
+
+import npsprite.SpriteGroupTemplate;
+import npsprite.SpriteTemplate;
 
 /**
  * This is the basic class for collision In this class we check whether there is
@@ -11,32 +14,20 @@ import sprite.SpriteTemplate;
  * @author Donghe
  */
 public class Collision {
-	private ArrayList<CollisionReaction> myReactionList = new ArrayList<CollisionReaction>();
-	private SpriteGroupTemplate myGroupOne;
-	private SpriteGroupTemplate myGroupTwo;
-
-	private boolean onlyOneGroup;
-
-	public Collision(SpriteGroupTemplate g1) {
-		myGroupOne = g1;
-		onlyOneGroup = true;
-		setReactionList();
+	private ArrayList<CollisionKind> myReactionList = new ArrayList<CollisionKind>();
+	private SpriteGroupTemplate myGroup;
+	
+	public Collision(SpriteGroupTemplate group,CollisionKind kind){
+		myReactionList.add(kind);
+		myGroup = group;
 	}
 
-	public Collision(SpriteGroupTemplate g1, SpriteGroupTemplate g2) {
-		myGroupOne = g1;
-		myGroupTwo = g2;
-		onlyOneGroup = false;
-		setReactionList();
+	public Collision(SpriteGroupTemplate group, ArrayList<CollisionKind> KindList) {
+		myGroup = group;
+		myReactionList=KindList;
 	}
-
-	private void setReactionList() {
-		myReactionList.add(new CollisionReactionFriends());
-		myReactionList.add(new CollisionReactionEnemy());
-		myReactionList.add(new CollisionReactionNeutral());
-	}
-
-	public boolean isCollided(SpriteTemplate s1, SpriteTemplate s2) {
+	
+	private boolean isCollided(SpriteTemplate s1, SpriteTemplate s2) {
 		if (s1.getX()>s2.getX()+s2.getWidth()) return false;
 		if (s1.getX()+s1.getWidth()<s2.getX()) return false;
 		if (s1.getY()>s2.getY()+s2.getHeight()) return false;
@@ -45,41 +36,49 @@ public class Collision {
 	}
 
 	public void checkGroupCollision() {
-		if (onlyOneGroup) {
-			checkInGroup();
-		} else {
-			checkBetweenGroups();
-		}
-	}
-
-	private void checkInGroup() {
-		for (int i = 0; i < myGroupOne.getSize(); i++) {
-			for (int j = i + 1; j < myGroupOne.getSize(); j++) {
-				checkEachCollision(myGroupOne.getSprite(i),
-						myGroupOne.getSprite(j));
-			}
-		}
-	}
-
-	private void checkBetweenGroups() {
-		for (SpriteTemplate s1 : myGroupOne.getSpriteArray()) {
-			for (SpriteTemplate s2 : myGroupTwo.getSpriteArray()) {
-				checkEachCollision(s1, s2);
+		for (int i = 0; i < myGroup.getSize(); i++) {
+			for (int j = i + 1; j < myGroup.getSize(); j++) {
+				checkEachCollision(myGroup.getSprite(i),
+						myGroup.getSprite(j));
 			}
 		}
 	}
 
 	private void checkEachCollision(SpriteTemplate s1, SpriteTemplate s2) {
 		if (isCollided(s1, s2)) {
-			for (CollisionReaction r : myReactionList) {
-				if (r.isThisComposition(s1, s2)) {
-					CollisionReaction reaction = r.createCollisionReaction(s1,
-							s2);
-					reaction.doThisReaction();
+			s1.setCollisionStatus(true);
+			s2.setCollisionStatus(true);
+			for (CollisionKind r : myReactionList) {
+				if (r.isThisKind(s1, s2)) {
+					r.doThisReaction(s1,s2);	
 				}
 			}
 			// for debug
 			System.out.println("collision");
 		}
+	}
+	
+	public void addSprite(SpriteTemplate sprite){
+		myGroup.addSpriteTemplate(sprite);
+	}
+	
+	public void addSprite(SpriteGroupTemplate spriteGroup){
+		myGroup.addSpriteGroup(spriteGroup);
+	}
+	
+	public void addCollisionKind(CollisionKind kind){
+		myReactionList.add(kind);
+	}
+	
+	public void addCollisionKind(ArrayList<CollisionKind> kindList){
+		myReactionList.addAll(kindList);
+	}
+	
+	public void removeCollisionKind(CollisionKind kind){
+		myReactionList.remove(kind);
+	}
+	
+	public void removeCollisionKind(ArrayList<CollisionKind> kindList){
+		myReactionList.removeAll(kindList);
 	}
 }

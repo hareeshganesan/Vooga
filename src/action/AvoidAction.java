@@ -1,15 +1,17 @@
 package action;
 
 import java.awt.geom.Point2D;
-import sprite.FighterSprite;
+
+import npsprite.FighterBody;
+//import sprite.FighterSprite;
 
 
 public class AvoidAction extends Action
 {
-    FighterSprite myEnemy;
+    FighterBody myEnemy;
+    FighterBody myFighter;
 
-
-    public AvoidAction (FighterSprite fighter, FighterSprite enemy)
+    public AvoidAction (FighterBody fighter, FighterBody enemy)
     {
         myFighter = fighter;
         myEnemy = enemy;
@@ -22,8 +24,8 @@ public class AvoidAction extends Action
         double dist =
             myFighter.getCurrentLocation()
                      .distance(myEnemy.getCurrentLocation());
-        double x_direction = -(myEnemy.getX() - myFighter.getX()) / dist;
-        double y_direction = -(myEnemy.getY() - myFighter.getY()) / dist;
+        double x_direction = -(myEnemy.getX() - myFighter.getX());
+        double y_direction = -(myEnemy.getY() - myFighter.getY());
         if (dist < 200)
         {
             MotionAction f =
