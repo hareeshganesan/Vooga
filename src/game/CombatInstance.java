@@ -256,6 +256,7 @@ import PhysicsEngine.CollisionKindNeutral;
 import PhysicsEngine.ReactionMomentumConservation;
 import PhysicsEngine.ReactionPush;
 import PhysicsEngine.ReactionRebound;
+import action.MotionAction;
 import action.QuitAction;
 import ai.AIAgent;
 import camera.*;
@@ -421,6 +422,10 @@ public class CombatInstance extends GameState {
                 AIAgent ai = (AIAgent) sprite;
                 ai.calculateLocation(elapsedTime);
             }
+        }
+        
+        for (FighterBody sprite : playerSprites){
+        	MotionAction.Gravity(sprite,1).performAction(elapsedTime);
         }
 
         myCollision.checkGroupCollision();
