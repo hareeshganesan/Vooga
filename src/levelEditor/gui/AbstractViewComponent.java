@@ -6,10 +6,8 @@ package levelEditor.gui;
 
 import javax.swing.JComponent;
 
+public abstract class AbstractViewComponent {
 
-public abstract class AbstractViewComponent
-{
-
-    public abstract JComponent create ();
+    public abstract JComponent create();
 
 }

@@ -4,16 +4,18 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 
+import levelEditor.mvc.LevelObject;
+
 /**
  * @author Peggy Li
  */
 
 
-public class FileWriter {
+public class Generic {
 
-	private LevelProxy myLevel;
+	private LevelObject myLevel;
 	
-	public FileWriter (LevelProxy level) {
+	public Generic (LevelObject level) {
 		myLevel = level;
 	}
 	

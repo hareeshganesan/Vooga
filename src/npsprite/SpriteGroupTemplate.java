@@ -48,6 +48,9 @@ public class SpriteGroupTemplate {
 		}
 	}
 	
+	/**
+	 * Add all limbs to collision detection
+	 */
 	public void addFighterSpriteArray(ArrayList<FighterBody> group) {
 		for (FighterBody s : group) {
 		    for (NodeSprite n:s.getBodyParts()){

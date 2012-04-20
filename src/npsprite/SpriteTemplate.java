@@ -15,8 +15,8 @@ import events.CollisionEvent;
 public class SpriteTemplate extends Sprite implements Cloneable{
     
     //distance moved=default speed*elapsedTime
-    double defaultSpeed = 0.1;
-    double myMass=20;
+    double defaultSpeed = 0.2;
+    double myMass=200;
     
     private HashMap<String,PropertyObject> myProperties = new HashMap<String,PropertyObject>();
     private HashMap<GroupID,CollisionEvent> myCollisions = new HashMap<GroupID,CollisionEvent>();
@@ -127,6 +127,7 @@ public class SpriteTemplate extends Sprite implements Cloneable{
         }else{
             moveBy=nextLocation;
         }
+//        System.out.println("setting loc"+moveBy.getX()+","+moveBy.getY());
     }
     public Point2D getCurrentLocation() {
         return new Point2D.Double(getX() + moveBy.getX(), getY()
@@ -148,11 +149,12 @@ public class SpriteTemplate extends Sprite implements Cloneable{
     }
 
 
-    @Override
-    public void update (long elapsedTime)
-    {
-        if (this.isActive())
-        {
+    public void update(long elapsedTime) {
+        if (this.isActive()) {
+//            if (moveBy.getX()!=0 || moveBy.getY()!=0){
+//                System.out.println("move");
+//                move(moveBy.getX(), moveBy.getY());
+//            }
             super.update(elapsedTime);
         }
     }

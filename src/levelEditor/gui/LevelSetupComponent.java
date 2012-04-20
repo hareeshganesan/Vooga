@@ -9,27 +9,21 @@ import javax.swing.JComponent;
 import javax.swing.JPanel;
 import levelEditor.mvc.Controller;
 
-
-public class LevelSetupComponent
-{
+public class LevelSetupComponent {
 
     private Controller myController;
 
-
-    public LevelSetupComponent (Controller c)
-    {
+    public LevelSetupComponent(Controller c) {
         myController = c;
     }
 
-
-    public JComponent create ()
-    {
+    public JComponent create() {
         JPanel panel = new JPanel();
 
         panel.add(new LevelNameComponent(myController).create(),
-                  BorderLayout.WEST);
+                BorderLayout.WEST);
         panel.add(new BackgroundImageComponent(myController).create(),
-                  BorderLayout.EAST);
+                BorderLayout.EAST);
 
         panel.setSize(50, 100);
 

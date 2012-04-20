@@ -1,11 +1,12 @@
-package levelEditor.output;
+package levelEditor.mvc;
 
 import java.util.ArrayList;
 import com.golden.gamedev.object.Sprite;
 
 /**
  * Creates object to hold all information associated with
- * a newly designed level.
+ * a newly designed level, updated as level is built
+ * 
  * Facilitates writing out level data to external file by
  * serving as intermediary between GUI and file writer
  * 
@@ -13,14 +14,13 @@ import com.golden.gamedev.object.Sprite;
  *
  */
 
-@SuppressWarnings("unused")
-public class LevelProxy {
+public class LevelObject {
 
 	private String myLevelName;
 	private String myBgImageURL;
 	private ArrayList<Sprite> mySprites;
 	
-	public LevelProxy () {
+	public LevelObject () {
 		
 	}
 	
@@ -32,8 +32,21 @@ public class LevelProxy {
 		myLevelName = name;
 	}
 	
+	public String getBackgroundImage () {
+		return myBgImageURL;
+	}
+	
 	public void setBackgoundImage (String url) {
 		myBgImageURL = url;
+	}
+	
+	
+	public void addSprite (Sprite s) {
+		mySprites.add(s);
+	}
+	
+	public ArrayList<Sprite> getSprites () {
+		return mySprites;
 	}
 	
 	
@@ -43,5 +56,6 @@ public class LevelProxy {
 		
 		return build.toString();
 	}
+	
 	
 }

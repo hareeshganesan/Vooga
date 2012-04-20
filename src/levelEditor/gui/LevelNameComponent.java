@@ -9,7 +9,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import levelEditor.mvc.Controller;
 
-
 /**
  * @author Peggy Li (pl59)
  */
@@ -49,4 +48,5 @@ public class LevelNameComponent {
 
         return panel;
     }
+
 }

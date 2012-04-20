@@ -9,7 +9,6 @@ import javax.imageio.ImageIO;
 import javax.imageio.stream.ImageInputStream;
 import javax.swing.JFrame;
 
-
 import com.golden.gamedev.util.ImageUtil;
 
 
@@ -65,7 +64,7 @@ public class GraphicsTest
           Graphics2D g = image.createGraphics();
           g.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
                   RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-          g.rotate(Math.toRadians(angle), w/2, h/2);
+          g.rotate(Math.toRadians(angle),  w/2, h/2);
           g.drawImage(src, 0, 0, null);
           g.dispose();
           
