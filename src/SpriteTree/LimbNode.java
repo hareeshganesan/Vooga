@@ -3,6 +3,11 @@ package SpriteTree;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Collections;
+
+
+import com.golden.gamedev.util.ImageUtil;
+
 import com.golden.gamedev.object.Sprite;
 
 public class LimbNode extends Sprite{
@@ -12,13 +17,10 @@ public class LimbNode extends Sprite{
 	private BufferedImage myCurrImage;
 	private BufferedImage myOrigImage;
 	
-	private int allAngles = 0;
-	private int currAngle = 0;
-	
 	
 	private double dx;
 	private double dy;
-	private int theta;
+	private double theta;
 	private LimbNode Parent;
 	
 	private ArrayList<LimbNode> children = new ArrayList<LimbNode>();
@@ -34,15 +36,15 @@ public class LimbNode extends Sprite{
 		this.myOrigImage = image;
 	}
 	
-	public LimbNode copy(LimbNode other){
-		return new LimbNode(other.myName,other.Parent,other.getImage(),other.dx,other.dy,other.theta);
-		
-	}
+	
 	
 	public String getName(){
 		return this.myName;
 	}
 	
+	public double getTheta(){
+		return this.theta;
+	}
 	
 	public ArrayList<LimbNode> getChildren(){
 		return this.children;
@@ -58,7 +60,7 @@ public class LimbNode extends Sprite{
 	
 	}
 	
-	public void rotate(int dTheta)
+	public void rotate(double dTheta)
 	{	
 		this.theta += dTheta;
 		
@@ -66,18 +68,17 @@ public class LimbNode extends Sprite{
 	
 	
 	public void addChild(LimbNode child){
-		
 		children.add(child);
 		
 	}
-	public void draw(double x, double y, int theta){
+	public void draw(double x, double y, double theta){
 		this.setX(x);
 		this.setY(y);
 		this.myCurrImage =GraphicsTest.rotate(this.myOrigImage,theta);
 		this.setImage(this.myCurrImage);
 	}
 
-	public void render(Graphics2D pen,double baseX, double baseY, int baseTheta){
+	public void render(Graphics2D pen,double baseX, double baseY, double baseTheta){
 		
 		
 		super.render(pen);

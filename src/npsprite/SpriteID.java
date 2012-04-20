@@ -4,7 +4,9 @@ package npsprite;
  * For keeping track of a sprite's additional characteristics
  * Just a data class for now, subclass if you want to add more stuff
  * @author Wendy
+ * @deprecated only used for interfaces, interfaces are deprecated now
  */
+@Deprecated
 public class SpriteID {
     public enum GroupID {
         PLAYER_1, PLAYER_2, PLAYER_AI, PLATFORM, POWER_UP, UNCATEGORIZED

@@ -1,5 +1,6 @@
 package SpriteTree;
 
+
 public class DemoAniOne extends Animation {
 
 	private boolean activate;

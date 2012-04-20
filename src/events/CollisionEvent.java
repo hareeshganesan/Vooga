@@ -3,8 +3,7 @@ package events;
 import npsprite.SpriteTemplate;
 
 /**
- * @author Wendy - superclass for collision events, will need to refactor later 
- * to reduce memory consumption
+ * @author Wendy - superclass for collision events, will need to refactor later
  */
 public abstract class CollisionEvent{
 

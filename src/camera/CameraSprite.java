@@ -38,9 +38,4 @@ public class CameraSprite extends SpriteTemplate{
     protected Point2D confineBounds(double dx, double dy) {
         return this.confineBounds(dx, dy);
     }
-
-    @Override
-    public String getSpriteKind() {
-        return this.getSpriteKind();
-    }
 }

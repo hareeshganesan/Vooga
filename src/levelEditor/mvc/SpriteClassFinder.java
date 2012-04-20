@@ -6,12 +6,22 @@ package levelEditor.mvc;
 
 import java.io.File;
 import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
 import javax.swing.JFileChooser;
 
 
+
+
+							// * * * * * DO NOT RUN THIS CLASS * * * * * 
+
+
+
+
+
+@SuppressWarnings({"rawtypes", "unused"})
 public class SpriteClassFinder {
 	
 	private static final String PATH = 
@@ -23,9 +33,12 @@ public class SpriteClassFinder {
 	}
 
 	private ArrayList<URL> myURLs;
+	private ArrayList<Class> mySpriteClasses;
 
 	public SpriteClassFinder () {
 		myURLs = new ArrayList<URL>();
+		
+		mySpriteClasses = new ArrayList<Class>();
 	}
 
 	public void findSprites () {
@@ -50,7 +63,25 @@ public class SpriteClassFinder {
 		
 		URLClassLoader loader = new URLClassLoader(urls);
 		for (URL url : loader.getURLs()) {
-			System.out.println(url.toString());
+			
+			// formatting
+			String className = url.toString();
+			int lastBackslash = className.lastIndexOf("/");
+			int lastPeriod = className.lastIndexOf(".");
+			className = className.substring(lastBackslash + 1, lastPeriod);
+		
+			try {
+				Class c = Class.forName(url.toURI().toString(), true, loader);
+				
+				mySpriteClasses.add(Class.forName(url.toString()));
+			} catch (ClassNotFoundException e) {
+				System.out.println(e.getCause());
+				e.printStackTrace();
+			} 
+			catch (URISyntaxException e) {
+				e.printStackTrace();
+			}
+			
 		}
 	}
 
@@ -69,12 +100,16 @@ public class SpriteClassFinder {
 		return chooser.getSelectedFile();
 	}
 
-	@SuppressWarnings("deprecation")
+	
+	/**
+	 * Checks each file to see whether name ends in .class
+	 * Recursively checks files within a directory
+	 */
 	private void iterate (File file) {
 		if (file.isFile() && 
 				file.getName().endsWith(".class")) {
 			try {
-				myURLs.add(file.toURL());
+				myURLs.add(file.toURI().toURL());
 			} 
 			catch (MalformedURLException e) {
 				e.printStackTrace();
@@ -88,6 +123,7 @@ public class SpriteClassFinder {
 			iterate(sub);
 		}
 	}
+	
 
 	
 }

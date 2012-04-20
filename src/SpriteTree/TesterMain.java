@@ -5,27 +5,32 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.PriorityQueue;
+
+
 import com.golden.gamedev.Game;
 import com.golden.gamedev.GameLoader;
+import com.golden.gamedev.object.Background;
+import com.golden.gamedev.object.Sprite;
+import com.golden.gamedev.object.Timer;
 
 public class TesterMain extends Game {
 	private BodyTree myTree;
-	private Graphics2D myPen;
-	private LimbNode leg;
-	private LimbNode lowerLeg;
-	private int sw = 0;
 	
+	private Graphics2D myPen;
 	private LimbNode movingLeg;
 	private LimbNode movingLowerLeg;
-
 	
-	private int currTime =0;
 	private Animation animation;
 	
 	
 	@Override
 	public void initResources() {
-		animation = new DemoAniProxy(currTime);
+		
+		
 		
 		BufferedImage imgH = GraphicsTest.loadImage("src/resources/bodyParts/circle.png");
 		BufferedImage imgT = GraphicsTest.loadImage("src/resources/bodyParts/limb.png");
@@ -35,7 +40,8 @@ public class TesterMain extends Game {
 		BufferedImage imgRL = GraphicsTest.loadImage("src/resources/bodyParts/limb.png");
 		
 
-		BufferedImage imgLRL = GraphicsTest.loadImage("src/resources/bodyParts/limb.png");
+		BufferedImage imgLRL = GraphicsTest.loadImage("src/resources/bodyParts/nLimb.png");
+
 		
 		LimbNode torso = new LimbNode("torso",imgT, this.getWidth()/2, this.getHeight()/2);
 		LimbNode head = new LimbNode("head",torso,imgH, torso.getWidth()/3,-5,0);
@@ -60,6 +66,21 @@ public class TesterMain extends Game {
 		
 		myTree = new BodyTree(torso);
 		
+		
+		
+//		//create animation motions
+		Motion m1 = new Motion("LeftArm", -800, myTree, 45);
+		Motion m2 = new Motion("RightLeg", 750, myTree, 40);
+		Motion m3 = new Motion("RightLeg", 0, myTree, 40);
+		Motion m4 = new Motion("LeftArm", 0, myTree, 45);
+
+		HashMap<Long, Motion> sequence = new HashMap<Long, Motion>();
+		sequence.put((long) 0,m1);
+		sequence.put((long) 150, m2);
+		sequence.put((long) 500, m3);
+		sequence.put((long) 1000, m4);
+		this.animation = new Animation(sequence, myTree);
+		
 
 	}
 
@@ -72,40 +93,20 @@ public class TesterMain extends Game {
         myTree.render(pen);
 	}
 
-	public void animationOne(){
-			
-			if(currTime<=40){
-				leg.rotate(-1);
-				lowerLeg.rotate(2);
-			}
-			if(currTime>40 && currTime <=80){
-				lowerLeg.rotate(-4);
-			}
-			
-			
-			if(currTime>80 && currTime<=120){
-				lowerLeg.rotate(4);
-
-			}
-			if(currTime >120 && currTime<=160){
-				leg.rotate(1);
-				lowerLeg.rotate(-2);
-			}
-	}
-	
-	
 	@Override
 	public void update(long elapsedTime) {
-		currTime +=1;
+		
+		
 		
 	if(this.animation.getStatus()==true){
-		this.animation.setCurrentTime(currTime);
-		this.animation.animate(movingLeg, movingLowerLeg);
+		System.out.println("********************");
+		System.out.println("animation update called");
+		System.out.println("********************");
+
+		this.animation.update(elapsedTime);
 	}
 	
-	if(this.animation.getStatus()==false){
-		currTime = 0;
-	}
+
 		
 		if(keyDown(KeyEvent.VK_LEFT)){
 			myTree.move(myPen,-1, 0); 
@@ -121,10 +122,17 @@ public class TesterMain extends Game {
 		}
 		
 		if(keyDown(KeyEvent.VK_SPACE)){
+			System.out.println("/////////////////////////////////");
+			//note to self: leftarm default is 45
+			//rightleg default is -45
+			
+
+			
 			this.animation.activateAnimation();
 
 		}
 		
+
 		
 	
 	}

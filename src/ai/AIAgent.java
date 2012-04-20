@@ -1,8 +1,11 @@
 package ai;
 
+import npsprite.FighterBody;
+import npsprite.LimbSprite;
 import game.CombatInstance;
-import sprite.FighterSprite;
+//import sprite.FighterSprite;
 import sprite.HealthDisplay;
+
 
 
 /**
@@ -12,18 +15,27 @@ import sprite.HealthDisplay;
  * 
  * @author Hareesh
  */
-public abstract class AIAgent extends FighterSprite
+public abstract class AIAgent extends FighterBody
 {
 
     CombatInstance myLevel;
 
+
+    public AIAgent (String name,LimbSprite root,
+                    HealthDisplay display,
+                    int groupID,
+                    CombatInstance c)
+    {
+        super(root, name, display);
+        myLevel = c;
+    }
 
     public AIAgent (String name,
                     HealthDisplay display,
                     int groupID,
                     CombatInstance c)
     {
-        super(name, display, groupID);
+        super(null, name, display);
         myLevel = c;
     }
 
@@ -33,9 +45,4 @@ public abstract class AIAgent extends FighterSprite
     {
         super.update(elapsedTime);
     }
-    
-    public String getSpriteKind(){
-        return "AI FighterSprite";
-    }
-
 }

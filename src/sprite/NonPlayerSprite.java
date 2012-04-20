@@ -8,6 +8,8 @@ import java.awt.image.BufferedImage;
 //TODO: compareto?
 //most basic sprite
 //TODO How will non-player sprites interact with physics engine?
+
+@Deprecated
 public abstract class NonPlayerSprite extends SpriteTemplate {
 
     //is this necessary?
