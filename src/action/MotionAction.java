@@ -1,9 +1,7 @@
 package action;
 
 import java.awt.geom.Point2D;
-
 import npsprite.FighterBody;
-//import sprite.FighterSprite;
 import PhysicsEngine.FightPhysicsEngine;
 
 
@@ -76,6 +74,9 @@ public class MotionAction implements Action
     }
     public static MotionAction DOWN(FighterBody fighter){
         return new MotionAction(fighter, 0, 1);
+    }
+    public static MotionAction Gravity(FighterBody fighter, double gravity){
+    	return new MotionAction(fighter, 0, gravity);
     }
 
     @Override

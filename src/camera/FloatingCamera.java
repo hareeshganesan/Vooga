@@ -2,14 +2,17 @@ package camera;
 
 import java.awt.Graphics;
 import java.util.ArrayList;
-import sprite.FighterSprite;
 
+import npsprite.FighterBody;
 
-public class FloatingCamera extends Camera
-{
+public class FloatingCamera extends Camera{
+    
+    public FloatingCamera() {
+        super();
+    }
+
     @Override
-    public void update (ArrayList<FighterSprite> playerSprites,
-                        CameraBackground bg)
+    public void update(ArrayList<FighterBody> playerSprites, CameraBackground bg)
     {
         bg.setToCenter(this.getX(),
                        this.getY(),

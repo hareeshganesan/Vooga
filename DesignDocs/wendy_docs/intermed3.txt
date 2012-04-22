@@ -1,0 +1,16 @@
+intermed3-wty3-commits guide
+
+Rewrote to use property objects instead of interfaces, merged with main game. 
+
+Marked the old sprite package deprecated
+https://github.com/hareeshganesan/Vooga/commit/82c8923cae3ded582c9cf068fa54fa82622a5248
+
+Massive merging, which was done with help from hareesh (to figure out inputs and physics) and helena (to figure out how the sprite tree integrate with physics engine)
+https://github.com/hareeshganesan/Vooga/commit/df56393b4d8d3c0a29319e7a9ca83131f8a41059
+https://github.com/hareeshganesan/Vooga/commit/66939a3581167bd88d82cbc077fab3e81a905196
+https://github.com/hareeshganesan/Vooga/commit/8690c1587d140be03d535325350c7ac7d4c43118
+
+
+It's not very clean code at all, compounded by the fact that I had to take into account Helena's changes with the movement of sprites up to the point of animation, and Donghe's physics engine (which relied on hard-coded reflection...and he wasn't around by that point to help).
+
+Run PropertiesTest and NPSTest inside npsprites, the maingame hasn't implemented properties/collisions fully yet. There are still issues with the connections that have to be dealt with before implementing additional features.
