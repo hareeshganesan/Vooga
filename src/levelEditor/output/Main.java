@@ -1,7 +1,9 @@
 package levelEditor.output;
 
+/**
+ * @author Peggy Li (pl59)
+ */
 
-import levelEditor.mvc.LevelObject;
 
 public class Main {
 
@@ -10,8 +12,11 @@ public class Main {
 		obj.setLevelName("test3");
 		obj.setBackgoundImage("src/block.png");
 		
-		
-		
+		/*
+		AIAgent ai = new BasicAIAgent("LE", new HealthDisplay(10, 20, 30), 2, 
+				new CombatInstance(new MainGame()));
+		obj.setAI(ai);
+		*/
 		
 		XMLWriter xml = new XMLWriter(obj);
 		xml.save();

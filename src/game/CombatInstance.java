@@ -363,7 +363,6 @@ public class CombatInstance extends GameState {
         groupSprite.addFighterSpriteArray(playerSprites);
         groupSprite.addPlatformBlockArray(platform);
 //        groupSprite.addSpriteArray(powerups);
-        playerSprites.get(0).setMass(200.0);
 
         ArrayList<CollisionKind> CollisionkindList = new ArrayList<CollisionKind>();
         CollisionkindList.add(new CollisionKindFriends(
