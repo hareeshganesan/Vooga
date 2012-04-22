@@ -2,9 +2,6 @@ package PhysicsEngine;
 
 import npsprite.SpriteTemplate;
 
-//import sprite.SpriteTemplate;
-
-
 public abstract class Reaction
 {
     protected FightPhysicsEngine myPhysicsEngine;
