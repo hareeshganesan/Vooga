@@ -17,7 +17,7 @@ import action.MotionAction;
  */
 public class FightPhysicsEngine extends PhysicsEngine {
 
-	private final int SPEED_DEFALT = 10;
+	private double speedFactor = 10;
 	private double jump = 100;
 	private double backgroundFactor = 1;
 	private double outBoundDistance = 10;
@@ -26,22 +26,15 @@ public class FightPhysicsEngine extends PhysicsEngine {
 		super(gameEngine);
 	}
 
-	public FightPhysicsEngine() {
-	}
-
-	// public FightPhysicsEngine(MotionAction motionAaction) {
-	// super(motionAaction);
-	// }
-
 	@Override
 	public void process(MotionAction motionAction, long elapsedTime) {
-		SpriteTemplate myFighterSprite = motionAction.getFighterBody();
+		SpriteTemplate sprite = motionAction.getFighterBody();
 		double myVectorX = motionAction.getVectorX();
 		double myVectorY = motionAction.getVectorY();
-		double speed = myFighterSprite.getSpeed() / SPEED_DEFALT;
+		double speed = sprite.getSpeed() / speedFactor;
 		double x = speed * elapsedTime * myVectorX;
 		double y = speed * elapsedTime * myVectorY;
-		setNextLocationIncrement(myFighterSprite, x, y);
+		setNextLocationIncrement(sprite, x, y);
 	}
 
 	public void setNextLocationIncrement(SpriteTemplate sprite, double x,
@@ -86,6 +79,10 @@ public class FightPhysicsEngine extends PhysicsEngine {
 
 	public void setOutBoundDistance(double b) {
 		outBoundDistance = b;
+	}
+
+	public void setSpeedFactor(double b) {
+		speedFactor = b;
 	}
 
 }

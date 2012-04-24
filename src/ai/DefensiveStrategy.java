@@ -38,7 +38,7 @@ public class DefensiveStrategy extends Strategy
 
         public AvoidGoal (FighterBody me, FighterBody enemy)
         {
-            super(new AvoidAction(me, enemy), 10000);
+            super(new AvoidAction(me, enemy,myPhysicsEngine), 10000);
             myFighter = me;
             myEnemy = enemy;
         }

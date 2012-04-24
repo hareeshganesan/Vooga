@@ -20,6 +20,7 @@ import org.jdom.xpath.XPath;
 //import sprite.FighterSprite;
 import sprite.HealthDisplay;
 //import sprite.PlatformBlock;
+import PhysicsEngine.PhysicsEngine;
 import action.MotionAction;
 import ai.AIAgent;
 import ai.BasicAIAgent;
@@ -33,11 +34,13 @@ public class LevelObjectsFactory
 {
     private Element root;
     private CombatInstance c;
+    private PhysicsEngine myPhysicsEngine;
 
 
     public LevelObjectsFactory (CombatInstance ci)
     {
         c = ci;
+        myPhysicsEngine = c.getPhysicsEngine();
     }
 
 
@@ -125,10 +128,10 @@ public class LevelObjectsFactory
     {
         InputHandler h = c.getMyHandler();
         int[] map = InputHandler.defaultMapping(playerIndex);
-        h.addKey(map[0], MotionAction.UP(s));
-        h.addKey(map[1], MotionAction.DOWN(s));
-        h.addKey(map[2], MotionAction.LEFT(s));
-        h.addKey(map[3], MotionAction.RIGHT(s));
+        h.addKey(map[0], MotionAction.UP(s,myPhysicsEngine));
+        h.addKey(map[1], MotionAction.DOWN(s,myPhysicsEngine));
+        h.addKey(map[2], MotionAction.LEFT(s,myPhysicsEngine));
+        h.addKey(map[3], MotionAction.RIGHT(s,myPhysicsEngine));
     }
 
 

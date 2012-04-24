@@ -202,7 +202,7 @@ public class CombatInstance extends GameState {
         }
         
         for (FighterBody sprite : playerSprites){
-        	MotionAction.Gravity(sprite,0.3).performAction(elapsedTime);
+        	MotionAction.Gravity(sprite,0.3,myPhysicsEngine).performAction(elapsedTime);
         }
 
         myCollision.checkGroupCollision();
@@ -245,5 +245,9 @@ public class CombatInstance extends GameState {
     public void addSprite(SpriteTemplate s) {
         spawns.add(s);
         groupSprite.addSpriteTemplate(s);
+    }
+    
+    public PhysicsEngine getPhysicsEngine(){
+    	return myPhysicsEngine;
     }
 }

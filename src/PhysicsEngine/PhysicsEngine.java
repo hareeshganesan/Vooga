@@ -13,13 +13,8 @@ import action.MotionAction;
  */
 public abstract class PhysicsEngine {
 	protected final int BASE_POINT = 0;
-	protected int BOUND_X = 544;
-	protected int BOUND_Y = 544;
-
-//	protected double myVectorX;
-//	protected double myVectorY;
-
-//	protected SpriteTemplate myFighterSprite;
+	protected int BOUND_X;
+	protected int BOUND_Y;
 
 	private GameEngine myGameEngine;
 
@@ -28,27 +23,17 @@ public abstract class PhysicsEngine {
 		BOUND_X = myGameEngine.getWidth();
 		BOUND_Y = myGameEngine.getHeight();
 	}
-	
-	public PhysicsEngine() {
-	}
 
+	public abstract void process(MotionAction motionAction, long elapsedTime);
 
-
-//	public PhysicsEngine(MotionAction motionAction) {
-//		myFighterSprite = motionAction.getFighterBody();
-//		myVectorX = motionAction.getVectorX();
-//		myVectorY = motionAction.getVectorY();
-//	}
-
-	public abstract void process(MotionAction motionAction,long elapsedTime);
-	
-	public abstract void setNextLocationIncrement(SpriteTemplate sprite, double x, double y); 
+	public abstract void setNextLocationIncrement(SpriteTemplate sprite,
+			double x, double y);
 
 	public boolean isOutLeft(SpriteTemplate sprite, double x) {
 		return sprite.getX() + x < BASE_POINT;
 	}
 
-	public boolean isOutRight(SpriteTemplate sprite,double x) {
+	public boolean isOutRight(SpriteTemplate sprite, double x) {
 		return sprite.getX() + x + sprite.getWidth() > BOUND_X;
 	}
 
