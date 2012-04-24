@@ -10,7 +10,7 @@ public class ReactionForce extends Reaction {
 	private double ForceY2 = -3000.0;
 
 	@Override
-	public void act(SpriteTemplate ps1, SpriteTemplate ps2) {
+	public void act(SpriteTemplate ps1, SpriteTemplate ps2, PhysicsEngine physicsEngine) {
 		double m1 = ps1.getMass();
 		double m2 = ps2.getMass();
 
@@ -19,11 +19,8 @@ public class ReactionForce extends Reaction {
 		double x2 = ForceX1 / m2;
 		double y2 = ForceY1 / m2;
 
-		myPhysicsEngine = new FightPhysicsEngine(ps1);
-		myPhysicsEngine.setNextLocationIncrement(x1, y1);
-
-		myPhysicsEngine = new FightPhysicsEngine(ps2);
-		myPhysicsEngine.setNextLocationIncrement(x2, y2);
+		physicsEngine.setNextLocationIncrement(ps1, x1, y1);
+		physicsEngine.setNextLocationIncrement(ps2, x2, y2);
 
 	}
 

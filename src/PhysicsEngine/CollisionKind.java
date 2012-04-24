@@ -30,7 +30,7 @@ public abstract class CollisionKind {
 
 	public abstract boolean isThisKind(SpriteTemplate ps1, SpriteTemplate ps2);
 
-	public void doThisReaction(SpriteTemplate ps1, SpriteTemplate ps2) {
+	public void doThisReaction(SpriteTemplate ps1, SpriteTemplate ps2, PhysicsEngine physicsEngine) {
 		// Wendy can untoggle these two lines if your code is ready
 		ps1.collisionAction(ps2);
 		ps2.collisionAction(ps1);
@@ -41,7 +41,7 @@ public abstract class CollisionKind {
 			if (belongFighterSprite(ps2)) {
 				ps2 = ((LimbSprite) ps2).getMyPointer();
 			}
-			reaction.act(ps1, ps2);
+			reaction.act(ps1, ps2, physicsEngine);
 		}
 	}
 

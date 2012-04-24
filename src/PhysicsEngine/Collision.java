@@ -18,16 +18,20 @@ import npsprite.SpriteTemplate;
 public class Collision {
 	private ArrayList<CollisionKind> myReactionList = new ArrayList<CollisionKind>();
 	private SpriteGroupTemplate myGroup;
+	private PhysicsEngine myPhysicsEngine;
 
-	public Collision(SpriteGroupTemplate group, CollisionKind kind) {
-		myReactionList.add(kind);
+	public Collision(SpriteGroupTemplate group, CollisionKind kind,
+			PhysicsEngine physicsEngine) {
 		myGroup = group;
+		myReactionList.add(kind);
+		myPhysicsEngine = physicsEngine;
 	}
 
 	public Collision(SpriteGroupTemplate group,
-			ArrayList<CollisionKind> KindList) {
+			ArrayList<CollisionKind> KindList, PhysicsEngine physicsEngine) {
 		myGroup = group;
 		myReactionList = KindList;
+		myPhysicsEngine = physicsEngine;
 	}
 
 	private boolean isCollided(SpriteTemplate s1, SpriteTemplate s2) {
@@ -56,7 +60,7 @@ public class Collision {
 			setCollisionStatus(s2);
 			for (CollisionKind r : myReactionList) {
 				if (r.isThisKind(s1, s2)) {
-					r.doThisReaction(s1, s2);
+					r.doThisReaction(s1, s2, myPhysicsEngine);
 				}
 			}
 			// for debug

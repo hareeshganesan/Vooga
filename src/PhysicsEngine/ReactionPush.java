@@ -9,14 +9,10 @@ public class ReactionPush extends Reaction
 {
 
     @Override
-    public void act (SpriteTemplate ps1, SpriteTemplate ps2)
+	public void act(SpriteTemplate ps1, SpriteTemplate ps2,
+			PhysicsEngine physicsEngine)
     {
-        push(ps1, ps2);
-    }
-
-
-    private void push (SpriteTemplate ps1, SpriteTemplate ps2)
-    {
+        
         Point2D p1 = ps1.getMoveBy();
         Point2D p2 = ps2.getMoveBy();
         double x1 = 0, y1 = 0, x2 = 0, y2 = 0;
@@ -95,11 +91,8 @@ public class ReactionPush extends Reaction
             y2 = p2.getY();
         }
 
-        myPhysicsEngine = new FightPhysicsEngine(ps1);
-        myPhysicsEngine.setNextLocationIncrement(x1, y1);
-
-        myPhysicsEngine = new FightPhysicsEngine(ps2);
-        myPhysicsEngine.setNextLocationIncrement(x2, y2);
+        physicsEngine.setNextLocationIncrement(ps1, x1, y1);
+        physicsEngine.setNextLocationIncrement(ps2, x2, y2);
     }
 
 }
