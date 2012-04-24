@@ -1,7 +1,5 @@
 package action;
 
-// import npsprite.FighterSprite;
-
 public interface Action
 {
 

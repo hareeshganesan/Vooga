@@ -3,6 +3,7 @@ package action;
 import java.awt.geom.Point2D;
 import npsprite.FighterBody;
 import PhysicsEngine.FightPhysicsEngine;
+import PhysicsEngine.PhysicsEngine;
 
 
 /**
@@ -19,6 +20,7 @@ public class MotionAction implements Action
     double y_direction;
     FighterBody myFighter;
     boolean done;
+
     
     public MotionAction (FighterBody fighter, Point2D point)
     {
@@ -43,8 +45,8 @@ public class MotionAction implements Action
     @Override
     public void performAction (long elapsed_time)
     {
-        FightPhysicsEngine physicsEngine = new FightPhysicsEngine(this);
-        physicsEngine.process(elapsed_time);
+        FightPhysicsEngine physicsEngine = new FightPhysicsEngine();
+        physicsEngine.process(this, elapsed_time);
         done = true;
     }
     

@@ -26,21 +26,26 @@ public class FightPhysicsEngine extends PhysicsEngine {
 		super(gameEngine);
 	}
 
-	public FightPhysicsEngine(MotionAction motionAaction) {
-		super(motionAaction);
+	public FightPhysicsEngine() {
 	}
 
+	// public FightPhysicsEngine(MotionAction motionAaction) {
+	// super(motionAaction);
+	// }
 
 	@Override
-	public void process(long elapsedTime) {
+	public void process(MotionAction motionAction, long elapsedTime) {
+		SpriteTemplate myFighterSprite = motionAction.getFighterBody();
+		double myVectorX = motionAction.getVectorX();
+		double myVectorY = motionAction.getVectorY();
 		double speed = myFighterSprite.getSpeed() / SPEED_DEFALT;
 		double x = speed * elapsedTime * myVectorX;
 		double y = speed * elapsedTime * myVectorY;
 		setNextLocationIncrement(myFighterSprite, x, y);
 	}
 
-	public void setNextLocationIncrement(SpriteTemplate sprite, double x, double y
-			) {
+	public void setNextLocationIncrement(SpriteTemplate sprite, double x,
+			double y) {
 
 		double finalX = x * backgroundFactor;
 		double finalY = y * backgroundFactor;
