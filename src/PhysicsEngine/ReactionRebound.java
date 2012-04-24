@@ -6,7 +6,7 @@ import npsprite.SpriteTemplate;
 
 public class ReactionRebound extends Reaction {
 
-	private double reboundFactor = 5.0;
+	private double reboundFactor = 20.0;
 
 	@Override
 	public void act(SpriteTemplate ps1, SpriteTemplate ps2) {

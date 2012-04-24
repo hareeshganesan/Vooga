@@ -4,10 +4,10 @@ import npsprite.SpriteTemplate;
 
 public class ReactionForce extends Reaction {
 
-	private double ForceX1 = 30.0;
-	private double ForceY1 = 30.0;
-	private double ForceX2 = 30.0;
-	private double ForceY2 = 30.0;
+	private double ForceX1 = 3000.0;
+	private double ForceY1 = 3000.0;
+	private double ForceX2 = -3000.0;
+	private double ForceY2 = -3000.0;
 
 	@Override
 	public void act(SpriteTemplate ps1, SpriteTemplate ps2) {

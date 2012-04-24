@@ -253,6 +253,7 @@ import PhysicsEngine.CollisionKind;
 import PhysicsEngine.CollisionKindEnemy;
 import PhysicsEngine.CollisionKindFriends;
 import PhysicsEngine.CollisionKindNeutral;
+import PhysicsEngine.ReactionForce;
 import PhysicsEngine.ReactionMomentumConservation;
 import PhysicsEngine.ReactionPush;
 import PhysicsEngine.ReactionRebound;
@@ -366,7 +367,7 @@ public class CombatInstance extends GameState {
 
         ArrayList<CollisionKind> CollisionkindList = new ArrayList<CollisionKind>();
         CollisionkindList.add(new CollisionKindFriends(
-                new ReactionMomentumConservation()));
+                new ReactionPush()));
         CollisionkindList.add(new CollisionKindEnemy(new ReactionPush()));
         CollisionkindList.add(new CollisionKindNeutral(new ReactionRebound()));
 
@@ -424,7 +425,7 @@ public class CombatInstance extends GameState {
         }
         
         for (FighterBody sprite : playerSprites){
-        	MotionAction.Gravity(sprite,1).performAction(elapsedTime);
+        	MotionAction.Gravity(sprite,0.3).performAction(elapsedTime);
         }
 
         myCollision.checkGroupCollision();
