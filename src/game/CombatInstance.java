@@ -46,7 +46,7 @@ public class CombatInstance extends GameState {
     InputHandler myHandler;
     Camera camera;
     CameraUtility cameraUtility;
-    PhysicsEngine myPhysicsEngine;
+    private PhysicsEngine myPhysicsEngine;
 
     // Sprites
     // ArrayList<FighterSprite> playerSprites;
@@ -145,7 +145,7 @@ public class CombatInstance extends GameState {
         ArrayList<CollisionKind> CollisionkindList = new ArrayList<CollisionKind>();
         CollisionkindList.add(new CollisionKindFriends(
                 new ReactionPush()));
-        CollisionkindList.add(new CollisionKindEnemy(new ReactionPush()));
+        CollisionkindList.add(new CollisionKindEnemy(new ReactionRebound()));
         CollisionkindList.add(new CollisionKindNeutral(new ReactionRebound()));
 
         myCollision = new Collision(groupSprite, CollisionkindList, myPhysicsEngine);

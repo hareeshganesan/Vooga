@@ -17,9 +17,8 @@ import action.MotionAction;
  */
 public class FightPhysicsEngine extends PhysicsEngine {
 
-	private double speedFactor = 10;
 	private double jump = 100;
-	private double backgroundFactor = 1;
+	private double backgroundFactor = 0.5;
 	private double outBoundDistance = 10;
 
 	public FightPhysicsEngine(GameEngine gameEngine) {
@@ -31,7 +30,7 @@ public class FightPhysicsEngine extends PhysicsEngine {
 		SpriteTemplate sprite = motionAction.getFighterBody();
 		double myVectorX = motionAction.getVectorX();
 		double myVectorY = motionAction.getVectorY();
-		double speed = sprite.getSpeed() / speedFactor;
+		double speed = sprite.getSpeed();
 		double x = speed * elapsedTime * myVectorX;
 		double y = speed * elapsedTime * myVectorY;
 		setNextLocationIncrement(sprite, x, y);
@@ -80,9 +79,4 @@ public class FightPhysicsEngine extends PhysicsEngine {
 	public void setOutBoundDistance(double b) {
 		outBoundDistance = b;
 	}
-
-	public void setSpeedFactor(double b) {
-		speedFactor = b;
-	}
-
 }
