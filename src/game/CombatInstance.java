@@ -1,6 +1,7 @@
 package game;
 
 import java.awt.Graphics2D;
+
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -9,14 +10,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import javax.swing.JFileChooser;
-
 import npsprite.FighterBody;
 import npsprite.GroupID;
-import npsprite.HealthSprite;
 import npsprite.NodeSprite;
 import npsprite.PlatformBlock;
 import npsprite.SpriteTemplate;
-
 import org.jdom.JDOMException;
 import npsprite.SpriteGroupTemplate;
 import camera.Camera;
@@ -243,15 +241,14 @@ public class CombatInstance extends GameState {
      * AUTOMATICALLY UPDATE ITSELF
      */
     public void addSprite(SpriteTemplate s) {
-    	SpriteGroupTemplate group= myCollision.getCollisionGroup();
+        spawns.add(s);
+        groupSprite.addSpriteInNewTeam(s);
+        
     	// change group here
     	// can find the sprite index in its team, and the team index in the group
     	// you can remove a sprite
     	// you also can add some sprite in certain team or in a new team
-    	myCollision.setCollisionGroup(group);
-    	
-        spawns.add(s);
-        groupSprite.addSpriteInNewTeam(s);
+    	myCollision.setCollisionGroup(groupSprite);
     }
     
     public PhysicsEngine getPhysicsEngine(){
