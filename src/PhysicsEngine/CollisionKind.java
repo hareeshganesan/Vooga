@@ -2,7 +2,6 @@ package PhysicsEngine;
 
 import java.util.ArrayList;
 import npsprite.FighterBody;
-import npsprite.LimbSprite;
 import npsprite.PlatformBlock;
 import npsprite.SpriteTemplate;
 
@@ -35,12 +34,12 @@ public abstract class CollisionKind {
 		ps1.collisionAction(ps2);
 		ps2.collisionAction(ps1);
 		for (Reaction reaction : myReactions) {
-			if (belongFighterSprite(ps1)) {
-				ps1 = ((LimbSprite) ps1).getMyPointer();
-			}
-			if (belongFighterSprite(ps2)) {
-				ps2 = ((LimbSprite) ps2).getMyPointer();
-			}
+//			if (belongFighterSprite(ps1)) {
+//				ps1 = ((LimbSprite) ps1).getMyPointer();
+//			}
+//			if (belongFighterSprite(ps2)) {
+//				ps2 = ((LimbSprite) ps2).getMyPointer();
+//			}
 			reaction.act(ps1, ps2, physicsEngine);
 		}
 	}
@@ -67,11 +66,12 @@ public abstract class CollisionKind {
 	}
 
 	protected boolean belongFighterSprite(SpriteTemplate s) {
-		if (LimbSprite.class.isAssignableFrom(s.getClass()))
-			if (FighterBody.class.isAssignableFrom(((LimbSprite) s)
-					.getMyPointer().getClass()))
-				return true;
-		return false;
+//		if (LimbSprite.class.isAssignableFrom(s.getClass()))
+//			if (FighterBody.class.isAssignableFrom(((LimbSprite) s)
+//					.getMyPointer().getClass()))
+//				return true;
+//		return false;
+		return FighterBody.class.isAssignableFrom(s.getClass());
 	}
 
 	// /**

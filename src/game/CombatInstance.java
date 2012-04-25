@@ -144,8 +144,8 @@ public class CombatInstance extends GameState {
 
         ArrayList<CollisionKind> CollisionkindList = new ArrayList<CollisionKind>();
         CollisionkindList.add(new CollisionKindFriends(
-                new ReactionPush()));
-        CollisionkindList.add(new CollisionKindEnemy(new ReactionRebound()));
+                new ReactionRebound()));
+        CollisionkindList.add(new CollisionKindEnemy(new ReactionPush()));
         CollisionkindList.add(new CollisionKindNeutral(new ReactionRebound()));
 
         myCollision = new Collision(groupSprite, CollisionkindList, myPhysicsEngine);
@@ -243,8 +243,15 @@ public class CombatInstance extends GameState {
      * AUTOMATICALLY UPDATE ITSELF
      */
     public void addSprite(SpriteTemplate s) {
+    	SpriteGroupTemplate group= myCollision.getCollisionGroup();
+    	// change group here
+    	// can find the sprite index in its team, and the team index in the group
+    	// you can remove a sprite
+    	// you also can add some sprite in certain team or in a new team
+    	myCollision.setCollisionGroup(group);
+    	
         spawns.add(s);
-        groupSprite.addSpriteTemplate(s);
+        groupSprite.addSpriteInNewTeam(s);
     }
     
     public PhysicsEngine getPhysicsEngine(){

@@ -1,11 +1,8 @@
 package PhysicsEngine;
 
 import java.util.ArrayList;
-//import sprite.SpriteGroupTemplate;
-//import sprite.SpriteTemplate;
-
 import npsprite.FighterBody;
-import npsprite.LimbSprite;
+import npsprite.NodeSprite;
 import npsprite.SpriteGroupTemplate;
 import npsprite.SpriteTemplate;
 
@@ -46,16 +43,48 @@ public class Collision {
 		return true;
 	}
 
-	public void checkGroupCollision() {
-		for (int i = 0; i < myGroup.getSize(); i++) {
-			for (int j = i + 1; j < myGroup.getSize(); j++) {
-				checkEachCollision(myGroup.getSprite(i), myGroup.getSprite(j));
+	private boolean isBodyCollided(SpriteTemplate s1, SpriteTemplate s2) {
+		ArrayList<SpriteTemplate> body1 = getBodyPart(s1);
+		ArrayList<SpriteTemplate> body2 = getBodyPart(s2);
+		for(SpriteTemplate bodyPart1: body1){
+			for(SpriteTemplate bodyPart2: body2){
+				if(isCollided(bodyPart1, bodyPart2)) return true;
+			}
+		}
+		return false;
+
+	}
+	
+	private ArrayList<SpriteTemplate> getBodyPart(SpriteTemplate s1){
+		ArrayList<SpriteTemplate> body1 = new ArrayList<SpriteTemplate>();
+		if (FighterBody.class.isAssignableFrom(s1.getClass())) {
+			for (NodeSprite n : ((FighterBody) s1).getBodyParts()) {
+				body1.add(n);
+			}
+		}
+		else{
+			body1.add(s1);
+		}
+		return body1;
+	}
+
+	public void checkGroupCollision() {		
+		for (int i = 0; i < myGroup.getTeamNum(); i++) {
+			ArrayList<SpriteTemplate> team1 = myGroup.getTeam(i);
+			for (int j = i + 1; j < myGroup.getTeamNum(); j++) {
+				ArrayList<SpriteTemplate> team2 = myGroup.getTeam(j);
+				for(SpriteTemplate s1: team1){
+					for(SpriteTemplate s2: team2){
+						checkEachCollision(s1, s2);
+					}
+				}
+			//	checkEachCollision(myGroup.getSprite(i), myGroup.getSprite(j));
 			}
 		}
 	}
 
 	private void checkEachCollision(SpriteTemplate s1, SpriteTemplate s2) {
-		if (isCollided(s1, s2)) {
+		if (isBodyCollided(s1, s2)) {
 			setCollisionStatus(s1);
 			setCollisionStatus(s2);
 			for (CollisionKind r : myReactionList) {
@@ -69,19 +98,32 @@ public class Collision {
 	}
 
 	private void setCollisionStatus(SpriteTemplate s1) {
-		if (LimbSprite.class.isAssignableFrom(s1.getClass()))
-			if (FighterBody.class.isAssignableFrom(((LimbSprite) s1)
-					.getMyPointer().getClass()))
-				((LimbSprite) s1).getMyPointer().setCollisionStatus(true);
+//		if (LimbSprite.class.isAssignableFrom(s1.getClass()))
+//			if (FighterBody.class.isAssignableFrom(((LimbSprite) s1)
+//					.getMyPointer().getClass()))
+//				((LimbSprite) s1).getMyPointer().setCollisionStatus(true);
+		s1.setCollisionStatus(true);
+	}
+	
+	public SpriteGroupTemplate getCollisionGroup(){
+		return myGroup;
+	}
+	
+	public void setCollisionGroup(SpriteGroupTemplate group){
+		myGroup = group;
 	}
 
-	public void addSprite(SpriteTemplate sprite) {
-		myGroup.addSpriteTemplate(sprite);
-	}
+//	public void addSpriteAsNewTeam(SpriteTemplate sprite) {
+//		myGroup.addSpriteTemplate(sprite);
+//	}
+//	
+//	public void addSpriteToCertainTeam(SpriteTemplate sprite, int teamIndex){
+//		myGroup.getTeamArray(teamIndex).add(sprite);
+//	}
 
-	public void addSprite(SpriteGroupTemplate spriteGroup) {
-		myGroup.addSpriteGroup(spriteGroup);
-	}
+//	public void addSprite(SpriteGroupTemplate spriteGroup) {
+//		myGroup.addSpriteGroup(spriteGroup);
+//	}
 
 	public void addCollisionKind(CollisionKind kind) {
 		myReactionList.add(kind);
