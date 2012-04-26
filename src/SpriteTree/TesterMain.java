@@ -30,7 +30,7 @@ public class TesterMain extends Game {
 	public void initResources() {
 		
 		
-		
+		/*
 		BufferedImage imgH = GraphicsTest.loadImage("src/resources/bodyParts/circle.png");
 		BufferedImage imgT = GraphicsTest.loadImage("src/resources/bodyParts/limb.png");
 		BufferedImage imgLA = GraphicsTest.loadImage("src/resources/bodyParts/limb.png");
@@ -144,7 +144,7 @@ public class TesterMain extends Game {
 
 		}
 		
-
+*/
 		
 	
 	}

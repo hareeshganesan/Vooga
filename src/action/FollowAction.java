@@ -1,35 +1,31 @@
 package action;
 
+import PhysicsEngine.PhysicsEngine;
 import npsprite.FighterBody;
 
-//import sprite.FighterSprite;
+public class FollowAction implements Action {
+	FighterBody myEnemy;
+	FighterBody myFighter;
+	boolean done;
+	PhysicsEngine myPhysicsEngine;
 
+	public FollowAction(FighterBody fighter, FighterBody enemy,
+			PhysicsEngine physicsEngine) {
+		myFighter = fighter;
+		myEnemy = enemy;
+		myPhysicsEngine = physicsEngine;
+	}
 
-public class FollowAction implements Action
-{
-    FighterBody myEnemy;
-    FighterBody myFighter;
-    boolean done;
-    
-    public FollowAction (FighterBody fighter, FighterBody enemy)
-    {
-        myFighter = fighter;
-        myEnemy = enemy;
-    }
+	@Override
+	public void performAction(long elapsedTime) {
+		MotionAction f = new MotionAction(myFighter,
+				myEnemy.getCurrentLocation(), myPhysicsEngine);
+		f.performAction(elapsedTime);
+		done = true;
+	}
 
-
-    @Override
-    public void performAction (long elapsedTime)
-    {
-        MotionAction f =
-            new MotionAction(myFighter, myEnemy.getCurrentLocation());
-        f.performAction(elapsedTime);
-        done = true;
-    }
-
-    public boolean isDone (long elapsedTime)
-    {
-        return done;
-    }
+	public boolean isDone(long elapsedTime) {
+		return done;
+	}
 
 }

@@ -19,76 +19,69 @@ public class Camera extends JPanel {
     
     public static final int X_OFFSET = 20;
     public static final int Y_OFFSET = 20;
-    public static final int CANVAS_HEIGHT = 522;
-    public static final int CANVAS_WIDTH = 522;
+    public static final int CANVAS_HEIGHT = 544;
+    public static final int CANVAS_WIDTH = 544;
+    
+    private int MIN_X = 50;
+    private int MIN_Y = 50;
+    private int MAX_X = CANVAS_WIDTH;
+    private int MAX_Y = CANVAS_HEIGHT;
 
     Point center;
     Point position = new Point(0, 0);
-    Rectangle bounds;
+    Rectangle currentBounds;
+    Rectangle targetBounds;
 
     public int prefHeight = 0;
     public int tolerance = 0;
 
     double zoom = 1;
-
-
+    double zoomSpeed = 100;
+    
     public Camera ()
     {
         super(null);
         setOpaque(true);
         setBackground(Color.WHITE);
-        setPreferredSize(new Dimension(200, 200));
-        this.center = new Point(0, 0);
-        this.bounds = new Rectangle(200, 200);
+        setPreferredSize(new Dimension(CANVAS_WIDTH, CANVAS_HEIGHT));
+        this.center = new Point(CANVAS_WIDTH/2, CANVAS_HEIGHT/2);
+        this.currentBounds = new Rectangle(CANVAS_WIDTH, CANVAS_HEIGHT);
+        this.targetBounds = new Rectangle(CANVAS_WIDTH, CANVAS_HEIGHT);
     }
     
     public Camera(Point center, Rectangle bounds) {
 
         this.center = center;
-        this.bounds = bounds;
+        this.currentBounds = bounds;
+        this.targetBounds = bounds;
     }
     
     public Camera(int x, int y) {
         this.center = new Point(0,0);
-        this.bounds = new Rectangle(x,y);
+        this.currentBounds = new Rectangle(x,y);
+        this.targetBounds = new Rectangle(x,y);
     }
+    
+    // get and set for min bounds
+    public void setMinX(int newMin){ MIN_X = newMin; }
+    public void setMinY(int newMin){ MIN_Y = newMin; }
+    public int getMinX(){ return MIN_X; }
+    public int getMinY(){ return MIN_Y; }
+    
+    // get and set for max bounds
+    public void setMaxX(int newMax){ MAX_X = newMax; }
+    public void setMaxY(int newMax){ MAX_Y = newMax; }
+    public int getMaxX(){ return MAX_X; }
+    public int getMaxY(){ return MAX_Y; }
+    
+    // get and set for current bounds
+    public int getX (){ return currentBounds.x; }
+    public int getY (){ return currentBounds.y; }
+    public int getHeight (){ return currentBounds.height; }
+    public int getWidth (){ return currentBounds.width; }
 
-
-    public int getX ()
-    {
-        return bounds.x;
-    }
-
-
-    public int getY ()
-    {
-        return bounds.y;
-    }
-
-
-    public int getHeight ()
-    {
-        return bounds.height;
-    }
-
-
-    public int getWidth ()
-    {
-        return bounds.width;
-    }
-
-
-    public void setCenter (Point center)
-    {
-        this.center = center;
-    }
-
-
-    public Point getCenter ()
-    {
-        return center;
-    }
-
+    public void setCenter (Point center) { this.center = center; }
+    public Point getCenter (){ return center; }
 
     public void calculateNewCenter (ArrayList<FighterBody> sprites)
     {
@@ -103,6 +96,8 @@ public class Camera extends JPanel {
 
         averageX = averageX / sprites.size();
         averageY = averageY / sprites.size();
+        
+        System.out.println("new center is at " + averageX + ", " + averageY);
 
         setCenter(new Point((int) averageX, (int) averageY));
     }
@@ -110,29 +105,42 @@ public class Camera extends JPanel {
 
     public void calculateNewBounds (ArrayList<FighterBody> sprites)
     {
-        double distanceX = center.x - sprites.get(0).getX();
-        double distanceY = center.y - sprites.get(0).getY();
+        double maxRadius = 0;
+        
+        for (int i = 0; i < sprites.size(); i++)
+        {
 
-        double radius =
-            Math.sqrt(Math.pow(distanceX, 2) + Math.pow(distanceY, 2));
+            double radius =
+                Math.sqrt(Math.pow(sprites.get(i).getX(), 2) + Math.pow(sprites.get(i).getY(), 2));
+            if (radius > maxRadius)
+                maxRadius = radius;
+        }
 
-        bounds.x = (int) (center.x - radius - X_OFFSET);
-        bounds.y = (int) (center.y - radius - Y_OFFSET);
-        bounds.height = (int) (bounds.y + 2 * (radius + X_OFFSET));
-        bounds.width = (int) (bounds.x + 2 * (radius + Y_OFFSET));
+        targetBounds.x = (int) (center.x - maxRadius - X_OFFSET);
+        targetBounds.y = (int) (center.y - maxRadius - Y_OFFSET);
+        targetBounds.height = (int) (targetBounds.y + 2 * (maxRadius + X_OFFSET));
+        targetBounds.width = (int) (targetBounds.x + 2 * (maxRadius + Y_OFFSET));
+        
+        currentBounds.x = (int) (currentBounds.x + ((targetBounds.x-currentBounds.x)/zoomSpeed));
+        currentBounds.y = (int) (currentBounds.y + ((targetBounds.y-currentBounds.y)/zoomSpeed));
+        currentBounds.height = (int) (currentBounds.height + ((targetBounds.height-currentBounds.height)/zoomSpeed));
+        currentBounds.width = (int) (currentBounds.width + ((targetBounds.width-currentBounds.width)/zoomSpeed));
+
     }
 
     private void changeZoom(double zoom){
         this.zoom = zoom;
-
     }
-
+    
+    private void setZoomSpeed(double zoom)
+    {
+        this.zoomSpeed = zoom;
+    }
 
     public double getZoom ()
     {
         return this.zoom;
     }
-
 
     public void follow (Sprite sprite)
     {
@@ -142,7 +150,6 @@ public class Camera extends JPanel {
                        (int) sprite.getY() + sprite.getHeight() / 2));
     }
 
-
     public void update(ArrayList<FighterBody> playerSprites,
                         CameraBackground bg)
     {
@@ -151,7 +158,6 @@ public class Camera extends JPanel {
         changeZoom(bg.getX());        
 
     }
-
 
     public void render (Graphics g1, CameraBackground bg)
     {
@@ -170,44 +176,5 @@ public class Camera extends JPanel {
         g.draw(r);
         g.setTransform(old);
         super.paintComponent(g1);
-
     }
-
-//    public static void main(String[] args) {
-//        JOptionPane.showMessageDialog(null, new Camera());
-//    }
-
-//        private float scaleFactor;
-//     
-//        private BufferedImage originalImage;
-//     
-//        public void setImage(BufferedImage image) {
-//            this.originalImage = image;
-//            this.setSize(image.getWidth(), image.getHeight());
-//            //setSize does repainting, no need to call repaint()
-//            //this.repaint();
-//        }
-//     
-//        public void setScaleFactor(float scaleFactor) {
-//            this.scaleFactor = scaleFactor;
-//            this.repaint();
-//        }
-//     
-//        @Override
-//        public void paintComponent(Graphics g) {
-//            if (this.originalImage != null) {
-//                Graphics2D g2 = (Graphics2D) g;
-//                int newW = (int) (originalImage.getWidth() * scaleFactor);
-//                int newH = (int) (originalImage.getHeight() * scaleFactor);
-//                this.setPreferredSize(new Dimension(newW, newH));
-//                this.revalidate();
-//                g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
-//                        //RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-//                        RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR);
-//                        //RenderingHints.VALUE_INTERPOLATION_BICUBIC);
-//                g2.drawImage(originalImage, 0, 0, newW, newH, null);
-//            }
-//        }
-//    }
-
 }

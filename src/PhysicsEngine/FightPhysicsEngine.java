@@ -1,9 +1,11 @@
 package PhysicsEngine;
 
 import java.awt.geom.Point2D;
+
+import com.golden.gamedev.GameEngine;
+
 import npsprite.SpriteTemplate;
 import action.MotionAction;
-
 
 /**
  * The fighting physics engine Calculation the new location of the sprite check
@@ -15,89 +17,71 @@ import action.MotionAction;
  */
 public class FightPhysicsEngine extends PhysicsEngine {
 
-	private final int BASE_POINT = 0;
-	private final int BOUND_X = 544;
-	private final int BOUND_Y = 544;
-	private final int SPEED_DEFALT = 10;
-	private double jump = 100;
-	private double backgroundFactor = 1;
-	private double outBoundDistance = 10;
+	private double myJump = 100;
+	private double myBackgroundFactor = 1.0;
+	private double myOutBoundDistance = 10;
+	private double mySpeedFactor = 0.5;
 
-	public FightPhysicsEngine(MotionAction motionAaction) {
-		super(motionAaction);
-	}
-
-	public FightPhysicsEngine(SpriteTemplate fighterSprite) {
-		super(fighterSprite);
+	public FightPhysicsEngine(GameEngine gameEngine) {
+		super(gameEngine);
 	}
 
 	@Override
-	public void process(long elapsedTime) {
-		double speed = myFighterSprite.getSpeed() / SPEED_DEFALT;
+	public void process(MotionAction motionAction, long elapsedTime) {
+		SpriteTemplate sprite = motionAction.getFighterBody();
+		double myVectorX = motionAction.getVectorX() * mySpeedFactor;
+		double myVectorY = motionAction.getVectorY() * mySpeedFactor;
+		double speed = sprite.getSpeed();
 		double x = speed * elapsedTime * myVectorX;
 		double y = speed * elapsedTime * myVectorY;
-
-		setNextLocationIncrement(x, y);
+		setNextLocationIncrement(sprite, x, y);
 	}
 
-	public void setNextLocationIncrement(double x, double y) {
+	public void setNextLocationIncrement(SpriteTemplate sprite, double x,
+			double y) {
 
-		double finalX = x * backgroundFactor;
-		double finalY = y * backgroundFactor;
-//		if (myVectorY < 0) {
-//			if (myFighterSprite.getY() + myFighterSprite.getHeight() < BOUND_Y ) {
-//				finalY = 0;
-//			} else {
-//				finalY = jump * finalY;
-//			}
-//		}
+		double finalX = x * myBackgroundFactor;
+		double finalY = y * myBackgroundFactor;
+		// if (myVectorY < 0) {
+		// if (myFighterSprite.getY() + myFighterSprite.getHeight() < BOUND_Y )
+		// {
+		// finalY = 0;
+		// } else {
+		// finalY = jump * finalY;
+		// }
+		// }
 
-		if (isOutLeft(x))
-			finalX = outBoundDistance;
-		if (isOutRight(x))
-			finalX = -outBoundDistance;
-		if (isOutTop(y))
-			finalY = outBoundDistance;
-		if (isOutBottom(y))
-			finalY = BOUND_Y - myFighterSprite.getY()
-					- myFighterSprite.getHeight();
+		if (isOutLeft(sprite, x))
+			finalX = myOutBoundDistance;
+		if (isOutRight(sprite, x))
+			finalX = -myOutBoundDistance;
+		if (isOutTop(sprite, y))
+			finalY = myOutBoundDistance;
+		if (isOutBottom(sprite, y))
+			finalY = BOUND_Y - sprite.getY() - sprite.getHeight();
 
-		myFighterSprite.setNextLocationIncrement(new Point2D.Double(finalX,
-				finalY));
+		sprite.setNextLocationIncrement(new Point2D.Double(finalX, finalY));
 
 		// for debug
-		// System.out.println("Left:" + myFighterSprite.getX() + "    Right:"
-		// + (myFighterSprite.getWidth() + myFighterSprite.getX())
-		// + "    Top:" + myFighterSprite.getY() + "    Bottom:"
-		// + (myFighterSprite.getHeight() + myFighterSprite.getY()));
+		// System.out.println(sprite.getGroupID() + "  Left:" + sprite.getX()
+		// + "    Right:" + (sprite.getWidth() + sprite.getX())
+		// + "    Top:" + sprite.getY() + "    Bottom:"
+		// + (sprite.getHeight() + sprite.getY()));
 	}
 
-	public boolean isOutLeft(double x) {
-		return myFighterSprite.getX() + x < BASE_POINT;
+	public void setJump(double jump) {
+		myJump = jump;
 	}
 
-	public boolean isOutRight(double x) {
-		return myFighterSprite.getX() + x + myFighterSprite.getWidth() > BOUND_X;
+	public void setBackgroundFactor(double backgroundFactor) {
+		myBackgroundFactor = backgroundFactor;
 	}
 
-	public boolean isOutTop(double y) {
-		return myFighterSprite.getY() + y < BASE_POINT;
+	public void setOutBoundDistance(double outBoundDistance) {
+		myOutBoundDistance = outBoundDistance;
 	}
 
-	public boolean isOutBottom(double y) {
-		return myFighterSprite.getY() + y + myFighterSprite.getHeight() > BOUND_Y;
+	public void setSpeedFactor(double speedFactor) {
+		mySpeedFactor = speedFactor;
 	}
-	
-	public void setJump(double j) {
-		jump = j;
-	}
-
-	public void setBackgroundFactor(double b) {
-		backgroundFactor = b;
-	}
-	
-	public void setOutBoundDistance(double b){
-		outBoundDistance=b;
-	}
-
 }

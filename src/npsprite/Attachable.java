@@ -8,11 +8,6 @@ import npsprite.SpriteID.GroupID;
  */
 @Deprecated 
 public interface Attachable{
-    boolean attaches=true;
-
-// IMPLEMENT THIS TO ATTACH/DETACH OTHER SPRITES TO YOUR MOVEMENT
-public interface Attachable
-{
     boolean attaches = true;
 
 

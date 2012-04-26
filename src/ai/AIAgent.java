@@ -1,5 +1,6 @@
 package ai;
 
+import PhysicsEngine.PhysicsEngine;
 import npsprite.FighterBody;
 import npsprite.LimbSprite;
 import game.CombatInstance;
@@ -19,6 +20,7 @@ public abstract class AIAgent extends FighterBody
 {
 
     CombatInstance myLevel;
+    protected PhysicsEngine myPhysicsEngine;
 
 
     public AIAgent (String name,LimbSprite root,
@@ -28,6 +30,7 @@ public abstract class AIAgent extends FighterBody
     {
         super(root, name, display);
         myLevel = c;
+        myPhysicsEngine = myLevel.getPhysicsEngine();
     }
 
 

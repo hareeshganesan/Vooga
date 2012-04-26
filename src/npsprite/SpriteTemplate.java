@@ -6,6 +6,8 @@ import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
+import PhysicsEngine.CollisionStatus;
+
 import npsprite.properties.PropertyObject;
 import events.CollisionEvent;
 
@@ -24,7 +26,8 @@ public class SpriteTemplate extends Sprite implements Cloneable{
     protected GroupID myID;
     
 
-    private boolean myCollisionStatus=false;
+//    private boolean myCollisionStatus=false;
+    protected CollisionStatus myCollisionStatus = new CollisionStatus();
     protected Point2D moveBy=new Point2D.Double();
 
 
@@ -113,14 +116,14 @@ public class SpriteTemplate extends Sprite implements Cloneable{
         }
     }
 
-    public void setCollisionStatus(boolean b){
-        myCollisionStatus=b;
-    }
+//    public void setCollisionStatus(boolean b){
+//        myCollisionStatus=b;
+//    }
     
 
     /* PHYSICS ENGINE MOVEMENT */
     public void setNextLocationIncrement(Point2D nextLocation) {
-        if(!myCollisionStatus){
+        if(!myCollisionStatus.getStatus()){
             this.moveBy = new Point2D.Double(moveBy.getX()+nextLocation.getX(),
                 moveBy.getY()+nextLocation.getY());
             
@@ -155,8 +158,17 @@ public class SpriteTemplate extends Sprite implements Cloneable{
 //                System.out.println("move");
 //                move(moveBy.getX(), moveBy.getY());
 //            }
+        	myCollisionStatus.setDefault();
             super.update(elapsedTime);
         }
+    }
+    
+    public CollisionStatus getCollisionStatus(){
+    	return myCollisionStatus;
+    }
+    
+    public void setCollisionStatus(CollisionStatus c){
+    	myCollisionStatus = c;
     }
 
 }

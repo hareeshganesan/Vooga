@@ -36,7 +36,7 @@ public class OffensiveStrategy extends Strategy
 
         public FollowGoal (FighterBody me, FighterBody enemy)
         {
-            super(new FollowAction(me, enemy), 10000);
+            super(new FollowAction(me, enemy,myPhysicsEngine), 10000);
             myFighter = me;
             myEnemy = enemy;
         }
