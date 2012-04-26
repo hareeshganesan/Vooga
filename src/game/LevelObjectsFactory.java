@@ -108,6 +108,7 @@ public class LevelObjectsFactory
         BasicAIAgent ai = new BasicAIAgent("ai1main",body, new HealthDisplay(50,50, c.getWidth()/2 -30),0,c);
         
         ai.setRoot(body);
+        ai.setDefaultSpeed(1.5);
         return ai;
     }
     
@@ -118,6 +119,7 @@ public class LevelObjectsFactory
         BasicStrategyAgent ai = new SituationalStrategyAgent("ai2main",body, new HealthDisplay(50,50, c.getWidth()/2 -30),0,c);
 
         ai.setRoot(body);
+
         return ai;
     }
 
