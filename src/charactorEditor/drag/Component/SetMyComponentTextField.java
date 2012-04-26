@@ -7,11 +7,14 @@ import java.awt.event.KeyListener;
 
 import javax.swing.JTextField;
 
+import charactorEditor.Controller;
 import charactorEditor.drag.AttributePane;
+import charactorEditor.drag.Update;
 
 @SuppressWarnings("serial")
-public class SetMyComponentTextField extends JTextField {
+public class SetMyComponentTextField extends JTextField  implements Update{
 	private AttributePane outer;
+	Controller myController = Controller.Instance();
 
 	public SetMyComponentTextField(AttributePane e) {
 		super();
@@ -21,15 +24,14 @@ public class SetMyComponentTextField extends JTextField {
 
 			@Override
 			public void focusGained(FocusEvent e) {
-				// TODO Auto-generated method stub
 			}
 
 			@Override
 			public void focusLost(FocusEvent e) {
-				// TODO Auto-generated method stub
 				update();
 			}
 		});
+		outer.register(this);
 		outer.add(this);
 
 		addKeyListener(new KeyListener() {
@@ -37,8 +39,8 @@ public class SetMyComponentTextField extends JTextField {
 			@Override
 			public void keyTyped(KeyEvent e) {
 				if (e.getKeyChar() == KeyEvent.VK_ENTER) {
-					outer.outerFighterBuilder.focusCMP.text = getText();
-					outer.outerFighterBuilder.repaint();
+					myController.getFoucsedComponent().setText(getText());
+					myController.updateFigherBuilder();
 				}
 			}
 
@@ -54,8 +56,8 @@ public class SetMyComponentTextField extends JTextField {
 	}
 
 	public void update() {
-		if (outer.outerFighterBuilder.focusCMP != null)
-			setText(outer.outerFighterBuilder.focusCMP.text);
+		if (myController.getFoucsedComponent() != null)
+			setText(myController.getFoucsedComponent().getText());
 		else
 			setText("");
 	}

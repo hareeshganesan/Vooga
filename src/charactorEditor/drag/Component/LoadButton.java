@@ -8,38 +8,52 @@ import java.io.FileNotFoundException;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 
-import charactorEditor.Loader;
+import charactorEditor.Controller;
 import charactorEditor.drag.AttributePane;
+import charactorEditor.drag.Update;
 
 @SuppressWarnings("serial")
-public class LoadButton extends JButton{
+public class LoadButton extends JButton  implements Update{
 	AttributePane outer;
-	public LoadButton(AttributePane outer){
+	private Controller myController = Controller.Instance();
+
+	public LoadButton(AttributePane outer) {
 		super("load");
-		this.outer=outer;
-		setBounds(outer.mySaveButton.getX()+outer.mySaveButton.getWidth()+10,outer.mySaveButton.getY(),70,20);
-	    addActionListener(new ActionListener(){
+		this.outer = outer;
+		setBounds(outer.mySaveButton.getX() + outer.mySaveButton.getWidth()
+				+ 10, outer.mySaveButton.getY(), 70, 20);
+		addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-                  try {
-					load();
-					update();
+				try {
+					load(e);
+					updateOther();
 				} catch (FileNotFoundException e1) {
 					e1.printStackTrace();
 				}
-			}});
+			}
+		});
+		outer.register(this);
 		outer.add(this);
 	}
-	private void load() throws FileNotFoundException{
-	JFileChooser fc = new JFileChooser(".");
-		
-		int returnVal =fc.showOpenDialog(null);
+
+	private void load(ActionEvent e) throws FileNotFoundException {
+		JFileChooser fc = new JFileChooser(".");
+		int returnVal = fc.showOpenDialog(null);
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
 			File file = fc.getSelectedFile();
-			outer.outerFighterBuilder.componentList= Loader.load(file.toString());
+			myController.getMessage(file, e);
 		}
 	}
-	private void update(){
-		outer.update();
-		outer.outerFighterBuilder.repaint();
+
+	private  void updateOther() {
+		
+		myController.updateAttributPane();
+		myController.updateFigherBuilder();
+	}
+
+	@Override
+	public void update() {
+		// TODO Auto-generated method stub
+		
 	}
 }
