@@ -21,7 +21,7 @@ public class FighterBody extends SpriteTemplate{
     private String myName;
     private HealthProperty myHealth; // default placeholder
     private DirectionProperty myDirection;
-    
+
     private HealthDisplay myDisplay;
     LimbSprite root; //root must be a limb
     

@@ -27,7 +27,6 @@ public class FollowAction implements Action
         done = true;
     }
 
-
     public boolean isDone (long elapsedTime)
     {
         return done;

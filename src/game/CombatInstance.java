@@ -268,7 +268,7 @@ public class CombatInstance extends GameState {
     // Engines
     MainGame myEngine;
     InputHandler myHandler;
-    Camera camera;
+    //Camera camera;
     CameraUtility cameraUtility;
 
     // Sprites
@@ -290,7 +290,7 @@ public class CombatInstance extends GameState {
         super(engine);
         myEngine = engine;
         myHandler = new InputHandler();
-        camera = new FloatingCamera();
+        //camera = new FloatingCamera();
         cameraUtility = new CameraUtility();
     }
 
@@ -390,18 +390,18 @@ public class CombatInstance extends GameState {
 
     @Override
     public void render(Graphics2D pen) {
-        camera.render(pen, bg);
+        //camera.render(pen, bg);
         //bg.render(pen, camera, camera.getX(), camera.getY(), camera.getX(),
         //        camera.getY(), camera.getHeight(), camera.getWidth());
         // bg.render(pen);
 
         bg.render(pen);
         for (FighterBody sprite : playerSprites)
-            cs.render(pen, sprite, camera);
-            //sprite.render(pen);
+            //cs.render(pen, sprite, camera);
+            sprite.render(pen);
         for (PlatformBlock pb : platform) {
-            cs.render(pen, pb, camera);
-            //pb.render(pen);
+            //cs.render(pen, pb, camera);
+            pb.render(pen);
         }
 //        for (SpriteTemplate p : powerups) {
 //            p.render(pen);
@@ -412,7 +412,7 @@ public class CombatInstance extends GameState {
     @Override
     public void update(long elapsedTime) {
         myHandler.update(elapsedTime, myEngine);
-        camera.update(playerSprites, bg);
+        //camera.update(playerSprites, bg);
         myHandler.update(elapsedTime, myEngine);
         bg.update(elapsedTime);
 
@@ -424,10 +424,10 @@ public class CombatInstance extends GameState {
         }
         
         for (FighterBody sprite : playerSprites){
-        	MotionAction.Gravity(sprite,1).performAction(elapsedTime);
+        	//MotionAction.Gravity(sprite,1).performAction(elapsedTime);
         }
 
-        myCollision.checkGroupCollision();
+        //myCollision.checkGroupCollision();
 
         for (FighterBody sprite : playerSprites) {
             sprite.update(elapsedTime);
