@@ -15,38 +15,35 @@ public class ReactionMomentumConservation extends Reaction {
 	@Override
 	public void act(SpriteTemplate spriteOne, SpriteTemplate spriteTwo,
 			PhysicsEngine physicsEngine) {
-		Point2D moveByOne = spriteOne.getMoveBy();
-		Point2D moveByTwo = spriteTwo.getMoveBy();
+		Point2D moveBy1 = spriteOne.getMoveBy();
+		Point2D moveBy2 = spriteTwo.getMoveBy();
 
-		double x1 = moveByOne.getX();
-		double y1 = moveByOne.getY();
-		double x2 = moveByTwo.getX();
-		double y2 = moveByTwo.getY();
+		double x1 = moveBy1.getX();
+		double y1 = moveBy1.getY();
+		double x2 = moveBy2.getX();
+		double y2 = moveBy2.getY();
 		double m1 = spriteOne.getMass();
 		double m2 = spriteTwo.getMass();
 		CollisionStatus status1 = spriteOne.getCollisionStatus();
 		CollisionStatus status2 = spriteTwo.getCollisionStatus();
 
-		double horizontalIncrementOne = x1;
-		double horizontalIncrementTwo = x2;
-		double verticalIncrementOne = y1;
-		double verticalIncrementTwo = y2;
+		dx1 = x1;
+		dx2 = x2;
+		dy1 = y1;
+		dy2 = y2;
 
 		if ((status1.getLeft() && status2.getRight())
 				|| (status1.getRight() && status2.getLeft())) {
-			horizontalIncrementOne = getIncrement(m1, m2, x1, x2);
-			horizontalIncrementTwo = getIncrement(m2, m1, x2, x1);
+			dx1 = getIncrement(m1, m2, x1, x2);
+			dx2 = getIncrement(m2, m1, x2, x1);
 		}
 		if ((status1.getUp() && status2.getDown())
 				|| (status1.getDown() && status2.getUp())) {
-			verticalIncrementOne = getIncrement(m1, m2, y1, y2);
-			verticalIncrementTwo = getIncrement(m2, m1, y2, y1);
+			dy1 = getIncrement(m1, m2, y1, y2);
+			dy2 = getIncrement(m2, m1, y2, y1);
 		}
 
-		physicsEngine.setNextLocationIncrement(spriteOne,
-				horizontalIncrementOne, verticalIncrementOne);
-		physicsEngine.setNextLocationIncrement(spriteTwo,
-				horizontalIncrementTwo, verticalIncrementTwo);
+		setNextLocationIncrement(spriteOne, spriteTwo, physicsEngine);
 
 	}
 
