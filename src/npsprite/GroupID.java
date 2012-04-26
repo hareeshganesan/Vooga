@@ -3,7 +3,7 @@ package npsprite;
 import java.util.HashMap;
 
 /**
- * I don't really know how to use enums
+ * Supposedly everything with the same groupID is placed in the same collision group
  * @author Wendy
  *
  */

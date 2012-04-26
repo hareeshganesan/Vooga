@@ -108,7 +108,6 @@ public class SpriteTemplate extends Sprite implements Cloneable{
      * active and have different groupIDs
      */
     public void collisionAction(SpriteTemplate otherSprite) {
-        
         CollisionEvent act=myCollisions.get(otherSprite.getGroupID());
         if (act != null) {
             act.performAction(this, otherSprite);

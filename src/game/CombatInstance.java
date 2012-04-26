@@ -52,7 +52,7 @@ public class CombatInstance extends GameState {
     ArrayList<FighterBody> playerSprites;
     ArrayList<PlatformBlock> platform;
     ArrayList<SpriteTemplate> spawns;
-//    ArrayList<SpriteTemplate> powerups;
+    ArrayList<SpriteTemplate> nonplayers;
 
     // Collision
     private Collision myCollision;
@@ -94,8 +94,8 @@ public class CombatInstance extends GameState {
 
         try {
             playerSprites = lof.createNPFighters();
-            platform = lof.createNPBlocks();
-//            powerups=lof.createPowerUps();
+            platform = lof.createPlatforms();
+            nonplayers=lof.createNPSprites();
         } catch (JDOMException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -131,7 +131,7 @@ public class CombatInstance extends GameState {
         groupSprite = new SpriteGroupTemplate();
         groupSprite.addFighterSpriteArray(playerSprites);
         groupSprite.addPlatformBlockArray(platform);
-//        groupSprite.addSpriteArray(powerups);
+        groupSprite.addSpriteArray(nonplayers);
 
         ArrayList<CollisionKind> CollisionkindList = new ArrayList<CollisionKind>();
         CollisionkindList.add(new CollisionKindFriends(
@@ -236,11 +236,6 @@ public class CombatInstance extends GameState {
         super.finish();
     }
 
-    /*
-     * TODO IT'D BE A LOT EASIER FOR THE SPRITE TO ADD ITSELF TO A GROUP
-     * (depending on groupID) INSIDE OF THE SPAWNS-PROPERTY, AND HAVE COLLISIONS
-     * AUTOMATICALLY UPDATE ITSELF
-     */
     public void addSprite(SpriteTemplate s) {
         spawns.add(s);
         groupSprite.addSpriteInNewTeam(s);

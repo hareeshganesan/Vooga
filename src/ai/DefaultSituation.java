@@ -3,7 +3,6 @@ package ai;
 import java.util.TreeMap;
 import npsprite.FighterBody;
 import game.CombatInstance;
-import sprite.FighterSprite;
 
 public class DefaultSituation extends Situation
 {

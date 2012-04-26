@@ -13,6 +13,10 @@ public class DirectionProperty extends PropertyObject{
     public static final String NAME="direction";
     private SpriteValues.DIR direction;
     
+    public DirectionProperty(DIR right) {
+        direction=right;
+    }
+
     public void setDirection(DIR dir){
         direction=dir;
     }
