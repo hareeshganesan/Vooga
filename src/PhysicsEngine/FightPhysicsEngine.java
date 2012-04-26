@@ -4,6 +4,8 @@ import java.awt.geom.Point2D;
 
 import com.golden.gamedev.GameEngine;
 
+import npsprite.FighterBody;
+import npsprite.NodeSprite;
 import npsprite.SpriteTemplate;
 import action.MotionAction;
 
@@ -47,10 +49,10 @@ public class FightPhysicsEngine extends PhysicsEngine {
 			finalX = -myOutBoundDistance;
 		if (isOutUp(sprite, y))
 			finalY = myOutBoundDistance;
-		if (isOutDown(sprite, y)){
+		if (isOutDown(sprite, y)) {
 			finalY = myBoundDown - sprite.getY() - sprite.getHeight();
 		}
-			
+
 		sprite.setNextLocationIncrement(new Point2D.Double(finalX, finalY));
 
 		// for debug

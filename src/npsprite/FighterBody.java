@@ -16,159 +16,176 @@ import events.CollisionEvent;
 
 //THIS IS A POINTER TO THE TOP OF THE TREE THAT REPRESENTS A PLAYER
 //TODO: reorganize, make it subclass of spritetemplate?
-public class FighterBody extends SpriteTemplate{
+public class FighterBody extends SpriteTemplate {
 
-    private String myName;
-    private HealthProperty myHealth; // default placeholder
-    private DirectionProperty myDirection;
-    
-    private HealthDisplay myDisplay;
-    LimbSprite root; //root must be a limb
-    
-    private Graphics2D myPen;
+	private String myName;
+	private HealthProperty myHealth; // default placeholder
+	private DirectionProperty myDirection;
 
-    private HashMap<String, NodeSprite> myMap;
+	private HealthDisplay myDisplay;
+	LimbSprite root; // root must be a limb
 
-    public FighterBody(LimbSprite root, String name, HealthDisplay display) {
-        super(root.getGroupID());
-        this.root = root;
-        root.setFighter(this);
-        myName = name;
-        myDisplay = display;
-        
-        myHealth=new HealthProperty(100);
-        myDirection=new DirectionProperty();
-                
-        myDisplay.setStat(myName, (int) getHealth());
+	private Graphics2D myPen;
 
-        myMap = new HashMap<String, NodeSprite>();
-        createMap(this.root);
-    }
-    //TODO: link up with the horizontal flipping in limb sprites
-    public void setInitDirection(int dir){
-        myDirection.setDirection(dir);
-    }
+	private HashMap<String, NodeSprite> myMap;
 
-    public void createMap(NodeSprite currNode) {
-        if (!myMap.containsKey(currNode.getName())) {
-            myMap.put(currNode.getName(), currNode);
-        }
-        for (NodeSprite limb : currNode.getChildren()) {
-            createMap(limb);
-        }
-    }
+	public FighterBody(LimbSprite root, String name, HealthDisplay display) {
+		super(root.getGroupID());
+		this.root = root;
+		root.setFighter(this);
+		myName = name;
+		myDisplay = display;
 
-    public NodeSprite getNode(String name) {
-        return myMap.get(name);
-    }
+		myHealth = new HealthProperty(100);
+		myDirection = new DirectionProperty();
 
-    public void move(Graphics2D pen, double moveX, double moveY) {
-        if (root != null) {
-//            System.out.println(moveX+" "+moveY);
-            root.render(pen, root.getX() + moveX, root.getY() + moveY, 0);
-        }
-        
-        if (moveX < 0) {
-            myDirection.setDirection(SpriteValues.LEFT);
-        } else if (moveY > 0) {
-            myDirection.setDirection(SpriteValues.RIGHT);
-        }
-    }
-    
-    public void setHealth(double h){
-        myHealth.setMaxHealth(h);
-    }
-    public double getHealth() {
-        return myHealth.getHealth();
-    }
+		myDisplay.setStat(myName, (int) getHealth());
 
-    public void add(NodeSprite child) {
-        root.addChild(child);
-    }
-    
-    public void removeChild(NodeSprite child) {
-        root.removeChild(child);
-    }
-    
-    /* Wrapped for input handler */
-    public Point2D getCurrentLocation() {
-        return root.getCurrentLocation();
-    }
+		myMap = new HashMap<String, NodeSprite>();
+		createMap(this.root);
+	}
 
-    public double getX() {
-        return root.getX();
-    }
+	// TODO: link up with the horizontal flipping in limb sprites
+	public void setInitDirection(int dir) {
+		myDirection.setDirection(dir);
+	}
 
-    public double getY() {
-        return root.getY();
-    }
+	public void createMap(NodeSprite currNode) {
+		if (!myMap.containsKey(currNode.getName())) {
+			myMap.put(currNode.getName(), currNode);
+		}
+		for (NodeSprite limb : currNode.getChildren()) {
+			createMap(limb);
+		}
+	}
 
-    public void setRoot(LimbSprite root){
-        this.root=root;
-        root.setFighter(this);
-    }
-    public LimbSprite getRoot() {
-        return root;
-    }
-    public Collection<NodeSprite> getBodyParts(){
-        return Collections.unmodifiableCollection(myMap.values());
-    }
+	public NodeSprite getNode(String name) {
+		return myMap.get(name);
+	}
 
-    public void childAdded(NodeSprite child) {
-        myMap.put(child.getName(), child);
-    }
+	public void move(Graphics2D pen, double moveX, double moveY) {
+		if (root != null) {
+			// System.out.println(moveX+" "+moveY);
+			root.render(pen, root.getX() + moveX, root.getY() + moveY, 0);
+		}
 
-    public void childRemoved(NodeSprite child) {
-        myMap.remove(child.getName());
-    }
+		if (moveX < 0) {
+			myDirection.setDirection(SpriteValues.LEFT);
+		} else if (moveY > 0) {
+			myDirection.setDirection(SpriteValues.RIGHT);
+		}
+	}
 
-    public boolean hasProperty(String name) {
-        return (name.equals(HealthProperty.getName())||name.equals(DirectionProperty.getName()));
-    }
+	public void setHealth(double h) {
+		myHealth.setMaxHealth(h);
+	}
 
-    public PropertyObject getHealthProperty() {
-        return myHealth;
-    }
+	public double getHealth() {
+		return myHealth.getHealth();
+	}
 
-    public PropertyObject getDirectionProperty() {
-        return myDirection;
-    }
+	public void add(NodeSprite child) {
+		root.addChild(child);
+	}
 
-    public PropertyObject getProperty(String name) {
-        if (name.equals(HealthProperty.getName())){
-            return myHealth;
-        }
-        if (name.equals(DirectionProperty.getName())){
-            return myDirection;
-        }
-        return null;
-    }
+	public void removeChild(NodeSprite child) {
+		root.removeChild(child);
+	}
 
+	/* Wrapped for input handler */
+	public Point2D getCurrentLocation() {
+		return root.getCurrentLocation();
+	}
 
-    @Override
-    public void render(Graphics2D pen) {
-        myPen=pen;
-        root.render(pen, root.getX(), root.getY(), 0);
-        myDisplay.render(pen);
-    }
+	public double getX() {
+		return root.getX();
+	}
 
+	public double getY() {
+		return root.getY();
+	}
 
-    public void update (long elapsedTime)
-    {
-        root.update(elapsedTime);
-        if (getHealth() <= 0) {
-            root.setActive(false); // dead, have game check for this for end of
-                                   // level
-        }
+	public void setRoot(LimbSprite root) {
+		this.root = root;
+		root.setFighter(this);
+	}
 
-        myDisplay.update(elapsedTime, (int) getHealth());
-        if (moveBy.getX()!=0 || moveBy.getY()!=0){
-            move(myPen, moveBy.getX(), moveBy.getY());
-        }
-        moveBy.setLocation(0, 0); // moveBy only work for one time then set to zero
-        myCollisionStatus.setDefault();
-        super.update(elapsedTime);
-    }
+	public LimbSprite getRoot() {
+		return root;
+	}
 
+	public Collection<NodeSprite> getBodyParts() {
+		return Collections.unmodifiableCollection(myMap.values());
+	}
 
+	public void childAdded(NodeSprite child) {
+		myMap.put(child.getName(), child);
+	}
+
+	public void childRemoved(NodeSprite child) {
+		myMap.remove(child.getName());
+	}
+
+	public boolean hasProperty(String name) {
+		return (name.equals(HealthProperty.getName()) || name
+				.equals(DirectionProperty.getName()));
+	}
+
+	public PropertyObject getHealthProperty() {
+		return myHealth;
+	}
+
+	public PropertyObject getDirectionProperty() {
+		return myDirection;
+	}
+
+	public PropertyObject getProperty(String name) {
+		if (name.equals(HealthProperty.getName())) {
+			return myHealth;
+		}
+		if (name.equals(DirectionProperty.getName())) {
+			return myDirection;
+		}
+		return null;
+	}
+
+	@Override
+	public void render(Graphics2D pen) {
+		myPen = pen;
+		root.render(pen, root.getX(), root.getY(), 0);
+		myDisplay.render(pen);
+	}
+
+	public void update(long elapsedTime) {
+		root.update(elapsedTime);
+		if (getHealth() <= 0) {
+			root.setActive(false); // dead, have game check for this for end of
+									// level
+		}
+
+		myDisplay.update(elapsedTime, (int) getHealth());
+		if (moveBy.getX() != 0 || moveBy.getY() != 0) {
+			move(myPen, moveBy.getX(), moveBy.getY());
+		}
+		moveBy.setLocation(0, 0); // moveBy only work for one time then set to
+									// zero
+		myCollisionStatus.setDefault();
+		super.update(elapsedTime);
+	}
+
+	public int getHeight() {
+		double height = 0;
+		for (NodeSprite n : getBodyParts()) {
+			height = Math.max(height, n.getY() + n.getHeight() - getY());
+		}
+		return (int) height;
+	}
+
+	public int getWidth() {
+		double width = 0;
+		for (NodeSprite n : getBodyParts()) {
+			width = Math.max(width, n.getX() + n.getWidth() - getX());
+		}
+		return (int) width;
+	}
 }
