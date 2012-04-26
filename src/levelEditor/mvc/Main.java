@@ -9,7 +9,7 @@ public class Main {
 	@SuppressWarnings("unused")
 	public static void main (String[] args) {
 
-		// Launches View (GUI) 
+		// Launches GUI
 		Controller c = new Controller();
 		
 	

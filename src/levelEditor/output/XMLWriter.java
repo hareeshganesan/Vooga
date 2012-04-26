@@ -41,10 +41,11 @@ public class XMLWriter {
 		myRoot = root;
 
 		saveLevelInfo();
-		saveAI();
-		saveSprites();
+		//saveAI();
+		//saveSprites();
 
 		writeToXML(doc);
+		System.out.printf("Finished saving to %s.xml\n" , myLevelObject.getLevelName());
 	}
 
 	private void writeToXML(Document doc) {

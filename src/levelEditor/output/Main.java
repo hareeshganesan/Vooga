@@ -9,7 +9,7 @@ public class Main {
 
 	public static void main (String[] args) {
 		LevelObject obj = new LevelObject();
-		obj.setLevelName("test3");
+		obj.setLevelName("random");
 		obj.setBackgoundImage("src/block.png");
 		
 		/*
