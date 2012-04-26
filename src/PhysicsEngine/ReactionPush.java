@@ -3,6 +3,12 @@ package PhysicsEngine;
 import java.awt.geom.Point2D;
 import npsprite.SpriteTemplate;
 
+/**
+ * this class works for the case that one push the other and go together
+ * 
+ * @author Donghe
+ * 
+ */
 public class ReactionPush extends Reaction {
 
 	@Override

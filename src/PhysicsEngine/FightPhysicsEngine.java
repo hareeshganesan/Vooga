@@ -8,16 +8,13 @@ import npsprite.SpriteTemplate;
 import action.MotionAction;
 
 /**
- * The fighting physics engine Calculation the new location of the sprite check
- * whether there is a collision if the sprite moves in this way if there is a
- * collision then have a collision reaction check whether there is out of bound
- * if yes we need to make the sprite move to the bound instead of out of bound
+ * the subclass of PhysicsEngine hope this can deal with most kinds of physics
+ * problems
  * 
  * @author Donghe
  */
 public class FightPhysicsEngine extends PhysicsEngine {
 
-	private double myJump = 100;
 	private double myBackgroundFactor = 1.0;
 	private double myOutBoundDistance = 10;
 	private double mySpeedFactor = 0.5;
@@ -37,29 +34,23 @@ public class FightPhysicsEngine extends PhysicsEngine {
 		setNextLocationIncrement(sprite, x, y);
 	}
 
+	@Override
 	public void setNextLocationIncrement(SpriteTemplate sprite, double x,
 			double y) {
 
 		double finalX = x * myBackgroundFactor;
 		double finalY = y * myBackgroundFactor;
-		// if (myVectorY < 0) {
-		// if (myFighterSprite.getY() + myFighterSprite.getHeight() < BOUND_Y )
-		// {
-		// finalY = 0;
-		// } else {
-		// finalY = jump * finalY;
-		// }
-		// }
 
 		if (isOutLeft(sprite, x))
 			finalX = myOutBoundDistance;
 		if (isOutRight(sprite, x))
 			finalX = -myOutBoundDistance;
-		if (isOutTop(sprite, y))
+		if (isOutUp(sprite, y))
 			finalY = myOutBoundDistance;
-		if (isOutBottom(sprite, y))
-			finalY = BOUND_Y - sprite.getY() - sprite.getHeight();
-
+		if (isOutDown(sprite, y)){
+			finalY = myBoundDown - sprite.getY() - sprite.getHeight();
+		}
+			
 		sprite.setNextLocationIncrement(new Point2D.Double(finalX, finalY));
 
 		// for debug
@@ -69,18 +60,35 @@ public class FightPhysicsEngine extends PhysicsEngine {
 		// + (sprite.getHeight() + sprite.getY()));
 	}
 
-	public void setJump(double jump) {
-		myJump = jump;
-	}
-
+	/**
+	 * set a new speed factor for this physics engine its default value is 1.0
+	 * For example, if we develop this game in the water, maybe we need to set
+	 * it to 0.8
+	 * 
+	 * @param backgroundFactor
+	 *            the new factor
+	 */
 	public void setBackgroundFactor(double backgroundFactor) {
 		myBackgroundFactor = backgroundFactor;
 	}
 
+	/**
+	 * when sprites hit the up bound, left bound and right bound, we make them a
+	 * rebound distantce
+	 * 
+	 * @param outBoundDistance
+	 *            the rebound distance
+	 */
 	public void setOutBoundDistance(double outBoundDistance) {
 		myOutBoundDistance = outBoundDistance;
 	}
 
+	/**
+	 * a speed factor works for motion's speed, its default value is 0.5
+	 * 
+	 * @param speedFactor
+	 *            speed factor
+	 */
 	public void setSpeedFactor(double speedFactor) {
 		mySpeedFactor = speedFactor;
 	}

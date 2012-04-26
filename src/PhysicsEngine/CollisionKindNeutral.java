@@ -1,13 +1,10 @@
 package PhysicsEngine;
 
 import java.util.ArrayList;
-//import sprite.SpriteTemplate;
-
 import npsprite.SpriteTemplate;
 
 /**
- * This class deal with the collision between one sprite and a block or
- * something that is neutral
+ * The Collision between some sprite and a block
  * 
  * @author Donghe
  */

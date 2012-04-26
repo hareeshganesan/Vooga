@@ -2,6 +2,12 @@ package PhysicsEngine;
 
 import npsprite.SpriteTemplate;
 
+/**
+ * this reaction works in the case that each sprite has a power to the other
+ * 
+ * @author Donghe
+ * 
+ */
 public class ReactionForce extends Reaction {
 
 	private double myHorizontalForceOne = 3000.0;
@@ -39,6 +45,18 @@ public class ReactionForce extends Reaction {
 
 	}
 
+	/**
+	 * set the power for these two sprites on X and Y direction
+	 * 
+	 * @param horizontalForceOne
+	 *            sprite one x direction power
+	 * @param verticalForceOne
+	 *            sprite one y direction power
+	 * @param horizontalForceTwo
+	 *            sprite two x direction power
+	 * @param verticalForceTwo
+	 *            sprite two y direction power
+	 */
 	public void setPower(double horizontalForceOne, double verticalForceOne,
 			double horizontalForceTwo, double verticalForceTwo) {
 		myHorizontalForceOne = horizontalForceOne;

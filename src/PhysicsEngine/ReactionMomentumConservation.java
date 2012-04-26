@@ -3,6 +3,13 @@ package PhysicsEngine;
 import java.awt.geom.Point2D;
 import npsprite.SpriteTemplate;
 
+/**
+ * this reaction is for the case that the collision under the law of momentum
+ * conservation and the law of energy conservation
+ * 
+ * @author Donghe
+ * 
+ */
 public class ReactionMomentumConservation extends Reaction {
 
 	@Override
