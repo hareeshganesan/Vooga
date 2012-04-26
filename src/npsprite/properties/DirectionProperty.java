@@ -1,28 +1,32 @@
 package npsprite.properties;
 
+import npsprite.SpriteValues;
+import npsprite.SpriteValues.DIR;
+
+
 /**
  * Mainly for fighter sprites, since we need to know which direction the fighter is facing for attacks
  * @author Wendy
  *
  */
 public class DirectionProperty extends PropertyObject{
-    final static String name="direction";
-    private int direction;
+    public static final String NAME="direction";
+    private SpriteValues.DIR direction;
     
-    public void setDirection(int dir){
+    public void setDirection(DIR dir){
         direction=dir;
     }
     
-    public int getDirection(){
+    public SpriteValues.DIR getDirection(){
         return direction;
     }
-    public static String getName(){
-        return name;
-    }
-
     @Override
     public PropertyObject clone() {
         return this;
     }
-    
+
+    @Override
+    public double getValue() {
+        return 0;
+    }
 }

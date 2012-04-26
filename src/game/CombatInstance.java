@@ -38,7 +38,6 @@ import action.QuitAction;
 import ai.AIAgent;
 import camera.*;
 
-
 public class CombatInstance extends GameState {
     private String DEFAULT_IMAGE = "resources/title.png";
 
@@ -50,8 +49,6 @@ public class CombatInstance extends GameState {
     private PhysicsEngine myPhysicsEngine;
 
     // Sprites
-    // ArrayList<FighterSprite> playerSprites;
-    // ArrayList<PlatformBlock> platform;
     ArrayList<FighterBody> playerSprites;
     ArrayList<PlatformBlock> platform;
     ArrayList<SpriteTemplate> spawns;
@@ -95,13 +92,6 @@ public class CombatInstance extends GameState {
             }
         }
 
-        // TODO: REMOVE HARDCODING LATER
-        // GameFont font = fontManager.getFont(getImage("resources/font.png"));
-        // BufferedImage HPimage = getImage("resources/frame.png");
-        // HealthDisplay display = new HealthDisplay(returnVal, returnVal,
-        // returnVal);
-        //
-        // TODO: MAKE IT SO DIFFERENT FIGHTERS CAN HAVE DIFFERENT DISPLAYS?
         try {
             playerSprites = lof.createNPFighters();
             platform = lof.createNPBlocks();
@@ -138,7 +128,7 @@ public class CombatInstance extends GameState {
         // you can create any new concrete CollisionKind or concrete Reaction
         // then add it into myCollision
 
-        groupSprite = new SpriteGroupTemplate("team");
+        groupSprite = new SpriteGroupTemplate();
         groupSprite.addFighterSpriteArray(playerSprites);
         groupSprite.addPlatformBlockArray(platform);
 //        groupSprite.addSpriteArray(powerups);

@@ -6,7 +6,7 @@
 <speed>0.2</speed>
 <x>0</x>
 <y>0</y>
-<img>resources/flame.png</img>
+<img>resources/flame_border.png</img>
 </Fighter>
 <Fighter>
 <name>player 2</name>
@@ -15,7 +15,7 @@
 <speed>1</speed>
 <x>100</x>
 <y>100</y>
-<img>resources/flame.png</img>
+<img>resources/flameb_border.png</img>
 </Fighter>
 <Block>
 <id>PLATFORM</id>

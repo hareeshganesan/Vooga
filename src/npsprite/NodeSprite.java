@@ -36,9 +36,7 @@ public class NodeSprite extends SpriteTemplate{
         this.setY(this.getY() + moveY);
     }
 
-
-    // TODO: implement
-    // for the connections with physics engine
+    //TODO: ANIMATIONS?
     public Point2D getCurrentLocation ()
     {
         return new Point2D.Double(getX() + moveBy.getX(), getY() +

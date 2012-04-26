@@ -25,8 +25,6 @@ public class SpriteTemplate extends Sprite implements Cloneable{
     
     protected GroupID myID;
     
-
-//    private boolean myCollisionStatus=false;
     protected CollisionStatus myCollisionStatus = new CollisionStatus();
     protected Point2D moveBy=new Point2D.Double();
 
@@ -74,6 +72,7 @@ public class SpriteTemplate extends Sprite implements Cloneable{
     public double getSpeed() {
         return defaultSpeed;
     }
+    
     /* MASS - each sprite has a default mass of 50, used in physics engine */
     public void setMass(double mass){
         myMass=mass;
@@ -83,8 +82,8 @@ public class SpriteTemplate extends Sprite implements Cloneable{
     }
     
     /* PROPERTIES STUFF */
-    public void addProperty(String name,PropertyObject p){
-        myProperties.put(name, p);
+    public void addProperty(String n,PropertyObject p){
+        myProperties.put(n, p);
     }
     public void addProperties(HashMap<String,PropertyObject>e){
         myProperties.putAll(e);
@@ -115,11 +114,14 @@ public class SpriteTemplate extends Sprite implements Cloneable{
             act.performAction(this, otherSprite);
         }
     }
-
-//    public void setCollisionStatus(boolean b){
-//        myCollisionStatus=b;
-//    }
     
+    public CollisionStatus getCollisionStatus(){
+        return myCollisionStatus;
+    }
+    
+    public void setCollisionStatus(CollisionStatus c){
+        myCollisionStatus = c;
+    }
 
     /* PHYSICS ENGINE MOVEMENT */
     public void setNextLocationIncrement(Point2D nextLocation) {
@@ -154,21 +156,9 @@ public class SpriteTemplate extends Sprite implements Cloneable{
 
     public void update(long elapsedTime) {
         if (this.isActive()) {
-//            if (moveBy.getX()!=0 || moveBy.getY()!=0){
-//                System.out.println("move");
-//                move(moveBy.getX(), moveBy.getY());
-//            }
         	myCollisionStatus.setDefault();
             super.update(elapsedTime);
         }
-    }
-    
-    public CollisionStatus getCollisionStatus(){
-    	return myCollisionStatus;
-    }
-    
-    public void setCollisionStatus(CollisionStatus c){
-    	myCollisionStatus = c;
     }
 
 }

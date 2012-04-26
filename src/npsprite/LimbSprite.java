@@ -1,16 +1,11 @@
 package npsprite;
 
 import java.awt.Graphics2D;
-import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
-
-import sprite.SpriteValues;
 
 import SpriteTree.GraphicsTest;
 
 import npsprite.properties.DamageProperty;
-import npsprite.properties.DirectionProperty;
-import npsprite.properties.HealthProperty;
 import npsprite.properties.PropertyObject;
 
 //for limb nodes on fighter sprites only
@@ -19,9 +14,6 @@ public class LimbSprite extends NodeSprite{
     
     private BufferedImage myCurrImage;
     protected BufferedImage myOrigImage;
-
-    private int allAngles = 0;
-    private int currAngle = 0;
     
     private double dx;
     private double dy;
@@ -44,7 +36,7 @@ public class LimbSprite extends NodeSprite{
 //        this.dx = x;
 //        this.dy = y;
         
-        this.addProperty(DamageProperty.getName(),new DamageProperty(DAMAGE_DEALT*damageMultiplier));
+        this.addProperty(DamageProperty.NAME, new DamageProperty(DAMAGE_DEALT*damageMultiplier));
     }
     
     /**
@@ -65,10 +57,11 @@ public class LimbSprite extends NodeSprite{
         this.dx = x;
         this.dy = y;
         
-        this.addProperty(DamageProperty.getName(),new DamageProperty(DAMAGE_DEALT*damageMultiplier));
+        this.addProperty(DamageProperty.NAME,new DamageProperty(DAMAGE_DEALT*damageMultiplier));
     }
     public void setFighter(FighterBody fighterBody) {
         myPointer=fighterBody;
+        myID=fighterBody.getGroupID();
     }
 
     

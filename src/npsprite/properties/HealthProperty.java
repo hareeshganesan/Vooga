@@ -2,7 +2,7 @@ package npsprite.properties;
 
 
 public class HealthProperty extends PropertyObject{
-    static final String NAME="health";
+    public static final String NAME="health";
     private double health;
     private double MAX_HEALTH;
     
@@ -14,9 +14,11 @@ public class HealthProperty extends PropertyObject{
         health+=damage;
         wrapHealth();
     }
-    public double getHealth(){
-        return health;
+    @Override
+    public double getValue() {
+        return (int) health;
     }
+
     // also resets health to max health
     public void setMaxHealth(double h){
         MAX_HEALTH=h;
@@ -34,8 +36,4 @@ public class HealthProperty extends PropertyObject{
     public HealthProperty clone(){
         return new HealthProperty(MAX_HEALTH);
     }
-    public static String getName(){
-        return NAME;
-    }
-
 }

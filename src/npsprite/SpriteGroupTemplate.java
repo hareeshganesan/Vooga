@@ -13,11 +13,8 @@ import java.util.ArrayList;
  */
 public class SpriteGroupTemplate {
 	private ArrayList<ArrayList<SpriteTemplate>> mySpriteGroup = new ArrayList<ArrayList<SpriteTemplate>>();
-	
-	private String myName;
 
-	public SpriteGroupTemplate(String groupName) {
-		myName = groupName;
+	public SpriteGroupTemplate() {
 	}
 
 	/**
@@ -97,14 +94,6 @@ public class SpriteGroupTemplate {
 			if(team.contains(s)) return mySpriteGroup.indexOf(team);
 		}
 		return -1;
-	}
-	
-
-	/**
-	 * team name
-	 */
-	public String getGroupName() {
-		return myName;
 	}
 
 	/**

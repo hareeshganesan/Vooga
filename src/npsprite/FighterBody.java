@@ -6,21 +6,24 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 
+import npsprite.SpriteValues.DIR;
+import npsprite.SpriteValues.STATUS;
 import npsprite.properties.DirectionProperty;
 import npsprite.properties.HealthProperty;
-import npsprite.properties.PropertyObject;
+import npsprite.properties.StatusProperty;
 
 import sprite.HealthDisplay;
-import sprite.SpriteValues;
-import events.CollisionEvent;
 
-//THIS IS A POINTER TO THE TOP OF THE TREE THAT REPRESENTS A PLAYER
-//TODO: reorganize, make it subclass of spritetemplate?
+//THIS IS A POINTER TO THE TOP OF THE TREE THAT REPRESENTS A PLAYER - has no width/height
+//it comes with health, direction, and status properties predefined - no need to add
+//limbs come with damage - see limbsprite
+//TODO: subclass of spritetemplate?
 public class FighterBody extends SpriteTemplate{
 
     private String myName;
-    private HealthProperty myHealth; // default placeholder
+    private HealthProperty myHealth; //for ease in access
     private DirectionProperty myDirection;
+    private StatusProperty myStatus; //for stuff like jumping, blocking
     
     private HealthDisplay myDisplay;
     LimbSprite root; //root must be a limb
@@ -38,15 +41,25 @@ public class FighterBody extends SpriteTemplate{
         
         myHealth=new HealthProperty(100);
         myDirection=new DirectionProperty();
-                
+        myStatus=new StatusProperty(SpriteValues.STATUS.NORM);
+        
+        myStatus.setStatusValue(STATUS.BLOCK, 0.1);
+        
+        super.addProperty(HealthProperty.NAME,myHealth);
+        super.addProperty(DirectionProperty.NAME,myDirection);
+        super.addProperty(StatusProperty.NAME,myStatus);
+        
         myDisplay.setStat(myName, (int) getHealth());
 
         myMap = new HashMap<String, NodeSprite>();
         createMap(this.root);
     }
     //TODO: link up with the horizontal flipping in limb sprites
-    public void setInitDirection(int dir){
+    public void setInitDirection(DIR dir){
         myDirection.setDirection(dir);
+    }
+    public void setInitStatus(STATUS s){
+        myStatus.setStatus(s);
     }
 
     public void createMap(NodeSprite currNode) {
@@ -69,9 +82,9 @@ public class FighterBody extends SpriteTemplate{
         }
         
         if (moveX < 0) {
-            myDirection.setDirection(SpriteValues.LEFT);
+            myDirection.setDirection(SpriteValues.DIR.LEFT);
         } else if (moveY > 0) {
-            myDirection.setDirection(SpriteValues.RIGHT);
+            myDirection.setDirection(SpriteValues.DIR.RIGHT);
         }
     }
     
@@ -79,15 +92,13 @@ public class FighterBody extends SpriteTemplate{
         myHealth.setMaxHealth(h);
     }
     public double getHealth() {
-        return myHealth.getHealth();
+        return myHealth.getValue();
     }
-
-    public void add(NodeSprite child) {
-        root.addChild(child);
+    public void setStatusValue(SpriteValues.STATUS s, double v){
+        myStatus.setStatusValue(s,v);
     }
-    
-    public void removeChild(NodeSprite child) {
-        root.removeChild(child);
+    public double getHealthMultiplier(){
+        return myStatus.getValue();
     }
     
     /* Wrapped for input handler */
@@ -114,42 +125,32 @@ public class FighterBody extends SpriteTemplate{
         return Collections.unmodifiableCollection(myMap.values());
     }
 
+    /* For sprite tree */
+    public void add(NodeSprite child) {
+        root.addChild(child);
+    }
+    
+    public void removeChild(NodeSprite child) {
+        root.removeChild(child);
+    }
+    
+    /* called by limb sprites to update the map */
     public void childAdded(NodeSprite child) {
         myMap.put(child.getName(), child);
     }
-
+    /* called by limb sprites to update the map */
     public void childRemoved(NodeSprite child) {
         myMap.remove(child.getName());
     }
 
-    public boolean hasProperty(String name) {
-        return (name.equals(HealthProperty.getName())||name.equals(DirectionProperty.getName()));
-    }
-
-    public PropertyObject getHealthProperty() {
-        return myHealth;
-    }
-
-    public PropertyObject getDirectionProperty() {
-        return myDirection;
-    }
-
-    public PropertyObject getProperty(String name) {
-        if (name.equals(HealthProperty.getName())){
-            return myHealth;
-        }
-        if (name.equals(DirectionProperty.getName())){
-            return myDirection;
-        }
-        return null;
-    }
-
-
     @Override
     public void render(Graphics2D pen) {
+        if(root.isActive()){
+            
         myPen=pen;
         root.render(pen, root.getX(), root.getY(), 0);
         myDisplay.render(pen);
+        }
     }
 
 
@@ -166,7 +167,7 @@ public class FighterBody extends SpriteTemplate{
             move(myPen, moveBy.getX(), moveBy.getY());
         }
         moveBy.setLocation(0, 0); // moveBy only work for one time then set to zero
-        myCollisionStatus.setDefault();
+        
         super.update(elapsedTime);
     }
 
