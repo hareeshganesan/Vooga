@@ -27,20 +27,14 @@ public abstract class CollisionKind {
 	public CollisionKind() {
 	}
 
-	public abstract boolean isThisKind(SpriteTemplate ps1, SpriteTemplate ps2);
+	public abstract boolean isThisKind(SpriteTemplate spriteOne, SpriteTemplate spriteTwo);
 
-	public void doThisReaction(SpriteTemplate ps1, SpriteTemplate ps2, PhysicsEngine physicsEngine) {
-		// Wendy can untoggle these two lines if your code is ready
-		ps1.collisionAction(ps2);
-		ps2.collisionAction(ps1);
+	public void doThisReaction(SpriteTemplate spriteOne,
+			SpriteTemplate spriteTwo, PhysicsEngine physicsEngine) {
+		spriteOne.collisionAction(spriteTwo);
+		spriteTwo.collisionAction(spriteOne);
 		for (Reaction reaction : myReactions) {
-//			if (belongFighterSprite(ps1)) {
-//				ps1 = ((LimbSprite) ps1).getMyPointer();
-//			}
-//			if (belongFighterSprite(ps2)) {
-//				ps2 = ((LimbSprite) ps2).getMyPointer();
-//			}
-			reaction.act(ps1, ps2, physicsEngine);
+			reaction.act(spriteOne, spriteTwo, physicsEngine);
 		}
 	}
 
@@ -61,25 +55,11 @@ public abstract class CollisionKind {
 		myReactions = reactions;
 	}
 
-	protected boolean isPlatformBlock(SpriteTemplate s) {
-		return s.getClass().equals(PlatformBlock.class);
+	protected boolean isPlatformBlock(SpriteTemplate sprite) {
+		return sprite.getClass().equals(PlatformBlock.class);
 	}
 
-	protected boolean belongFighterSprite(SpriteTemplate s) {
-//		if (LimbSprite.class.isAssignableFrom(s.getClass()))
-//			if (FighterBody.class.isAssignableFrom(((LimbSprite) s)
-//					.getMyPointer().getClass()))
-//				return true;
-//		return false;
-		return FighterBody.class.isAssignableFrom(s.getClass());
+	protected boolean belongFighterBody(SpriteTemplate sprite) {
+		return FighterBody.class.isAssignableFrom(sprite.getClass());
 	}
-
-	// /**
-	// * @deprecated no longer using weaponsprites distinction
-	// */
-	// @Deprecated
-	// protected boolean isWeaponSprite(SpriteTemplate s){
-	// return s.getClass().equals(WeaponSprite.class);
-	// }
-
 }

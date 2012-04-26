@@ -24,9 +24,9 @@ public class CollisionKindFriends extends CollisionKind {
 	}
 
 	@Override
-	public boolean isThisKind(SpriteTemplate ps1, SpriteTemplate ps2) {
-		return belongFighterSprite(ps1) && belongFighterSprite(ps2)
-				&& ps1.getGroupID() == ps2.getGroupID();
+	public boolean isThisKind(SpriteTemplate spriteOne, SpriteTemplate spriteTwo) {
+		return belongFighterBody(spriteOne) && belongFighterBody(spriteTwo)
+				&& spriteOne.getGroupID() == spriteTwo.getGroupID();
 	}
 
 }

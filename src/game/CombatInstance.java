@@ -28,8 +28,11 @@ import PhysicsEngine.CollisionKindFriends;
 import PhysicsEngine.CollisionKindNeutral;
 import PhysicsEngine.FightPhysicsEngine;
 import PhysicsEngine.PhysicsEngine;
+import PhysicsEngine.ReactionMomentumConservation;
+import PhysicsEngine.ReactionPunch;
 import PhysicsEngine.ReactionPush;
 import PhysicsEngine.ReactionRebound;
+import PhysicsEngine.ReactionStop;
 import action.MotionAction;
 import action.QuitAction;
 import ai.AIAgent;
@@ -142,7 +145,7 @@ public class CombatInstance extends GameState {
 
         ArrayList<CollisionKind> CollisionkindList = new ArrayList<CollisionKind>();
         CollisionkindList.add(new CollisionKindFriends(
-                new ReactionRebound()));
+                new ReactionMomentumConservation()));
         CollisionkindList.add(new CollisionKindEnemy(new ReactionPush()));
         CollisionkindList.add(new CollisionKindNeutral(new ReactionRebound()));
 
@@ -192,12 +195,12 @@ public class CombatInstance extends GameState {
         myHandler.update(elapsedTime, myEngine);
         bg.update(elapsedTime);
 
-//        for (FighterBody sprite : playerSprites) {
-//            if (AIAgent.class.isAssignableFrom(sprite.getClass())) {
-//                AIAgent ai = (AIAgent) sprite;
-//                ai.calculateLocation(elapsedTime);
-//            }
-//        }
+        for (FighterBody sprite : playerSprites) {
+            if (AIAgent.class.isAssignableFrom(sprite.getClass())) {
+                AIAgent ai = (AIAgent) sprite;
+                ai.calculateLocation(elapsedTime);
+            }
+        }
         
         for (FighterBody sprite : playerSprites){
         	MotionAction.Gravity(sprite,0.3,myPhysicsEngine).performAction(elapsedTime);
@@ -206,7 +209,7 @@ public class CombatInstance extends GameState {
         myCollision.checkGroupCollision();
 
         for (FighterBody sprite : playerSprites) {
-        	printCollision(sprite);
+//        	printCollision(sprite);
             sprite.update(elapsedTime);
         }
 

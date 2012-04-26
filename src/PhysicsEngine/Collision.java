@@ -32,65 +32,70 @@ public class Collision {
 		myPhysicsEngine = physicsEngine;
 	}
 
-	private boolean isCollided(SpriteTemplate s1, SpriteTemplate s2) {
-		if (s1.getX() > s2.getX() + s2.getWidth())
+	private boolean isCollided(SpriteTemplate spriteOne,
+			SpriteTemplate spriteTwo) {
+		if (getLeft(spriteOne) > getRight(spriteTwo))
 			return false;
-		if (s1.getX() + s1.getWidth() < s2.getX())
+		if (getRight(spriteOne) < getLeft(spriteTwo))
 			return false;
-		if (s1.getY() > s2.getY() + s2.getHeight())
+		if (getUp(spriteOne) > getDown(spriteTwo))
 			return false;
-		if (s1.getY() + s1.getHeight() < s2.getY())
+		if (getDown(spriteOne) < getUp(spriteTwo))
 			return false;
 		return true;
 	}
 
-	private boolean isBodyCollided(SpriteTemplate s1, SpriteTemplate s2) {
-		ArrayList<SpriteTemplate> body1 = getBodyPart(s1);
-		ArrayList<SpriteTemplate> body2 = getBodyPart(s2);
-		for (SpriteTemplate bodyPart1 : body1) {
-			for (SpriteTemplate bodyPart2 : body2) {
-				if (isCollided(bodyPart1, bodyPart2))
+	private boolean isBodyCollided(SpriteTemplate spriteOne,
+			SpriteTemplate spriteTwo) {
+		ArrayList<SpriteTemplate> bodyPartsOne = getBodyParts(spriteOne);
+		ArrayList<SpriteTemplate> bodyPartsTwo = getBodyParts(spriteTwo);
+		for (SpriteTemplate bodyPartOne : bodyPartsOne) {
+			for (SpriteTemplate bodyPartTwo : bodyPartsTwo) {
+				if (isCollided(bodyPartOne, bodyPartTwo))
 					return true;
 			}
 		}
 		return false;
-
 	}
 
-	private ArrayList<SpriteTemplate> getBodyPart(SpriteTemplate s1) {
-		ArrayList<SpriteTemplate> body1 = new ArrayList<SpriteTemplate>();
-		if (FighterBody.class.isAssignableFrom(s1.getClass())) {
-			for (NodeSprite n : ((FighterBody) s1).getBodyParts()) {
-				body1.add(n);
+	private ArrayList<SpriteTemplate> getBodyParts(SpriteTemplate sprite) {
+		ArrayList<SpriteTemplate> bodyParts = new ArrayList<SpriteTemplate>();
+		if (FighterBody.class.isAssignableFrom(sprite.getClass())) {
+			for (NodeSprite n : ((FighterBody) sprite).getBodyParts()) {
+				bodyParts.add(n);
 			}
 		} else {
-			body1.add(s1);
+			bodyParts.add(sprite);
 		}
-		return body1;
+		return bodyParts;
 	}
 
 	public void checkGroupCollision() {
 		for (int i = 0; i < myGroup.getTeamNum(); i++) {
-			ArrayList<SpriteTemplate> team1 = myGroup.getTeam(i);
+			ArrayList<SpriteTemplate> teamOne = myGroup.getTeam(i);
 			for (int j = i + 1; j < myGroup.getTeamNum(); j++) {
-				ArrayList<SpriteTemplate> team2 = myGroup.getTeam(j);
-				for (SpriteTemplate s1 : team1) {
-					for (SpriteTemplate s2 : team2) {
-						checkEachCollision(s1, s2);
-					}
-				}
-				// checkEachCollision(myGroup.getSprite(i),
-				// myGroup.getSprite(j));
+				ArrayList<SpriteTemplate> teamTwo = myGroup.getTeam(j);
+				checkTeamCollision(teamOne, teamTwo);
 			}
 		}
 	}
 
-	private void checkEachCollision(SpriteTemplate s1, SpriteTemplate s2) {
-		if (isBodyCollided(s1, s2)) {
-			setCollisionStatus(s1, s2);
-			for (CollisionKind r : myReactionList) {
-				if (r.isThisKind(s1, s2)) {
-					r.doThisReaction(s1, s2, myPhysicsEngine);
+	private void checkTeamCollision(ArrayList<SpriteTemplate> teamOne,
+			ArrayList<SpriteTemplate> teamTwo) {
+		for (SpriteTemplate spriteOne : teamOne) {
+			for (SpriteTemplate spriteTwo : teamTwo) {
+				checkEachCollision(spriteOne, spriteTwo);
+			}
+		}
+	}
+
+	private void checkEachCollision(SpriteTemplate spriteOne,
+			SpriteTemplate spriteTwo) {
+		if (isBodyCollided(spriteOne, spriteTwo)) {
+			setGroupCollisionStatus(spriteOne, spriteTwo);
+			for (CollisionKind kind : myReactionList) {
+				if (kind.isThisKind(spriteOne, spriteTwo)) {
+					kind.doThisReaction(spriteOne, spriteTwo, myPhysicsEngine);
 				}
 			}
 			// for debug
@@ -98,43 +103,42 @@ public class Collision {
 		}
 	}
 
-	private void setCollisionStatus(SpriteTemplate s1, SpriteTemplate s2) {
-		// if (LimbSprite.class.isAssignableFrom(s1.getClass()))
-		// if (FighterBody.class.isAssignableFrom(((LimbSprite) s1)
-		// .getMyPointer().getClass()))
-		// ((LimbSprite) s1).getMyPointer().setCollisionStatus(true);
-
-		CollisionStatus status1 = s1.getCollisionStatus();
-		// status1.setDown(true);
-		// s1.setCollisionStatus(status1);
-		CollisionStatus status2 = s2.getCollisionStatus();
-		// status2.setDown(true);
-		// s2.setCollisionStatus(status2);
-
-		ArrayList<SpriteTemplate> body1 = getBodyPart(s1);
-		ArrayList<SpriteTemplate> body2 = getBodyPart(s2);
-		for (SpriteTemplate bodyPart1 : body1) {
-			for (SpriteTemplate bodyPart2 : body2) {
-				if (Math.abs(getRight(bodyPart1) - getLeft(bodyPart2)) < myCollisionFactor) {
-					status1.setRight(true);
-					status2.setLeft(true);
-				}
-				if (Math.abs(getRight(bodyPart2) - getLeft(bodyPart1)) < myCollisionFactor) {
-					status2.setRight(true);
-					status1.setLeft(true);
-				}
-				if (Math.abs(getUp(bodyPart1) - getDown(bodyPart2)) < myCollisionFactor) {
-					status1.setUp(true);
-					status2.setDown(true);
-				}
-				if (Math.abs(getUp(bodyPart2) - getDown(bodyPart1)) < myCollisionFactor) {
-					status2.setUp(true);
-					status1.setDown(true);
-				}
+	private void setGroupCollisionStatus(SpriteTemplate spriteOne,
+			SpriteTemplate spriteTwo) {
+		CollisionStatus statusOne = spriteOne.getCollisionStatus();
+		CollisionStatus statusTwo = spriteTwo.getCollisionStatus();
+		ArrayList<SpriteTemplate> bodyPartsOne = getBodyParts(spriteOne);
+		ArrayList<SpriteTemplate> bodyPartsTwo = getBodyParts(spriteTwo);
+		for (SpriteTemplate bodyPartOne : bodyPartsOne) {
+			for (SpriteTemplate bodyPartTwo : bodyPartsTwo) {
+				setHorizontalCollision(bodyPartOne, bodyPartTwo, statusOne,
+						statusTwo);
+				setHorizontalCollision(bodyPartTwo, bodyPartOne, statusTwo,
+						statusOne);
+				setverticalCollision(bodyPartOne, bodyPartTwo, statusOne,
+						statusTwo);
+				setverticalCollision(bodyPartTwo, bodyPartOne, statusTwo,
+						statusOne);
 			}
 		}
+	}
 
-		// s1.setCollisionStatus(true);
+	private void setHorizontalCollision(SpriteTemplate bodyPartOne,
+			SpriteTemplate bodyPartTwo, CollisionStatus statusOne,
+			CollisionStatus statusTwo) {
+		if (Math.abs(getUp(bodyPartOne) - getDown(bodyPartTwo)) < myCollisionFactor) {
+			statusOne.setUp(true);
+			statusTwo.setDown(true);
+		}
+	}
+
+	private void setverticalCollision(SpriteTemplate bodyPartOne,
+			SpriteTemplate bodyPartTwo, CollisionStatus statusOne,
+			CollisionStatus statusTwo) {
+		if (Math.abs(getRight(bodyPartOne) - getLeft(bodyPartTwo)) < myCollisionFactor) {
+			statusOne.setRight(true);
+			statusTwo.setLeft(true);
+		}
 	}
 
 	public SpriteGroupTemplate getCollisionGroup() {
@@ -145,33 +149,21 @@ public class Collision {
 		myGroup = group;
 	}
 
-	private double getRight(SpriteTemplate s) {
-		return s.getX() + s.getWidth();
+	private double getRight(SpriteTemplate sprite) {
+		return sprite.getX() + sprite.getWidth();
 	}
 
-	private double getLeft(SpriteTemplate s) {
-		return s.getX();
+	private double getLeft(SpriteTemplate sprite) {
+		return sprite.getX();
 	}
 
-	private double getUp(SpriteTemplate s) {
-		return s.getY();
+	private double getUp(SpriteTemplate sprite) {
+		return sprite.getY();
 	}
 
-	private double getDown(SpriteTemplate s) {
-		return s.getY() + s.getHeight();
+	private double getDown(SpriteTemplate sprite) {
+		return sprite.getY() + sprite.getHeight();
 	}
-
-	// public void addSpriteAsNewTeam(SpriteTemplate sprite) {
-	// myGroup.addSpriteTemplate(sprite);
-	// }
-	//
-	// public void addSpriteToCertainTeam(SpriteTemplate sprite, int teamIndex){
-	// myGroup.getTeamArray(teamIndex).add(sprite);
-	// }
-
-	// public void addSprite(SpriteGroupTemplate spriteGroup) {
-	// myGroup.addSpriteGroup(spriteGroup);
-	// }
 
 	public void addCollisionKind(CollisionKind kind) {
 		myReactionList.add(kind);
@@ -189,7 +181,7 @@ public class Collision {
 		myReactionList.removeAll(kindList);
 	}
 
-	public void setCollisionFactor(double d) {
-		myCollisionFactor = d;
+	public void setCollisionFactor(double factor) {
+		myCollisionFactor = factor;
 	}
 }

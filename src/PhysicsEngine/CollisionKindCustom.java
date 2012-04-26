@@ -5,11 +5,11 @@ import npsprite.SpriteTemplate;
 
 public class CollisionKindCustom extends CollisionKind {
 
-	private Class<?> c1;
-	private Class<?> c2;
-	private Type type1;
-	private Type type2;
-	private Relation relation;
+	private Class<?> myClassOne;
+	private Class<?> myClassTwo;
+	private Type myTypeOne;
+	private Type myTypeTwo;
+	private Relation myRelation;
 
 	public enum Type {
 		IS, SUPER, SUB
@@ -32,13 +32,13 @@ public class CollisionKindCustom extends CollisionKind {
 
 	@Override
 	public boolean isThisKind(SpriteTemplate spriteOne, SpriteTemplate spriteTwo) {
-		switch (relation) {
+		switch (myRelation) {
 		case AND:
-			return checkThisClass(spriteOne, c1, type1)
-					&& checkThisClass(spriteTwo, c2, type2);
+			return checkThisClass(spriteOne, myClassOne, myTypeOne)
+					&& checkThisClass(spriteTwo, myClassTwo, myTypeTwo);
 		case OR:
-			return checkThisClass(spriteOne, c1, type1)
-					|| checkThisClass(spriteTwo, c2, type2);
+			return checkThisClass(spriteOne, myClassOne, myTypeOne)
+					|| checkThisClass(spriteTwo, myClassTwo, myTypeTwo);
 		default:
 			return false;
 		}
@@ -71,14 +71,14 @@ public class CollisionKindCustom extends CollisionKind {
 		return c.isAssignableFrom(sprite.getClass());
 	}
 
-	public void setType(Class<?> c1, CollisionKindCustom.Type type1,
-			CollisionKindCustom.Relation r, Class<?> c2,
-			CollisionKindCustom.Type type2) {
-		this.c1 = c1;
-		this.c2 = c2;
-		this.type1 = type1;
-		this.type2 = type2;
-		this.relation = r;
+	public void setType(Class<?> classOne, CollisionKindCustom.Type typeOne,
+			CollisionKindCustom.Relation relation, Class<?> classTwo,
+			CollisionKindCustom.Type typeTwo) {
+		this.myClassOne = classOne;
+		this.myClassTwo = classTwo;
+		this.myTypeOne = typeOne;
+		this.myTypeTwo = typeTwo;
+		this.myRelation = relation;
 	}
 
 }
