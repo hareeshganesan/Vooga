@@ -1,47 +1,116 @@
 package PhysicsEngine;
 
 import com.golden.gamedev.GameEngine;
-
 import npsprite.SpriteTemplate;
 import action.MotionAction;
 
 /**
- * This is the super class of physics engine Maybe there will more children
- * engine in the futures
+ * This is the super class of physics engine if developers wants to create their
+ * own engine just make a subclass
  * 
  * @author Donghe
  */
 public abstract class PhysicsEngine {
-	protected final int BASE_POINT = 0;
-	protected int BOUND_X;
-	protected int BOUND_Y;
+
+	protected double myBoundUp = 0;
+	protected double myBoundLeft = 0;
+	protected double myBoundRight;
+	protected double myBoundDown;
 
 	private GameEngine myGameEngine;
 
 	public PhysicsEngine(GameEngine gameEngine) {
 		myGameEngine = gameEngine;
-		BOUND_X = myGameEngine.getWidth();
-		BOUND_Y = myGameEngine.getHeight();
+		myBoundRight = myGameEngine.getWidth();
+		myBoundDown = myGameEngine.getHeight();
 	}
 
+	/**
+	 * deal with any MotionAction from inputHandler, calculate new location
+	 * 
+	 * @param motionAction
+	 *            the sprite's motion
+	 * @param elapsedTime
+	 *            the update frequency
+	 */
 	public abstract void process(MotionAction motionAction, long elapsedTime);
 
+	/**
+	 * set this sprite's location increment
+	 * 
+	 * @param sprite
+	 * @param dx
+	 *            the horizontal increment
+	 * @param dy
+	 *            the vertical increment
+	 */
 	public abstract void setNextLocationIncrement(SpriteTemplate sprite,
-			double x, double y);
+			double dx, double dy);
 
-	public boolean isOutLeft(SpriteTemplate sprite, double x) {
-		return sprite.getX() + x < BASE_POINT;
+	/**
+	 * check whether the sprite is out of left bound
+	 * 
+	 * @param sprite
+	 * @param dx
+	 *            the horizontal increment
+	 * @return whether the sprite is out of left bound
+	 */
+	protected boolean isOutLeft(SpriteTemplate sprite, double dx) {
+		return sprite.getX() + dx < myBoundLeft;
 	}
 
-	public boolean isOutRight(SpriteTemplate sprite, double x) {
-		return sprite.getX() + x + sprite.getWidth() > BOUND_X;
+	/**
+	 * check whether the sprite is out of right bound
+	 * 
+	 * @param sprite
+	 * @param dx
+	 *            the horizontal increment
+	 * @return whether the sprite is out of right bound
+	 */
+	protected boolean isOutRight(SpriteTemplate sprite, double dx) {
+		return sprite.getX() + dx + sprite.getWidth() > myBoundRight;
 	}
 
-	public boolean isOutTop(SpriteTemplate sprite, double y) {
-		return sprite.getY() + y < BASE_POINT;
+	/**
+	 * check whether the sprite is out of up bound
+	 * 
+	 * @param sprite
+	 * @param dy
+	 *            the vertical increment
+	 * @return whether the sprite is out of up bound
+	 */
+	protected boolean isOutUp(SpriteTemplate sprite, double dy) {
+		return sprite.getY() + dy < myBoundUp;
 	}
 
-	public boolean isOutBottom(SpriteTemplate sprite, double y) {
-		return sprite.getY() + y + sprite.getHeight() > BOUND_Y;
+	/**
+	 * check whether the sprite is out of down bound
+	 * 
+	 * @param sprite
+	 * @param dy
+	 *            the vertical increment
+	 * @return whether the sprite is out of down bound
+	 */
+	protected boolean isOutDown(SpriteTemplate sprite, double dy) {
+		return sprite.getY() + dy + sprite.getHeight() > myBoundDown;
+	}
+
+	/**
+	 * set the bound for this engine the default bound is the bound of this game
+	 * 
+	 * @param up
+	 *            the up bound
+	 * @param down
+	 *            the down bound
+	 * @param left
+	 *            the left bound
+	 * @param right
+	 *            the right bound
+	 */
+	public void setBound(double up, double down, double left, double right) {
+		myBoundUp = up;
+		myBoundLeft = left;
+		myBoundRight = right;
+		myBoundDown = down;
 	}
 }

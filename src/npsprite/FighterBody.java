@@ -212,4 +212,20 @@ public class FighterBody extends SpriteTemplate {
         
     }
 
+
+    public int getHeight() {
+        double height = 0;
+        for (NodeSprite n : getBodyParts()) {
+            height = Math.max(height, n.getY() + n.getHeight() - getY());
+        }
+        return (int) height;
+    }
+
+    public int getWidth() {
+        double width = 0;
+        for (NodeSprite n : getBodyParts()) {
+            width = Math.max(width, n.getX() + n.getWidth() - getX());
+        }
+        return (int) width;
+    }
 }

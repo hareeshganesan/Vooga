@@ -3,6 +3,13 @@ package PhysicsEngine;
 import java.awt.geom.Point2D;
 import npsprite.SpriteTemplate;
 
+/**
+ * this reaction is for the case that the collision under the law of momentum
+ * conservation and the law of energy conservation
+ * 
+ * @author Donghe
+ * 
+ */
 public class ReactionMomentumConservation extends Reaction {
 
 	@Override
@@ -27,17 +34,13 @@ public class ReactionMomentumConservation extends Reaction {
 
 		if ((status1.getLeft() && status2.getRight())
 				|| (status1.getRight() && status2.getLeft())) {
-			horizontalIncrementOne = (m1 - m2) * x1 / (m1 + m2) + 2 * m2 * x2
-					/ (m1 + m2);
-			horizontalIncrementTwo = (m2 - m1) * x2 / (m1 + m2) + 2 * m1 * x1
-					/ (m1 + m2);
+			horizontalIncrementOne = getIncrement(m1, m2, x1, x2);
+			horizontalIncrementTwo = getIncrement(m2, m1, x2, x1);
 		}
 		if ((status1.getUp() && status2.getDown())
 				|| (status1.getDown() && status2.getUp())) {
-			verticalIncrementOne = (m1 - m2) * y1 / (m1 + m2) + 2 * m2 * y2
-					/ (m1 + m2);
-			verticalIncrementTwo = (m2 - m1) * y2 / (m1 + m2) + 2 * m1 * y1
-					/ (m1 + m2);
+			verticalIncrementOne = getIncrement(m1, m2, y1, y2);
+			verticalIncrementTwo = getIncrement(m2, m1, y2, y1);
 		}
 
 		physicsEngine.setNextLocationIncrement(spriteOne,
@@ -45,6 +48,15 @@ public class ReactionMomentumConservation extends Reaction {
 		physicsEngine.setNextLocationIncrement(spriteTwo,
 				horizontalIncrementTwo, verticalIncrementTwo);
 
+	}
+
+	/**
+	 * get the increment by the law of momentum conservation and the law of
+	 * energy conservation
+	 */
+	private double getIncrement(double m1, double m2, double speed1,
+			double speed2) {
+		return (m1 - m2) * speed1 / (m1 + m2) + 2 * m2 * speed2 / (m1 + m2);
 	}
 
 }

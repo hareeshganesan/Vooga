@@ -2,6 +2,13 @@ package PhysicsEngine;
 
 import npsprite.SpriteTemplate;
 
+/**
+ * this works for the case that one sprite punch another to a certain position
+ * For example, punch some one to the wall
+ * 
+ * @author Donghe
+ * 
+ */
 public class ReactionPunch extends Reaction {
 
 	private final double STOP = 0;
@@ -48,6 +55,9 @@ public class ReactionPunch extends Reaction {
 				horizontalIncrementTwo, verticalIncrementTwo);
 	}
 
+	/**
+	 * set the bound that the sprite needs to go to
+	 */
 	public void setBound(double up, double down, double left, double right) {
 		BoundUp = up;
 		BoundDown = down;
@@ -55,18 +65,30 @@ public class ReactionPunch extends Reaction {
 		BoundDown = down;
 	}
 
+	/**
+	 * the left bound of this sprite
+	 */
 	private double getLeft(SpriteTemplate sprite) {
 		return BoundLeft - sprite.getX();
 	}
 
+	/**
+	 * the right bound of this sprite
+	 */
 	private double getRight(SpriteTemplate sprite) {
 		return BoundRight - sprite.getWidth() - sprite.getX();
 	}
 
+	/**
+	 * the up bound of this sprite
+	 */
 	private double getUp(SpriteTemplate sprite) {
 		return BoundUp - sprite.getY();
 	}
 
+	/**
+	 * the left down of this sprite
+	 */
 	private double getDown(SpriteTemplate sprite) {
 		return BoundDown - sprite.getHeight() - sprite.getY();
 	}

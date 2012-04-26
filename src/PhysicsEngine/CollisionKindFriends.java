@@ -1,11 +1,10 @@
 package PhysicsEngine;
 
 import java.util.ArrayList;
-
 import npsprite.SpriteTemplate;
 
 /**
- * This class deals with the collision between two sprites from the same group
+ * The Collision between two bodyFighter with the same GroupID
  * 
  * @author Donghe
  */

@@ -1,7 +1,6 @@
 package game;
 
 import java.awt.Graphics2D;
-
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -29,10 +28,8 @@ import PhysicsEngine.CollisionKindNeutral;
 import PhysicsEngine.FightPhysicsEngine;
 import PhysicsEngine.PhysicsEngine;
 import PhysicsEngine.ReactionMomentumConservation;
-import PhysicsEngine.ReactionPunch;
 import PhysicsEngine.ReactionPush;
 import PhysicsEngine.ReactionRebound;
-import PhysicsEngine.ReactionStop;
 import action.MotionAction;
 import action.QuitAction;
 import ai.AIAgent;
