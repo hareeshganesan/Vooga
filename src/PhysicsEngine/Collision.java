@@ -7,8 +7,13 @@ import npsprite.SpriteGroupTemplate;
 import npsprite.SpriteTemplate;
 
 /**
- * This is the basic class for collision In this class we check whether there is
- * a collision If yes here we create an associated collision reaction type
+ * This is a basic class for collision issue. When we create it for a game, we
+ * need to pass in three arguments. 1. a SpriteGroupTemplate, which contains
+ * several teams, and we just check collisions between sprites from different
+ * teams. 2. a list of collisionKind, it will help us to find which kind of
+ * collision it is, for example, the collision between sprites and blocks or
+ * collision between two sprites from the same team. 3. a physicsEngine which we
+ * need to set collision reaction
  * 
  * @author Donghe
  */
@@ -32,6 +37,9 @@ public class Collision {
 		myPhysicsEngine = physicsEngine;
 	}
 
+	/**
+	 * check whether these two parts are collided
+	 */
 	private boolean isCollided(SpriteTemplate spriteOne,
 			SpriteTemplate spriteTwo) {
 		if (getLeft(spriteOne) > getRight(spriteTwo))
@@ -45,6 +53,10 @@ public class Collision {
 		return true;
 	}
 
+	/**
+	 * check whether these two sprites(maybe they has some body parts) are
+	 * collided
+	 */
 	private boolean isBodyCollided(SpriteTemplate spriteOne,
 			SpriteTemplate spriteTwo) {
 		ArrayList<SpriteTemplate> bodyPartsOne = getBodyParts(spriteOne);
@@ -58,6 +70,10 @@ public class Collision {
 		return false;
 	}
 
+	/**
+	 * use in BodyFighter since it has some body parts, this class help us to
+	 * get all body parts of this sprite
+	 */
 	private ArrayList<SpriteTemplate> getBodyParts(SpriteTemplate sprite) {
 		ArrayList<SpriteTemplate> bodyParts = new ArrayList<SpriteTemplate>();
 		if (FighterBody.class.isAssignableFrom(sprite.getClass())) {
@@ -70,6 +86,9 @@ public class Collision {
 		return bodyParts;
 	}
 
+	/**
+	 * check this whole group collision
+	 */
 	public void checkGroupCollision() {
 		for (int i = 0; i < myGroup.getTeamNum(); i++) {
 			ArrayList<SpriteTemplate> teamOne = myGroup.getTeam(i);
@@ -80,6 +99,9 @@ public class Collision {
 		}
 	}
 
+	/**
+	 * check the collision between two teams
+	 */
 	private void checkTeamCollision(ArrayList<SpriteTemplate> teamOne,
 			ArrayList<SpriteTemplate> teamTwo) {
 		for (SpriteTemplate spriteOne : teamOne) {
@@ -89,6 +111,10 @@ public class Collision {
 		}
 	}
 
+	/**
+	 * check the collision between two sprites (including the case that it is a
+	 * BodyFighter with some bodyparts in it)
+	 */
 	private void checkEachCollision(SpriteTemplate spriteOne,
 			SpriteTemplate spriteTwo) {
 		if (isBodyCollided(spriteOne, spriteTwo)) {
@@ -103,6 +129,9 @@ public class Collision {
 		}
 	}
 
+	/**
+	 * set the group collision status, including the specific position
+	 */
 	private void setGroupCollisionStatus(SpriteTemplate spriteOne,
 			SpriteTemplate spriteTwo) {
 		CollisionStatus statusOne = spriteOne.getCollisionStatus();
@@ -123,6 +152,9 @@ public class Collision {
 		}
 	}
 
+	/**
+	 * set the horizontal collision status
+	 */
 	private void setHorizontalCollision(SpriteTemplate bodyPartOne,
 			SpriteTemplate bodyPartTwo, CollisionStatus statusOne,
 			CollisionStatus statusTwo) {
@@ -132,6 +164,9 @@ public class Collision {
 		}
 	}
 
+	/**
+	 * set the vertical collision status
+	 */
 	private void setverticalCollision(SpriteTemplate bodyPartOne,
 			SpriteTemplate bodyPartTwo, CollisionStatus statusOne,
 			CollisionStatus statusTwo) {
@@ -141,46 +176,98 @@ public class Collision {
 		}
 	}
 
+	/**
+	 * @return the group in this collision
+	 */
 	public SpriteGroupTemplate getCollisionGroup() {
 		return myGroup;
 	}
 
+	/**
+	 * set the group in this collision
+	 * 
+	 * @param group
+	 *            the group needs to be set into this collision engine
+	 */
 	public void setCollisionGroup(SpriteGroupTemplate group) {
 		myGroup = group;
 	}
 
+	/**
+	 * the right bound of this sprite
+	 */
 	private double getRight(SpriteTemplate sprite) {
 		return sprite.getX() + sprite.getWidth();
 	}
 
+	/**
+	 * the left bound of this sprite
+	 */
 	private double getLeft(SpriteTemplate sprite) {
 		return sprite.getX();
 	}
 
+	/**
+	 * the up bound of this sprite
+	 */
 	private double getUp(SpriteTemplate sprite) {
 		return sprite.getY();
 	}
 
+	/**
+	 * the down bound of this sprite
+	 */
 	private double getDown(SpriteTemplate sprite) {
 		return sprite.getY() + sprite.getHeight();
 	}
 
+	/**
+	 * add new collisionKind into this collision engine
+	 * 
+	 * @param kind
+	 *            the new collision kind
+	 */
 	public void addCollisionKind(CollisionKind kind) {
 		myReactionList.add(kind);
 	}
 
+	/**
+	 * add a list of new collisionKinds into this collision engine
+	 * 
+	 * @param kindList
+	 *            a list of new collisionKinds
+	 */
 	public void addCollisionKind(ArrayList<CollisionKind> kindList) {
 		myReactionList.addAll(kindList);
 	}
 
+	/**
+	 * remove the collisionKind from this collision engine
+	 * 
+	 * @param kind
+	 *            the collision kind that needs to be removed
+	 */
 	public void removeCollisionKind(CollisionKind kind) {
 		myReactionList.remove(kind);
 	}
 
+	/**
+	 * remove a list of collisionKinds from this collision engine
+	 * 
+	 * @param kindList
+	 *            a list of collisionKinds that need to be removed
+	 */
 	public void removeCollisionKind(ArrayList<CollisionKind> kindList) {
 		myReactionList.removeAll(kindList);
 	}
 
+	/**
+	 * use for the defination of collision position if the distance between two
+	 * edges is smaller than this factor we regard they collide at this edge
+	 * 
+	 * @param factor
+	 *            the distance as a standard
+	 */
 	public void setCollisionFactor(double factor) {
 		myCollisionFactor = factor;
 	}

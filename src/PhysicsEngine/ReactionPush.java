@@ -3,6 +3,12 @@ package PhysicsEngine;
 import java.awt.geom.Point2D;
 import npsprite.SpriteTemplate;
 
+/**
+ * this class works for the case that one push the other and go together
+ * 
+ * @author Donghe
+ * 
+ */
 public class ReactionPush extends Reaction {
 
 	@Override
@@ -34,15 +40,24 @@ public class ReactionPush extends Reaction {
 		}
 
 		if (status1.getDown() && status2.getUp()) {
-			if (y1 > y2) {
-				verticalIncrementOne = (y1 + y2) / 2;
-				verticalIncrementTwo = (y1 + y2) / 2;
+			if (spriteTwo.getCollisionStatus().getStandOnSth()) {
+				verticalIncrementOne = Math.min(y1, 0);
+			} else {
+				if (y1 > y2) {
+					verticalIncrementOne = (y1 + y2) / 2;
+					verticalIncrementTwo = (y1 + y2) / 2;
+				}
 			}
 		} else if (status1.getUp() && status2.getDown()) {
-			if (y1 < y2) {
-				verticalIncrementOne = (y1 + y2) / 2;
-				verticalIncrementTwo = (y1 + y2) / 2;
+			if (spriteOne.getCollisionStatus().getStandOnSth()) {
+				verticalIncrementTwo = Math.min(y2, 0);
+			} else {
+				if (y1 < y2) {
+					verticalIncrementOne = (y1 + y2) / 2;
+					verticalIncrementTwo = (y1 + y2) / 2;
+				}
 			}
+
 		}
 
 		physicsEngine.setNextLocationIncrement(spriteOne,

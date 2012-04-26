@@ -2,6 +2,13 @@ package PhysicsEngine;
 
 import npsprite.SpriteTemplate;
 
+/**
+ * this class works for the case that two sprites collide and then we want them
+ * both stop with a certain distance between them
+ * 
+ * @author Donghe
+ * 
+ */
 public class ReactionStop extends Reaction {
 
 	private final double FACTOR = 0.5;
@@ -49,6 +56,9 @@ public class ReactionStop extends Reaction {
 				horizontalIncrementTwo, verticalIncrementTwo);
 	}
 
+	/**
+	 * the stop position for these two sprites
+	 */
 	public void setStopPosition(double x1, double y1, double x2, double y2) {
 		this.myStopPositionXOne = x1;
 		this.myStopPositionXTwo = x2;
@@ -56,6 +66,9 @@ public class ReactionStop extends Reaction {
 		this.myStopPositionYTwo = y2;
 	}
 
+	/**
+	 * the distance we want them to keep
+	 */
 	public void setDistance(double dis) {
 		myDistance = dis;
 	}
