@@ -22,6 +22,7 @@ import sprite.HealthDisplay;
 //import sprite.PlatformBlock;
 import PhysicsEngine.PhysicsEngine;
 import action.MotionAction;
+import action.WeaponAction;
 import ai.AIAgent;
 import ai.BasicAIAgent;
 import ai.BasicStrategyAgent;
@@ -134,6 +135,8 @@ public class LevelObjectsFactory
         h.addKey(map[1], MotionAction.DOWN(s,myPhysicsEngine));
         h.addKey(map[2], MotionAction.LEFT(s,myPhysicsEngine));
         h.addKey(map[3], MotionAction.RIGHT(s,myPhysicsEngine));
+        h.addKey(map[4], new WeaponAction(s, 0));
+        h.addKey(map[5], new WeaponAction(s, 1));
     }
 
 

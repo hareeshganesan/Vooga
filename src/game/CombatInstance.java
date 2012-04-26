@@ -73,6 +73,12 @@ public class CombatInstance extends GameState {
         myPhysicsEngine = new FightPhysicsEngine(myEngine);
     }
 
+    public ArrayList<SpriteTemplate> getObstacles(){
+        ArrayList<SpriteTemplate> objects = new ArrayList<SpriteTemplate>();
+        objects.addAll(platform);
+        objects.addAll(playerSprites);
+        return objects;
+    }
     @Override
     public void initResources() {
 
@@ -181,7 +187,10 @@ public class CombatInstance extends GameState {
         for (PlatformBlock pb : platform) {
             //cs.render(pen, pb, camera);
             pb.render(pen);
+            pen.drawOval(((int)pb.getCenterX())-3, ((int)pb.getCenterY())-3, 3, 3);
         }
+        pen.drawLine((int) playerSprites.get(2).getX(), (int) playerSprites.get(2).getY(), (int) playerSprites.get(0).getX(), (int) playerSprites.get(0).getY());
+
 //        for (SpriteTemplate p : powerups) {
 //            p.render(pen);
 //        }
@@ -203,10 +212,10 @@ public class CombatInstance extends GameState {
         }
         
         for (FighterBody sprite : playerSprites){
-        	MotionAction.Gravity(sprite,0.3,myPhysicsEngine).performAction(elapsedTime);
+        	//MotionAction.Gravity(sprite,0.3,myPhysicsEngine).performAction(elapsedTime);
         }
 
-        //myCollision.checkGroupCollision();
+        myCollision.checkGroupCollision();
 
         for (FighterBody sprite : playerSprites) {
 //        	printCollision(sprite);
