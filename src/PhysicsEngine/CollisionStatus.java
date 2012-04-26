@@ -11,6 +11,7 @@ public class CollisionStatus {
 	private boolean myRightStatus;
 	private boolean myUpStatus;
 	private boolean myDownStatus;
+	private boolean myStandOnSth = false;
 
 	public CollisionStatus() {
 		setDefault();
@@ -77,6 +78,21 @@ public class CollisionStatus {
 	 */
 	public void setDown(boolean b) {
 		myDownStatus = b;
+	}
+
+	/**
+	 * whether this sprite is standing on sth. For example, on the ground or on
+	 * some other sprite
+	 */
+	public boolean getStandOnSth() {
+		return myStandOnSth;
+	}
+
+	/**
+	 * set the standing status
+	 */
+	public void setStandOnSth(boolean b) {
+		myStandOnSth = b;
 	}
 
 	/**

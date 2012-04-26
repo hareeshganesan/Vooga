@@ -1,9 +1,6 @@
 package PhysicsEngine;
 
 import com.golden.gamedev.GameEngine;
-
-import npsprite.FighterBody;
-import npsprite.NodeSprite;
 import npsprite.SpriteTemplate;
 import action.MotionAction;
 

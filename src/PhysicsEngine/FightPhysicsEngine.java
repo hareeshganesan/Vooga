@@ -1,11 +1,7 @@
 package PhysicsEngine;
 
 import java.awt.geom.Point2D;
-
 import com.golden.gamedev.GameEngine;
-
-import npsprite.FighterBody;
-import npsprite.NodeSprite;
 import npsprite.SpriteTemplate;
 import action.MotionAction;
 
@@ -33,26 +29,26 @@ public class FightPhysicsEngine extends PhysicsEngine {
 		double speed = sprite.getSpeed();
 		double x = speed * elapsedTime * myVectorX;
 		double y = speed * elapsedTime * myVectorY;
+		setCollisionStatus(sprite, y);
 		setNextLocationIncrement(sprite, x, y);
 	}
 
 	@Override
-	public void setNextLocationIncrement(SpriteTemplate sprite, double x,
-			double y) {
+	public void setNextLocationIncrement(SpriteTemplate sprite, double dx,
+			double dy) {
 
-		double finalX = x * myBackgroundFactor;
-		double finalY = y * myBackgroundFactor;
+		double finalX = dx * myBackgroundFactor;
+		double finalY = dy * myBackgroundFactor;
 
-		if (isOutLeft(sprite, x))
+		if (isOutLeft(sprite, dx))
 			finalX = myOutBoundDistance;
-		if (isOutRight(sprite, x))
+		if (isOutRight(sprite, dx))
 			finalX = -myOutBoundDistance;
-		if (isOutUp(sprite, y))
+		if (isOutUp(sprite, dy))
 			finalY = myOutBoundDistance;
-		if (isOutDown(sprite, y)) {
+		if (isOutDown(sprite, dy)) {
 			finalY = myBoundDown - sprite.getY() - sprite.getHeight();
 		}
-
 		sprite.setNextLocationIncrement(new Point2D.Double(finalX, finalY));
 
 		// for debug
@@ -60,6 +56,14 @@ public class FightPhysicsEngine extends PhysicsEngine {
 		// + "    Right:" + (sprite.getWidth() + sprite.getX())
 		// + "    Top:" + sprite.getY() + "    Bottom:"
 		// + (sprite.getHeight() + sprite.getY()));
+	}
+
+	/**
+	 * set the collision standing status
+	 */
+	private void setCollisionStatus(SpriteTemplate sprite, double dy) {
+		sprite.getCollisionStatus().setStandOnSth(
+				isOutDown(sprite, dy) || sprite.getCollisionStatus().getDown());
 	}
 
 	/**
