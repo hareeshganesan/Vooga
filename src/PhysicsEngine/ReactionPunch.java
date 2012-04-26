@@ -2,38 +2,73 @@ package PhysicsEngine;
 
 import npsprite.SpriteTemplate;
 
-//import sprite.SpriteTemplate;
+public class ReactionPunch extends Reaction {
 
+	private final double STOP = 0;
+	private double BoundLeft = 0;
+	private double BoundUp = 0;
+	private double BoundRight = 544;
+	private double BoundDown = 544;
 
-public class ReactionPunch extends Reaction
-{
+	@Override
+	public void act(SpriteTemplate spriteOne, SpriteTemplate spriteTwo,
+			PhysicsEngine physicsEngine) {
+		double horizontalIncrementOne = spriteOne.getMoveBy().getX();
+		double verticalIncrementOne = spriteOne.getMoveBy().getY();
+		double horizontalIncrementTwo = spriteTwo.getMoveBy().getX();
+		double verticalIncrementTwo = spriteTwo.getMoveBy().getY();
+		CollisionStatus status1 = spriteOne.getCollisionStatus();
+		CollisionStatus status2 = spriteTwo.getCollisionStatus();
 
-    @Override
-    public void act (SpriteTemplate ps1, SpriteTemplate ps2)
-    {
-        punch(ps1, ps2);
-        punch(ps2, ps1);
-    }
+		if (status1.getRight() && status2.getLeft()) {
+			if (spriteOne.getMoveBy().getX() == STOP)
+				horizontalIncrementOne = getLeft(spriteOne);
+			if (spriteTwo.getMoveBy().getX() == STOP)
+				horizontalIncrementTwo = getRight(spriteTwo);
+		} else if (status1.getLeft() && status2.getRight()) {
+			if (spriteOne.getMoveBy().getX() == STOP)
+				horizontalIncrementOne = getRight(spriteOne);
+			if (spriteTwo.getMoveBy().getX() == STOP)
+				horizontalIncrementTwo = getLeft(spriteTwo);
+		}
+		if (status1.getDown() && status2.getUp()) {
+			if (spriteOne.getMoveBy().getY() == STOP)
+				verticalIncrementOne = getDown(spriteOne);
+			if (spriteTwo.getMoveBy().getY() == STOP)
+				verticalIncrementTwo = getUp(spriteTwo);
+		} else if (status1.getUp() && status2.getDown()) {
+			if (spriteOne.getMoveBy().getY() == STOP)
+				verticalIncrementOne = getUp(spriteOne);
+			if (spriteTwo.getMoveBy().getY() == STOP)
+				verticalIncrementTwo = getDown(spriteTwo);
+		}
+		physicsEngine.setNextLocationIncrement(spriteOne,
+				horizontalIncrementOne, verticalIncrementOne);
+		physicsEngine.setNextLocationIncrement(spriteTwo,
+				horizontalIncrementTwo, verticalIncrementTwo);
+	}
 
+	public void setBound(double up, double down, double left, double right) {
+		BoundUp = up;
+		BoundDown = down;
+		BoundRight = right;
+		BoundDown = down;
+	}
 
-    private void punch (SpriteTemplate f1, SpriteTemplate f2)
-    {
-        if (f1.getMoveBy().getX() == 0 && f1.getMoveBy().getY() == 0)
-        {
-            myPhysicsEngine = new FightPhysicsEngine(f1);
+	private double getLeft(SpriteTemplate sprite) {
+		return BoundLeft - sprite.getX();
+	}
 
-            double dx = 0;
-            double dy = 0;
+	private double getRight(SpriteTemplate sprite) {
+		return BoundRight - sprite.getWidth() - sprite.getX();
+	}
 
-            if (f2.getMoveBy().getX() > 0) dx = 544 - f1.getWidth() - f1.getX();
-            else if (f2.getMoveBy().getX() < 0) dx = -f1.getX();
+	private double getUp(SpriteTemplate sprite) {
+		return BoundUp - sprite.getY();
+	}
 
-            if (f2.getMoveBy().getY() > 0) dy =
-                544 - f1.getHeight() - f1.getY();
-            else if (f2.getMoveBy().getY() < 0) dy = -f1.getY();
-
-            myPhysicsEngine.setNextLocationIncrement(dx, dy);
-        }
-    }
+	private double getDown(SpriteTemplate sprite) {
+		return BoundDown - sprite.getHeight() - sprite.getY();
+	}
 
 }

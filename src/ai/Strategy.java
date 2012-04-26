@@ -3,6 +3,7 @@ package ai;
 import game.CombatInstance;
 import java.util.ArrayList;
 import npsprite.FighterBody;
+import PhysicsEngine.PhysicsEngine;
 import action.Action;
 
 
@@ -14,6 +15,7 @@ abstract class Strategy
     private boolean done;
     protected CombatInstance c;
     protected FighterBody myFighter;
+    protected PhysicsEngine myPhysicsEngine; 
 
 
     public Strategy (FighterBody ai, CombatInstance ci)
@@ -21,6 +23,7 @@ abstract class Strategy
         c = ci;
         myFighter = ai;
         goals = new ArrayList<Goal>();
+        myPhysicsEngine = c.getPhysicsEngine();
     }
 
 
