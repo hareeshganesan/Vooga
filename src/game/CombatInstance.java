@@ -192,12 +192,12 @@ public class CombatInstance extends GameState {
         myHandler.update(elapsedTime, myEngine);
         bg.update(elapsedTime);
 
-        for (FighterBody sprite : playerSprites) {
-            if (AIAgent.class.isAssignableFrom(sprite.getClass())) {
-                AIAgent ai = (AIAgent) sprite;
-                ai.calculateLocation(elapsedTime);
-            }
-        }
+//        for (FighterBody sprite : playerSprites) {
+//            if (AIAgent.class.isAssignableFrom(sprite.getClass())) {
+//                AIAgent ai = (AIAgent) sprite;
+//                ai.calculateLocation(elapsedTime);
+//            }
+//        }
         
         for (FighterBody sprite : playerSprites){
         	MotionAction.Gravity(sprite,0.3,myPhysicsEngine).performAction(elapsedTime);
@@ -206,6 +206,7 @@ public class CombatInstance extends GameState {
         myCollision.checkGroupCollision();
 
         for (FighterBody sprite : playerSprites) {
+        	printCollision(sprite);
             sprite.update(elapsedTime);
         }
 
@@ -215,6 +216,13 @@ public class CombatInstance extends GameState {
 //        for (SpriteTemplate sprite : powerups) {
 //            sprite.update(elapsedTime);
 //        }
+    }
+    
+    private void printCollision(FighterBody sprite){
+    	if(sprite.getCollisionStatus().getDown()) System.out.println(sprite.getGroupID()+" is collided at DOWN");
+    	if(sprite.getCollisionStatus().getUp()) System.out.println(sprite.getGroupID()+" is collided at UP");
+    	if(sprite.getCollisionStatus().getLeft()) System.out.println(sprite.getGroupID()+" is collided at LEFT");
+    	if(sprite.getCollisionStatus().getRight()) System.out.println(sprite.getGroupID()+" is collided at RIGHT");
     }
 
     public InputHandler getMyHandler() {

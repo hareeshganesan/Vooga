@@ -14,6 +14,7 @@ public class PlatformBlock extends SpriteTemplate
     
     public void update(long elapsedTime){
         //don't bother, it doesn't move
+    	myCollisionStatus.setDefault();
     }
 
 }

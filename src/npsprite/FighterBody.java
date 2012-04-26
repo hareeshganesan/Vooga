@@ -165,8 +165,8 @@ public class FighterBody extends SpriteTemplate{
         if (moveBy.getX()!=0 || moveBy.getY()!=0){
             move(myPen, moveBy.getX(), moveBy.getY());
         }
-        moveBy.setLocation(0, 0); // moveBy only work for one time then set to
-        setCollisionStatus(false); // zero
+        moveBy.setLocation(0, 0); // moveBy only work for one time then set to zero
+        myCollisionStatus.setDefault();
         super.update(elapsedTime);
     }
 
