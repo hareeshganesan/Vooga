@@ -2,6 +2,8 @@ package levelEditor.output;
 
 import java.util.ArrayList;
 
+import levelEditor.mvc.SpriteEditable;
+
 import ai.AIAgent;
 
 import com.golden.gamedev.object.Sprite;
@@ -19,12 +21,19 @@ import com.golden.gamedev.object.Sprite;
 
 public class LevelObject {
 
+	private static final String DEFAULT_BACKGROUND = "src/resources/title.png";
+	
 	private String myLevelName;
 	private String myBgImageURL;
-	private ArrayList<Sprite> mySprites;
-	private AIAgent myAI;					// computer player - can be NULL if no computer
+	private ArrayList<SpriteEditable> mySprites;
+	private SpriteEditable myAI;					// computer player - can be NULL if no computer
 	
-	public LevelObject () { }
+	public LevelObject () { 
+		myBgImageURL = DEFAULT_BACKGROUND;
+		
+		mySprites = new ArrayList<SpriteEditable>();
+	}
+	
 	
 	
 	/* =================================== LEVEL NAME =================================== */ 
@@ -35,6 +44,8 @@ public class LevelObject {
 	
 	public void setLevelName (String name) {
 		myLevelName = name;
+		
+		System.out.println("Level object name: " + myLevelName);
 	}
 	
 	
@@ -51,44 +62,27 @@ public class LevelObject {
 	
 	/* ======================================== AI ======================================== */ 
 	
-	public void setAI (AIAgent ai) {
+	public void setAI (SpriteEditable ai) {
 		if (ai != null) {
 			myAI = ai;
 		}
 	}
 	
-	public AIAgent getAI () {
+	public SpriteEditable getAI () {
 		return myAI;
 	}
 	
 	
 	/* =================================== SPRITES =================================== */ 
 	
-	public void addSprite (Sprite s) {
+	public void addSprite (SpriteEditable s) {
 		mySprites.add(s);
 	}
 	
-	public ArrayList<Sprite> getSprites () {
+	public ArrayList<SpriteEditable> getSprites () {
 		return mySprites;
 	}
 	
-	public void removeSprite (Sprite s) {
-		for (Sprite sprite : mySprites) {
-			if (sprite.equals(s)) 
-				mySprites.remove(sprite);
-		}
-	}
 	
-	
-	
-	
-	/* ================================= WRITE TO FILE ================================= */ 
-	public String getWriteable () {
-		StringBuilder build = new StringBuilder("");
-		
-		
-		return build.toString();
-	}
-	
-	
+
 }

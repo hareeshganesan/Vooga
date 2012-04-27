@@ -240,5 +240,5 @@ public class FighterBody extends SpriteTemplate {
     {
         return myTimers.get(index);
     }
-    
+
 }

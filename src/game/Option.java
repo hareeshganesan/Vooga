@@ -1,5 +1,6 @@
 package game;
 
+import java.awt.Graphics2D;
 import com.golden.gamedev.GameEngine;
 
 
@@ -28,6 +29,6 @@ abstract class Option
     }
 
 
-    abstract void displayOption (GameEngine engine);
+    abstract void renderOption (Graphics2D pen, int x, int y);
 
 }

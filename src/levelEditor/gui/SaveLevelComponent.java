@@ -38,7 +38,6 @@ public class SaveLevelComponent {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			myController.displayMessageToUser("Saving to file...");
 			myController.saveAndClose();
 		}
 	}

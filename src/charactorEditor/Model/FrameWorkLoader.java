@@ -7,16 +7,21 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
+import sprite.HealthDisplay;
+
+import npsprite.FighterBody;
 import npsprite.NodeSprite;
 
 import SpriteTree.GraphicsTest;
 import SpriteTree.LimbNode;
+import SpriteTree.Motion;
 import npsprite.GroupID;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 public class FrameWorkLoader {
-	Model myModel=Model.Instance();
+	Model myModel = Model.Instance();
+
 	public static NodeSprite load(String file) throws FileNotFoundException {
 		Gson gson3 = new Gson();
 		Scanner scanner3 = new Scanner(new File(file));
@@ -48,15 +53,32 @@ public class FrameWorkLoader {
 		for (MyComponent m : list)
 			if (m.isRoot())
 				root = m;
-		return buildBodyTree(root, null);
+		NodeSprite torso = buildNodeSpriteTree(root, null);
+
+		HashMap<Long, Motion> sequence = new HashMap<Long, Motion>();
+		int health = Integer.valueOf(root.getHealthProperty());
+		FighterBody fighterbody = new FighterBody(torso, root.getName(),
+				new HealthDisplay(0, 0, health));
+
+		for (MyComponent m : list) {
+			long startTime = Long.valueOf(m.getProperties().get("startTime"));
+			double myExpAngle = Double.valueOf(m.getProperties().get(
+					"myExpAngle"));
+			long time = Long.valueOf(m.getProperties().get("time"));
+			sequence.put(startTime, new Motion(m.getText(), myExpAngle, fighterbody,
+					time));
+			
+		}
 
 	}
 
-	public static NodeSprite buildBodyTree(MyComponent root, NodeSprite toReturn) {
+	public static NodeSprite buildNodeSpriteTree(MyComponent root,
+			NodeSprite toReturn) {
 
 		if (root.getParent() == null) {
 			double damage = Double.valueOf(root.getProperties().get("damage"));
-			toReturn = new NodeSprite(root.getText(),
+			toReturn = new NodeSprite(
+					root.getText(),
 					GraphicsTest.loadImage(root.getImg().toString()),
 					GroupID.getIdFromString(root.getProperties().get("GroupID")),
 					(double) root.getBorderX(), (double) root.getBorderY(),
@@ -67,7 +89,8 @@ public class FrameWorkLoader {
 			double dx = m.getBorderX() - root.getBorderX();
 			double dy = m.getBorderY() - root.getBorderY();
 			double damage = Double.valueOf(m.getProperties().get("damage"));
-			int baseTheta=Integer.valueOf(m.getProperties().get("baseTheta"));;
+			int baseTheta = Integer.valueOf(m.getProperties().get("baseTheta"));
+			;
 			NodeSprite child = new NodeSprite(m.getText(), toReturn,
 
 			GraphicsTest.loadImage(m.getImg().toString()), dx, dy, damage,
@@ -75,8 +98,8 @@ public class FrameWorkLoader {
 			toReturn.addChild(child);
 		}
 		for (int i = 0; i < root.getChildern().size(); i++)
-			buildBodyTree(root.getChildern().get(i), toReturn.getChildren()
-					.get(i));
+			buildNodeSpriteTree(root.getChildern().get(i), toReturn
+					.getChildren().get(i));
 		return toReturn;
 	}
 }

@@ -70,7 +70,7 @@ public class BackgroundImage extends JPanel {
 		Image image;
 		try {
 			image = ImageIO.read(new File(path));
-			image = getScaledImage(image, 100, 100);
+			image = getScaledImage(image, 150, 150);
 			return new ImageIcon(image);
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -78,14 +78,17 @@ public class BackgroundImage extends JPanel {
 		return null;
 	}
 	
-
-	private Image getScaledImage(Image srcImg, int w, int h){
-		BufferedImage resizedImg = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
-		Graphics2D g2 = resizedImg.createGraphics();
+	/**
+	 * Resize image
+	 * Code from <url>http://docs.oracle.com/javase/tutorial/uiswing/components/icon.html</url>
+	 */
+	private Image getScaledImage(Image image, int w, int h){
+		BufferedImage resizedImage = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
+		Graphics2D g2 = resizedImage.createGraphics();
 		g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-		g2.drawImage(srcImg, 0, 0, w, h, null);
+		g2.drawImage(image, 0, 0, w, h, null);
 		g2.dispose();
-		return resizedImg;
+		return resizedImage;
 	}
 	
 

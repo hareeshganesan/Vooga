@@ -30,10 +30,18 @@ public class SpriteClassLoader {
 
 	
 	public void load () {
-		File root = getRootFile();
+		//File root = getRootFile();
+		File root = new File(System.getProperty("user.dir")); 
 		iterate(root);
 		loadClasses();
 	}
+	
+	
+	public HashSet<Class> getClasses () {
+		return myLoadedClasses;
+	}
+	
+	
 	
 	public String[] getSpriteClassNames() {
 		ArrayList<Class> classes = new ArrayList<Class>(myLoadedClasses);
@@ -69,7 +77,6 @@ public class SpriteClassLoader {
 					
 					if (c != null) {
 						myLoadedClasses.add(c);
-						System.out.println(myLoadedClasses.size());
 					}
 					
 				}
@@ -134,6 +141,7 @@ public class SpriteClassLoader {
 	 * Prompt user to select starting directory in which to search for files
 	 * @return file selected by user
 	 */
+	@SuppressWarnings("unused")
 	private File getRootFile () {
 		JFileChooser chooser = new JFileChooser();
 		chooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
