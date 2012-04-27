@@ -4,62 +4,74 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-
 import javax.swing.JTextField;
-
 import charactorEditor.Controller;
 import charactorEditor.drag.AttributePane;
 import charactorEditor.drag.Update;
 
+
 @SuppressWarnings("serial")
-public class SetHealthProperty extends JTextField  implements Update{
-	private AttributePane outer;
-	Controller myController = Controller.Instance();
+public class SetHealthProperty extends JTextField implements Update
+{
+    private AttributePane outer;
+    Controller myController = Controller.Instance();
 
-	public SetHealthProperty(AttributePane e) {
-		super();
-		outer = e;
-		setBounds(55, 160, 114, 23);
-		addFocusListener(new FocusListener() {
 
-			@Override
-			public void focusGained(FocusEvent e) {
-			}
+    public SetHealthProperty (AttributePane e)
+    {
+        super();
+        outer = e;
+        setBounds(55, 160, 114, 23);
+        addFocusListener(new FocusListener()
+        {
 
-			@Override
-			public void focusLost(FocusEvent e) {
-				update();
-			}
-		});
-		outer.register(this);
-		outer.add(this);
+            @Override
+            public void focusGained (FocusEvent e)
+            {}
 
-		addKeyListener(new KeyListener() {
 
-			@Override
-			public void keyTyped(KeyEvent e) {
-				if (e.getKeyChar() == KeyEvent.VK_ENTER) {
-					myController.setHealth(getText());
-					myController.updateFigherBuilder();
-				}
-			}
+            @Override
+            public void focusLost (FocusEvent e)
+            {
+                update();
+            }
+        });
+        outer.register(this);
+        outer.add(this);
 
-			@Override
-			public void keyPressed(KeyEvent e) {
-			}
+        addKeyListener(new KeyListener()
+        {
 
-			@Override
-			public void keyReleased(KeyEvent e) {
+            @Override
+            public void keyTyped (KeyEvent e)
+            {
+                if (e.getKeyChar() == KeyEvent.VK_ENTER)
+                {
+                    myController.setHealth(getText());
+                    myController.updateFigherBuilder();
+                }
+            }
 
-			}
-		});
-	}
 
-	public void update() {
-		if (myController.getFoucsedComponent() != null)
-			setText(myController.getFoucsedComponent().getHealthProperty());
-		else
-			setText("");
-	}
+            @Override
+            public void keyPressed (KeyEvent e)
+            {}
+
+
+            @Override
+            public void keyReleased (KeyEvent e)
+            {
+
+            }
+        });
+    }
+
+
+    public void update ()
+    {
+        if (myController.getFoucsedComponent() != null) setText(myController.getFoucsedComponent()
+                                                                            .getHealthProperty());
+        else setText("");
+    }
 
 }

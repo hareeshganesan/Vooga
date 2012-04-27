@@ -1,7 +1,6 @@
 package action;
 
 import java.awt.geom.Point2D;
-import com.golden.gamedev.object.Timer;
 import npsprite.FighterBody;
 import PhysicsEngine.PhysicsEngine;
 
@@ -54,12 +53,14 @@ public class MotionAction implements Action
 
     @Override
     public void performAction (long elapsed_time)
-    {        
-        if(y_direction>=0 || myFighter.getMyTimer(0).action(elapsed_time)){
+    {
+        if (y_direction >= 0 || myFighter.getMyTimer(0).action(elapsed_time))
+        {
             myPhysicsEngine.process(this, elapsed_time);
         }
         done = true;
     }
+
 
     public FighterBody getFighterBody ()
     {

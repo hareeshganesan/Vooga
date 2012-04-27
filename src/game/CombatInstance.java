@@ -2,7 +2,6 @@ package game;
 
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
-import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -11,21 +10,27 @@ import java.util.Collections;
 import java.util.List;
 import javax.swing.JFileChooser;
 import npsprite.FighterBody;
-import npsprite.GroupID;
-import npsprite.NodeSprite;
 import npsprite.PlatformBlock;
-import npsprite.SpriteTemplate;
 import npsprite.SpriteGroupTemplate;
+import npsprite.SpriteTemplate;
 import org.jdom.JDOMException;
-import camera.Camera;
-import camera.CameraBackground;
-import camera.CameraUtility;
-import events.HealthEvent;
-import PhysicsEngine.*;
+import PhysicsEngine.Collision;
+import PhysicsEngine.CollisionKind;
+import PhysicsEngine.CollisionKindEnemy;
+import PhysicsEngine.CollisionKindFriends;
+import PhysicsEngine.CollisionKindNeutral;
+import PhysicsEngine.FightPhysicsEngine;
+import PhysicsEngine.PhysicsEngine;
+import PhysicsEngine.ReactionMomentumConservation;
+import PhysicsEngine.ReactionPush;
+import PhysicsEngine.ReactionRebound;
 import action.MotionAction;
 import action.QuitAction;
 import ai.AIAgent;
-import camera.*;
+import camera.CameraBackground;
+import camera.CameraSprite;
+import camera.CameraUtility;
+
 
 public class CombatInstance extends GameState
 {
@@ -54,7 +59,9 @@ public class CombatInstance extends GameState
     CameraBackground bg;
     CameraSprite cs;
 
-    public CombatInstance(MainGame engine) {
+
+    public CombatInstance (MainGame engine)
+    {
         super(engine);
         myEngine = engine;
         myHandler = new InputHandler();
@@ -63,8 +70,10 @@ public class CombatInstance extends GameState
         myPhysicsEngine = new FightPhysicsEngine(myEngine);
     }
 
+
     @Override
-    public void initResources() {
+    public void initResources ()
+    {
 
         nextState = (GameState) myEngine.getGame(myEngine.getMain());
 
@@ -74,28 +83,38 @@ public class CombatInstance extends GameState
         fc.setApproveButtonText("load game file");
         int returnVal = fc.showOpenDialog(null);
         myHandler.addKey(KeyEvent.VK_Q, new QuitAction(myEngine));
-        if (returnVal == JFileChooser.APPROVE_OPTION) {
+        if (returnVal == JFileChooser.APPROVE_OPTION)
+        {
             File file = fc.getSelectedFile();
-            try {
+            try
+            {
                 lof.parseFile(file);
-            } catch (IOException e) {
+            }
+            catch (IOException e)
+            {
                 e.printStackTrace();
-            } catch (JDOMException e) {
+            }
+            catch (JDOMException e)
+            {
                 e.printStackTrace();
             }
         }
 
-        try {
+        try
+        {
             playerSprites = lof.createNPFighters();
             platform = lof.createPlatforms();
             nonplayers = lof.createNPSprites();
-        } catch (JDOMException e) {
+        }
+        catch (JDOMException e)
+        {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
         String back = lof.getBackground();
 
-        if (back == null) {
+        if (back == null)
+        {
             back = DEFAULT_IMAGE;
         }
         b = getImage(back);
@@ -110,115 +129,132 @@ public class CombatInstance extends GameState
         // blocks or collision between two sprites from the same team. 3. a
         // physicsEngine which we need to set collision reaction
 
-
-        spawns=new ArrayList<SpriteTemplate>();
+        spawns = new ArrayList<SpriteTemplate>();
         groupSprite = new SpriteGroupTemplate();
         groupSprite.addPlatformBlockArray(platform);
         groupSprite.addFighterSpriteArray(playerSprites);
         groupSprite.addSpriteArray(nonplayers);
 
-        ArrayList<CollisionKind> CollisionkindList = new ArrayList<CollisionKind>();
-        CollisionkindList.add(new CollisionKindFriends(
-                new ReactionMomentumConservation()));
+        ArrayList<CollisionKind> CollisionkindList =
+            new ArrayList<CollisionKind>();
+        CollisionkindList.add(new CollisionKindFriends(new ReactionMomentumConservation()));
         CollisionkindList.add(new CollisionKindEnemy(new ReactionPush()));
         CollisionkindList.add(new CollisionKindNeutral(new ReactionRebound()));
 
-        myCollision = new Collision(groupSprite, CollisionkindList,
-                myPhysicsEngine);
+        myCollision =
+            new Collision(groupSprite, CollisionkindList, myPhysicsEngine);
 
     }
 
+
     @Override
-    public void render(Graphics2D pen) {
+    public void render (Graphics2D pen)
+    {
 //        camera.render(pen, bg);
 
         bg.render(pen);
         for (FighterBody sprite : playerSprites)
 //            cs.render(pen, sprite, camera);
             sprite.render(pen);
-        for (PlatformBlock pb : platform) {
+        for (PlatformBlock pb : platform)
+        {
 //            cs.render(pen, pb, camera);
             pb.render(pen);
         }
 
-        for (SpriteTemplate p : nonplayers) {
+        for (SpriteTemplate p : nonplayers)
+        {
             p.render(pen);
-		}
+        }
 
     }
 
+
     @Override
-    public void update(long elapsedTime) {
+    public void update (long elapsedTime)
+    {
         commitSpawnedSprites();
         myHandler.update(elapsedTime, myEngine);
 //        camera.update(playerSprites, bg);
         myHandler.update(elapsedTime, myEngine);
         bg.update(elapsedTime);
 
-        for (FighterBody sprite : playerSprites) {
-            if (AIAgent.class.isAssignableFrom(sprite.getClass())) {
+        for (FighterBody sprite : playerSprites)
+        {
+            if (AIAgent.class.isAssignableFrom(sprite.getClass()))
+            {
                 AIAgent ai = (AIAgent) sprite;
                 ai.calculateLocation(elapsedTime);
             }
         }
 
-        for (FighterBody sprite : playerSprites) {
-            MotionAction.Gravity(sprite, 0.6, myPhysicsEngine).performAction(
-                    elapsedTime);
+        for (FighterBody sprite : playerSprites)
+        {
+            MotionAction.Gravity(sprite, 0.6, myPhysicsEngine)
+                        .performAction(elapsedTime);
         }
 
         myCollision.checkGroupCollision();
 //        camera.update(playerSprites, bg);
 
-        for (FighterBody sprite : playerSprites) {
+        for (FighterBody sprite : playerSprites)
+        {
             //printCollision(sprite);
             sprite.update(elapsedTime);
         }
 
-		int active = 0;
-		int original = 0;
-		for (FighterBody sprite : playerSprites) {
-			//printCollision(sprite);
-			sprite.update(elapsedTime);
-			if(!(AIAgent.class.isAssignableFrom(sprite.getClass()))){
-			    original++;
-			    if(sprite.isActive())
-			        active++;			    
-			}
-		}
-		
-		if(active<=1 && original>1 || active==0)
-		    transitionState();
-			
+        int active = 0;
+        int original = 0;
+        for (FighterBody sprite : playerSprites)
+        {
+            //printCollision(sprite);
+            sprite.update(elapsedTime);
+            if (!(AIAgent.class.isAssignableFrom(sprite.getClass())))
+            {
+                original++;
+                if (sprite.isActive()) active++;
+            }
+        }
+
+        if (active <= 1 && original > 1 || active == 0) transitionState();
+
         for (PlatformBlock pb : platform)
             pb.update(elapsedTime);
 
-         for (SpriteTemplate sprite : nonplayers) {
-             sprite.update(elapsedTime);
-         }
+        for (SpriteTemplate sprite : nonplayers)
+        {
+            sprite.update(elapsedTime);
+        }
     }
 
-    private void printCollision(FighterBody sprite) {
-        if (sprite.getCollisionStatus().getDown())
-            System.out.println(sprite.getGroupID() + " is collided at DOWN");
-        if (sprite.getCollisionStatus().getUp())
-            System.out.println(sprite.getGroupID() + " is collided at UP");
-        if (sprite.getCollisionStatus().getLeft())
-            System.out.println(sprite.getGroupID() + " is collided at LEFT");
-        if (sprite.getCollisionStatus().getRight())
-            System.out.println(sprite.getGroupID() + " is collided at RIGHT");
-        if (sprite.getCollisionStatus().getStandOnSth())
-            System.out.println(sprite.getGroupID() + " is standing on sth.");
+
+    private void printCollision (FighterBody sprite)
+    {
+        if (sprite.getCollisionStatus().getDown()) System.out.println(sprite.getGroupID() +
+                                                                      " is collided at DOWN");
+        if (sprite.getCollisionStatus().getUp()) System.out.println(sprite.getGroupID() +
+                                                                    " is collided at UP");
+        if (sprite.getCollisionStatus().getLeft()) System.out.println(sprite.getGroupID() +
+                                                                      " is collided at LEFT");
+        if (sprite.getCollisionStatus().getRight()) System.out.println(sprite.getGroupID() +
+                                                                       " is collided at RIGHT");
+        if (sprite.getCollisionStatus().getStandOnSth()) System.out.println(sprite.getGroupID() +
+                                                                            " is standing on sth.");
     }
 
-    public InputHandler getMyHandler() {
+
+    public InputHandler getMyHandler ()
+    {
         return myHandler;
     }
 
-    public List<FighterBody> getFighters() {
+
+    public List<FighterBody> getFighters ()
+    {
         return Collections.unmodifiableList(playerSprites);
 
     }
+
 
     @Override
     public void transitionState ()
@@ -235,7 +271,9 @@ public class CombatInstance extends GameState
         super.finish();
     }
 
-    public void addSprite(SpriteTemplate s) {
+
+    public void addSprite (SpriteTemplate s)
+    {
         spawns.add(s);
         // nonplayers.add(s);
         // groupSprite.addSpriteInNewTeam(s);
@@ -247,12 +285,16 @@ public class CombatInstance extends GameState
         // myCollision.setCollisionGroup(groupSprite);
     }
 
-    public void commitSpawnedSprites() {
-        if (!spawns.isEmpty()) {
-            for (SpriteTemplate s:spawns){
+
+    public void commitSpawnedSprites ()
+    {
+        if (!spawns.isEmpty())
+        {
+            for (SpriteTemplate s : spawns)
+            {
                 nonplayers.add(s);
                 s.setActive(true);
-                int teamIndex=groupSprite.getTeam(s.getGroupID());
+                int teamIndex = groupSprite.getTeam(s.getGroupID());
                 groupSprite.addSpriteInOldTeam(s, teamIndex);
             }
             myCollision.setCollisionGroup(groupSprite);
@@ -260,11 +302,15 @@ public class CombatInstance extends GameState
         }
     }
 
-    public PhysicsEngine getPhysicsEngine() {
+
+    public PhysicsEngine getPhysicsEngine ()
+    {
         return myPhysicsEngine;
     }
 
-    public ArrayList<SpriteTemplate> getObstacles() {
+
+    public ArrayList<SpriteTemplate> getObstacles ()
+    {
         ArrayList<SpriteTemplate> obstacles = new ArrayList<SpriteTemplate>();
         obstacles.addAll(platform);
         obstacles.addAll(playerSprites);

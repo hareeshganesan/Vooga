@@ -3,7 +3,6 @@ package camera;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
-
 import com.golden.gamedev.object.background.ImageBackground;
 
 
@@ -15,13 +14,16 @@ public class CameraBackground extends ImageBackground
     {
         super(b);
     }
-    
-    public void render(Graphics2D g, BufferedImage b, Camera camera) {
-        
+
+
+    public void render (Graphics2D g, BufferedImage b, Camera camera)
+    {
+
         AffineTransform old = g.getTransform();
         AffineTransform tr2 = new AffineTransform(old);
         tr2.translate(camera.getX(), camera.getY());
-        tr2.scale((double)Camera.CANVAS_WIDTH/camera.getWidth(), (double)Camera.CANVAS_HEIGHT/camera.getHeight());
+        tr2.scale((double) Camera.CANVAS_WIDTH / camera.getWidth(),
+                  (double) Camera.CANVAS_HEIGHT / camera.getHeight());
         g.setTransform(tr2);
         g.drawImage(b, tr2, null);
         super.render(g);

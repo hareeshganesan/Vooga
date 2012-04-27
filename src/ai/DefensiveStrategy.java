@@ -1,11 +1,9 @@
 package ai;
 
-import java.util.TreeMap;
-import npsprite.FighterBody;
 import game.CombatInstance;
+import npsprite.FighterBody;
 import action.AvoidAction;
 import action.Goal;
-import action.MotionAction;
 
 
 /**
@@ -40,10 +38,10 @@ public class DefensiveStrategy extends Strategy
 
         public AvoidGoal (FighterBody me, FighterBody enemy)
         {
-            super(new AvoidAction(me, enemy,myPhysicsEngine), 10000);
+            super(new AvoidAction(me, enemy, myPhysicsEngine), 10000);
             myFighter = me;
             myEnemy = enemy;
-            
+
         }
 
 

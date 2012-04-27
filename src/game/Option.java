@@ -1,7 +1,6 @@
 package game;
 
 import java.awt.Graphics2D;
-import com.golden.gamedev.GameEngine;
 
 
 abstract class Option
