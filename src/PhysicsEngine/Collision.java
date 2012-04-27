@@ -2,7 +2,6 @@ package PhysicsEngine;
 
 import java.util.ArrayList;
 import npsprite.FighterBody;
-import npsprite.GroupID;
 import npsprite.NodeSprite;
 import npsprite.SpriteGroupTemplate;
 import npsprite.SpriteTemplate;
@@ -88,7 +87,6 @@ public class Collision {
 	 */
 	private ArrayList<SpriteTemplate> getBodyParts(SpriteTemplate sprite) {
 		ArrayList<SpriteTemplate> bodyParts = new ArrayList<SpriteTemplate>();
-//		if (GroupID.isFighter(sprite.getGroupID())){
 		if (FighterBody.class.isAssignableFrom(sprite.getClass())) {
 		    
 			for (NodeSprite n : ((FighterBody) sprite).getBodyParts()) {
@@ -131,10 +129,7 @@ public class Collision {
 	 */
 	private void checkEachCollision(SpriteTemplate spriteOne,
 			SpriteTemplate spriteTwo) {
-//	    isBodyCollided(spriteOne,spriteTwo);
 		if (isBodyCollided(spriteOne, spriteTwo)){
-//
-		    //TODO: refactor
             setGroupCollisionStatus(spriteOne, spriteTwo);
             for (CollisionKind kind : myReactionList) {
                 if (kind.isThisKind(spriteOne, spriteTwo)) {
@@ -142,9 +137,6 @@ public class Collision {
                 }
             }
 		}
-			// for debug
-			// System.out.println("collision");
-//		}
 	}
 
 	/**
