@@ -139,7 +139,7 @@ public class SpriteTemplate extends Sprite implements Cloneable{
         }else{
             moveBy=nextLocation;
         }
-//        System.out.println("setting loc"+moveBy.getX()+","+moveBy.getY());
+//            System.out.println("setting loc"+moveBy.getX()+","+moveBy.getY());
     }
     public Point2D getCurrentLocation() {
         return new Point2D.Double(getX() + moveBy.getX(), getY()

@@ -34,7 +34,7 @@ public class CombatInstance extends GameState
     // Engines
     MainGame myEngine;
     InputHandler myHandler;
-    Camera camera;
+//    Camera camera;
     CameraUtility cameraUtility;
     private PhysicsEngine myPhysicsEngine;
 
@@ -60,7 +60,7 @@ public class CombatInstance extends GameState
         super(engine);
         myEngine = engine;
         myHandler = new InputHandler();
-        camera = new FloatingCamera();
+//        camera = new FloatingCamera();
         cameraUtility = new CameraUtility();
         myPhysicsEngine = new FightPhysicsEngine(myEngine);
     }
@@ -140,18 +140,18 @@ public class CombatInstance extends GameState
 
     @Override
     public void render(Graphics2D pen) {
-        camera.render(pen, bg);
+//        camera.render(pen, bg);
         // bg.render(pen, camera, camera.getX(), camera.getY(), camera.getX(),
         // camera.getY(), camera.getHeight(), camera.getWidth());
         // bg.render(pen);
 
         bg.render(pen);
         for (FighterBody sprite : playerSprites)
-            cs.render(pen, sprite, camera);
-            //sprite.render(pen);
+//            cs.render(pen, sprite, camera);
+            sprite.render(pen);
         for (PlatformBlock pb : platform) {
-            cs.render(pen, pb, camera);
-            //pb.render(pen);
+//            cs.render(pen, pb, camera);
+            pb.render(pen);
             //pen.drawRect((int) pb.getX()+pb.getWidth()/2-2, (int) pb.getY()+pb.getHeight()/2-2, 4,4);
             //pen.draw(new Rectangle2D.Double(pb.getX(),pb.getY(),pb.getWidth(), pb.getHeight()));
 
@@ -165,8 +165,9 @@ public class CombatInstance extends GameState
 
     @Override
     public void update(long elapsedTime) {
+        commitSpawnedSprites();
         myHandler.update(elapsedTime, myEngine);
-        camera.update(playerSprites, bg);
+//        camera.update(playerSprites, bg);
         myHandler.update(elapsedTime, myEngine);
         bg.update(elapsedTime);
 
@@ -183,7 +184,7 @@ public class CombatInstance extends GameState
         }
 
         myCollision.checkGroupCollision();
-        camera.update(playerSprites, bg);
+//        camera.update(playerSprites, bg);
 
         for (FighterBody sprite : playerSprites) {
             //printCollision(sprite);
@@ -208,9 +209,9 @@ public class CombatInstance extends GameState
         for (PlatformBlock pb : platform)
             pb.update(elapsedTime);
 
-        // for (SpriteTemplate sprite : powerups) {
-        // sprite.update(elapsedTime);
-        // }
+         for (SpriteTemplate sprite : nonplayers) {
+         sprite.update(elapsedTime);
+         }
     }
 
     private void printCollision(FighterBody sprite) {
@@ -250,12 +251,6 @@ public class CombatInstance extends GameState
         super.finish();
     }
 
-    /*
-     * TODO IT'D BE A LOT EASIER FOR THE SPRITE TO ADD ITSELF TO A GROUP
-     * (depending on groupID) INSIDE OF THE SPAWNS-PROPERTY, AND HAVE COLLISIONS
-     * AUTOMATICALLY UPDATE ITSELF
-     */
-
     public void addSprite(SpriteTemplate s) {
         spawns.add(s);
         // nonplayers.add(s);
@@ -272,6 +267,7 @@ public class CombatInstance extends GameState
         if (!spawns.isEmpty()) {
             for (SpriteTemplate s:spawns){
                 nonplayers.add(s);
+                s.setActive(true);
                 int teamIndex=groupSprite.getTeam(s.getGroupID());
                 groupSprite.addSpriteInOldTeam(s, teamIndex);
             }
