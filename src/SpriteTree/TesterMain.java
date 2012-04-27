@@ -55,6 +55,8 @@ public class TesterMain extends Game {
 		BufferedImage imgLRL = GraphicsTest.loadImage("src/resources/bodyParts/leftFoot.png");
 		BufferedImage imgLLL = GraphicsTest.loadImage("src/resources/bodyParts/rightFoot.png"); //nlimb
 
+		
+		
 		//root node
 		LimbNode torso = new LimbNode("torso",imgT, this.getWidth()/2, this.getHeight()/2);
 		//limb nodes, require parent field
@@ -62,12 +64,12 @@ public class TesterMain extends Game {
 		LimbNode LeftArm = new LimbNode("LeftArm",torso,imgLA, -(torso.getWidth()/2),0,45);		
 		LimbNode RightArm = new LimbNode("RightArm",torso,imgRA,(torso.getWidth()/2),-(torso.getHeight()/2),-45);
 		LimbNode LeftLeg = new LimbNode("LeftLeg",torso,imgLL, 0,torso.getHeight()/2+20,0);
-		LimbNode RightLeg= new LimbNode("RightLeg",torso,imgRL, torso.getWidth()-20,torso.getHeight()/2+20,0);
+		LimbNode RightLeg= new LimbNode("RightLeg",torso,imgRL, torso.getWidth(),torso.getHeight()/2+20,0);
 		
-		LimbNode LRightLeg = new LimbNode("LRightLeg",RightLeg, imgLRL, 0, (RightLeg.getHeight()), 0);
+		LimbNode LRightLeg = new LimbNode("LRightLeg",RightLeg, imgLRL, 1, (RightLeg.getHeight()), 0);
 		RightLeg.addChild(LRightLeg);
 		
-		LimbNode LLeftLeg = new LimbNode("LLeftLeg",LeftLeg, imgLLL, 0, (LeftLeg.getHeight()), 0);
+		LimbNode LLeftLeg = new LimbNode("LLeftLeg",LeftLeg, imgLLL, 1, (LeftLeg.getHeight()), 0);
 		LeftLeg.addChild(LLeftLeg);
 		
 		
@@ -110,6 +112,8 @@ public class TesterMain extends Game {
 		sequence.put((long) 504, m8);
 		sequence.put((long) 1001, m9);
 		sequence.put((long) 1002, m10);
+
+
 		this.animation = new Animation(sequence, myTree);
 		
 

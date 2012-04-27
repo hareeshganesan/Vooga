@@ -40,8 +40,7 @@ public class Motion {
 			double currAngle = myLimb.getTheta();
 
 			this.dTheta = (myExpAngle-currAngle)/(double)time;
-			this.myLimb.rotate(dTheta*Math.min(elapsedTime, time));
-
+			this.myLimb.rotate(dTheta*Math.min(elapsedTime, time));			
 			this.time -=elapsedTime;
 		
 		}

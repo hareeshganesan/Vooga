@@ -20,7 +20,7 @@ public class MyComponentPanel extends JPanel implements MouseListener,
 	private final Color UNCLICKED_COMPONENT_COLOR = Color.blue;
 	private final Color CLICKED_COMPONENT_COLOR = Color.red;
 	private final Color STRING_COLOR = Color.white;
-	public final int  COMPONENTNUMBER=2;
+	public final int  COMPONENTNUMBER=1;
 	private Graphics2D g = null;
 	private Rectangle2D[] components = new Rectangle2D.Double[COMPONENTNUMBER];
 	private Controller myController=null;
@@ -44,7 +44,7 @@ public class MyComponentPanel extends JPanel implements MouseListener,
 
 	void initComponents() {
 		for (int i = 0; i < COMPONENTNUMBER; i++) {
-			components[i] = new Rectangle2D.Double(25, 30 + 30 * i, 60, 25);
+			components[i] = new Rectangle2D.Double(25, 30 + 30 * i, 70, 25);
 		}
 	}
 

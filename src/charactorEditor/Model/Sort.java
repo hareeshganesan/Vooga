@@ -1,18 +1,15 @@
 package charactorEditor.Model;
 
 public class Sort {
-	final static int HEAD = 0;
-	final static int BODY = 1;
+	final static int LIMBSPRITE = 0;
 
-	public final static String[] NAME = new String[2];
-	public final static String[] CMP = new String[2];
+	public final static String[] NAME = new String[1];
+	public final static String[] CMP = new String[1];
 
 	static {
-		NAME[0] = "head";
-		NAME[1] = "body";
+		NAME[0] = "ls";
 
-		CMP[0] = "Head";
-		CMP[1] = "Body";
+		CMP[0] = "LimbSprite";
 
 	}
 

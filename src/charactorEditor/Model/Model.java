@@ -104,10 +104,14 @@ public class Model {
 	private void loadPropertyList() throws FileNotFoundException {
 
 		try {
-			Class<?> cls = Class.forName("SpriteTree.LimbNode");
+			Class<?> cls = Class.forName("npsprite.NodeSprite");
 			Field fieldlist[] = cls.getDeclaredFields();
 			ArrayList<String> list = new ArrayList<String>();
-			list.add(fieldlist[5].getName());
+			list.add("GroupID");
+			list.add("damage");
+			list.add("baseTheta");
+			for(int i=0;i<fieldlist.length;i++)
+			list.add(fieldlist[i].getName());
 			setProperties(list);
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
@@ -143,24 +147,24 @@ public class Model {
 		return setSizeFlag;
 	}
 
-	public LimbNode buildLimbNodeTree(MyComponent root, LimbNode toReturn) {
-
-		if (root.getParent() == null) {
-			toReturn = new LimbNode(root.getText(), GraphicsTest.loadImage(root
-					.getImg().toString()), root.getBorderX(), root.getBorderY());
-		}
-
-		for (MyComponent m : root.getChildern()) {
-			double dx = m.getBorderX() - root.getBorderX();
-			double dy = m.getBorderY() - root.getBorderY();
-			LimbNode child = new LimbNode(m.getText(), toReturn,
-					GraphicsTest.loadImage(m.getImg().toString()), dx, dy,
-					Integer.valueOf(m.getProperties().get(properties.get(0))));
-			toReturn.addChild(child);
-		}
-		for (int i = 0; i < root.getChildern().size(); i++)
-			buildLimbNodeTree(root.getChildern().get(i), toReturn.getChildren()
-					.get(i));
-		return toReturn;
-	}
+//	public LimbNode buildLimbNodeTree(MyComponent root, LimbNode toReturn) {
+//
+//		if (root.getParent() == null) {
+//			toReturn = new LimbNode(root.getText(), GraphicsTest.loadImage(root
+//					.getImg().toString()), root.getBorderX(), root.getBorderY());
+//		}
+//
+//		for (MyComponent m : root.getChildern()) {
+//			double dx = m.getBorderX() - root.getBorderX();
+//			double dy = m.getBorderY() - root.getBorderY();
+//			LimbNode child = new LimbNode(m.getText(), toReturn,
+//					GraphicsTest.loadImage(m.getImg().toString()), dx, dy,
+//					Integer.valueOf(m.getProperties().get(properties.get(0))));
+//			toReturn.addChild(child);
+//		}
+//		for (int i = 0; i < root.getChildern().size(); i++)
+//			buildLimbNodeTree(root.getChildern().get(i), toReturn.getChildren()
+//					.get(i));
+//		return toReturn;
+//	}
 }

@@ -13,7 +13,7 @@ public class BodyTree {
 	private LimbNode root;
 	private HashMap<String,LimbNode> map ;
 	private boolean flipped =false;
-	
+	private HashMap<String, Animation> myAnimations;
 	
 	public BodyTree (LimbNode root){
 		this.root=root;
@@ -22,7 +22,14 @@ public class BodyTree {
 		
 	}
 	
-
+	public void setAnimations(HashMap<String, Animation> animations){
+		this.myAnimations = animations;
+	}
+	
+	public Animation getAnimation(String animationName){
+		return myAnimations.get(animationName);
+	}
+	
 	public void createMap(LimbNode currNode){
 		if(!map.containsKey(currNode.getName())){
 			map.put(currNode.getName(), currNode);
@@ -81,7 +88,7 @@ public class BodyTree {
 		root.render(pen, root.getX(),root.getY(),0);
 	}
 	
-	public void move(double moveX, double moveY){
+	public void move(Graphics2D pen, double moveX, double moveY){
 		root.setX(root.getX() + moveX);		
 		root.setY(root.getY() + moveY);
 	}
