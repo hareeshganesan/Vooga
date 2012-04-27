@@ -22,6 +22,7 @@ import PhysicsEngine.CollisionKindNeutral;
 import PhysicsEngine.FightPhysicsEngine;
 import PhysicsEngine.PhysicsEngine;
 import PhysicsEngine.ReactionMomentumConservation;
+import PhysicsEngine.ReactionPunch;
 import PhysicsEngine.ReactionPush;
 import PhysicsEngine.ReactionRebound;
 import action.MotionAction;
@@ -138,7 +139,7 @@ public class CombatInstance extends GameState
         ArrayList<CollisionKind> CollisionkindList =
             new ArrayList<CollisionKind>();
         CollisionkindList.add(new CollisionKindFriends(new ReactionMomentumConservation()));
-        CollisionkindList.add(new CollisionKindEnemy(new ReactionPush()));
+        CollisionkindList.add(new CollisionKindEnemy(new ReactionPunch()));
         CollisionkindList.add(new CollisionKindNeutral(new ReactionRebound()));
 
         myCollision =
