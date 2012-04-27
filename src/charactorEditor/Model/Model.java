@@ -107,6 +107,9 @@ public class Model {
 			Class<?> cls = Class.forName("npsprite.NodeSprite");
 			Field fieldlist[] = cls.getDeclaredFields();
 			ArrayList<String> list = new ArrayList<String>();
+			list.add("GroupID");
+			list.add("damage");
+			list.add("baseTheta");
 			for(int i=0;i<fieldlist.length;i++)
 			list.add(fieldlist[i].getName());
 			setProperties(list);

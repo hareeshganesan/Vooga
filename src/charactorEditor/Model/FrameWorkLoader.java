@@ -67,7 +67,7 @@ public class FrameWorkLoader {
 			double dx = m.getBorderX() - root.getBorderX();
 			double dy = m.getBorderY() - root.getBorderY();
 			double damage = Double.valueOf(m.getProperties().get("damage"));
-			int baseTheta=Integer.valueOf(m.getProperties().get("damage"));;
+			int baseTheta=Integer.valueOf(m.getProperties().get("baseTheta"));;
 			NodeSprite child = new NodeSprite(m.getText(), toReturn,
 
 			GraphicsTest.loadImage(m.getImg().toString()), dx, dy, damage,

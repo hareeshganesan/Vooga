@@ -20,7 +20,7 @@ public class AddImgButton extends JButton implements Update {
 		setBounds(55, 129, 115, 23);
 		addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JFileChooser fc = new JFileChooser(".");
+				JFileChooser fc = new JFileChooser("./src/resources/bodyParts");
 				int returnVal = fc.showOpenDialog(null);
 				if (returnVal == JFileChooser.APPROVE_OPTION) {
 					myController.getMessage(fc.getSelectedFile(), e);
