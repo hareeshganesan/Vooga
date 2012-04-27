@@ -1,29 +1,26 @@
 package camera;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Point;
-import java.awt.Rectangle;
+import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 import javax.swing.JPanel;
 
 import npsprite.FighterBody;
+import ai.AIAgent;
+
 import com.golden.gamedev.object.Sprite;
 
 
 @SuppressWarnings("serial")
 public class Camera extends JPanel {
     
-    public static final int X_OFFSET = 20;
-    public static final int Y_OFFSET = 20;
+    public static final int X_OFFSET = 10;
+    public static final int Y_OFFSET = 10;
     public static final int CANVAS_HEIGHT = 544;
     public static final int CANVAS_WIDTH = 544;
     
-    private int MIN_X = 50;
-    private int MIN_Y = 50;
+    private int MIN_X = 200;
+    private int MIN_Y = 200;
     private int MAX_X = CANVAS_WIDTH;
     private int MAX_Y = CANVAS_HEIGHT;
 
@@ -37,6 +34,10 @@ public class Camera extends JPanel {
 
     double zoom = 1;
     double zoomSpeed = 100;
+    double timer = 0;
+    double duration = 0;
+    boolean inSpecialMode = false;
+    SpecialCamera mySpec = null;
     
     public Camera ()
     {
@@ -96,9 +97,6 @@ public class Camera extends JPanel {
 
         averageX = averageX / sprites.size();
         averageY = averageY / sprites.size();
-        
-        System.out.println("new center is at " + averageX + ", " + averageY);
-
         setCenter(new Point((int) averageX, (int) averageY));
     }
 
@@ -111,28 +109,45 @@ public class Camera extends JPanel {
         {
 
             double radius =
-                Math.sqrt(Math.pow(sprites.get(i).getX(), 2) + Math.pow(sprites.get(i).getY(), 2));
+                Math.sqrt(Math.pow(center.x - sprites.get(i).getX(), 2) + Math.pow(center.y - sprites.get(i).getY(), 2));
             if (radius > maxRadius)
                 maxRadius = radius;
         }
+        
+        targetBounds.height = (int) ((2 * maxRadius) + Y_OFFSET);
+        targetBounds.width = (int) ((2 * maxRadius) + X_OFFSET);
+        
+        maxRadius = maxRadius * Math.sqrt(2);
 
         targetBounds.x = (int) (center.x - maxRadius - X_OFFSET);
         targetBounds.y = (int) (center.y - maxRadius - Y_OFFSET);
-        targetBounds.height = (int) (targetBounds.y + 2 * (maxRadius + X_OFFSET));
-        targetBounds.width = (int) (targetBounds.x + 2 * (maxRadius + Y_OFFSET));
+
+        if (targetBounds.x < 0) targetBounds.x = 0;
+        if (targetBounds.y < 0) targetBounds.y = 0;
+        
+        if (targetBounds.height > MAX_Y) targetBounds.height = MAX_Y + Y_OFFSET;
+        if (targetBounds.width > MAX_X) targetBounds.width = MAX_X + X_OFFSET;
+        
+        if (targetBounds.height < MIN_Y) targetBounds.height = MIN_Y;
+        if (targetBounds.width < MIN_X) targetBounds.width = MIN_X;
         
         currentBounds.x = (int) (currentBounds.x + ((targetBounds.x-currentBounds.x)/zoomSpeed));
         currentBounds.y = (int) (currentBounds.y + ((targetBounds.y-currentBounds.y)/zoomSpeed));
         currentBounds.height = (int) (currentBounds.height + ((targetBounds.height-currentBounds.height)/zoomSpeed));
         currentBounds.width = (int) (currentBounds.width + ((targetBounds.width-currentBounds.width)/zoomSpeed));
 
+        System.out.println("Centered at " + center.x + "," + center.y);
+        int herp = targetBounds.x + targetBounds.width;
+        int derp = targetBounds.y + targetBounds.height;
+        System.out.println("Bounded by " + targetBounds.x + "," + targetBounds.y + " " + herp + "," + derp);
+        
     }
 
-    private void changeZoom(double zoom){
+    public void changeZoom(double zoom){
         this.zoom = zoom;
     }
     
-    private void setZoomSpeed(double zoom)
+    public void setZoomSpeed(double zoom)
     {
         this.zoomSpeed = zoom;
     }
@@ -155,8 +170,36 @@ public class Camera extends JPanel {
     {
         calculateNewCenter(playerSprites);
         calculateNewBounds(playerSprites);
-        changeZoom(bg.getX());        
+        changeZoom(bg.getX());
+        
+        for (FighterBody sprite : playerSprites)
+        {
+            if (sprite.getCollisionStatus().getStatus() )//&& FighterBody.class.isAssignableFrom(sprite.getClass()))
+            {
+                System.out.println("NOTIFYING FOR SPECIAL MODE");
+                notifySpecialMode(new SpecialShake(), 10);
+                break;
+            }
+        }
+        
+        if (inSpecialMode)
+        {
+            System.out.println("SPECIAL MODE");
+            mySpec.update(playerSprites, bg, this, timer);
+        }
+        
+        if (timer == duration)
+        {
+            inSpecialMode = false;
+        }
 
+    }
+    
+    public void notifySpecialMode(SpecialCamera spec, double duration)
+    {
+        mySpec = spec;
+        inSpecialMode = true;
+        this.duration = duration;
     }
 
     public void render (Graphics g1, CameraBackground bg)
@@ -176,5 +219,7 @@ public class Camera extends JPanel {
         g.draw(r);
         g.setTransform(old);
         super.paintComponent(g1);
+       
     }
+    
 }

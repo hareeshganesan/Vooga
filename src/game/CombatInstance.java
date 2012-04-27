@@ -61,6 +61,7 @@ public class CombatInstance extends GameState {
     private Collision myCollision;
     private SpriteGroupTemplate groupSprite;
 
+    BufferedImage b;
     CameraBackground bg;
     CameraSprite cs;
 
@@ -68,7 +69,7 @@ public class CombatInstance extends GameState {
         super(engine);
         myEngine = engine;
         myHandler = new InputHandler();
-        camera = new FloatingCamera();
+        camera = new FixedCamera();
         cameraUtility = new CameraUtility();
         myPhysicsEngine = new FightPhysicsEngine(myEngine);
     }
@@ -114,7 +115,7 @@ public class CombatInstance extends GameState {
         if (back == null) {
             back = DEFAULT_IMAGE;
         }
-        BufferedImage b = getImage(back);
+        b = getImage(back);
         bg = new CameraBackground(b);
         cs = new CameraSprite(null);
 
@@ -170,17 +171,14 @@ public class CombatInstance extends GameState {
     @Override
     public void render(Graphics2D pen) {
         camera.render(pen, bg);
-        //bg.render(pen, camera, camera.getX(), camera.getY(), camera.getX(),
-        //        camera.getY(), camera.getHeight(), camera.getWidth());
-        // bg.render(pen);
-
+        //bg.render(pen, b, camera);
         bg.render(pen);
         for (FighterBody sprite : playerSprites)
-            cs.render(pen, sprite, camera);
-            //sprite.render(pen);
+            //cs.render(pen, sprite, camera);
+            sprite.render(pen);
         for (PlatformBlock pb : platform) {
-            cs.render(pen, pb, camera);
-            //pb.render(pen);
+            //cs.render(pen, pb, camera);
+            pb.render(pen);
         }
 //        for (SpriteTemplate p : powerups) {
 //            p.render(pen);
@@ -203,10 +201,12 @@ public class CombatInstance extends GameState {
         }
         
         for (FighterBody sprite : playerSprites){
-        	MotionAction.Gravity(sprite,0.3,myPhysicsEngine).performAction(elapsedTime);
+        	MotionAction.Gravity(sprite,0.6,myPhysicsEngine).performAction(elapsedTime);
         }
 
         myCollision.checkGroupCollision();
+        
+        // camera collision
 
         for (FighterBody sprite : playerSprites) {
 //        	printCollision(sprite);
@@ -219,6 +219,7 @@ public class CombatInstance extends GameState {
 //        for (SpriteTemplate sprite : powerups) {
 //            sprite.update(elapsedTime);
 //        }
+
     }
     
     private void printCollision(FighterBody sprite){

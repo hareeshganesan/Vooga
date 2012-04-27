@@ -1,25 +1,22 @@
 package camera;
 
+import java.awt.Point;
 import java.util.ArrayList;
 
 import npsprite.FighterBody;
 
 @SuppressWarnings("serial")
-public class SpecialZoom extends SpecialCamera{
+public class SpecialShake extends SpecialCamera{
 
-    SpecialZoom() {
+    SpecialShake() {
         super();
-    }
-    
-    SpecialZoom(double duration) {
-        super(duration);
-        // TODO Auto-generated constructor stub
     }
 
     public void update(ArrayList<FighterBody> playerSprites,
             CameraBackground bg, Camera camera, double duration){
         
-        camera.changeZoom(25);
+        Point newPoint = new Point((int)(camera.getX() + (0.1 * Math.sin(camera.getX()))), camera.getY());
+        camera.setCenter(newPoint);
         
         
         //super.update(playerSprites, bg);

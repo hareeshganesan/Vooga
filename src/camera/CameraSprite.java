@@ -15,14 +15,14 @@ public class CameraSprite extends SpriteTemplate{
     }
     
     public void render(Graphics2D g, SpriteTemplate sprite, Camera camera) {
+                
         AffineTransform old = g.getTransform();
         AffineTransform tr2 = new AffineTransform(old);
-        //tr2.translate((camera.getWidth() / 2) - (camera.getBounds().getWidth() / 2),
-        //        (camera.getHeight() / 2) - (camera.getBounds().getHeight() / 2));
-        
-        tr2.scale((double)Camera.CANVAS_WIDTH/camera.getWidth(), (double)Camera.CANVAS_HEIGHT/camera.getWidth());
+        tr2.translate(-50, -50);
+        tr2.scale((double)Camera.CANVAS_WIDTH/camera.getWidth(), (double)Camera.CANVAS_HEIGHT/camera.getHeight());
         g.setTransform(tr2);
         sprite.render(g);
         g.setTransform(old);
+        
     }
 }
