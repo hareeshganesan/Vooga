@@ -2,9 +2,6 @@ package camera;
 
 import java.awt.Graphics;
 import java.util.ArrayList;
-
-import com.golden.gamedev.object.Sprite;
-
 import npsprite.FighterBody;
 
 
@@ -17,10 +14,14 @@ public class FollowCamera extends Camera
 
 
     @Override
-    public void update (ArrayList<FighterBody> playerSprites, CameraBackground bg)
+    public void update (ArrayList<FighterBody> playerSprites,
+                        CameraBackground bg)
     {
         FighterBody focus = playerSprites.get(0);
-        bg.setToCenter((int)focus.getX(), (int)focus.getY(), focus.getWidth(), focus.getHeight());
+        bg.setToCenter((int) focus.getX(),
+                       (int) focus.getY(),
+                       focus.getWidth(),
+                       focus.getHeight());
         super.update(playerSprites, bg);
     }
 

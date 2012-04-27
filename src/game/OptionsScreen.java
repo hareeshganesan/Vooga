@@ -1,9 +1,7 @@
 package game;
 
-import java.awt.Font;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
-import com.golden.gamedev.object.Background;
 import com.golden.gamedev.object.background.ImageBackground;
 
 
@@ -12,11 +10,12 @@ public class OptionsScreen extends GameState
 
     MainGame myEngine;
     ArrayList<Option> myOptions;
+
+
     protected void setMyOptions (ArrayList<Option> myOptions)
     {
         this.myOptions = myOptions;
     }
-
 
     int optionIndex;
     ImageBackground myBackground;
@@ -46,8 +45,9 @@ public class OptionsScreen extends GameState
     public void render (Graphics2D g2)
     {
         myBackground.render(g2);
-        for(Option o : myOptions){
-            o.renderOption(g2, 100, 20*myOptions.indexOf(o)+100);
+        for (Option o : myOptions)
+        {
+            o.renderOption(g2, 100, 20 * myOptions.indexOf(o) + 100);
         }
     }
 

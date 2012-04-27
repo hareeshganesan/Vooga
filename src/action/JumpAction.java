@@ -1,32 +1,33 @@
 package action;
 
-import PhysicsEngine.PhysicsEngine;
 import npsprite.FighterBody;
+import PhysicsEngine.PhysicsEngine;
+
 
 public class JumpAction extends MotionAction
 {
 
-    public JumpAction (FighterBody r, double x, double y,   PhysicsEngine p)
+    public JumpAction (FighterBody r, double x, double y, PhysicsEngine p)
     {
         super(r, x, y, p);
         done = true;
     }
-    
+
+
     public void performAction (long elapsed_time)
     {
-        if(done){
+        if (done)
+        {
             myPhysicsEngine.process(this, elapsed_time);
             done = false;
         }
         setDone();
     }
 
+
     private void setDone ()
     {
-        if(myFighter.getCollisionStatus().getDown())
-            done = true;
+        if (myFighter.getCollisionStatus().getDown()) done = true;
     }
-    
-    
 
 }

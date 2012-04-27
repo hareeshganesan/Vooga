@@ -2,7 +2,6 @@ package ai;
 
 import game.CombatInstance;
 import java.util.TreeMap;
-
 import npsprite.HealthDisplay;
 import npsprite.NodeSprite;
 import action.Action;
@@ -25,12 +24,14 @@ public class BasicStrategyAgent extends AIAgent
     Strategy strat;
     TreeMap<Double, Strategy> strategies = new TreeMap<Double, Strategy>();
 
-    public BasicStrategyAgent (String name,NodeSprite root,
-                         HealthDisplay display,
-                         int groupID,
-                         CombatInstance c)
+
+    public BasicStrategyAgent (String name,
+                               NodeSprite root,
+                               HealthDisplay display,
+                               int groupID,
+                               CombatInstance c)
     {
-        super(name, root,display, groupID, c);
+        super(name, root, display, groupID, c);
     }
 
 

@@ -1,7 +1,6 @@
 package levelEditor.loader;
 
-public class SpritePropertyExtractor {
+public class SpritePropertyExtractor
+{
 
-	
-	
 }

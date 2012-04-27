@@ -1,7 +1,5 @@
 package action;
 
-
-
 public abstract class Goal implements Action
 {
     protected boolean done;
