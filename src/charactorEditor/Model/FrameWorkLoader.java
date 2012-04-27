@@ -7,14 +7,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
+import npsprite.NodeSprite;
+
 import SpriteTree.GraphicsTest;
 import SpriteTree.LimbNode;
-
+import npsprite.GroupID;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 public class FrameWorkLoader {
-	public static LimbNode load(String file) throws FileNotFoundException {
+	Model myModel=Model.Instance();
+	public static NodeSprite load(String file) throws FileNotFoundException {
 		Gson gson3 = new Gson();
 		Scanner scanner3 = new Scanner(new File(file));
 		String wholeFile3 = scanner3.useDelimiter("\\A").next();
@@ -49,18 +52,26 @@ public class FrameWorkLoader {
 
 	}
 
-	public static LimbNode buildBodyTree(MyComponent root, LimbNode toReturn) {
+	public static NodeSprite buildBodyTree(MyComponent root, NodeSprite toReturn) {
 
 		if (root.getParent() == null) {
-			toReturn = new LimbNode(root.getText(), GraphicsTest.loadImage(root
-					.getImg().toString()), root.getBorderX(), root.getBorderY());
+			double damage = Double.valueOf(root.getProperties().get("damage"));
+			toReturn = new NodeSprite(root.getText(),
+					GraphicsTest.loadImage(root.getImg().toString()),
+					GroupID.getIdFromString(root.getProperties().get("GroupID")),
+					(double) root.getBorderX(), (double) root.getBorderY(),
+					damage);
 		}
 
 		for (MyComponent m : root.getChildern()) {
 			double dx = m.getBorderX() - root.getBorderX();
 			double dy = m.getBorderY() - root.getBorderY();
-			LimbNode child = new LimbNode(m.getText(), toReturn,
-					GraphicsTest.loadImage(m.getImg().toString()), dx, dy, 0);
+			double damage = Double.valueOf(m.getProperties().get("damage"));
+			int baseTheta=Integer.valueOf(m.getProperties().get("damage"));;
+			NodeSprite child = new NodeSprite(m.getText(), toReturn,
+
+			GraphicsTest.loadImage(m.getImg().toString()), dx, dy, damage,
+					baseTheta);
 			toReturn.addChild(child);
 		}
 		for (int i = 0; i < root.getChildern().size(); i++)
