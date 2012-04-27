@@ -1,7 +1,5 @@
 package events;
 
-import npsprite.GroupID;
-import npsprite.LimbSprite;
 import npsprite.SpriteTemplate;
 import npsprite.properties.DamageProperty;
 import npsprite.properties.HealthProperty;
@@ -15,6 +13,15 @@ import npsprite.properties.HealthProperty;
  */
 public class HealthEvent extends CollisionEvent {
 
+    private static HealthEvent he;
+    protected HealthEvent(){}
+    
+    public static HealthEvent getInstanceOf(){
+        if (he==null){
+            he=new HealthEvent();
+        }
+        return he;
+    }
     // we know that I have a health because this is called inside me
     @Override
     public void performAction(SpriteTemplate me, SpriteTemplate o) {

@@ -95,6 +95,16 @@
 </Block>
 
 <Sprite>
+<img>resources/flame_border.png</img>
+<id>POWER_UP</id>
+<x>400</x>
+<y>500</y>
+<property>
+<damage>-1</damage>
+</property>
+</Sprite>
+
+<Sprite>
 <img>resources/flameb_border.png</img>
 <id>POWER_UP</id>
 <x>300</x>
@@ -138,20 +148,4 @@
 </collision>
 
 </Sprite>
-
-<!-- <Sprite>
-<img>resources/health.png</img>
-<id>POWER_UP</id>
-<x>0</x>
-<y>500</y>
-<property>
-<damage>50</damage>
-</property>
-<collision>
-<inactive>PLAYER_1</inactive>
-<inactive>PLAYER_2</inactive>
-</collision>
-</Sprite>
--->
-
 </all>

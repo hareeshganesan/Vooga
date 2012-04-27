@@ -34,7 +34,7 @@ public class CombatInstance extends GameState {
     // Engines
     MainGame myEngine;
     InputHandler myHandler;
-    // Camera camera;
+//     Camera camera;
     CameraUtility cameraUtility;
     private PhysicsEngine myPhysicsEngine;
 
@@ -58,7 +58,7 @@ public class CombatInstance extends GameState {
         super(engine);
         myEngine = engine;
         myHandler = new InputHandler();
-        // camera = new FloatingCamera();
+//         camera = new FloatingCamera();
         cameraUtility = new CameraUtility();
         myPhysicsEngine = new FightPhysicsEngine(myEngine);
     }
@@ -142,10 +142,10 @@ public class CombatInstance extends GameState {
 
         bg.render(pen);
         for (FighterBody sprite : playerSprites)
-            // cs.render(pen, sprite, camera);
+//             cs.render(pen, sprite, camera);
             sprite.render(pen);
         for (PlatformBlock pb : platform) {
-            // cs.render(pen, pb, camera);
+//             cs.render(pen, pb, camera);
             pb.render(pen);
             pen.drawRect((int) pb.getX() + pb.getWidth() / 2 - 2,
                     (int) pb.getY() + pb.getHeight() / 2 - 2, 4, 4);
@@ -170,7 +170,7 @@ public class CombatInstance extends GameState {
     public void update(long elapsedTime) {
         commitSpawnedSprites();
         myHandler.update(elapsedTime, myEngine);
-        // camera.update(playerSprites, bg);
+//         camera.update(playerSprites, bg);
         myHandler.update(elapsedTime, myEngine);
         bg.update(elapsedTime);
 

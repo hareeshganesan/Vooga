@@ -1,13 +1,16 @@
 package npsprite.properties;
 
-import java.util.HashMap;
-
 import events.CollisionEvent;
 import events.SpawnEvent;
 
 import npsprite.SpriteValues;
 import npsprite.SpriteValues.STATUS;
 
+/**
+ * May not be needed - for blocks, punches, damage multipliers (if someone maybe wants combo moves)
+ * @author Wendy
+ *
+ */
 public class StatusProperty extends PropertyObject{
     public static final String NAME="status";
     private SpriteValues.STATUS status;
@@ -34,7 +37,8 @@ public class StatusProperty extends PropertyObject{
     
     public CollisionEvent update(long elapsedTime){
         if (status==STATUS.BLOCK){
-            return new SpawnEvent();
+//            return new SpawnEvent();
+            return SpawnEvent.getInstanceOf();
         }
         return null;
     }

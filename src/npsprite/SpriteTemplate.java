@@ -10,6 +10,7 @@ import PhysicsEngine.CollisionStatus;
 
 import npsprite.properties.PropertyObject;
 import events.CollisionEvent;
+import events.HealthEvent;
 
 
 // all sprites in fighting game extend this template. 
@@ -33,6 +34,7 @@ public class SpriteTemplate extends Sprite implements Cloneable{
     {
         super();
         myID=g;
+        myCollisions.put(GroupID.PLATFORM, HealthEvent.getInstanceOf());
     }
     public SpriteTemplate(BufferedImage b, GroupID g) {
         super(b);
