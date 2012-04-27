@@ -34,7 +34,7 @@ public class CombatInstance extends GameState
     // Engines
     MainGame myEngine;
     InputHandler myHandler;
-    Camera camera;
+//    Camera camera;
     CameraUtility cameraUtility;
     private PhysicsEngine myPhysicsEngine;
 
@@ -58,7 +58,7 @@ public class CombatInstance extends GameState
         super(engine);
         myEngine = engine;
         myHandler = new InputHandler();
-        camera = new FloatingCamera();
+//        camera = new FloatingCamera();
         cameraUtility = new CameraUtility();
         myPhysicsEngine = new FightPhysicsEngine(myEngine);
     }
@@ -130,13 +130,15 @@ public class CombatInstance extends GameState
 
     @Override
     public void render(Graphics2D pen) {
-        camera.render(pen, bg);
+//        camera.render(pen, bg);
 
         bg.render(pen);
         for (FighterBody sprite : playerSprites)
-            cs.render(pen, sprite, camera);
+//            cs.render(pen, sprite, camera);
+            sprite.render(pen);
         for (PlatformBlock pb : platform) {
-            cs.render(pen, pb, camera);
+//            cs.render(pen, pb, camera);
+            pb.render(pen);
         }
 
         for (SpriteTemplate p : nonplayers) {
@@ -148,7 +150,7 @@ public class CombatInstance extends GameState
     @Override
     public void update(long elapsedTime) {
         myHandler.update(elapsedTime, myEngine);
-        camera.update(playerSprites, bg);
+//        camera.update(playerSprites, bg);
         myHandler.update(elapsedTime, myEngine);
         bg.update(elapsedTime);
 
@@ -165,7 +167,7 @@ public class CombatInstance extends GameState
         }
 
         myCollision.checkGroupCollision();
-        camera.update(playerSprites, bg);
+//        camera.update(playerSprites, bg);
 
         for (FighterBody sprite : playerSprites) {
             //printCollision(sprite);
