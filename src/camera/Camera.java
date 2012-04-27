@@ -172,17 +172,17 @@ public class Camera extends JPanel {
         {
             for (FighterBody sprite : playerSprites)
             {    
-                if (sprite.getCollisionStatus().getStatus() && !sprite.getCollisionStatus().getStandOnSth() 
+                if ((sprite.getCollisionStatus().getDown() || sprite.getCollisionStatus().getUp()
+                        || sprite.getCollisionStatus().getRight() || sprite.getCollisionStatus().getLeft())
                         && FighterBody.class.isAssignableFrom(sprite.getClass()))
                 {
-                    notifySpecialMode(new SpecialShake(), 60);
+                    notifySpecialMode(new SpecialShake(), 30);
                     break;
                 }
             }
         }
         else if (inSpecialMode)
         {
-            System.out.println("IN SPECIAL MODE");
             mySpec.update(playerSprites, bg, this, timer);
             timer++;
         }
