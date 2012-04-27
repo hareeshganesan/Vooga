@@ -240,7 +240,7 @@ public class CombatInstance extends GameState
         String winner = null;
         for (FighterBody f : playerSprites)
         {
-            
+            winner = f.getName();
         }
         if (winner == null) winner = "TO US";
         this.setNextState(new WinScreen(myEngine, DEFAULT_IMAGE, winner));

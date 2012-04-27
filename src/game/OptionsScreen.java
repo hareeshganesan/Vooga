@@ -3,6 +3,8 @@ package game;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
+import com.golden.gamedev.object.Background;
+import com.golden.gamedev.object.background.ImageBackground;
 
 
 public class OptionsScreen extends GameState
@@ -10,9 +12,14 @@ public class OptionsScreen extends GameState
 
     MainGame myEngine;
     ArrayList<Option> myOptions;
-    Option selected;
+    protected void setMyOptions (ArrayList<Option> myOptions)
+    {
+        this.myOptions = myOptions;
+    }
+
+
     int optionIndex;
-    String myBackground;
+    ImageBackground myBackground;
 
 
     public OptionsScreen (MainGame arg0,
@@ -22,9 +29,8 @@ public class OptionsScreen extends GameState
         super(arg0);
         myEngine = arg0;
         myOptions = options;
-        myBackground = background;
+        myBackground = new ImageBackground(getImage(background));
         optionIndex = 0;
-        selected = myOptions.get(optionIndex);
     }
 
 
@@ -32,33 +38,24 @@ public class OptionsScreen extends GameState
     public void initResources ()
     {
         this.lastState = myEngine.getCurrentState();
-        this.nextState = myEngine.getCurrentState();
+        this.nextState = (GameState) myEngine.getGame(0);
     }
 
 
     @Override
     public void render (Graphics2D g2)
     {
-        g2.setFont(new Font("Serif", Font.BOLD, 20));
-        for (int i = 0; i < myOptions.size(); i++)
-        {
-            if (myOptions.get(i).myName.equals(selected.myName))
-            {
-                //g2.drawImage(getImage("/resources/arrow.jpg"), 20, 20 + (i*30), (ImageObserver)this);
-            }
-            g2.drawString((String) myOptions.get(i).getValue(),
-                          100,
-                          20 + (i * 30));
+        myBackground.render(g2);
+        for(Option o : myOptions){
+            o.renderOption(g2, 100, 20*myOptions.indexOf(o)+100);
         }
-
     }
 
 
     @Override
     public void update (long elapsedTime)
     {
-        selected = myOptions.get(optionIndex);
-
+        myHandler.update(elapsedTime, this.myEngine);
     }
 
 
@@ -82,14 +79,6 @@ public class OptionsScreen extends GameState
     }
 
 
-    public void enterAction ()
-    {
-        this.nextState =
-            new OptionsScreen(myEngine, myBackground, new ArrayList<Option>());
-        transitionState();
-    }
-
-
     @Override
     public void finish ()
     {
@@ -100,8 +89,9 @@ public class OptionsScreen extends GameState
     @Override
     public void transitionState ()
     {
-        myEngine.setCurrentState(this.nextState);
-
+        if (nextState != null) myEngine.nextGame = this.nextState;
+        else myEngine.nextGame = this.lastState;
+        finish();
     }
 
 }
