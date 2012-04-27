@@ -74,7 +74,6 @@ public class HealthDisplay
         }
     }
 
-
     public void render (Graphics2D pen)
     {
         //notes: add customizable x, y coordinates, customizable health frame

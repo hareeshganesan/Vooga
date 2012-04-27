@@ -2,15 +2,17 @@ package charactorEditor.drag.Component;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 
+import charactorEditor.Controller;
 import charactorEditor.drag.AttributePane;
+import charactorEditor.drag.Update;
 
 @SuppressWarnings("serial")
-public class AddImgButton extends JButton {
+public class AddImgButton extends JButton implements Update {
 	private AttributePane outer;
+	Controller myController = Controller.Instance();
 
 	public AddImgButton(AttributePane e) {
 		super("add");
@@ -18,21 +20,26 @@ public class AddImgButton extends JButton {
 		setBounds(55, 129, 115, 23);
 		addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JFileChooser fc = new JFileChooser(".");
+				JFileChooser fc = new JFileChooser("./src/resources/bodyParts");
 				int returnVal = fc.showOpenDialog(null);
 				if (returnVal == JFileChooser.APPROVE_OPTION) {
-					outer.outerFighterBuilder.focusCMP.img = fc
-							.getSelectedFile();
-					update();
+					myController.getMessage(fc.getSelectedFile(), e);
+					updateOther();
 				}
 			}
 		});
-
+		outer.register(this);
 		outer.add(this);
 	}
 
+
 	public void update() {
-		setEnabled(outer.outerFighterBuilder.focusCMP != null);
-		outer.outerFighterBuilder.repaint();
+		setEnabled(myController.getFoucsedComponent() != null);
+
 	}
+		public void updateOther() {
+		myController.updateFigherBuilder();
+	}
+
+	
 }

@@ -20,11 +20,13 @@ public class SpriteListComponent {
 
 	private Controller myController;
 	
-	private final static String[] myNames = 
-		{"Fire", "5x Power-Up", "10x Power-Up", "Shield", "Sword", "Block", "Wall"};
+	private String[] myNames;
 	
 	public SpriteListComponent (Controller c) {
 		myController = c;
+		
+		//myNames = null;
+		
 	}
 	
 	public JComponent create() {

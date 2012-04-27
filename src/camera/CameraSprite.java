@@ -21,7 +21,6 @@ public class CameraSprite extends SpriteTemplate{
         //        (camera.getHeight() / 2) - (camera.getBounds().getHeight() / 2));
         
         tr2.scale((double)Camera.CANVAS_WIDTH/camera.getWidth(), (double)Camera.CANVAS_HEIGHT/camera.getWidth());
- 
         g.setTransform(tr2);
         sprite.render(g);
         g.setTransform(old);

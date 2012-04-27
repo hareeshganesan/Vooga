@@ -2,53 +2,87 @@ package npsprite;
 
 import java.awt.Graphics2D;
 import java.awt.geom.Point2D;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 
+import events.CollisionEvent;
+import action.Action;
+import action.ActionTimer;
+
+import SpriteTree.Animation;
+import npsprite.SpriteValues.DIR;
+import npsprite.SpriteValues.STATUS;
 import npsprite.properties.DirectionProperty;
 import npsprite.properties.HealthProperty;
-import npsprite.properties.PropertyObject;
+import npsprite.properties.SpawnsProperty;
+import npsprite.properties.StatusProperty;
 
 import sprite.HealthDisplay;
-import sprite.SpriteValues;
-import events.CollisionEvent;
 
-//THIS IS A POINTER TO THE TOP OF THE TREE THAT REPRESENTS A PLAYER
-//TODO: reorganize, make it subclass of spritetemplate?
-public class FighterBody extends SpriteTemplate{
-
+//THIS IS A POINTER TO THE TOP OF THE TREE THAT REPRESENTS A PLAYER - has no width/height
+public class FighterBody extends SpriteTemplate {
     private String myName;
-    private HealthProperty myHealth; // default placeholder
+    private HealthProperty myHealth; // for ease in access
     private DirectionProperty myDirection;
-    
+    private StatusProperty myStatus; // for stuff like jumping, blocking
+
+    private ArrayList<ActionTimer> myTimers;
     private HealthDisplay myDisplay;
-    LimbSprite root; //root must be a limb
+    NodeSprite root; // root must be a limb
     
-    private Graphics2D myPen;
-
     private HashMap<String, NodeSprite> myMap;
-
-    public FighterBody(LimbSprite root, String name, HealthDisplay display) {
+    private HashMap<String,Animation> myMovements;
+    
+    public FighterBody(NodeSprite root, String name, HealthDisplay display) {
         super(root.getGroupID());
         this.root = root;
         root.setFighter(this);
+        this.setDefaultSpeed(root.getSpeed());
         myName = name;
         myDisplay = display;
-        
-        myHealth=new HealthProperty(100);
-        myDirection=new DirectionProperty();
-                
+
+        myHealth = new HealthProperty(100);
+        myDirection = new DirectionProperty(DIR.RIGHT);
+        myStatus = new StatusProperty(SpriteValues.STATUS.NORM);
+
+        myTimers = new ArrayList<ActionTimer>();
+        myTimers.add(new ActionTimer(500));
+
+        this.addProperty(HealthProperty.NAME, myHealth);
+        this.addProperty(DirectionProperty.NAME, myDirection);
+        this.addProperty(StatusProperty.NAME, myStatus);
+
         myDisplay.setStat(myName, (int) getHealth());
 
         myMap = new HashMap<String, NodeSprite>();
         createMap(this.root);
     }
-    //TODO: link up with the horizontal flipping in limb sprites
-    public void setInitDirection(int dir){
+    public String getName(){
+        return myName;
+    }
+
+    public void setAnimations(HashMap<String,Animation>moves){
+        myMovements=moves;
+    }
+    public Animation getAnimation(String name){
+        return myMovements.get(name);
+    }
+    public void setInitDirection(DIR dir) {
         myDirection.setDirection(dir);
     }
 
+    public void setInitStatus(STATUS s) {
+        myStatus.setStatus(s);
+    }
+    public DIR getDirection(){
+        return myDirection.getDirection();
+    }
+    public STATUS getStatus(){
+        return myStatus.getStatus();
+    }
+    
     public void createMap(NodeSprite currNode) {
         if (!myMap.containsKey(currNode.getName())) {
             myMap.put(currNode.getName(), currNode);
@@ -62,35 +96,33 @@ public class FighterBody extends SpriteTemplate{
         return myMap.get(name);
     }
 
-    public void move(Graphics2D pen, double moveX, double moveY) {
+    public void move(double moveX, double moveY) {
         if (root != null) {
-//            System.out.println(moveX+" "+moveY);
-            //root.render(pen, root.getX() + moveX, root.getY() + moveY, 0);
-        	root.move(moveX, moveY);
+
+            root.setX(root.getX() + moveX);     
+            root.setY(root.getY() + moveY);
+
         }
-        
+
         if (moveX < 0) {
-            myDirection.setDirection(SpriteValues.LEFT);
+            myDirection.setDirection(SpriteValues.DIR.LEFT);
         } else if (moveY > 0) {
-            myDirection.setDirection(SpriteValues.RIGHT);
+            myDirection.setDirection(SpriteValues.DIR.RIGHT);
         }
-    }
-    
-    public void setHealth(double h){
-        myHealth.setMaxHealth(h);
-    }
-    public double getHealth() {
-        return myHealth.getHealth();
     }
 
-    public void add(NodeSprite child) {
-        root.addChild(child);
+    public void setHealth(double h) {
+        myHealth.setMaxHealth(h);
     }
-    
-    public void removeChild(NodeSprite child) {
-        root.removeChild(child);
+
+    public double getHealth() {
+        return myHealth.getValue();
     }
-    
+
+    public double getHealthMultiplier() {
+        return myStatus.getValue();
+    }
+
     /* Wrapped for input handler */
     public Point2D getCurrentLocation() {
         return root.getCurrentLocation();
@@ -104,72 +136,115 @@ public class FighterBody extends SpriteTemplate{
         return root.getY();
     }
 
-    public void setRoot(LimbSprite root){
-        this.root=root;
+    public void setRoot(NodeSprite root) {
+        this.root = root;
         root.setFighter(this);
     }
-    public LimbSprite getRoot() {
+
+    public NodeSprite getRoot() {
         return root;
     }
-    public Collection<NodeSprite> getBodyParts(){
+
+    public NodeSprite getLimb(String name) {
+        return myMap.get(name);
+    }
+
+    public Collection<NodeSprite> getBodyParts() {
         return Collections.unmodifiableCollection(myMap.values());
     }
 
+    /* For sprite tree */
+    public void add(String parentName, NodeSprite child) {
+        NodeSprite parent = myMap.get(parentName);
+        parent.addChild(child);
+        
+    }
+
+    public void removeChild(NodeSprite child) {
+        NodeSprite node = myMap.get(child);
+        if (node == null) {
+            return; // break gracefully
+        }
+        if (node.getChildren().size() != 0) {
+            for (NodeSprite cchild : node.getChildren()) {
+                myMap.remove(cchild.getName());
+            }
+        }
+        NodeSprite parent = child.getParent();
+        parent.removeChild(child);
+        myMap.remove(child.getName());
+    }
+
+    /* called by limb sprites to update the map */
     public void childAdded(NodeSprite child) {
         myMap.put(child.getName(), child);
     }
 
-    public void childRemoved(NodeSprite child) {
-        myMap.remove(child.getName());
-    }
-
-    public boolean hasProperty(String name) {
-        return (name.equals(HealthProperty.getName())||name.equals(DirectionProperty.getName()));
-    }
-
-    public PropertyObject getHealthProperty() {
-        return myHealth;
-    }
-
-    public PropertyObject getDirectionProperty() {
-        return myDirection;
-    }
-
-    public PropertyObject getProperty(String name) {
-        if (name.equals(HealthProperty.getName())){
-            return myHealth;
+    public void flip(SpriteValues.DIR direction) {
+        if (direction!=myDirection.getDirection()){
+        root.flip(true);
         }
-        if (name.equals(DirectionProperty.getName())){
-            return myDirection;
-        }
-        return null;
+        myDirection.setDirection(direction);
     }
-
+    
+    public void collisionAction(SpriteTemplate otherSprite) {
+        super.collisionAction(otherSprite);
+    }
 
     @Override
     public void render(Graphics2D pen) {
-        myPen=pen;
-        root.render(pen, root.getX(), root.getY(), 0);
-        myDisplay.render(pen);
+        if (root.isActive()) {
+            root.render(pen, root.getX(), root.getY(), 0);
+            myDisplay.render(pen);
+        }
     }
 
-
-    public void update (long elapsedTime)
-    {
+    public void update(long elapsedTime) {
+        if(this.getCollisionStatus().getStandOnSth()){
+            myTimers.get(0).makeAvailable();
+        }
         root.update(elapsedTime);
         if (getHealth() <= 0) {
             root.setActive(false); // dead, have game check for this for end of
                                    // level
+            this.setActive(false);
         }
-
         myDisplay.update(elapsedTime, (int) getHealth());
-        if (moveBy.getX()!=0 || moveBy.getY()!=0){
-            move(myPen, moveBy.getX(), moveBy.getY());
-        }
-        moveBy.setLocation(0, 0); // moveBy only work for one time then set to
-        setCollisionStatus(false); // zero
         super.update(elapsedTime);
+    }
+    
+    public String print(NodeSprite currentNode){
+        String tree = currentNode.getName();
+        if(currentNode.getChildren().size() == 0){
+            return currentNode.getName();
+        }
+        for(NodeSprite child: currentNode.getChildren()){
+            tree +=print(child);
+            tree += "--";
+        }
+        return tree;
+        
     }
 
 
+    public int getHeight() {
+        double height = 0;
+        for (NodeSprite n : getBodyParts()) {
+            height = Math.max(height, n.getY() + n.getHeight() - getY());
+        }
+        return (int) height;
+    }
+
+    public int getWidth() {
+        double width = 0;
+        for (NodeSprite n : getBodyParts()) {
+            width = Math.max(width, n.getX() + n.getWidth() - getX());
+        }
+        return (int) width;
+    }
+    public ActionTimer getMyTimer (int index)
+    {
+        return myTimers.get(index);
+    }
+    
 }

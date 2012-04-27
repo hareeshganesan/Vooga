@@ -2,14 +2,18 @@ package charactorEditor.drag.Component;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.*;
-
+import charactorEditor.Controller;
 import charactorEditor.drag.AttributePane;
+import charactorEditor.drag.Update;
 
 @SuppressWarnings("serial")
-public class AddPropertyButton extends JButton {
+public class AddPropertyButton extends JButton implements Update {
 	private AttributePane outer;
+	private Controller myController = Controller.Instance();
+	private ArrayList<String> msg = new ArrayList<String>();
 
 	public AddPropertyButton(AttributePane e) {
 		super("add");
@@ -17,24 +21,26 @@ public class AddPropertyButton extends JButton {
 		setBounds(0, 103, 55, 21);
 		addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				msg.clear();
 				String key = (String) outer.myPropertySelectCombo
 						.getSelectedItem();
 				String value = JOptionPane.showInputDialog("input "
 						+ "the value of " + key);
-				if (value != null) {
-					if (value.equalsIgnoreCase(""))
-						outer.outerFighterBuilder.focusCMP.remove(key);
-					else
-						outer.outerFighterBuilder.focusCMP.setProperty(key,
-								value);
-				}
-				outer.update();
+				msg.add(key);
+				msg.add(value);
+				myController.getMessage(msg, e);
+				updateOther();
 			}
 		});
+		outer.register(this);
 		outer.add(this);
 	}
 
+	public void updateOther() {
+		outer.update();
+	}
+
 	public void update() {
-		setEnabled(outer.outerFighterBuilder.focusCMP != null);
+		setEnabled(myController.getFoucsedComponent() != null);
 	}
 }

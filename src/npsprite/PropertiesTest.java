@@ -13,26 +13,26 @@ import npsprite.properties.SpawnsProperty;
 public class PropertiesTest {
     
     public PropertiesTest(){
-        SpriteGroup all=new SpriteGroup("everything");
+        ArrayList<SpriteTemplate>all=new ArrayList<SpriteTemplate>();
 
         SpriteTemplate t=new SpriteTemplate(GroupID.PLAYER_1);
-        t.addProperty(HealthProperty.getName(), new HealthProperty(50));
-        t.addProperty(SpawnsProperty.getName(), new SpawnsProperty(all));
+        t.addProperty(HealthProperty.NAME, new HealthProperty(50));
+        t.addProperty(SpawnsProperty.NAME, new SpawnsProperty(all));
         PropertyObject po=t.getProperty("health");
 
-        System.out.println("first: "+((HealthProperty)po).getHealth());
+        System.out.println("first: "+po.getValue());
         ((HealthProperty)po).addHealth(-5);
-        System.out.println("first: "+((HealthProperty)po).getHealth());
+        System.out.println("first: "+po.getValue());
         
         PropertyObject ps=t.getProperty("spawns");
-        
         List<Point2D> locations=new ArrayList<Point2D>();
         locations.add(new Point2D.Double(50,75));
         locations.add(new Point2D.Double(100,100));
         ((SpawnsProperty)ps).spawnSprites(2, t,locations);
         
-        System.out.println(all.getSize());
-        System.out.println(all.getActiveSprite().getX()+" , "+all.getActiveSprite().getY());
+        System.out.println(all.size());
+        System.out.println(all.get(0).getX()+" , "+all.get(0).getY());
+        System.out.println(all.get(1).getX()+" , "+all.get(1).getY());
         
         
     }

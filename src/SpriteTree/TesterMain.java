@@ -30,32 +30,46 @@ public class TesterMain extends Game {
 	public void initResources() {
 		
 		
+//		
+//		BufferedImage imgH = GraphicsTest.loadImage("src/resources/bodyParts/circle.png");
+//		BufferedImage imgT = GraphicsTest.loadImage("src/resources/bodyParts/limb.png");
+//		BufferedImage imgLA = GraphicsTest.loadImage("src/resources/bodyParts/limb.png");
+//		BufferedImage imgRA = GraphicsTest.loadImage("src/resources/bodyParts/limb.png");
+//		BufferedImage imgLL = GraphicsTest.loadImage("src/resources/bodyParts/limb.png");
+//		BufferedImage imgRL = GraphicsTest.loadImage("src/resources/bodyParts/limb.png");
+//		
+//
+//		BufferedImage imgLRL = GraphicsTest.loadImage("src/resources/bodyParts/limb.png");
+//		BufferedImage imgLLL = GraphicsTest.loadImage("src/resources/bodyParts/limb.png"); //nlimb
+
 		
-		BufferedImage imgH = GraphicsTest.loadImage("src/resources/bodyParts/circle.png");
-		BufferedImage imgT = GraphicsTest.loadImage("src/resources/bodyParts/limb.png");
-		BufferedImage imgLA = GraphicsTest.loadImage("src/resources/bodyParts/limb.png");
-		BufferedImage imgRA = GraphicsTest.loadImage("src/resources/bodyParts/limb.png");
-		BufferedImage imgLL = GraphicsTest.loadImage("src/resources/bodyParts/limb.png");
-		BufferedImage imgRL = GraphicsTest.loadImage("src/resources/bodyParts/limb.png");
+		
+		BufferedImage imgH = GraphicsTest.loadImage("src/resources/bodyParts/head.png");
+		BufferedImage imgT = GraphicsTest.loadImage("src/resources/bodyParts/torso.png");
+		BufferedImage imgLA = GraphicsTest.loadImage("src/resources/bodyParts/leftArm.png");
+		BufferedImage imgRA = GraphicsTest.loadImage("src/resources/bodyParts/rightArm.png");
+		BufferedImage imgLL = GraphicsTest.loadImage("src/resources/bodyParts/leftThigh.png");
+		BufferedImage imgRL = GraphicsTest.loadImage("src/resources/bodyParts/rightThigh.png");
 		
 
-		BufferedImage imgLRL = GraphicsTest.loadImage("src/resources/bodyParts/limb.png");
-		BufferedImage imgLLL = GraphicsTest.loadImage("src/resources/bodyParts/limb.png"); //nlimb
+		BufferedImage imgLRL = GraphicsTest.loadImage("src/resources/bodyParts/leftFoot.png");
+		BufferedImage imgLLL = GraphicsTest.loadImage("src/resources/bodyParts/rightFoot.png"); //nlimb
 
 		
-//		LimbNode torso = new LimbNode("torso",imgT, this.getWidth()/2, this.getHeight()/2);
-		LimbNode torso = new LimbNode("torso",imgT, 50, 50);
-
-		LimbNode head = new LimbNode("head",torso,imgH, torso.getWidth()/3,-5,0);
-		LimbNode LeftArm = new LimbNode("LeftArm",torso,imgLA, -15,0,45);		
-		LimbNode RightArm = new LimbNode("RightArm",torso,imgRA, 15,0,-45);
-		LimbNode LeftLeg = new LimbNode("LeftLeg",torso,imgLL, -15,torso.getHeight()/2,0);
-		LimbNode RightLeg= new LimbNode("RightLeg",torso,imgRL, 15,torso.getHeight()/2,0);
 		
-		LimbNode LRightLeg = new LimbNode("LRightLeg",RightLeg, imgLRL, 0, RightLeg.getHeight()/2, 0);
+		//root node
+		LimbNode torso = new LimbNode("torso",imgT, this.getWidth()/2, this.getHeight()/2);
+		//limb nodes, require parent field
+		LimbNode head = new LimbNode("head",torso,imgH, 0,-(torso.getHeight()/2),0);
+		LimbNode LeftArm = new LimbNode("LeftArm",torso,imgLA, -(torso.getWidth()/2),0,45);		
+		LimbNode RightArm = new LimbNode("RightArm",torso,imgRA,(torso.getWidth()/2),-(torso.getHeight()/2),-45);
+		LimbNode LeftLeg = new LimbNode("LeftLeg",torso,imgLL, 0,torso.getHeight()/2+20,0);
+		LimbNode RightLeg= new LimbNode("RightLeg",torso,imgRL, torso.getWidth(),torso.getHeight()/2+20,0);
+		
+		LimbNode LRightLeg = new LimbNode("LRightLeg",RightLeg, imgLRL, 1, (RightLeg.getHeight()), 0);
 		RightLeg.addChild(LRightLeg);
 		
-		LimbNode LLeftLeg = new LimbNode("LLeftLeg",LeftLeg, imgLLL, 0, LeftLeg.getHeight()/2, 0);
+		LimbNode LLeftLeg = new LimbNode("LLeftLeg",LeftLeg, imgLLL, 1, (LeftLeg.getHeight()), 0);
 		LeftLeg.addChild(LLeftLeg);
 		
 		
@@ -79,7 +93,7 @@ public class TesterMain extends Game {
 		
 		Motion m6 = new Motion("LeftLeg", -80, myTree, 500);
 		Motion m7 = new Motion("LLeftLeg", 90, myTree, 500);
-		Motion m8 = new Motion("LLeftLeg", myTree.getMap().get("LRightLeg").getDefaultTheta(), myTree, 500);
+		Motion m8 = new Motion("LLeftLeg", myTree.getMap().get("LLeftLeg").getDefaultTheta(), myTree, 500);
 		Motion m9 = new Motion("LeftLeg", myTree.getMap().get("LeftLeg").getDefaultTheta(), myTree, 500);
 		Motion m10 = new Motion("LLeftLeg", 0, myTree, 500);
 		
@@ -143,7 +157,25 @@ public class TesterMain extends Game {
 			this.animation.activateAnimation();
 
 		}
+		if(keyPressed(KeyEvent.VK_A)){ //attach node
+			BufferedImage LLL = GraphicsTest.loadImage("src/resources/bodyParts/limb.png");
+			LimbNode LLLeftLeg = new LimbNode("LLLeftLeg",myTree.getNode("LLeftLeg"), LLL, 0, 40, 0);
+			myTree.attach("LLeftLeg",LLLeftLeg);
+
+
+		}
+		if(keyPressed(KeyEvent.VK_R)){ //remove node
+			myTree.detach("LLLeftLeg");
+		}
 		
+		if(keyPressed(KeyEvent.VK_F)){
+			if(myTree.isFlipped() == false){
+			myTree.flip(true);
+			}
+			else{
+				myTree.flip(false);
+			}
+		}
 
 		
 	

@@ -15,9 +15,10 @@ import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.output.XMLOutputter;
 
+import ai.AIAgent;
+
 import com.golden.gamedev.object.Sprite;
 
-import levelEditor.mvc.LevelObject;
 
 public class XMLWriter {
 	
@@ -40,10 +41,11 @@ public class XMLWriter {
 		myRoot = root;
 
 		saveLevelInfo();
-		saveAI();
-		saveSprites();
+		//saveAI();
+		//saveSprites();
 
 		writeToXML(doc);
+		System.out.printf("Finished saving to %s.xml\n" , myLevelObject.getLevelName());
 	}
 
 	private void writeToXML(Document doc) {
@@ -68,9 +70,36 @@ public class XMLWriter {
 	}
 
 
-
+	/**
+	 * @TODO - Use Reflection instead of hard-coded properties
+	 * 	after requisite changes are implemented in AIAgent
+	 */
 	private void saveAI() {
+		AIAgent agent = myLevelObject.getAI();
+		
 		Element ai = new Element("ai");
+		
+		Element health = new Element("health");
+		health.addContent(Double.toString(agent.getHealth()));
+		ai.addContent(health);
+		
+		Element location = new Element("location");
+		
+		Element x = new Element("x");
+		x.addContent(Double.toString(agent.getX()));
+		location.addContent(x);
+		
+		Element y = new Element("y");
+		y.addContent(Double.toString(agent.getY()));
+		location.addContent(y);
+		
+		ai.addContent(location);
+		
+		Element speed = new Element("speed");
+		speed.addContent(Double.toString(agent.getSpeed()));
+		ai.addContent(speed);
+		
+		myRoot.addContent(ai);
 		
 	}
 

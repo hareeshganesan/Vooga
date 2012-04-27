@@ -14,6 +14,7 @@ public class SpritePropertiesComponent {
 
     public void setVisible(boolean b) {
         isVisible = b;
+        setVisible(isVisible);
     }
 
 }

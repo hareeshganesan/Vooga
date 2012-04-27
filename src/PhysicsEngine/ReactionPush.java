@@ -1,106 +1,68 @@
 package PhysicsEngine;
 
 import java.awt.geom.Point2D;
-
 import npsprite.SpriteTemplate;
-//import sprite.SpriteTemplate;
 
+/**
+ * this class works for the case that one push the other and go together
+ * 
+ * @author Donghe
+ * 
+ */
+public class ReactionPush extends Reaction {
 
-public class ReactionPush extends Reaction
-{
+	@Override
+	public void act(SpriteTemplate spriteOne, SpriteTemplate spriteTwo,
+			PhysicsEngine physicsEngine) {
+		Point2D p1 = spriteOne.getMoveBy();
+		Point2D p2 = spriteTwo.getMoveBy();
+		double x1 = p1.getX();
+		double y1 = p1.getY();
+		double x2 = p2.getX();
+		double y2 = p2.getY();
+		dx1 = x1;
+		dy1 = y1;
+		dx2 = x2;
+		dy2 = y2;
+		CollisionStatus status1 = spriteOne.getCollisionStatus();
+		CollisionStatus status2 = spriteTwo.getCollisionStatus();
 
-    @Override
-    public void act (SpriteTemplate ps1, SpriteTemplate ps2)
-    {
-        push(ps1, ps2);
-    }
+		//horizontal collision
+		if (status1.getRight() && status2.getLeft()) {
+			if (x1 > x2) {
+				dx1 = (x1 + x2) / 2;
+				dx2 = (x1 + x2) / 2;
+			}
+		} else if (status1.getLeft() && status2.getRight()) {
+			if (x1 < x2) {
+				dx1 = (x1 + x2) / 2;
+				dx2 = (x1 + x2) / 2;
+			}
+		}
 
+		//vertical collision
+		if (status1.getDown() && status2.getUp()) {
+			if (spriteTwo.getCollisionStatus().getStandOnSth()) {
+				dy1 = Math.min(y1, 0);
+			} else {
+				if (y1 > y2) {
+					dy1 = (y1 + y2) / 2;
+					dy2 = (y1 + y2) / 2;
+				}
+			}
+		} else if (status1.getUp() && status2.getDown()) {
+			if (spriteOne.getCollisionStatus().getStandOnSth()) {
+				dy2 = Math.min(y2, 0);
+			} else {
+				if (y1 < y2) {
+					dy1 = (y1 + y2) / 2;
+					dy2 = (y1 + y2) / 2;
+				}
+			}
 
-    private void push (SpriteTemplate ps1, SpriteTemplate ps2)
-    {
-        Point2D p1 = ps1.getMoveBy();
-        Point2D p2 = ps2.getMoveBy();
-        double x1 = 0, y1 = 0, x2 = 0, y2 = 0;
-        // same direction
-        if ((p1.getX() > 0 && p2.getX() > 0) ||
-            (p1.getX() < 0 && p2.getX() < 0))
-        {
-            x1 = (p1.getX() + p2.getX()) / 2;
-            x2 = (p1.getX() + p2.getX()) / 2;
-        }
-        if ((p1.getY() > 0 && p2.getY() > 0) ||
-            (p1.getY() < 0 && p2.getY() < 0))
-        {
-            y1 = (p1.getY() + p2.getY()) / 2;
-            y2 = (p1.getY() + p2.getY()) / 2;
-        }
-        // collided toward
-        if ((p1.getX() > 0 && p2.getX() < 0 && ps1.getX() < ps2.getX()) ||
-            (p1.getX() < 0 && p2.getX() > 0 && ps1.getX() > ps2.getX()))
-        {
-            x1 = (p1.getX() + p2.getX()) / 2;
-            x2 = (p1.getX() + p2.getX()) / 2;
-        }
-        if ((p1.getY() > 0 && p2.getY() < 0 && ps1.getY() < ps2.getY()) ||
-            (p1.getY() < 0 && p2.getY() > 0 && ps1.getY() > ps2.getY()))
-        {
-            y1 = (p1.getY() + p2.getY()) / 2;
-            y2 = (p1.getY() + p2.getY()) / 2;
-        }
-        // away
-        if ((p1.getX() > 0 && p2.getX() < 0 && ps1.getX() >= ps2.getX()) ||
-            (p1.getX() < 0 && p2.getX() > 0 && ps1.getX() <= ps2.getX()))
-        {
-            x1 = p1.getX();
-            x2 = p2.getX();
-        }
-        if ((p1.getY() > 0 && p2.getY() < 0 && ps1.getY() >= ps2.getY()) ||
-            (p1.getY() < 0 && p2.getY() > 0 && ps1.getY() <= ps2.getY()))
-        {
-            y1 = p1.getY();
-            y2 = p2.getY();
-        }
-        // one stop, one toward
-        if ((p1.getX() > 0 && p2.getX() == 0 && ps1.getX() <= ps2.getX()) ||
-            (p1.getX() < 0 && p2.getX() == 0 && ps1.getX() >= ps2.getX()) ||
-            (p2.getX() > 0 && p1.getX() == 0 && ps2.getX() <= ps1.getX()) ||
-            (p2.getX() < 0 && p1.getX() == 0 && ps2.getX() >= ps1.getX()))
-        {
-            x1 = (p1.getX() + p2.getX()) / 2;
-            x2 = (p1.getX() + p2.getX()) / 2;
-        }
-        if ((p1.getY() > 0 && p2.getY() == 0 && ps1.getY() <= ps2.getY()) ||
-            (p1.getY() < 0 && p2.getY() == 0 && ps1.getY() >= ps2.getY()) ||
-            (p2.getY() > 0 && p1.getY() == 0 && ps2.getY() <= ps1.getY()) ||
-            (p2.getY() < 0 && p1.getY() == 0 && ps2.getY() >= ps1.getY()))
-        {
-            y1 = (p1.getY() + p2.getY()) / 2;
-            y2 = (p1.getY() + p2.getY()) / 2;
-        }
+		}
 
-        // one stop, one away
-        if ((p1.getX() > 0 && p2.getX() == 0 && ps1.getX() > ps2.getX()) ||
-            (p1.getX() < 0 && p2.getX() == 0 && ps1.getX() < ps2.getX()) ||
-            (p2.getX() > 0 && p1.getX() == 0 && ps2.getX() > ps1.getX()) ||
-            (p2.getX() < 0 && p1.getX() == 0 && ps2.getX() < ps1.getX()))
-        {
-            x1 = p1.getX();
-            x2 = p2.getX();
-        }
-        if ((p1.getY() > 0 && p2.getY() == 0 && ps1.getY() > ps2.getY()) ||
-            (p1.getY() < 0 && p2.getY() == 0 && ps1.getY() < ps2.getY()) ||
-            (p2.getY() > 0 && p1.getY() == 0 && ps2.getY() > ps1.getY()) ||
-            (p2.getY() < 0 && p1.getY() == 0 && ps2.getY() < ps1.getY()))
-        {
-            y1 = p1.getY();
-            y2 = p2.getY();
-        }
-
-        myPhysicsEngine = new FightPhysicsEngine(ps1);
-        myPhysicsEngine.setNextLocationIncrement(x1, y1);
-
-        myPhysicsEngine = new FightPhysicsEngine(ps2);
-        myPhysicsEngine.setNextLocationIncrement(x2, y2);
-    }
+		setNextLocationIncrement(spriteOne, spriteTwo, physicsEngine);
+	}
 
 }

@@ -11,26 +11,29 @@ import java.awt.geom.Rectangle2D;
 
 import javax.swing.JPanel;
 
-class MyComponentPanel extends JPanel implements MouseListener,
+import charactorEditor.Controller;
+import charactorEditor.Model.Sort;
+
+public class MyComponentPanel extends JPanel implements MouseListener,
 		MouseMotionListener {
 	private static final long serialVersionUID = 100L;
 	private final Color UNCLICKED_COMPONENT_COLOR = Color.blue;
 	private final Color CLICKED_COMPONENT_COLOR = Color.red;
 	private final Color STRING_COLOR = Color.white;
-	public final int  COMPONENTNUMBER=2;
+	public final int  COMPONENTNUMBER=1;
 	private Graphics2D g = null;
 	private Rectangle2D[] components = new Rectangle2D.Double[COMPONENTNUMBER];
-	private FighterBuilder outer = null;
+	private Controller myController=null;
 
-	MyComponentPanel(FighterBuilder e) {
-		outer = e;
+	MyComponentPanel() {
 		initComponents();
 		setBounds(0, 0, 113, 615);
+		myController=Controller.Instance();
 		addMouseListener(this);
 		addMouseMotionListener(this);
 	}
 
-	int find(Point2D p) {
+	public int find(Point2D p) {
 		for (int i = 0; i < COMPONENTNUMBER; i++) {
 			if (components[i].contains(p)) {
 				return i;
@@ -41,13 +44,13 @@ class MyComponentPanel extends JPanel implements MouseListener,
 
 	void initComponents() {
 		for (int i = 0; i < COMPONENTNUMBER; i++) {
-			components[i] = new Rectangle2D.Double(25, 30 + 30 * i, 60, 25);
+			components[i] = new Rectangle2D.Double(25, 30 + 30 * i, 70, 25);
 		}
 	}
 
 	void drawComponents(Graphics2D g) {
 		for (int i = 0; i < COMPONENTNUMBER; i++) {
-			if (i == outer.willPut) {
+			if (i == myController.getWillPut()) {
 				g.setColor(CLICKED_COMPONENT_COLOR);
 				g.fill(components[i]);
 			} else {
@@ -57,7 +60,7 @@ class MyComponentPanel extends JPanel implements MouseListener,
 		}
 		g.setColor(STRING_COLOR);
 		for (int i = 0; i < COMPONENTNUMBER; i++) {
-			g.drawString(outer.SORT.CMP[i], 27, 47 + 30 * i);
+			g.drawString(Sort.CMP[i], 27, 47 + 30 * i);
 		}
 	}
 
@@ -77,10 +80,7 @@ class MyComponentPanel extends JPanel implements MouseListener,
 	}
 
 	public void mousePressed(MouseEvent e) {
-		outer.willPut = find(e.getPoint());
-		outer.focusCMP = null;
-		update();
-		outer.repaint();
+		myController.mousePressed(e);
 	}
 
 	public void mouseReleased(MouseEvent e) {
@@ -91,14 +91,7 @@ class MyComponentPanel extends JPanel implements MouseListener,
 	}
 
 	public void mouseMoved(MouseEvent e) {
-		if (find(e.getPoint()) != -1) {
-			outer.cross();
-		} else {
-			outer.deletecross();
-		}
+		myController.mouseMoved(e);
 	}
 
-	private void update() {
-		outer.attributePane.update();
-	}
 }

@@ -2,7 +2,7 @@ package ai;
 
 import game.CombatInstance;
 import java.util.TreeMap;
-import npsprite.LimbSprite;
+import npsprite.NodeSprite;
 import sprite.HealthDisplay;
 import action.Action;
 
@@ -24,7 +24,7 @@ public class BasicStrategyAgent extends AIAgent
     Strategy strat;
     TreeMap<Double, Strategy> strategies = new TreeMap<Double, Strategy>();
 
-    public BasicStrategyAgent (String name,LimbSprite root,
+    public BasicStrategyAgent (String name,NodeSprite root,
                          HealthDisplay display,
                          int groupID,
                          CombatInstance c)
@@ -56,7 +56,7 @@ public class BasicStrategyAgent extends AIAgent
         {
             strat = selectRandomStrategy();
             strat.initializeGoals();
-            System.out.println(strat.getClass().getName());
+            //System.out.println(strat.getClass().getName());
         }
         return strat.generateAction(myLevel, this);
 

@@ -3,7 +3,7 @@ package ai;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import npsprite.LimbSprite;
+import npsprite.NodeSprite;
 import SpriteTree.LimbNode;
 import game.CombatInstance;
 import sprite.HealthDisplay;
@@ -14,7 +14,7 @@ public class SituationalStrategyAgent extends BasicStrategyAgent
     ArrayList<Situation> situations = new ArrayList<Situation>();
 
     public SituationalStrategyAgent (String name,
-                               LimbSprite root,
+                               NodeSprite root,
                                HealthDisplay display,
                                int groupID,
                                CombatInstance c)

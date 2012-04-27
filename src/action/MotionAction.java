@@ -1,8 +1,9 @@
 package action;
 
 import java.awt.geom.Point2D;
+import com.golden.gamedev.object.Timer;
 import npsprite.FighterBody;
-import PhysicsEngine.FightPhysicsEngine;
+import PhysicsEngine.PhysicsEngine;
 
 
 /**
@@ -19,8 +20,13 @@ public class MotionAction implements Action
     double y_direction;
     FighterBody myFighter;
     boolean done;
-    
-    public MotionAction (FighterBody fighter, Point2D point)
+    PhysicsEngine myPhysicsEngine;
+    long upTime;
+
+
+    public MotionAction (FighterBody fighter,
+                         Point2D point,
+                         PhysicsEngine physicsEngine)
     {
         myFighter = fighter;
         double dist = myFighter.getCurrentLocation().distance(point);
@@ -29,27 +35,35 @@ public class MotionAction implements Action
             x_direction = (point.getX() - myFighter.getX()) / dist;
             y_direction = (point.getY() - myFighter.getY()) / dist;
         }
+        myPhysicsEngine = physicsEngine;
 
     }
 
-    public MotionAction (FighterBody r, double x, double y)
+
+    public MotionAction (FighterBody r,
+                         double x,
+                         double y,
+                         PhysicsEngine physicsEngine)
     {
         myFighter = r;
         x_direction = x;
         y_direction = y;
+        myPhysicsEngine = physicsEngine;
     }
 
 
     @Override
     public void performAction (long elapsed_time)
-    {
-        FightPhysicsEngine physicsEngine = new FightPhysicsEngine(this);
-        physicsEngine.process(elapsed_time);
+    {        
+        if(y_direction>=0 || myFighter.getMyTimer(0).action(elapsed_time)){
+            myPhysicsEngine.process(this, elapsed_time);
+        }
         done = true;
     }
-    
-    public FighterBody getFighterBody(){
-    	return myFighter;
+
+    public FighterBody getFighterBody ()
+    {
+        return myFighter;
     }
 
 
@@ -63,21 +77,43 @@ public class MotionAction implements Action
     {
         return y_direction;
     }
-    public static MotionAction LEFT(FighterBody fighter){
-        return new MotionAction(fighter, -1, 0);
+
+
+    public static MotionAction LEFT (FighterBody fighter,
+                                     PhysicsEngine physicsEngine)
+    {
+        return new MotionAction(fighter, -1, 0, physicsEngine);
     }
-    public static MotionAction RIGHT(FighterBody fighter){
-        return new MotionAction(fighter, 1, 0);
+
+
+    public static MotionAction RIGHT (FighterBody fighter,
+                                      PhysicsEngine physicsEngine)
+    {
+        return new MotionAction(fighter, 1, 0, physicsEngine);
     }
-    public static MotionAction UP(FighterBody fighter){
-        return new MotionAction(fighter, 0, -1);
+
+
+    public static MotionAction UP (FighterBody fighter,
+                                   PhysicsEngine physicsEngine)
+    {
+        return new MotionAction(fighter, 0, -1, physicsEngine);
     }
-    public static MotionAction DOWN(FighterBody fighter){
-        return new MotionAction(fighter, 0, 1);
+
+
+    public static MotionAction DOWN (FighterBody fighter,
+                                     PhysicsEngine physicsEngine)
+    {
+        return new MotionAction(fighter, 0, 1, physicsEngine);
     }
-    public static MotionAction Gravity(FighterBody fighter, double gravity){
-    	return new MotionAction(fighter, 0, gravity);
+
+
+    public static MotionAction Gravity (FighterBody fighter,
+                                        double gravity,
+                                        PhysicsEngine physicsEngine)
+    {
+        return new MotionAction(fighter, 0, gravity, physicsEngine);
     }
+
 
     @Override
     public boolean isDone (long elapsedTime)
