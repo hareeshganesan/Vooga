@@ -65,7 +65,8 @@ public class FighterBody extends SpriteTemplate{
     public void move(Graphics2D pen, double moveX, double moveY) {
         if (root != null) {
 //            System.out.println(moveX+" "+moveY);
-            root.render(pen, root.getX() + moveX, root.getY() + moveY, 0);
+            //root.render(pen, root.getX() + moveX, root.getY() + moveY, 0);
+        	root.move(moveX, moveY);
         }
         
         if (moveX < 0) {
