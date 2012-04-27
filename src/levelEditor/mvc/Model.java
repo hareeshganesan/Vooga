@@ -29,8 +29,6 @@ public class Model {
 	}
 	
 	
-	
-	
 	public void addSprite (Sprite s) {
 		mySprites.add(s);
 		myLevel.addSprite(s);
