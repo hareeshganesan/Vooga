@@ -22,6 +22,10 @@ public class MyComponent {
 	private String parentForFile;
 	private ArrayList<MyComponent> children = new ArrayList<MyComponent>();
 	private ArrayList<String> childrenForFile = new ArrayList<String>();
+	private String fighterName;
+	private String healthProperty;
+	
+	
 
 	public MyComponent(MyComponent m) {
 		this.sortID = m.getSortID();
@@ -226,13 +230,26 @@ public class MyComponent {
 	}
 
 
-
+    
+	public String getName(){
+		return fighterName;
+	}
+	public void setName(String name){
+		this.fighterName=name;
+	}
 	public void resetParent() {
 		this.parent = null;
 	}
 
 	public String getParentForFile() {
 		return this.parentForFile;
+	}
+	
+	public String getHealthProperty(){
+		return healthProperty;
+	}
+	public void setHealthProperty(String d){
+		healthProperty=d;
 	}
 
 	public ArrayList<String> getChildrenForFile() {

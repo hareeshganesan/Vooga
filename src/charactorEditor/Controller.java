@@ -267,7 +267,12 @@ public class Controller implements MouseListener, MouseMotionListener,
 	public MyComponent getNextFocusComponent() {
 		return myMainPaneModel.getNextFocusComponent();
 	}
-
+    public void setFighterName(String s){
+    	myModel.setFigherName(s);
+    }
+    public void setHealth(String s){
+    	myModel.setHealth(s);
+    }
 //	public LimbNode getLimbNodeTree() {
 //		ArrayList<MyComponent> list = myModel.getComponentList();
 //		// HashMap<String,MyComponent> map=new HashMap<String,MyComponent>();
