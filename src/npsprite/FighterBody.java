@@ -245,5 +245,10 @@ public class FighterBody extends SpriteTemplate {
     {
         return myTimers.get(index);
     }
+
+    public String getName ()
+    {
+        return myName;
+    }
     
 }
