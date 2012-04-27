@@ -35,12 +35,12 @@ public class FighterBody extends SpriteTemplate {
 
     private ArrayList<ActionTimer> myTimers;
     private HealthDisplay myDisplay;
-    LimbSprite root; // root must be a limb
+    NodeSprite root; // root must be a limb
     
     private HashMap<String, NodeSprite> myMap;
     private HashMap<String,Animation> myMovements;
     
-    public FighterBody(LimbSprite root, String name, HealthDisplay display) {
+    public FighterBody(NodeSprite root, String name, HealthDisplay display) {
         super(root.getGroupID());
         this.root = root;
         root.setFighter(this);
@@ -136,12 +136,12 @@ public class FighterBody extends SpriteTemplate {
         return root.getY();
     }
 
-    public void setRoot(LimbSprite root) {
+    public void setRoot(NodeSprite root) {
         this.root = root;
         root.setFighter(this);
     }
 
-    public LimbSprite getRoot() {
+    public NodeSprite getRoot() {
         return root;
     }
 
