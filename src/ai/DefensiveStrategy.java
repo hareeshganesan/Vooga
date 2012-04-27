@@ -1,9 +1,14 @@
 package ai;
 
+import java.util.TreeMap;
 import npsprite.FighterBody;
 import game.CombatInstance;
 import sprite.FighterSprite;
+import action.Action;
+import action.ActionSeries;
 import action.AvoidAction;
+import action.Goal;
+import action.MotionAction;
 
 
 /**
@@ -41,11 +46,12 @@ public class DefensiveStrategy extends Strategy
             super(new AvoidAction(me, enemy,myPhysicsEngine), 10000);
             myFighter = me;
             myEnemy = enemy;
+            
         }
 
 
         @Override
-        void updateGoalState ()
+        protected void updateGoalState ()
         {
             if (myFighter.getCurrentLocation()
                          .distance(myEnemy.getCurrentLocation()) > 200) done =

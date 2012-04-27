@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import npsprite.FighterBody;
 import PhysicsEngine.PhysicsEngine;
 import action.Action;
+import action.Goal;
 
 
 abstract class Strategy
