@@ -6,24 +6,19 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
-import npsprite.FighterBody;
-import npsprite.GroupID;
-import npsprite.HealthSprite;
-import npsprite.LimbSprite;
-import npsprite.NodeSprite;
-import npsprite.PlatformBlock;
-import npsprite.SpriteTemplate;
-import npsprite.properties.DamageProperty;
-import npsprite.properties.PropertyObject;
-import npsprite.properties.SpawnsProperty;
+import npsprite.*;
+import events.*;
+import npsprite.properties.*;
 
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
 import org.jdom.xpath.XPath;
+
 
 import sprite.HealthDisplay;
 import PhysicsEngine.PhysicsEngine;
@@ -80,7 +75,7 @@ public class LevelObjectsFactory {
                         (c.getWidth() / 2) - 30);
             }
             Element torsoe = e.getChild("limb");
-            LimbSprite torso = new LimbSprite(torsoe.getChildText("name"),
+            NodeSprite torso = new NodeSprite(torsoe.getChildText("name"),
                     c.getImage(torsoe.getChildText("img")),
                     GroupID.getIdFromString(e.getChildText("id")),
                     Double.parseDouble(torsoe.getChildText("x")),
@@ -89,45 +84,48 @@ public class LevelObjectsFactory {
             torso.setDefaultSpeed(Double.parseDouble(torsoe
                     .getChildText("speed")));
 
-            System.out.println("torso: " + torso.getName());
             addProperties(torso, torsoe.getChildren("property"));
-            addCollisions(torso, torsoe.getChildren("collision"));
-
+            torso.addCollisionEvents(getCollisions(torsoe.getChildren("collision")));
+            
             FighterBody tree = new FighterBody(torso, e.getChildText("name"),
                     dis);
             tree.setHealth(Integer.parseInt(e.getChildText("health")));
 
             addLimbs(torso, torsoe.getChildren("limb"));
+            
             mapFighter(playerIndex, tree);
             playerIndex++;
 
+//            System.out.println(torso.getGroupID()+" "+torso.getCollisionSize());
             fs.add(tree);
         }
 
-//        fs.add(createAIStrategyFighter());
+        fs.add(createAIStrategyFighter());
+
         return fs;
     }
 
     @SuppressWarnings("unchecked")
-    private void addLimbs(LimbSprite torso, List<Element> elements) {
+    private void addLimbs(NodeSprite torso, List<Element> elements) {
         for (Element e : elements) {
-            LimbSprite s = new LimbSprite(e.getChildText("name"), c.getImage(e
-                    .getChildText("img")), torso, Double.parseDouble(e
-                    .getChildText("x")),
+            NodeSprite s = new NodeSprite(e.getChildText("name"), 
+                    torso,
+                    c.getImage(e.getChildText("img")),
+                    Double.parseDouble(e.getChildText("x")),
                     Double.parseDouble(e.getChildText("y")),
                     Double.parseDouble(e.getChildText("damage")),
                     Integer.parseInt(e.getChildText("theta")));
 
             addProperties(s, e.getChildren("property"));
-            addCollisions(s, e.getChildren("collision"));
+            s.addCollisionEvents(getCollisions(e.getChildren("collision")));
             addLimbs(s, e.getChildren("limb"));
-            System.out.println("limb: " + s.getName());
+//            System.out.println("limb: " + s.getName());
             torso.addChild(s);
         }
     }
 
     private AIAgent createAIFighter() {
-        LimbSprite body = new LimbSprite("ai1body",
+        NodeSprite body = new NodeSprite("ai1body",
                 c.getImage("resources/flame.png"), GroupID.PLAYER_AI, 400, 500,
                 0);
         BasicAIAgent ai = new BasicAIAgent("ai1main", body, new HealthDisplay(
@@ -140,7 +138,7 @@ public class LevelObjectsFactory {
     }
 
     private AIAgent createAIStrategyFighter() {
-        LimbSprite body = new LimbSprite("ai2body",
+        NodeSprite body = new NodeSprite("ai2body",
                 c.getImage("resources/flame.png"), GroupID.PLAYER_AI, 400, 500,
                 0);
         BasicStrategyAgent ai = new SituationalStrategyAgent("ai2main", body,
@@ -182,31 +180,25 @@ public class LevelObjectsFactory {
         List<Element> b = findAllInstancesOfElement("Sprite");
         ArrayList<SpriteTemplate> fs = new ArrayList<SpriteTemplate>();
         for (Element e : b) {
-            SpriteTemplate s = new SpriteTemplate(c.getImage(e
-                    .getChildText("img")), GroupID.getIdFromString(e
-                    .getChildText("id")));
-            s.setLocation(Double.parseDouble(e.getChildText("x")),
-                    Double.parseDouble(e.getChildText("y")));
-            addProperties(s, e.getChildren("property"));
-            addCollisions(s, e.getChildren("collision"));
-            fs.add(s);
+            fs.add(createSprite(e));
         }
         return fs;
     }
-
     private SpriteTemplate createSprite(Element e) {
         SpriteTemplate s = new SpriteTemplate(
                 c.getImage(e.getChildText("img")), GroupID.getIdFromString(e
                         .getChildText("id")));
         s.setLocation(Double.parseDouble(e.getChildText("x")),
                 Double.parseDouble(e.getChildText("y")));
+        if (e.getChild("inactive") != null){
+            s.setActive(false);
+        }
         addProperties(s, e.getChildren("property"));
-        addCollisions(s, e.getChildren("collision"));
+        s.addCollisionEvents(getCollisions(e.getChildren("collision")));
         return s;
-
     }
 
-    //TODO
+    //TODO: refactor
     private void addProperties(SpriteTemplate s, List<Element> props) {
         for (Element e : props) {
             String p = e.getChildText(DamageProperty.NAME);
@@ -214,9 +206,13 @@ public class LevelObjectsFactory {
                 s.addProperty(DamageProperty.NAME,
                         new DamageProperty(Double.parseDouble(p)));
             }
+            p=e.getChildText(HealthProperty.NAME);
+            if (p!=null){
+                s.addProperty(HealthProperty.NAME, new HealthProperty(Double.parseDouble(p)));
+            }
             p = e.getChildText(SpawnsProperty.NAME);
-            
             if (p != null) {
+                System.out.println("creating spawner");
                 s.addProperty(SpawnsProperty.NAME,createSpawnsProp(e));
             }
         }
@@ -245,11 +241,57 @@ public class LevelObjectsFactory {
         }
         return sp;
         
-        
     }
 
-    private void addCollisions(SpriteTemplate s, List<Element> coll) {
-        // TODO
+    //TODO: refactor
+    private HashMap<GroupID,CollisionEvent> getCollisions(List coll) {
+        HashMap<GroupID,CollisionEvent>allEvents=new HashMap<GroupID,CollisionEvent>();
+        for (Object d:coll){
+            Element e=(Element) d;
+            for (Object c:e.getChildren(HealthEvent.getName())){
+//                System.out.println("creating health collision");
+                String p=((Element) c).getText();
+                allEvents.put(GroupID.getIdFromString(p), new HealthEvent());
+            }
+            for (Object c:e.getChildren(InactiveEvent.getName())){
+//                System.out.println("creating inactive collision");
+                String p=((Element) c).getText();
+                allEvents.put(GroupID.getIdFromString(p), new InactiveEvent());
+            }
+            for (Object c:e.getChildren(SpawnEvent.getName())){
+//                System.out.println("creating spawn collision");
+                String p=((Element) c).getText();
+                allEvents.put(GroupID.getIdFromString(p), new SpawnEvent());
+            }
+            for (Object c:e.getChildren(CompositeEvent.getName())){
+              String p=((Element) c).getText();
+              System.out.println("creating composite collision "+GroupID.getIdFromString(p));
+              CompositeEvent ce=new CompositeEvent();
+              for (Object o:((Element) c).getChildren()){ //i wish this could be done with recursion
+                  ce.addEvent(getCollision((Element) o));
+              }
+              allEvents.put(GroupID.getIdFromString(p), ce);
+          }
+        }
+        return allEvents;
+    }
+
+    private CollisionEvent getCollision(Element o) {
+        if (o.getName().equals(HealthEvent.getName())){
+            return new HealthEvent();
+        }
+        if (o.getName().equals(InactiveEvent.getName())){
+            System.out.println("creating inactive event");
+            return new InactiveEvent();
+        }
+        if (o.getName().equals(SpawnEvent.getName())){
+            System.out.println("creating spawn event");
+            return new SpawnEvent();
+        }
+        if (o.getName().equals(HealthEvent.getName())){
+            return new HealthEvent();
+        }
+        return null;
     }
 
     public String getBackground() {

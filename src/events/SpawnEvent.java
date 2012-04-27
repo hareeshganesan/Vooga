@@ -19,5 +19,8 @@ public class SpawnEvent extends CollisionEvent {
                     .spawnSprites();
         }
     }
+    public static String getName(){
+        return "spawn";
+    }
 
 }

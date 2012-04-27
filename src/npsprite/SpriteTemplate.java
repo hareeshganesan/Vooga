@@ -20,8 +20,8 @@ public class SpriteTemplate extends Sprite implements Cloneable{
     double defaultSpeed = 0.3;
     double myMass=200;
     
-    private HashMap<String,PropertyObject> myProperties = new HashMap<String,PropertyObject>();
-    private HashMap<GroupID,CollisionEvent> myCollisions = new HashMap<GroupID,CollisionEvent>();
+    protected HashMap<String,PropertyObject> myProperties = new HashMap<String,PropertyObject>();
+    protected HashMap<GroupID,CollisionEvent> myCollisions = new HashMap<GroupID,CollisionEvent>();
     
     protected GroupID myID;
     
@@ -55,8 +55,8 @@ public class SpriteTemplate extends Sprite implements Cloneable{
      */
     @SuppressWarnings("unchecked")
     public SpriteTemplate clone(){
-        SpriteTemplate c=new SpriteTemplate(myID);
-        c.addCollisionEvents((HashMap<GroupID, CollisionEvent>) myCollisions.clone()); //TODO: SHALLOW CLONE FOR THIS is okay, right?
+        SpriteTemplate c=new SpriteTemplate(this.getImage(),myID);
+        c.addCollisionEvents((HashMap<GroupID, CollisionEvent>) myCollisions.clone());
         HashMap<String, PropertyObject> newProperties=new HashMap<String, PropertyObject>();
         for (Entry<String, PropertyObject> e:myProperties.entrySet()){
             newProperties.put(e.getKey(), e.getValue().clone());
@@ -108,10 +108,16 @@ public class SpriteTemplate extends Sprite implements Cloneable{
      * active and have different groupIDs
      */
     public void collisionAction(SpriteTemplate otherSprite) {
+//        System.out.println(myID+" trying to collide "+myCollisions.size());
         CollisionEvent act=myCollisions.get(otherSprite.getGroupID());
         if (act != null) {
+//            System.out.println("acting");
             act.performAction(this, otherSprite);
         }
+    }
+    //TODO: DELETE, FOR TESTING
+    public int getCollisionSize(){
+        return myCollisions.size();
     }
     
     public CollisionStatus getCollisionStatus(){

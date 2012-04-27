@@ -19,18 +19,14 @@ public class HealthEvent extends CollisionEvent {
     @Override
     public void performAction(SpriteTemplate me, SpriteTemplate o) {
         if (o.hasProperty(DamageProperty.NAME)) {
-            if (me.hasProperty(HealthProperty.NAME)){
-                double damage=o.getProperty(DamageProperty.NAME)
-                    .getValue();
-                if (GroupID.isFighter(me.getGroupID())){
-                    if (GroupID.isFighter(o.getGroupID())){
-                        //TODO - check if facing each other, punching/blocking, etc
-                    }
-                    damage=damage*((LimbSprite) me).getMyPointer().getHealthMultiplier();
-                }
+            if (me.hasProperty(HealthProperty.NAME)) {
+                double damage = o.getProperty(DamageProperty.NAME).getValue();
                 ((HealthProperty) me.getProperty(HealthProperty.NAME))
-                    .addHealth(damage);
+                        .addHealth(damage);
             }
         }
+    }
+    public static String getName(){
+        return "health";
     }
 }

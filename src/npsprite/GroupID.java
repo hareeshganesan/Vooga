@@ -22,7 +22,7 @@ public enum GroupID {
     
     //for level objects factory
     public static GroupID getIdFromString(String n){
-        GroupID name=xmlcodes.get(n);
+        GroupID name=xmlcodes.get(n.trim());
         if (name==null){
             return UNCATEGORIZED;
         }
@@ -32,6 +32,12 @@ public enum GroupID {
     //if the collisions want to use this instead of reflection
     public static boolean isFighter(GroupID g){
         return g.name().contains("PLAYER");
+    }
+    public static boolean isPlatform(GroupID g){
+        return g==PLATFORM;
+    }
+    public static boolean isOther(GroupID g){
+        return !(isFighter(g)||isPlatform(g));
     }
 }
 

@@ -41,9 +41,8 @@ public class NPSTest extends Game {
         power.setLocation(400, 300);
 
         BufferedImage imgTorso = getImage("src/resources/bodyParts/torso.png");
-        LimbSprite torso = new LimbSprite("torso", imgTorso, GroupID.PLAYER_1,
-                50,50);
-
+        NodeSprite torso = new NodeSprite("torso", imgTorso, GroupID.PLAYER_1,
+                50,50,-5);
         InactiveEvent pevent = new InactiveEvent();// TODO: SHOULD I CHANGE
                                                    // THESE INTO STATIC? IT'S A
                                                    // CLASS WRAPPING A SINGLE

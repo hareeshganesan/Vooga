@@ -12,6 +12,7 @@ public class HealthProperty extends PropertyObject{
     }
     public void addHealth(double damage){
         health+=damage;
+        System.out.println("removing health"+health);
         wrapHealth();
     }
     @Override

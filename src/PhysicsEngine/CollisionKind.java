@@ -2,6 +2,7 @@ package PhysicsEngine;
 
 import java.util.ArrayList;
 import npsprite.FighterBody;
+import npsprite.GroupID;
 import npsprite.PlatformBlock;
 import npsprite.SpriteTemplate;
 
@@ -50,7 +51,7 @@ public abstract class CollisionKind {
 	 */
 	public void doThisReaction(SpriteTemplate spriteOne,
 			SpriteTemplate spriteTwo, PhysicsEngine physicsEngine) {
-		spriteOne.collisionAction(spriteTwo);
+	    spriteOne.collisionAction(spriteTwo);
 		spriteTwo.collisionAction(spriteOne);
 		for (Reaction reaction : myReactions) {
 			reaction.act(spriteOne, spriteTwo, physicsEngine);
@@ -102,13 +103,18 @@ public abstract class CollisionKind {
 	 * check whether this sprite is a platform block
 	 */
 	protected boolean isPlatformBlock(SpriteTemplate sprite) {
-		return sprite.getClass().equals(PlatformBlock.class);
+	    return GroupID.isPlatform(sprite.getGroupID());
+//		return sprite.getClass().equals(PlatformBlock.class);
+	}
+	protected boolean isOtherSprite(SpriteTemplate sprite){
+	    return GroupID.isOther(sprite.getGroupID());
 	}
 
 	/**
 	 * check whether this sprite is a kind of FighterBody
 	 */
 	protected boolean belongFighterBody(SpriteTemplate sprite) {
-		return FighterBody.class.isAssignableFrom(sprite.getClass());
+	    return GroupID.isFighter(sprite.getGroupID());
+//		return FighterBody.class.isAssignableFrom(sprite.getClass());
 	}
 }

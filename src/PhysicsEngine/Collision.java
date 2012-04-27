@@ -2,6 +2,7 @@ package PhysicsEngine;
 
 import java.util.ArrayList;
 import npsprite.FighterBody;
+import npsprite.GroupID;
 import npsprite.NodeSprite;
 import npsprite.SpriteGroupTemplate;
 import npsprite.SpriteTemplate;
@@ -42,6 +43,9 @@ public class Collision {
 	 */
 	private boolean isCollided(SpriteTemplate spriteOne,
 			SpriteTemplate spriteTwo) {
+	    if ((!spriteOne.isActive())||(!spriteTwo.isActive())){
+	        return false;
+	    }
 		if (getLeft(spriteOne) > getRight(spriteTwo))
 			return false;
 		if (getRight(spriteOne) < getLeft(spriteTwo))
@@ -63,8 +67,16 @@ public class Collision {
 		ArrayList<SpriteTemplate> bodyPartsTwo = getBodyParts(spriteTwo);
 		for (SpriteTemplate bodyPartOne : bodyPartsOne) {
 			for (SpriteTemplate bodyPartTwo : bodyPartsTwo) {
-				if (isCollided(bodyPartOne, bodyPartTwo))
-					return true;
+				if (isCollided(bodyPartOne, bodyPartTwo)){
+				    
+		            setGroupCollisionStatus(bodyPartOne, bodyPartTwo);
+		            for (CollisionKind kind : myReactionList) {
+		                if (kind.isThisKind(spriteOne, spriteTwo)) {
+		                    kind.doThisReaction(bodyPartOne, bodyPartTwo, myPhysicsEngine);
+		                }
+		            }
+				    return true;
+				}
 			}
 		}
 		return false;
@@ -76,7 +88,9 @@ public class Collision {
 	 */
 	private ArrayList<SpriteTemplate> getBodyParts(SpriteTemplate sprite) {
 		ArrayList<SpriteTemplate> bodyParts = new ArrayList<SpriteTemplate>();
+//		if (GroupID.isFighter(sprite.getGroupID())){
 		if (FighterBody.class.isAssignableFrom(sprite.getClass())) {
+		    
 			for (NodeSprite n : ((FighterBody) sprite).getBodyParts()) {
 				bodyParts.add(n);
 			}
@@ -117,16 +131,20 @@ public class Collision {
 	 */
 	private void checkEachCollision(SpriteTemplate spriteOne,
 			SpriteTemplate spriteTwo) {
-		if (isBodyCollided(spriteOne, spriteTwo)) {
-			setGroupCollisionStatus(spriteOne, spriteTwo);
-			for (CollisionKind kind : myReactionList) {
-				if (kind.isThisKind(spriteOne, spriteTwo)) {
-					kind.doThisReaction(spriteOne, spriteTwo, myPhysicsEngine);
-				}
-			}
+//	    isBodyCollided(spriteOne,spriteTwo);
+		if (isBodyCollided(spriteOne, spriteTwo)){
+//
+		    //TODO: refactor
+            setGroupCollisionStatus(spriteOne, spriteTwo);
+            for (CollisionKind kind : myReactionList) {
+                if (kind.isThisKind(spriteOne, spriteTwo)) {
+                    kind.doThisReaction(spriteOne, spriteTwo, myPhysicsEngine);
+                }
+            }
+		}
 			// for debug
 			// System.out.println("collision");
-		}
+//		}
 	}
 
 	/**

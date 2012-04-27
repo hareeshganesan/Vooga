@@ -9,7 +9,7 @@ public class CompositeEvent extends CollisionEvent{
 
     private ArrayList<CollisionEvent> events;
 
-    public CompositeEvent(SpriteTemplate o) {
+    public CompositeEvent() {
         events = new ArrayList<CollisionEvent>();
     }
 
@@ -18,10 +18,12 @@ public class CompositeEvent extends CollisionEvent{
     }
 
     public void addEvent(CollisionEvent e) {
+        if (e==null){return;}
         events.add(e);
     }
 
     public void addAll(ArrayList<CollisionEvent> e) {
+        if (e==null){return;}
         events.addAll(e);
     }
 
@@ -30,5 +32,9 @@ public class CompositeEvent extends CollisionEvent{
         for (CollisionEvent e : events) {
             e.performAction(me, o);
         }
+    }
+
+    public static String getName() {
+        return "composite";
     }
 }
