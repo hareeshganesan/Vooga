@@ -2,9 +2,12 @@ package npsprite;
 
 import java.awt.Graphics2D;
 import java.awt.geom.Point2D;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import action.Action;
+import action.ActionTimer;
 
 import npsprite.properties.DirectionProperty;
 import npsprite.properties.HealthProperty;
@@ -21,7 +24,7 @@ public class FighterBody extends SpriteTemplate {
 	private String myName;
 	private HealthProperty myHealth; // default placeholder
 	private DirectionProperty myDirection;
-
+	private ArrayList<ActionTimer> myTimers;
 	private HealthDisplay myDisplay;
 	LimbSprite root; // root must be a limb
 
@@ -35,10 +38,10 @@ public class FighterBody extends SpriteTemplate {
 		root.setFighter(this);
 		myName = name;
 		myDisplay = display;
-
 		myHealth = new HealthProperty(100);
 		myDirection = new DirectionProperty();
-
+		myTimers = new ArrayList<ActionTimer>();
+		myTimers.add(new ActionTimer(500));
 		myDisplay.setStat(myName, (int) getHealth());
 
 		myMap = new HashMap<String, NodeSprite>();
@@ -157,6 +160,9 @@ public class FighterBody extends SpriteTemplate {
 	}
 
 	public void update(long elapsedTime) {
+	    if(this.getCollisionStatus().getStandOnSth()){
+	        myTimers.get(0).makeAvailable();
+	    }
 		root.update(elapsedTime);
 		if (getHealth() <= 0) {
 			root.setActive(false); // dead, have game check for this for end of
@@ -188,4 +194,10 @@ public class FighterBody extends SpriteTemplate {
 		}
 		return (int) width;
 	}
+
+    public ActionTimer getMyTimer (int index)
+    {
+        return myTimers.get(index);
+    }
+    
 }

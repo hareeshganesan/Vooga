@@ -19,8 +19,8 @@ public class Camera extends JPanel {
     public static final int CANVAS_HEIGHT = 544;
     public static final int CANVAS_WIDTH = 544;
     
-    private int MIN_X = 200;
-    private int MIN_Y = 200;
+    private int MIN_X = CANVAS_WIDTH / 2;
+    private int MIN_Y = CANVAS_HEIGHT / 2;
     private int MAX_X = CANVAS_WIDTH;
     private int MAX_Y = CANVAS_HEIGHT;
 
@@ -136,10 +136,10 @@ public class Camera extends JPanel {
         currentBounds.height = (int) (currentBounds.height + ((targetBounds.height-currentBounds.height)/zoomSpeed));
         currentBounds.width = (int) (currentBounds.width + ((targetBounds.width-currentBounds.width)/zoomSpeed));
 
-        System.out.println("Centered at " + center.x + "," + center.y);
-        int herp = targetBounds.x + targetBounds.width;
-        int derp = targetBounds.y + targetBounds.height;
-        System.out.println("Bounded by " + targetBounds.x + "," + targetBounds.y + " " + herp + "," + derp);
+        //System.out.println("Centered at " + center.x + "," + center.y);
+        //int herp = targetBounds.x + targetBounds.width;
+        //int derp = targetBounds.y + targetBounds.height;
+        //System.out.println("Bounded by " + targetBounds.x + "," + targetBounds.y + " " + herp + "," + derp);
         
     }
 
@@ -170,33 +170,37 @@ public class Camera extends JPanel {
     {
         calculateNewCenter(playerSprites);
         calculateNewBounds(playerSprites);
-        changeZoom(bg.getX());
+        //changeZoom(bg.getX());
         
-        for (FighterBody sprite : playerSprites)
-        {
-            if (sprite.getCollisionStatus().getStatus() )//&& FighterBody.class.isAssignableFrom(sprite.getClass()))
-            {
-                System.out.println("NOTIFYING FOR SPECIAL MODE");
-                notifySpecialMode(new SpecialShake(), 10);
-                break;
-            }
-        }
-        
-        if (inSpecialMode)
-        {
-            System.out.println("SPECIAL MODE");
-            mySpec.update(playerSprites, bg, this, timer);
-        }
-        
-        if (timer == duration)
-        {
-            inSpecialMode = false;
-        }
+//        if (!inSpecialMode)
+//        {
+//            for (FighterBody sprite : playerSprites)
+//            {    
+//                if (sprite.getCollisionStatus().getStatus() && !sprite.getCollisionStatus().getStandOnSth() 
+//                        && FighterBody.class.isAssignableFrom(sprite.getClass()))
+//                {
+//                    notifySpecialMode(new SpecialShake(), 60);
+//                    break;
+//                }
+//            }
+//        }
+//        else if (inSpecialMode)
+//        {
+//            System.out.println("IN SPECIAL MODE");
+//            mySpec.update(playerSprites, bg, this, timer);
+//            timer++;
+//        }
+//        
+//        if (timer == duration)
+//        {
+//            inSpecialMode = false;
+//        }
 
     }
     
     public void notifySpecialMode(SpecialCamera spec, double duration)
     {
+        timer = 0;
         mySpec = spec;
         inSpecialMode = true;
         this.duration = duration;
@@ -210,8 +214,8 @@ public class Camera extends JPanel {
         g.draw(r);
         AffineTransform old = g.getTransform();
         AffineTransform tr2 = new AffineTransform(old);
-        tr2.translate((this.getWidth() / 2) - (r.getWidth() * (zoom)) / 2,
-                      (this.getHeight() / 2) - (r.getHeight() * (zoom)) / 2);
+        //tr2.translate((this.getWidth() / 2) - (r.getWidth() * (zoom)) / 2,
+        //              (this.getHeight() / 2) - (r.getHeight() * (zoom)) / 2);
 
         tr2.scale(zoom, zoom);
         g.setTransform(tr2);

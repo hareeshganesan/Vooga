@@ -135,8 +135,8 @@ public class LevelObjectsFactory
         h.addKey(map[1], MotionAction.DOWN(s,myPhysicsEngine));
         h.addKey(map[2], MotionAction.LEFT(s,myPhysicsEngine));
         h.addKey(map[3], MotionAction.RIGHT(s,myPhysicsEngine));
-        h.addKey(map[4], new WeaponAction(s, 0));
-        h.addKey(map[5], new WeaponAction(s, 1));
+        h.addKey(map[4], new WeaponAction(s, 0,c));
+        h.addKey(map[5], new WeaponAction(s, 1,c));
     }
 
 

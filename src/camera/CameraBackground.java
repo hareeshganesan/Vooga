@@ -20,13 +20,12 @@ public class CameraBackground extends ImageBackground
         
         AffineTransform old = g.getTransform();
         AffineTransform tr2 = new AffineTransform(old);
-        tr2.translate(-10, -10);
+        tr2.translate(camera.getX(), camera.getY());
         tr2.scale((double)Camera.CANVAS_WIDTH/camera.getWidth(), (double)Camera.CANVAS_HEIGHT/camera.getHeight());
         g.setTransform(tr2);
         g.drawImage(b, tr2, null);
         super.render(g);
         //g.drawImage(this.getImage(), 0, 0, this.getWidth(), this.getHeight(), (ImageObserver)this);
         g.setTransform(old);
-        
     }
 }
