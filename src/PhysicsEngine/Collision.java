@@ -72,6 +72,7 @@ public class Collision {
 		            for (CollisionKind kind : myReactionList) {
 		                if (kind.isThisKind(spriteOne, spriteTwo)) {
 		                    kind.doThisReaction(bodyPartOne, bodyPartTwo, myPhysicsEngine);
+                            
 		                }
 		            }
 				    return true;

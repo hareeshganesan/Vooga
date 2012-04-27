@@ -1,4 +1,4 @@
-package SpriteTree;
+package npsprite;
 
 import java.util.AbstractList;
 import java.util.ArrayList;

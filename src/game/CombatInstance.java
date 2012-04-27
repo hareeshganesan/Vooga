@@ -149,6 +149,7 @@ public class CombatInstance extends GameState
 
     @Override
     public void update(long elapsedTime) {
+        commitSpawnedSprites();
         myHandler.update(elapsedTime, myEngine);
 //        camera.update(playerSprites, bg);
         myHandler.update(elapsedTime, myEngine);
@@ -192,6 +193,9 @@ public class CombatInstance extends GameState
         for (PlatformBlock pb : platform)
             pb.update(elapsedTime);
 
+         for (SpriteTemplate sprite : nonplayers) {
+             sprite.update(elapsedTime);
+         }
     }
 
     private void printCollision(FighterBody sprite) {
@@ -231,12 +235,6 @@ public class CombatInstance extends GameState
         super.finish();
     }
 
-    /*
-     * TODO IT'D BE A LOT EASIER FOR THE SPRITE TO ADD ITSELF TO A GROUP
-     * (depending on groupID) INSIDE OF THE SPAWNS-PROPERTY, AND HAVE COLLISIONS
-     * AUTOMATICALLY UPDATE ITSELF
-     */
-
     public void addSprite(SpriteTemplate s) {
         spawns.add(s);
         // nonplayers.add(s);
@@ -253,6 +251,7 @@ public class CombatInstance extends GameState
         if (!spawns.isEmpty()) {
             for (SpriteTemplate s:spawns){
                 nonplayers.add(s);
+                s.setActive(true);
                 int teamIndex=groupSprite.getTeam(s.getGroupID());
                 groupSprite.addSpriteInOldTeam(s, teamIndex);
             }

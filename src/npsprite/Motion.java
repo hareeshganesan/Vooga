@@ -1,4 +1,4 @@
-package SpriteTree;
+package npsprite;
 
 import npsprite.FighterBody;
 import npsprite.NodeSprite;
