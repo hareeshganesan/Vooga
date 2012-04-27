@@ -1,7 +1,6 @@
 package action;
 
 import npsprite.Animation;
-
 import events.HealthEvent;
 import game.CombatInstance;
 import npsprite.FighterBody;
@@ -26,6 +25,7 @@ public class WeaponAction implements Action
     @Override
     public void performAction (long elapsedTime)
     {
+        System.out.println("attacking");
     	if(a == null){
         	a = myFighter.getAnimation(myWeapon);
     	}

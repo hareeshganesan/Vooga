@@ -221,7 +221,7 @@ public class NodeSprite extends SpriteTemplate
     }
 
 
-    public void rotate (int dTheta)
+    public void rotate (double dTheta)
     {
         this.mutableTheta += dTheta;
     }

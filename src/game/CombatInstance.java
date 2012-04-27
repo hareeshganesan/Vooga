@@ -139,24 +139,24 @@ public class CombatInstance extends GameState {
         
 
         for(FighterBody fighter: playerSprites){
-            if(fighter.getName().equals("player 1")){
-                Motion m1 = new Motion("rightArm", 80, fighter, 300);
-                Motion m2 = new Motion("rightArm", -80, fighter, 300);
+        	if(fighter.getName().equals("player 1")){
+        		Motion m1 = new Motion("rightArm", 50, fighter, 300);
+        		Motion m2 = new Motion("rightArm", -50, fighter, 300);
 
-                HashMap<Long, Motion> sequence1 = new HashMap<Long, Motion>();
-                sequence1.put((long)100, m1);
-                Animation ani1 = new Animation(sequence1, fighter);
-                
-                HashMap<Long, Motion> sequence2 = new HashMap<Long, Motion>();
-                sequence2.put((long)101, m2);
-                Animation ani2 = new Animation(sequence2, fighter);
-                
-                HashMap<String, Animation> moves = new HashMap<String, Animation>();
-                moves.put("weapon1", ani1);
-                moves.put("weapon0", ani2);
-                
-                fighter.setAnimations(moves);
-            }
+        		HashMap<Long, Motion> sequence1 = new HashMap<Long, Motion>();
+        		sequence1.put((long)100, m1);
+        		Animation ani1 = new Animation(sequence1, fighter);
+        		
+         		HashMap<Long, Motion> sequence2 = new HashMap<Long, Motion>();
+        		sequence2.put((long)101, m2);
+        		Animation ani2 = new Animation(sequence2, fighter);
+        		
+        		HashMap<String, Animation> moves = new HashMap<String, Animation>();
+        		moves.put("weapon1", ani1);
+        		moves.put("weapon0", ani2);
+        		
+        		fighter.setAnimations(moves);
+        	}
         }
 
     }
@@ -220,6 +220,21 @@ public class CombatInstance extends GameState {
             // printCollision(sprite);
             sprite.update(elapsedTime);
         }
+        
+        int active = 0;
+        int original = 0;
+        for (FighterBody sprite : playerSprites)
+        {
+            //printCollision(sprite);
+            sprite.update(elapsedTime);
+            if (!(AIAgent.class.isAssignableFrom(sprite.getClass())))
+            {
+                original++;
+                if (sprite.isActive()) active++;
+            }
+        }
+
+        if (active <= 1 && original > 1 || active == 0) transitionState();
 
         for (PlatformBlock pb : platform)
             pb.update(elapsedTime);
@@ -252,11 +267,17 @@ public class CombatInstance extends GameState {
     }
 
     @Override
-    public void transitionState() {
-        if (nextState != null)
-            myEngine.nextGame = this.nextState;
-        else
-            myEngine.nextGame = this.lastState;
+    public void transitionState ()
+    {
+        String winner = null;
+        for (FighterBody f : playerSprites)
+        {
+            winner = f.getName();
+        }
+        if (winner == null) winner = "TO US";
+        this.setNextState(new WinScreen(myEngine, DEFAULT_IMAGE, winner));
+        if (nextState != null) myEngine.nextGame = this.nextState;
+        else myEngine.nextGame = this.lastState;
         super.finish();
     }
 

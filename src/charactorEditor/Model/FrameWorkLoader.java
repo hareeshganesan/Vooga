@@ -7,12 +7,12 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
+import npsprite.Animation;
 import npsprite.FighterBody;
 import npsprite.GroupID;
+import npsprite.Motion;
 import npsprite.NodeSprite;
-import SpriteTree.Animation;
 import SpriteTree.GraphicsTest;
-import SpriteTree.Motion;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 

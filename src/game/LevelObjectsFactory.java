@@ -134,7 +134,7 @@ public class LevelObjectsFactory
             fs.add(tree);
         }
 
-//        fs.add(createAIStrategyFighter());
+        fs.add(createAIStrategyFighter());
 
         return fs;
     }
@@ -219,8 +219,8 @@ public class LevelObjectsFactory
         h.addKey(map[1], MotionAction.DOWN(s, myPhysicsEngine));
         h.addKey(map[2], MotionAction.LEFT(s, myPhysicsEngine));
         h.addKey(map[3], MotionAction.RIGHT(s, myPhysicsEngine));
-        h.addKey(map[4], new WeaponAction(s, 0, c));
-        h.addKey(map[5], new WeaponAction(s, 1, c));
+        h.addKey(map[4], new WeaponAction(s, "weapon0", c));
+        h.addKey(map[5], new WeaponAction(s, "weapon1", c));
     }
 
 

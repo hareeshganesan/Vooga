@@ -11,7 +11,6 @@ import npsprite.SpriteValues.STATUS;
 import npsprite.properties.DirectionProperty;
 import npsprite.properties.HealthProperty;
 import npsprite.properties.StatusProperty;
-import SpriteTree.Animation;
 import action.ActionTimer;
 
 
@@ -56,6 +55,7 @@ public class FighterBody extends SpriteTemplate
         myDisplay.setStat(myName, (int) getHealth());
 
         myMap = new HashMap<String, NodeSprite>();
+        myMovements = new HashMap<String, Animation>();
         createMap(this.root);
     }
 
@@ -265,6 +265,13 @@ public class FighterBody extends SpriteTemplate
         {
             myTimers.get(0).makeAvailable();
         }
+        
+        for(String key : myMovements.keySet()){
+            Animation a = myMovements.get(key);
+            if(a.getStatus())
+                a.update(elapsedTime);
+        }
+        
         root.update(elapsedTime);
         if (getHealth() <= 0)
         {
@@ -319,6 +326,10 @@ public class FighterBody extends SpriteTemplate
     public ActionTimer getMyTimer (int index)
     {
         return myTimers.get(index);
+    }
+    
+    public HashMap<String, NodeSprite> getMap(){
+        return myMap;
     }
 
 }

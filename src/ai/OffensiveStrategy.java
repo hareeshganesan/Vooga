@@ -63,7 +63,7 @@ public class OffensiveStrategy extends Strategy
 
         public AttackGoal (FighterBody me, FighterBody enemy, CombatInstance ci)
         {
-            super(new WeaponAction(me, 0, ci), 10000);
+            super(new WeaponAction(me, "weapon0", ci), 10000);
             myFighter = me;
             myEnemy = enemy;
         }
