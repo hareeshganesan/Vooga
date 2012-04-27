@@ -2,7 +2,6 @@ package ai;
 
 import npsprite.FighterBody;
 import game.CombatInstance;
-import sprite.FighterSprite;
 import action.AvoidAction;
 
 

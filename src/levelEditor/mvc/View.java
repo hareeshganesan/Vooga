@@ -5,13 +5,9 @@ import java.awt.Dimension;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-import levelEditor.gui.BackgroundPane;
-import levelEditor.gui.LevelSetupComponent;
+import levelEditor.gui.BackgroundImage;
+import levelEditor.gui.LevelNameComponent;
 import levelEditor.gui.SaveLevelComponent;
-import levelEditor.gui.SpriteListComponent;
-import levelEditor.gui.VisualComponent;
-
-
 
 
 /**
@@ -32,24 +28,26 @@ public class View extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		// NORTH
-		add (new LevelSetupComponent(myController).create(), BorderLayout.NORTH);
+		add (new LevelNameComponent(myController), BorderLayout.NORTH);
 		
 		// SOUTH
 		add (new SaveLevelComponent(myController).create(), BorderLayout.SOUTH);
 		
 		// WEST
-		add (new SpriteListComponent(myController).create(), BorderLayout.WEST);
+		// add (new SpriteListComponent(myController).create(), BorderLayout.WEST);
 		
 		// EAST
+		//add (new AIEditor(), BorderLayout.EAST);
 		
 		// CENTER
-		add (new BackgroundPane("src/resources/flame.png").showImage(), BorderLayout.CENTER);
+		// add (new BackgroundImage("src/resources/flame.png"), BorderLayout.CENTER);
+		add (new BackgroundImage(), BorderLayout.CENTER);
 		
 		
 		setSize(SIZE);
+		
 		//set pop-up window centered relative to screen
 		setLocationRelativeTo(null);
-		
 		setVisible(true);
 	}
 	
@@ -61,6 +59,11 @@ public class View extends JFrame {
 	
 	public void displayMessage (String message) {
 		JOptionPane.showMessageDialog(this, message);
+	}
+	
+	public void displayError (String message) {
+		JOptionPane.showMessageDialog(null, message, message, 
+				JOptionPane.ERROR_MESSAGE);
 	}
 	
 }

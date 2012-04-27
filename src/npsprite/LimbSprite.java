@@ -1,50 +1,32 @@
 package npsprite;
 
 import java.awt.Graphics2D;
-import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
-
-import sprite.SpriteValues;
+import java.util.HashMap;
 
 import SpriteTree.GraphicsTest;
 
+import npsprite.SpriteValues.DIR;
 import npsprite.properties.DamageProperty;
-import npsprite.properties.DirectionProperty;
-import npsprite.properties.HealthProperty;
 import npsprite.properties.PropertyObject;
 
 //for limb nodes on fighter sprites only
 public class LimbSprite extends NodeSprite{
     protected FighterBody myPointer;
-    
-    private BufferedImage myCurrImage;
-    protected BufferedImage myOrigImage;
-
-    private int allAngles = 0;
-    private int currAngle = 0;
-    
-    private double dx;
-    private double dy;
-    private int theta;
-
-    final double DAMAGE_DEALT = -5;
-
-    // to be implemented
+        
+    // TODO to be implemented
     double damageMultiplier=1; // if this node is arm, damageMultiplier less than
                              // if node were torso
 
     /**
      * constructor for the torso (stored as root under fighterbody)
      */
-    public LimbSprite(String name, BufferedImage image, GroupID g, double x, double y){
+    public LimbSprite(String name, BufferedImage image, GroupID g, double x, double y, double damage){
         super(image,g,x,y);
         this.myName = name;
         this.myOrigImage = image;
-//        this.theta = baseTheta;
-//        this.dx = x;
-//        this.dy = y;
         
-        this.addProperty(DamageProperty.getName(),new DamageProperty(DAMAGE_DEALT*damageMultiplier));
+        this.addProperty(DamageProperty.NAME, new DamageProperty(damage*damageMultiplier));
     }
     
     /**
@@ -57,20 +39,22 @@ public class LimbSprite extends NodeSprite{
      * @param y
      * @param baseTheta
      */
-    public LimbSprite(String name, BufferedImage image, NodeSprite parent,GroupID g, double x, double y,int baseTheta){
-        super(image,parent.getGroupID(), parent.getX()+x, parent.getY()+y);
+    public LimbSprite(String name, BufferedImage image, NodeSprite parent, double x, double y, double damage,int baseTheta){
+        super(parent, image,parent.getX()+x, parent.getY()+y,baseTheta);
         this.myName = name;
         this.myOrigImage = image;
-        this.theta = baseTheta;
+        this.mutableTheta = baseTheta;
+        this.defaultTheta = baseTheta;
         this.dx = x;
         this.dy = y;
         
-        this.addProperty(DamageProperty.getName(),new DamageProperty(DAMAGE_DEALT*damageMultiplier));
+        this.addProperty(DamageProperty.NAME,new DamageProperty(damage*damageMultiplier));
     }
+    
     public void setFighter(FighterBody fighterBody) {
         myPointer=fighterBody;
+        myID=fighterBody.getGroupID();
     }
-
     
     public void addChild(NodeSprite child) {
         super.addChild(child);
@@ -78,7 +62,6 @@ public class LimbSprite extends NodeSprite{
     }
     public void removeChild(NodeSprite child){
         super.removeChild(child);
-        myPointer.childRemoved(child);
     }
     
     /* PROPERTIES (mostly wrapping parent fighterbody) */
@@ -103,12 +86,28 @@ public class LimbSprite extends NodeSprite{
     public double getMass(){
         return myPointer.getMass();
     }
-
     /* IMAGERY */ 
     public void rotate(int dTheta)
     {   
-        this.theta += dTheta;
+        this.mutableTheta += dTheta;
     }
+    public double getTheta(){
+        return this.mutableTheta;
+    }
+    public double getDefaultTheta(){
+        return this.defaultTheta;
+    }
+
+    public void setTheta(double expTheta){
+        this.mutableTheta = expTheta;
+    }
+    public Integer roundTheta(double theta){
+        Integer n = 0;
+        n = (int) Math.round(theta);
+        return n;
+    }
+    
+
     public void setPosition(int moveX, int moveY){
         super.setPosition(moveX, moveY);
     }
@@ -120,20 +119,15 @@ public class LimbSprite extends NodeSprite{
         this.setImage(this.myCurrImage);
     }
 
-    public void render(Graphics2D pen,double baseX, double baseY, int baseTheta){
-        super.render(pen);
-        
-        double dx =Math.cos(Math.toRadians(baseTheta)) * this.dx - Math.sin(Math.toRadians(baseTheta)) * this.dy;
-        double dy =Math.sin(Math.toRadians(baseTheta)) * this.dx + Math.cos(Math.toRadians(baseTheta)) * this.dy;
-
-        draw((baseX + dx), (baseY + dy),this.theta+baseTheta);
-        
-        for(NodeSprite limb: this.children){
-            ((LimbSprite)limb).render(pen, (baseX + dx), (baseY + dy), baseTheta);
-        }
-    }
-
     public FighterBody getMyPointer() {
         return myPointer;
+    }
+
+
+    public void print() {
+        System.out.println(this.Parent);
+        System.out.println(this.dx);
+        System.out.println(this.dy);
+        System.out.println(this.mutableTheta);
     }
 }

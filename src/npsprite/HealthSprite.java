@@ -8,10 +8,10 @@ public class HealthSprite extends SpriteTemplate{
 
     public HealthSprite(BufferedImage image,GroupID g) {
         super(image,g);
-        this.addProperty(DamageProperty.getName(), new DamageProperty(5));
+        this.addProperty(DamageProperty.NAME,new DamageProperty(5));
     }
     public HealthSprite(BufferedImage image,GroupID g,int damage) {
         super(image,g);
-        this.addProperty(DamageProperty.getName(), new DamageProperty(damage));
+        this.addProperty(DamageProperty.NAME,new DamageProperty(damage));
     }
 }

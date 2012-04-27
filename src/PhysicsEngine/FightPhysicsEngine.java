@@ -1,11 +1,7 @@
 package PhysicsEngine;
 
 import java.awt.geom.Point2D;
-
 import com.golden.gamedev.GameEngine;
-
-import npsprite.FighterBody;
-import npsprite.NodeSprite;
 import npsprite.SpriteTemplate;
 import action.MotionAction;
 
@@ -18,7 +14,7 @@ import action.MotionAction;
 public class FightPhysicsEngine extends PhysicsEngine {
 
 	private double myBackgroundFactor = 1.0;
-	private double myOutBoundDistance = 10;
+	private double myOutBoundDistance = 1;
 	private double mySpeedFactor = 0.5;
 
 	public FightPhysicsEngine(GameEngine gameEngine) {
@@ -33,26 +29,29 @@ public class FightPhysicsEngine extends PhysicsEngine {
 		double speed = sprite.getSpeed();
 		double x = speed * elapsedTime * myVectorX;
 		double y = speed * elapsedTime * myVectorY;
+		setCollisionStatus(sprite, y);
 		setNextLocationIncrement(sprite, x, y);
 	}
 
 	@Override
-	public void setNextLocationIncrement(SpriteTemplate sprite, double x,
-			double y) {
+	public void setNextLocationIncrement(SpriteTemplate sprite, double dx,
+			double dy) {
 
-		double finalX = x * myBackgroundFactor;
-		double finalY = y * myBackgroundFactor;
+//        System.out.println("fightbefore"+dx+","+dy);
+        
+		double finalX = dx * myBackgroundFactor;
+		double finalY = dy * myBackgroundFactor;
 
-		if (isOutLeft(sprite, x))
+		if (isOutLeft(sprite, dx))
 			finalX = myOutBoundDistance;
-		if (isOutRight(sprite, x))
+		if (isOutRight(sprite, dx))
 			finalX = -myOutBoundDistance;
-		if (isOutUp(sprite, y))
+		if (isOutUp(sprite, dy))
 			finalY = myOutBoundDistance;
-		if (isOutDown(sprite, y)) {
+		if (isOutDown(sprite, dy)) {
 			finalY = myBoundDown - sprite.getY() - sprite.getHeight();
 		}
-
+//		System.out.println("fight"+finalX+","+finalY);
 		sprite.setNextLocationIncrement(new Point2D.Double(finalX, finalY));
 
 		// for debug
@@ -60,6 +59,13 @@ public class FightPhysicsEngine extends PhysicsEngine {
 		// + "    Right:" + (sprite.getWidth() + sprite.getX())
 		// + "    Top:" + sprite.getY() + "    Bottom:"
 		// + (sprite.getHeight() + sprite.getY()));
+	}
+
+	/**
+	 * set the collision standing status
+	 */
+	private void setCollisionStatus(SpriteTemplate sprite, double dy) {
+		sprite.getCollisionStatus().setStandOnGound(isOutDown(sprite, dy));
 	}
 
 	/**
