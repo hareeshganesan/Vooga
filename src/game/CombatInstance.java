@@ -196,7 +196,7 @@ public class CombatInstance extends GameState {
 		myCollision.checkGroupCollision();
 
 		for (FighterBody sprite : playerSprites) {
-			//printCollision(sprite);
+			printCollision(sprite);
 			sprite.update(elapsedTime);
 		}
 

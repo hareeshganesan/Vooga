@@ -162,11 +162,12 @@ public class SpriteTemplate extends Sprite implements Cloneable{
         	        c.performAction(this, null);
         	    }
         	}
-        	 if (moveBy.getX()!=0 || moveBy.getY()!=0){
-        	     
-//        	 System.out.println("move "+moveBy.getX()+","+moveBy.getY());
-        	     move(moveBy.getX(), moveBy.getY());
-        	 }
+        	if (moveBy.getX() != 0 || moveBy.getY() != 0) {
+                move(moveBy.getX(), moveBy.getY());
+            }
+            moveBy.setLocation(0, 0); // moveBy only work for one time then set to
+                                        // zero
+
             super.update(elapsedTime);
         }
     }

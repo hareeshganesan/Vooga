@@ -201,12 +201,6 @@ public class FighterBody extends SpriteTemplate {
             root.setActive(false); // dead, have game check for this for end of
                                    // level
         }
-        if (moveBy.getX() != 0 || moveBy.getY() != 0) {
-            move(moveBy.getX(), moveBy.getY());
-        }
-        moveBy.setLocation(0, 0); // moveBy only work for one time then set to
-                                    // zero
-
         myDisplay.update(elapsedTime, (int) getHealth());
         super.update(elapsedTime);
     }
