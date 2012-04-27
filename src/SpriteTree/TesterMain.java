@@ -98,8 +98,6 @@ public class TesterMain extends Game {
 		sequence.put((long) 504, m8);
 		sequence.put((long) 1001, m9);
 		sequence.put((long) 1002, m10);
-
-
 		this.animation = new Animation(sequence, myTree);
 		
 

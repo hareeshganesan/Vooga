@@ -13,6 +13,8 @@ import java.util.ArrayList;
 
 import javax.swing.JMenuItem;
 
+import SpriteTree.LimbNode;
+
 import charactorEditor.drag.AttributePane;
 import charactorEditor.drag.FighterBuilder;
 import charactorEditor.drag.MainPane;
@@ -98,11 +100,16 @@ public class Controller implements MouseListener, MouseMotionListener,
 		return myModel.getProperties();
 	}
 
-	public ArrayList<MyComponent> getWhatToSave() {
-		ArrayList<MyComponent> toReturn;sdfkjskf
-		for(MyComponent m:myModel.getComponentList())
-			m.clearChilder();
-		return myModel.getComponentList();
+	public ArrayList<MyComponent> getMyComponentToSave() {
+		ArrayList<MyComponent> toReturn = new ArrayList<MyComponent>();
+		for (MyComponent m : myModel.getComponentList()) {
+			toReturn.add(new MyComponent(m));
+		}
+		for (MyComponent m : toReturn) {
+			m.resetParent();
+			m.clearChildern();
+		}
+		return toReturn;
 	}
 
 	public void getMessage(Object msg, ActionEvent e) {
@@ -157,7 +164,7 @@ public class Controller implements MouseListener, MouseMotionListener,
 	}
 
 	@Override
-	public void mouseMoved(MouseEvent e) {	
+	public void mouseMoved(MouseEvent e) {
 		state = MouseMovedState.Instance(myFighterBuilder, e);
 		action();
 	}
@@ -259,6 +266,19 @@ public class Controller implements MouseListener, MouseMotionListener,
 
 	public MyComponent getNextFocusComponent() {
 		return myMainPaneModel.getNextFocusComponent();
+	}
+
+	public LimbNode getLimbNodeTree() {
+		ArrayList<MyComponent> list = myModel.getComponentList();
+		// HashMap<String,MyComponent> map=new HashMap<String,MyComponent>();
+		// for(MyComponent m:list)
+		// map.put(m.getText(), m);
+		//
+		MyComponent root = null;
+		for (MyComponent m : list)
+			if (m.isRoot())
+				root = m;
+    return myModel.buildLimbNodeTree(root, null);
 	}
 
 }
