@@ -14,22 +14,13 @@ import npsprite.GroupID;
 import npsprite.NodeSprite;
 import npsprite.PlatformBlock;
 import npsprite.SpriteTemplate;
-import org.jdom.JDOMException;
 import npsprite.SpriteGroupTemplate;
+import org.jdom.JDOMException;
 import camera.Camera;
 import camera.CameraBackground;
 import camera.CameraUtility;
 import events.HealthEvent;
-import PhysicsEngine.Collision;
-import PhysicsEngine.CollisionKind;
-import PhysicsEngine.CollisionKindEnemy;
-import PhysicsEngine.CollisionKindFriends;
-import PhysicsEngine.CollisionKindNeutral;
-import PhysicsEngine.FightPhysicsEngine;
-import PhysicsEngine.PhysicsEngine;
-import PhysicsEngine.ReactionMomentumConservation;
-import PhysicsEngine.ReactionPush;
-import PhysicsEngine.ReactionRebound;
+import PhysicsEngine.*;
 import action.MotionAction;
 import action.QuitAction;
 import ai.AIAgent;
@@ -41,8 +32,8 @@ public class CombatInstance extends GameState {
     // Engines
     MainGame myEngine;
     InputHandler myHandler;
-    Camera camera;
-    CameraUtility cameraUtility;
+//    Camera camera;
+//    CameraUtility cameraUtility;
     private PhysicsEngine myPhysicsEngine;
 
     // Sprites
@@ -62,8 +53,8 @@ public class CombatInstance extends GameState {
         super(engine);
         myEngine = engine;
         myHandler = new InputHandler();
-        camera = new FloatingCamera();
-        cameraUtility = new CameraUtility();
+//        camera = new FloatingCamera();
+//        cameraUtility = new CameraUtility();
         myPhysicsEngine = new FightPhysicsEngine(myEngine);
     }
 
@@ -137,48 +128,34 @@ public class CombatInstance extends GameState {
         CollisionkindList.add(new CollisionKindNeutral(new ReactionRebound()));
 
         myCollision = new Collision(groupSprite, CollisionkindList, myPhysicsEngine);
+        this.setFPS(8);
 
     }
-
-    // TODO: remove hard-coding, this is for testing on newsample.xml
-    private void addCollisionActions() {
-        for (FighterBody f : playerSprites) {
-            for (NodeSprite n : f.getBodyParts()) {
-                n.addCollisionEvent(GroupID.POWER_UP, new HealthEvent());
-            }
-        }
-//        for (SpriteTemplate f : powerups) {
-//            f.addCollisionEvent(GroupID.PLAYER_1, new InactiveEvent());
-//            f.addCollisionEvent(GroupID.PLAYER_2, new InactiveEvent());
-//        }
-
-    }
-
     @Override
     public void render(Graphics2D pen) {
-        camera.render(pen, bg);
+//        camera.render(pen, bg);
         //bg.render(pen, camera, camera.getX(), camera.getY(), camera.getX(),
         //        camera.getY(), camera.getHeight(), camera.getWidth());
         // bg.render(pen);
 
         bg.render(pen);
         for (FighterBody sprite : playerSprites)
-            cs.render(pen, sprite, camera);
-            //sprite.render(pen);
+//            cs.render(pen, sprite, camera);
+            sprite.render(pen);
         for (PlatformBlock pb : platform) {
-            cs.render(pen, pb, camera);
-            //pb.render(pen);
+//            cs.render(pen, pb, camera);
+            pb.render(pen);
         }
-//        for (SpriteTemplate p : powerups) {
-//            p.render(pen);
-//        }
+        for (SpriteTemplate p : nonplayers) {
+            p.render(pen);
+        }
         
     }
 
     @Override
     public void update(long elapsedTime) {
-        myHandler.update(elapsedTime, myEngine);
-        camera.update(playerSprites, bg);
+//        myHandler.update(elapsedTime, myEngine);
+//        camera.update(playerSprites, bg);
         myHandler.update(elapsedTime, myEngine);
         bg.update(elapsedTime);
 
@@ -196,16 +173,16 @@ public class CombatInstance extends GameState {
         myCollision.checkGroupCollision();
 
         for (FighterBody sprite : playerSprites) {
-//        	printCollision(sprite);
+        	printCollision(sprite);
             sprite.update(elapsedTime);
         }
 
         for (PlatformBlock pb : platform)
             pb.update(elapsedTime);
 
-//        for (SpriteTemplate sprite : powerups) {
-//            sprite.update(elapsedTime);
-//        }
+        for (SpriteTemplate sprite : nonplayers) {
+            sprite.update(elapsedTime);
+        }
     }
     
     private void printCollision(FighterBody sprite){
@@ -235,7 +212,8 @@ public class CombatInstance extends GameState {
 
     public void addSprite(SpriteTemplate s) {
         spawns.add(s);
-        groupSprite.addSpriteInNewTeam(s);
+        int team=groupSprite.getTeam(s.getGroupID());
+        groupSprite.addSpriteInOldTeam(s,team);
         
     	// change group here
     	// can find the sprite index in its team, and the team index in the group

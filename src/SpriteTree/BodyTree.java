@@ -81,7 +81,7 @@ public class BodyTree {
 		root.render(pen, root.getX(),root.getY(),0);
 	}
 	
-	public void move(Graphics2D pen, double moveX, double moveY){
+	public void move(double moveX, double moveY){
 		root.setX(root.getX() + moveX);		
 		root.setY(root.getY() + moveY);
 	}

@@ -13,6 +13,7 @@ import npsprite.SpriteValues.DIR;
 import npsprite.SpriteValues.STATUS;
 import npsprite.properties.DirectionProperty;
 import npsprite.properties.HealthProperty;
+import npsprite.properties.SpawnsProperty;
 import npsprite.properties.StatusProperty;
 
 import sprite.HealthDisplay;
@@ -38,14 +39,13 @@ public class FighterBody extends SpriteTemplate {
         super(root.getGroupID());
         this.root = root;
         root.setFighter(this);
+        this.setDefaultSpeed(root.getSpeed());
         myName = name;
         myDisplay = display;
 
         myHealth = new HealthProperty(100);
         myDirection = new DirectionProperty(DIR.RIGHT);
         myStatus = new StatusProperty(SpriteValues.STATUS.NORM);
-
-        myStatus.setStatusValue(STATUS.BLOCK, 0.1);
 
         super.addProperty(HealthProperty.NAME, myHealth);
         super.addProperty(DirectionProperty.NAME, myDirection);
@@ -70,7 +70,13 @@ public class FighterBody extends SpriteTemplate {
     public void setInitStatus(STATUS s) {
         myStatus.setStatus(s);
     }
-
+    public DIR getDirection(){
+        return myDirection.getDirection();
+    }
+    public STATUS getStatus(){
+        return myStatus.getStatus();
+    }
+    
     public void createMap(NodeSprite currNode) {
         if (!myMap.containsKey(currNode.getName())) {
             myMap.put(currNode.getName(), currNode);
@@ -84,10 +90,10 @@ public class FighterBody extends SpriteTemplate {
         return myMap.get(name);
     }
 
-    public void move(Graphics2D pen, double moveX, double moveY) {
+    public void move(double moveX, double moveY) {
         if (root != null) {
-            // System.out.println(moveX+" "+moveY);
-            root.render(pen, root.getX() + moveX, root.getY() + moveY, 0);
+            root.setX(root.getX() + moveX);     
+            root.setY(root.getY() + moveY);
         }
 
         if (moveX < 0) {
@@ -103,10 +109,6 @@ public class FighterBody extends SpriteTemplate {
 
     public double getHealth() {
         return myHealth.getValue();
-    }
-
-    public void setStatusValue(SpriteValues.STATUS s, double v) {
-        myStatus.setStatusValue(s, v);
     }
 
     public double getHealthMultiplier() {
@@ -174,11 +176,6 @@ public class FighterBody extends SpriteTemplate {
         root.flip(true);
         }
         myDirection.setDirection(direction);
-    }
-
-    public void move(double moveX, double moveY) {
-        root.setX(root.getX() + moveX);
-        root.setY(root.getY() + moveY);
     }
 
     @Override

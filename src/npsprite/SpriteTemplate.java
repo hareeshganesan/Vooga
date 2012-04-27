@@ -156,6 +156,17 @@ public class SpriteTemplate extends Sprite implements Cloneable{
     public void update(long elapsedTime) {
         if (this.isActive()) {
         	myCollisionStatus.setDefault();
+        	for (PropertyObject p:myProperties.values()){
+        	    CollisionEvent c=p.update(elapsedTime);
+        	    if (c!=null){
+        	        c.performAction(this, null);
+        	    }
+        	}
+        	 if (moveBy.getX()!=0 || moveBy.getY()!=0){
+        	     
+//        	 System.out.println("move "+moveBy.getX()+","+moveBy.getY());
+        	     move(moveBy.getX(), moveBy.getY());
+        	 }
             super.update(elapsedTime);
         }
     }

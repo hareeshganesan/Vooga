@@ -24,21 +24,31 @@ public class SpawnsProperty extends PropertyObject{
     private CombatInstance myGame;
     private SpriteTemplate toSpawn; //TODO
     private int number; //TODO
+    private List<Point2D> spawnSpots;
     
     public SpawnsProperty(CombatInstance c, SpriteTemplate template){
         myGame=c;
         toSpawn=template;
         number=1; //default;
     }
-    
-    private ArrayList<SpriteTemplate> myOGame;
-    //for testing, delete
-    public SpawnsProperty(ArrayList<SpriteTemplate>all) {
-        myOGame=all;
+    public void setCombatInstance(CombatInstance c){
+        myGame=c;
+    }
+    public void setSpawnSpots(List<Point2D>spawnSpots){
+        this.spawnSpots=spawnSpots;
+    }
+    /**move all spawn spots over by given coordinates
+     */
+    public void translateSpawnSpots(Point2D translate){
+        for (int i=0;i<spawnSpots.size();i++){
+            Point2D loc=spawnSpots.get(i);
+            loc.setLocation(loc.getX()+translate.getX(), loc.getY()+translate.getY());
+        }
     }
 
-    //spawns in random locations
+    //spawns in random locations by default
     public void spawnSprites(){
+        if (spawnSpots==null){
         Random ran=new Random();
         int i=0;
         while (i<number){
@@ -46,6 +56,10 @@ public class SpawnsProperty extends PropertyObject{
             newsprite.setLocation(ran.nextDouble()*myGame.getWidth(),ran.nextDouble()*myGame.getHeight());
             myGame.addSprite(newsprite);
             i++;
+        }
+        }
+        else {
+            spawnSprites(spawnSpots);
         }
     }
     //spawns in locations given
@@ -71,11 +85,9 @@ public class SpawnsProperty extends PropertyObject{
             SpriteTemplate newsprite=s.clone();
             Point2D loc=locations.get(i);
             newsprite.setLocation(loc.getX(),loc.getY());
-//            myGame.addSprite(newsprite);
+            myGame.addSprite(newsprite);
 
-            myOGame.add(newsprite); //for testing, delete
             i++;
-            
         }
     }
 

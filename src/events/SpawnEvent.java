@@ -1,16 +1,23 @@
 package events;
 
+import java.awt.geom.Point2D;
+
+import npsprite.GroupID;
 import npsprite.SpriteTemplate;
 import npsprite.properties.SpawnsProperty;
 
-public class SpawnEvent extends CollisionEvent{
+public class SpawnEvent extends CollisionEvent {
 
     @Override
     public void performAction(SpriteTemplate me, SpriteTemplate o) {
-        if (me.hasProperty(SpawnsProperty.NAME)){
-        ((SpawnsProperty) me.getProperty(SpawnsProperty.NAME)).spawnSprites();
+        if (me.hasProperty(SpawnsProperty.NAME)) {
+            if (GroupID.isFighter(me.getGroupID())){
+                Point2D loc=new Point2D.Double(me.getCenterX(),me.getCenterY());
+                ((SpawnsProperty) me.getProperty(SpawnsProperty.NAME)).translateSpawnSpots(loc);
+            }
+            ((SpawnsProperty) me.getProperty(SpawnsProperty.NAME))
+                    .spawnSprites();
         }
-        //TODO: LET SPRITETEMPLATE DECIDE SPAWNING LOCATIONS SOMEWHERE
     }
 
 }

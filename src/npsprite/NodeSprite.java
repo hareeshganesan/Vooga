@@ -46,6 +46,7 @@ public class NodeSprite extends SpriteTemplate{
     public NodeSprite(NodeSprite parent, BufferedImage image,double dx, double dy, int baseTheta){
         super(image,parent.getGroupID(), parent.getX()+dx, parent.getY()+dy);
         setParent(parent);
+        this.setDefaultSpeed(Parent.getSpeed());
         moveBy = new Point2D.Double();
         
         currGroupID=myID;
@@ -79,6 +80,7 @@ public class NodeSprite extends SpriteTemplate{
         if (Parent==null){
             currGroupID=myID;
         }
+        this.setDefaultSpeed(Parent.getSpeed());
     }
 
     public NodeSprite getParent() {
