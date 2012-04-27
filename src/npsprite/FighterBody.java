@@ -12,6 +12,8 @@ import action.Action;
 import action.ActionTimer;
 
 import SpriteTree.Animation;
+import SpriteTree.LimbNode;
+
 import npsprite.SpriteValues.DIR;
 import npsprite.SpriteValues.STATUS;
 import npsprite.properties.DirectionProperty;
@@ -22,6 +24,9 @@ import npsprite.properties.StatusProperty;
 import sprite.HealthDisplay;
 
 //THIS IS A POINTER TO THE TOP OF THE TREE THAT REPRESENTS A PLAYER - has no width/height
+//it comes with health, direction, and status properties predefined - no need to add
+//limbs come with damage - see limbsprite
+//TODO: subclass of spritetemplate?
 public class FighterBody extends SpriteTemplate {
     private String myName;
     private HealthProperty myHealth; // for ease in access
@@ -30,12 +35,12 @@ public class FighterBody extends SpriteTemplate {
 
     private ArrayList<ActionTimer> myTimers;
     private HealthDisplay myDisplay;
-    NodeSprite root; // root must be a limb
+    LimbSprite root; // root must be a limb
     
     private HashMap<String, NodeSprite> myMap;
     private HashMap<String,Animation> myMovements;
     
-    public FighterBody(NodeSprite root, String name, HealthDisplay display) {
+    public FighterBody(LimbSprite root, String name, HealthDisplay display) {
         super(root.getGroupID());
         this.root = root;
         root.setFighter(this);
@@ -58,9 +63,6 @@ public class FighterBody extends SpriteTemplate {
 
         myMap = new HashMap<String, NodeSprite>();
         createMap(this.root);
-    }
-    public String getName(){
-        return myName;
     }
 
     public void setAnimations(HashMap<String,Animation>moves){
@@ -134,12 +136,12 @@ public class FighterBody extends SpriteTemplate {
         return root.getY();
     }
 
-    public void setRoot(NodeSprite root) {
+    public void setRoot(LimbSprite root) {
         this.root = root;
         root.setFighter(this);
     }
 
-    public NodeSprite getRoot() {
+    public LimbSprite getRoot() {
         return root;
     }
 
@@ -210,13 +212,12 @@ public class FighterBody extends SpriteTemplate {
         myDisplay.update(elapsedTime, (int) getHealth());
         super.update(elapsedTime);
     }
-    
-    public String print(NodeSprite currentNode){
+    public String print(LimbNode currentNode){
         String tree = currentNode.getName();
         if(currentNode.getChildren().size() == 0){
             return currentNode.getName();
         }
-        for(NodeSprite child: currentNode.getChildren()){
+        for(LimbNode child: currentNode.getChildren()){
             tree +=print(child);
             tree += "--";
         }

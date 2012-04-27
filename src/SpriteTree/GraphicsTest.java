@@ -58,9 +58,8 @@ public class GraphicsTest
           int w = src.getWidth(), h = src.getHeight(), transparency = src
                   .getColorModel().getTransparency();
           
-//          int maxD = Math.max(w, h);  
-          
-          BufferedImage image = ImageUtil.createImage(w,h, transparency);
+          int maxD = Math.max(w, h);  
+          BufferedImage image = ImageUtil.createImage(maxD,maxD, transparency);
            
           Graphics2D g = image.createGraphics();
           g.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
