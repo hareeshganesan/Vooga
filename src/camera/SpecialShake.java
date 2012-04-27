@@ -15,11 +15,13 @@ public class SpecialShake extends SpecialCamera{
 
     public void update(ArrayList<FighterBody> playerSprites,
             CameraBackground bg, Camera camera, double duration){
-        Point oldPoint = camera.getCenter();
-        Point newPoint = new Point((int)(camera.getX() * (1.3 * Math.sin(duration))), camera.getY());
-        Rectangle oldBounds = camera.getBounds();
-        Rectangle newBounds = new Rectangle((int)(oldBounds.x * (1.3 * Math.sin(duration))), oldBounds.y, oldBounds.width, oldBounds.height);
         
+        Point oldPoint = camera.getCenter();
+        Point newPoint = new Point((int)(camera.getX() - (50 * Math.sin(duration))), camera.getY());
+        
+        Rectangle oldBounds = camera.getBounds();
+        Rectangle newBounds = new Rectangle((int)(oldBounds.x - (20*Math.sin(duration))), oldBounds.y, oldBounds.width, oldBounds.height);
+                        
         camera.setCenter(newPoint);
         camera.setBounds(newBounds);
         

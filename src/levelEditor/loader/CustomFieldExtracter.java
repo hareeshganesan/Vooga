@@ -16,7 +16,7 @@ public class CustomFieldExtracter {
 	
 	public ArrayList<Field> getFields (Class c) {
 		ArrayList<Field> fields = new ArrayList<Field>();
-		for (Field f : c.getFields()) {
+		for (Field f : c.getDeclaredFields()) {
 			fields.add(f);
 		}
 		return fields;

@@ -3,9 +3,13 @@ package charactorEditor.Model;
 import java.awt.geom.Point2D;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
+import SpriteTree.GraphicsTest;
+import SpriteTree.LimbNode;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -37,13 +41,23 @@ public class Model {
 	}
 
 	public void load(ArrayList<MyComponent> t) {
-		for(MyComponent c:t)
-			c.setChildren();
-		for(MyComponent c:t)
-			if(c.getParent()!=null){
-				c.getParent().addChild(c);
-//				System.out.println(c.getParent().getText()+"->"+c.getText()+" children size= "+c.getParent().getChildern().size());
-				}
+		HashMap<String, MyComponent> map = new HashMap<String, MyComponent>();
+		for (MyComponent m : t) {
+			map.put(m.getText(), m);
+			m.resetChildren();
+		}
+		for (MyComponent m : t) {
+			m.setParent(map.get(m.getParentForFile()));
+			int numberofchilren = m.getChildrenForFile().size();
+			for (int i = 0; i < numberofchilren; i++) {
+				String s = m.getChildrenForFile().get(i);
+				m.addChild(map.get(s));
+			}
+		}
+		for (MyComponent m : t)
+			for (int i = 0; i < m.getChildrenForFile().size()
+					- m.getChildern().size(); i++)
+				m.getChildrenForFile().remove(0);
 		componentList = t;
 	}
 
@@ -57,7 +71,6 @@ public class Model {
 				setSizeFlag = false;
 				return m;
 			}
-
 		}
 		return null;
 	}
@@ -89,12 +102,21 @@ public class Model {
 	}
 
 	private void loadPropertyList() throws FileNotFoundException {
-		Gson gson = new Gson();
-		Scanner scanner = new Scanner(new File("Properties.json"));
-		String wholeFile = scanner.useDelimiter("\\A").next();
-		java.lang.reflect.Type collectionType = new TypeToken<ArrayList<String>>() {
-		}.getType();
-		setProperties(gson.fromJson(wholeFile, collectionType));
+
+		try {
+			Class<?> cls = Class.forName("npsprite.NodeSprite");
+			Field fieldlist[] = cls.getDeclaredFields();
+			ArrayList<String> list = new ArrayList<String>();
+			list.add("GroupID");
+			list.add("damage");
+			list.add("baseTheta");
+			for(int i=0;i<fieldlist.length;i++)
+			list.add(fieldlist[i].getName());
+			setProperties(list);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+
 	}
 
 	public int getWillPut() {
@@ -124,4 +146,25 @@ public class Model {
 	public boolean getSetSizeFlag() {
 		return setSizeFlag;
 	}
+
+//	public LimbNode buildLimbNodeTree(MyComponent root, LimbNode toReturn) {
+//
+//		if (root.getParent() == null) {
+//			toReturn = new LimbNode(root.getText(), GraphicsTest.loadImage(root
+//					.getImg().toString()), root.getBorderX(), root.getBorderY());
+//		}
+//
+//		for (MyComponent m : root.getChildern()) {
+//			double dx = m.getBorderX() - root.getBorderX();
+//			double dy = m.getBorderY() - root.getBorderY();
+//			LimbNode child = new LimbNode(m.getText(), toReturn,
+//					GraphicsTest.loadImage(m.getImg().toString()), dx, dy,
+//					Integer.valueOf(m.getProperties().get(properties.get(0))));
+//			toReturn.addChild(child);
+//		}
+//		for (int i = 0; i < root.getChildern().size(); i++)
+//			buildLimbNodeTree(root.getChildern().get(i), toReturn.getChildren()
+//					.get(i));
+//		return toReturn;
+//	}
 }

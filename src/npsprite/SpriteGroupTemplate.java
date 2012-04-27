@@ -13,11 +13,8 @@ import java.util.ArrayList;
  */
 public class SpriteGroupTemplate {
 	private ArrayList<ArrayList<SpriteTemplate>> mySpriteGroup = new ArrayList<ArrayList<SpriteTemplate>>();
-	
-	private String myName;
 
-	public SpriteGroupTemplate(String groupName) {
-		myName = groupName;
+	public SpriteGroupTemplate() {
 	}
 
 	/**
@@ -33,6 +30,9 @@ public class SpriteGroupTemplate {
 	 * add this sprite in an old specific team according to the team index
 	 */
 	public void addSpriteInOldTeam(SpriteTemplate s,int teamIndex){
+	    if (teamIndex>=mySpriteGroup.size()){
+	        addSpriteInNewTeam(s);
+	    }
 		mySpriteGroup.get(teamIndex).add(s);
 	}
 
@@ -64,6 +64,18 @@ public class SpriteGroupTemplate {
 		mySpriteGroup.get(teamIndex).remove(spriteIndex);
 	}
 
+	/**
+	 * gives the group with this groupID
+	 */
+	public int getTeam(GroupID g){
+	    for (int i=0;i<mySpriteGroup.size();i++){
+	        ArrayList<SpriteTemplate> a=mySpriteGroup.get(i);
+            if (a.get(0).getGroupID()==g){
+                return 0;
+            }
+	    }
+	    return mySpriteGroup.size();
+	}
 	/**
 	 * the total number of teams in this group
 	 */
@@ -97,14 +109,6 @@ public class SpriteGroupTemplate {
 			if(team.contains(s)) return mySpriteGroup.indexOf(team);
 		}
 		return -1;
-	}
-	
-
-	/**
-	 * team name
-	 */
-	public String getGroupName() {
-		return myName;
 	}
 
 	/**

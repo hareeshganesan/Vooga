@@ -20,13 +20,11 @@ public class SpriteTemplate extends Sprite implements Cloneable{
     double defaultSpeed = 0.3;
     double myMass=200;
     
-    private HashMap<String,PropertyObject> myProperties = new HashMap<String,PropertyObject>();
-    private HashMap<GroupID,CollisionEvent> myCollisions = new HashMap<GroupID,CollisionEvent>();
+    protected HashMap<String,PropertyObject> myProperties = new HashMap<String,PropertyObject>();
+    protected HashMap<GroupID,CollisionEvent> myCollisions = new HashMap<GroupID,CollisionEvent>();
     
     protected GroupID myID;
     
-
-//    private boolean myCollisionStatus=false;
     protected CollisionStatus myCollisionStatus = new CollisionStatus();
     protected Point2D moveBy=new Point2D.Double();
 
@@ -57,8 +55,8 @@ public class SpriteTemplate extends Sprite implements Cloneable{
      */
     @SuppressWarnings("unchecked")
     public SpriteTemplate clone(){
-        SpriteTemplate c=new SpriteTemplate(myID);
-        c.addCollisionEvents((HashMap<GroupID, CollisionEvent>) myCollisions.clone()); //TODO: SHALLOW CLONE FOR THIS is okay, right?
+        SpriteTemplate c=new SpriteTemplate(this.getImage(),myID);
+        c.addCollisionEvents((HashMap<GroupID, CollisionEvent>) myCollisions.clone());
         HashMap<String, PropertyObject> newProperties=new HashMap<String, PropertyObject>();
         for (Entry<String, PropertyObject> e:myProperties.entrySet()){
             newProperties.put(e.getKey(), e.getValue().clone());
@@ -74,6 +72,7 @@ public class SpriteTemplate extends Sprite implements Cloneable{
     public double getSpeed() {
         return defaultSpeed;
     }
+    
     /* MASS - each sprite has a default mass of 50, used in physics engine */
     public void setMass(double mass){
         myMass=mass;
@@ -83,8 +82,8 @@ public class SpriteTemplate extends Sprite implements Cloneable{
     }
     
     /* PROPERTIES STUFF */
-    public void addProperty(String name,PropertyObject p){
-        myProperties.put(name, p);
+    public void addProperty(String n,PropertyObject p){
+        myProperties.put(n, p);
     }
     public void addProperties(HashMap<String,PropertyObject>e){
         myProperties.putAll(e);
@@ -109,17 +108,25 @@ public class SpriteTemplate extends Sprite implements Cloneable{
      * active and have different groupIDs
      */
     public void collisionAction(SpriteTemplate otherSprite) {
-        
+//        System.out.println(myID+" trying to collide "+myCollisions.size());
         CollisionEvent act=myCollisions.get(otherSprite.getGroupID());
         if (act != null) {
+//            System.out.println("acting");
             act.performAction(this, otherSprite);
         }
     }
-
-//    public void setCollisionStatus(boolean b){
-//        myCollisionStatus=b;
-//    }
+    //TODO: DELETE, FOR TESTING
+    public int getCollisionSize(){
+        return myCollisions.size();
+    }
     
+    public CollisionStatus getCollisionStatus(){
+        return myCollisionStatus;
+    }
+    
+    public void setCollisionStatus(CollisionStatus c){
+        myCollisionStatus = c;
+    }
 
     /* PHYSICS ENGINE MOVEMENT */
     public void setNextLocationIncrement(Point2D nextLocation) {
@@ -154,21 +161,21 @@ public class SpriteTemplate extends Sprite implements Cloneable{
 
     public void update(long elapsedTime) {
         if (this.isActive()) {
-//            if (moveBy.getX()!=0 || moveBy.getY()!=0){
-//                System.out.println("move");
-//                move(moveBy.getX(), moveBy.getY());
-//            }
         	myCollisionStatus.setDefault();
+        	for (PropertyObject p:myProperties.values()){
+        	    CollisionEvent c=p.update(elapsedTime);
+        	    if (c!=null){
+        	        c.performAction(this, null);
+        	    }
+        	}
+        	if (moveBy.getX() != 0 || moveBy.getY() != 0) {
+                move(moveBy.getX(), moveBy.getY());
+            }
+            moveBy.setLocation(0, 0); // moveBy only work for one time then set to
+                                        // zero
+
             super.update(elapsedTime);
         }
-    }
-    
-    public CollisionStatus getCollisionStatus(){
-    	return myCollisionStatus;
-    }
-    
-    public void setCollisionStatus(CollisionStatus c){
-    	myCollisionStatus = c;
     }
 
 }

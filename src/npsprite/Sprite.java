@@ -1,8 +1,9 @@
 package npsprite;
 
 /*
- * Copied from golden T, but removed other ID settings to not interfere with new
- * SpriteID object Copyright (c) 2008 Golden T Studios. This program is free
+ * Copied from golden T, but removed other ID settings
+ * 
+ * Copyright (c) 2008 Golden T Studios. This program is free
  * software: you can redistribute it and/or modify it under the terms of the GNU
  * Lesser General Public License as published by the Free Software Foundation,
  * either version 3 of the License, or (at your option) any later version. This

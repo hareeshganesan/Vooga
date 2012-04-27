@@ -32,7 +32,7 @@ public class CameraSprite extends SpriteTemplate{
         sprite.render(g);
         g.setTransform(old);
         
-        System.out.println("translating by " + xTrans + "," + yTrans);
+        //System.out.println("translating by " + xTrans + "," + yTrans);
         
     }
 }

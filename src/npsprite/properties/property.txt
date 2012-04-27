@@ -1,0 +1,11 @@
+Guide to creating a new property object:
+-extend PropertyObject
+-create a public final String field NAME containing the name of your property that is unique.
+
+names used so far:
+health
+damage
+timer
+direction
+spawns
+status

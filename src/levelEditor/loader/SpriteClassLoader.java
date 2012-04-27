@@ -5,6 +5,7 @@ import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.util.ArrayList;
 import java.util.HashSet;
 import javax.swing.JFileChooser;
 
@@ -32,6 +33,16 @@ public class SpriteClassLoader {
 		File root = getRootFile();
 		iterate(root);
 		loadClasses();
+	}
+	
+	public String[] getSpriteClassNames() {
+		ArrayList<Class> classes = new ArrayList<Class>(myLoadedClasses);
+		String[] names = new String [classes.size()];
+		
+		for (int i = 0; i < names.length; i++) {
+			names[i] = classes.get(i).getSimpleName();
+		}
+		return names;
 	}
 	
 	
@@ -103,11 +114,9 @@ public class SpriteClassLoader {
 		}
 		
 		String subpath = path.substring(backslash + 1);
-		System.out.println("Current path:  " +  subpath);
 
 		try {	
 			c = loader.loadClass(subpath);
-			System.out.println(c != null);
 		}
 		
 		catch (ClassNotFoundException e) {
@@ -156,5 +165,7 @@ public class SpriteClassLoader {
 			iterate(sub);
 		}
 	}
+	
+
 
 }
