@@ -8,90 +8,118 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
-
 import javax.swing.JPanel;
-
 import charactorEditor.Controller;
 import charactorEditor.Model.Sort;
 
-public class MyComponentPanel extends JPanel implements MouseListener,
-		MouseMotionListener {
-	private static final long serialVersionUID = 100L;
-	private final Color UNCLICKED_COMPONENT_COLOR = Color.blue;
-	private final Color CLICKED_COMPONENT_COLOR = Color.red;
-	private final Color STRING_COLOR = Color.white;
-	public final int  COMPONENTNUMBER=1;
-	private Graphics2D g = null;
-	private Rectangle2D[] components = new Rectangle2D.Double[COMPONENTNUMBER];
-	private Controller myController=null;
 
-	MyComponentPanel() {
-		initComponents();
-		setBounds(0, 0, 113, 615);
-		myController=Controller.Instance();
-		addMouseListener(this);
-		addMouseMotionListener(this);
-	}
+public class MyComponentPanel extends JPanel
+    implements MouseListener, MouseMotionListener
+{
+    private static final long serialVersionUID = 100L;
+    private final Color UNCLICKED_COMPONENT_COLOR = Color.blue;
+    private final Color CLICKED_COMPONENT_COLOR = Color.red;
+    private final Color STRING_COLOR = Color.white;
+    public final int COMPONENTNUMBER = 1;
+    private Graphics2D g = null;
+    private Rectangle2D[] components = new Rectangle2D.Double[COMPONENTNUMBER];
+    private Controller myController = null;
 
-	public int find(Point2D p) {
-		for (int i = 0; i < COMPONENTNUMBER; i++) {
-			if (components[i].contains(p)) {
-				return i;
-			}
-		}
-		return -1;
-	}
 
-	void initComponents() {
-		for (int i = 0; i < COMPONENTNUMBER; i++) {
-			components[i] = new Rectangle2D.Double(25, 30 + 30 * i, 70, 25);
-		}
-	}
+    MyComponentPanel ()
+    {
+        initComponents();
+        setBounds(0, 0, 113, 615);
+        myController = Controller.Instance();
+        addMouseListener(this);
+        addMouseMotionListener(this);
+    }
 
-	void drawComponents(Graphics2D g) {
-		for (int i = 0; i < COMPONENTNUMBER; i++) {
-			if (i == myController.getWillPut()) {
-				g.setColor(CLICKED_COMPONENT_COLOR);
-				g.fill(components[i]);
-			} else {
-				g.setColor(UNCLICKED_COMPONENT_COLOR);
-				g.fill(components[i]);
-			}
-		}
-		g.setColor(STRING_COLOR);
-		for (int i = 0; i < COMPONENTNUMBER; i++) {
-			g.drawString(Sort.CMP[i], 27, 47 + 30 * i);
-		}
-	}
 
-	public void paintComponent(Graphics e) {
-		super.paintComponent(e);
-		g = (Graphics2D) e;
-		drawComponents(g);
-	}
+    public int find (Point2D p)
+    {
+        for (int i = 0; i < COMPONENTNUMBER; i++)
+        {
+            if (components[i].contains(p))
+            {
+                return i;
+            }
+        }
+        return -1;
+    }
 
-	public void mouseClicked(MouseEvent e) {
-	}
 
-	public void mouseEntered(MouseEvent e) {
-	}
+    void initComponents ()
+    {
+        for (int i = 0; i < COMPONENTNUMBER; i++)
+        {
+            components[i] = new Rectangle2D.Double(25, 30 + 30 * i, 70, 25);
+        }
+    }
 
-	public void mouseExited(MouseEvent e) {
-	}
 
-	public void mousePressed(MouseEvent e) {
-		myController.mousePressed(e);
-	}
+    void drawComponents (Graphics2D g)
+    {
+        for (int i = 0; i < COMPONENTNUMBER; i++)
+        {
+            if (i == myController.getWillPut())
+            {
+                g.setColor(CLICKED_COMPONENT_COLOR);
+                g.fill(components[i]);
+            }
+            else
+            {
+                g.setColor(UNCLICKED_COMPONENT_COLOR);
+                g.fill(components[i]);
+            }
+        }
+        g.setColor(STRING_COLOR);
+        for (int i = 0; i < COMPONENTNUMBER; i++)
+        {
+            g.drawString(Sort.CMP[i], 27, 47 + 30 * i);
+        }
+    }
 
-	public void mouseReleased(MouseEvent e) {
 
-	}
+    public void paintComponent (Graphics e)
+    {
+        super.paintComponent(e);
+        g = (Graphics2D) e;
+        drawComponents(g);
+    }
 
-	public void mouseDragged(MouseEvent e) {
-	}
 
-	public void mouseMoved(MouseEvent e) {
-		myController.mouseMoved(e);
-	}
+    public void mouseClicked (MouseEvent e)
+    {}
+
+
+    public void mouseEntered (MouseEvent e)
+    {}
+
+
+    public void mouseExited (MouseEvent e)
+    {}
+
+
+    public void mousePressed (MouseEvent e)
+    {
+        myController.mousePressed(e);
+    }
+
+
+    public void mouseReleased (MouseEvent e)
+    {
+
+    }
+
+
+    public void mouseDragged (MouseEvent e)
+    {}
+
+
+    public void mouseMoved (MouseEvent e)
+    {
+        myController.mouseMoved(e);
+    }
 
 }

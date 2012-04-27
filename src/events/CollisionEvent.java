@@ -11,7 +11,7 @@ public abstract class CollisionEvent
     protected CollisionEvent ()
     {}
 
-    public abstract void performAction (SpriteTemplate me, SpriteTemplate o);
 
+    public abstract void performAction (SpriteTemplate me, SpriteTemplate o);
 
 }

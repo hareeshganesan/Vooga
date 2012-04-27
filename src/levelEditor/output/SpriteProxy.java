@@ -1,5 +1,6 @@
 package levelEditor.output;
 
-public class SpriteProxy {
+public class SpriteProxy
+{
 
 }

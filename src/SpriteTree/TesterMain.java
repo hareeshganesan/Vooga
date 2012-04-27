@@ -61,10 +61,10 @@ public class TesterMain extends Game {
 		LimbNode torso = new LimbNode("torso",imgT, this.getWidth()/2, this.getHeight()/2);
 		//limb nodes, require parent field
 		LimbNode head = new LimbNode("head",torso,imgH, 0,-(torso.getHeight()/2),0);
-		LimbNode LeftArm = new LimbNode("LeftArm",torso,imgLA, -(torso.getWidth()/2),0,45);		
-		LimbNode RightArm = new LimbNode("RightArm",torso,imgRA,(torso.getWidth()/2),-(torso.getHeight()/2),-45);
+		LimbNode LeftArm = new LimbNode("LeftArm",torso,imgLA, -(torso.getWidth()/2),0,40);		
+		LimbNode RightArm = new LimbNode("RightArm",torso,imgRA,(torso.getWidth()/2)+10,-(torso.getHeight()/2),-50);
 		LimbNode LeftLeg = new LimbNode("LeftLeg",torso,imgLL, 0,torso.getHeight()/2+20,0);
-		LimbNode RightLeg= new LimbNode("RightLeg",torso,imgRL, torso.getWidth(),torso.getHeight()/2+20,0);
+		LimbNode RightLeg= new LimbNode("RightLeg",torso,imgRL, torso.getWidth()-20,torso.getHeight()/2+20,0);
 		
 		LimbNode LRightLeg = new LimbNode("LRightLeg",RightLeg, imgLRL, 1, (RightLeg.getHeight()), 0);
 		RightLeg.addChild(LRightLeg);
@@ -158,9 +158,9 @@ public class TesterMain extends Game {
 
 		}
 		if(keyPressed(KeyEvent.VK_A)){ //attach node
-			BufferedImage LLL = GraphicsTest.loadImage("src/resources/bodyParts/limb.png");
-			LimbNode LLLeftLeg = new LimbNode("LLLeftLeg",myTree.getNode("LLeftLeg"), LLL, 0, 40, 0);
-			myTree.attach("LLeftLeg",LLLeftLeg);
+			BufferedImage LLL = GraphicsTest.loadImage("src/resources/bodyParts/weapon.png");
+			LimbNode LLLeftLeg = new LimbNode("LLLeftLeg",myTree.getNode("RightArm"), LLL, -40, -60, 50);
+			myTree.attach("RightArm",LLLeftLeg);
 
 
 		}

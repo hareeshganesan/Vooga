@@ -43,8 +43,8 @@ public class LimbNode extends Sprite{
 		this.myName = name;
 		this.myOrigImage = image;
 	}
-	//constructor for limbs
 	
+	//constructor for limbs
 	public LimbNode(String name, LimbNode parent, BufferedImage image,double dx, double dy, int baseTheta){
 		super(image,parent.getX()+dx, parent.getY()+dy);
 		this.myName = name;

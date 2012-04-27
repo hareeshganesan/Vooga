@@ -5,11 +5,10 @@ import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.HashMap;
-
-import SpriteTree.GraphicsTest;
-
 import npsprite.properties.DamageProperty;
 import npsprite.properties.PropertyObject;
+import SpriteTree.GraphicsTest;
+
 
 //The sprite for things that can overlap and own other sprites
 public class NodeSprite extends SpriteTemplate {
@@ -34,33 +33,48 @@ public class NodeSprite extends SpriteTemplate {
     protected double mutableTheta;
     protected BufferedImage myCurrImage;
     protected BufferedImage myOrigImage;
-    protected HashMap<Integer, BufferedImage> myPreGenImgs = new HashMap<Integer, BufferedImage>();
-    protected HashMap<Integer, BufferedImage> myFlippedImgs = new HashMap<Integer, BufferedImage>();
+    protected HashMap<Integer, BufferedImage> myPreGenImgs =
+        new HashMap<Integer, BufferedImage>();
+    protected HashMap<Integer, BufferedImage> myFlippedImgs =
+        new HashMap<Integer, BufferedImage>();
 
     protected GroupID currGroupID; // different from initial groupID if this is
                                    // attached to something else
 
+
     /**
      * constructor for torso/base nodes
      */
-    public NodeSprite(String n, BufferedImage image, GroupID g, double x,
-            double y, double damage) {
+    public NodeSprite (String n,
+                       BufferedImage image,
+                       GroupID g,
+                       double x,
+                       double y,
+                       double damage)
+    {
         super(image, g, x, y);
         this.myOrigImage = image;
         myName = n;
         moveBy = new Point2D.Double();
-        this.addProperty(DamageProperty.NAME, new DamageProperty(damage
-                * damageMultiplier));
+        this.addProperty(DamageProperty.NAME,
+                         new DamageProperty(damage * damageMultiplier));
         currGroupID = myID;
     }
+
 
     /**
      * constructor for other things
      */
-    public NodeSprite(String n, NodeSprite parent, BufferedImage image,
-            double dx, double dy, double damage, int baseTheta) {
-        super(image, parent.getGroupID(), parent.getX() + dx, parent.getY()
-                + dy);
+    public NodeSprite (String n,
+                       NodeSprite parent,
+                       BufferedImage image,
+                       double dx,
+                       double dy,
+                       double damage,
+                       int baseTheta)
+    {
+        super(image, parent.getGroupID(), parent.getX() + dx, parent.getY() +
+                                                              dy);
 
         this.myOrigImage = image;
         this.mutableTheta = baseTheta;
@@ -73,46 +87,61 @@ public class NodeSprite extends SpriteTemplate {
         moveBy = new Point2D.Double();
 
         currGroupID = myID;
-        this.addProperty(DamageProperty.NAME, new DamageProperty(damage
-                * damageMultiplier));
+        this.addProperty(DamageProperty.NAME,
+                         new DamageProperty(damage * damageMultiplier));
     }
 
-    public void setFighter(FighterBody fighterBody) {
+
+    public void setFighter (FighterBody fighterBody)
+    {
         myPointer = fighterBody;
         myID = fighterBody.getGroupID();
     }
 
-    public void setPosition(int moveX, int moveY) {
+
+    public void setPosition (int moveX, int moveY)
+    {
         this.setX(this.getX() + moveX);
         this.setY(this.getY() + moveY);
     }
 
-    public Point2D getCurrentLocation() {
-        return new Point2D.Double(this.getX() + moveBy.getX(), this.getY()
-                + moveBy.getY());
+
+    public Point2D getCurrentLocation ()
+    {
+        return new Point2D.Double(this.getX() + moveBy.getX(), this.getY() +
+                                                               moveBy.getY());
     }
 
-    public void setNextLocationIncrement(Point2D nextLocation) {
-        this.moveBy = new Point2D.Double(nextLocation.getX(),
-                nextLocation.getY());
+
+    public void setNextLocationIncrement (Point2D nextLocation)
+    {
+        this.moveBy =
+            new Point2D.Double(nextLocation.getX(), nextLocation.getY());
     }
+
 
     /*          */
     /* TREE AREA */
     /*          */
-    protected void setParent(NodeSprite parent) {
+    protected void setParent (NodeSprite parent)
+    {
         Parent = parent;
-        if (Parent == null) {
+        if (Parent == null)
+        {
             currGroupID = myID;
         }
         this.setDefaultSpeed(Parent.getSpeed());
     }
 
-    public NodeSprite getParent() {
+
+    public NodeSprite getParent ()
+    {
         return Parent;
     }
 
-    public void addChild(NodeSprite child) {
+
+    public void addChild (NodeSprite child)
+    {
         child.setParent(this);
         child.changeGroupID(this.getGroupID());
         children.add(child);
@@ -120,21 +149,31 @@ public class NodeSprite extends SpriteTemplate {
         myPointer.childAdded(child);
     }
 
-    public void changeGroupID(GroupID g) {
+
+    public void changeGroupID (GroupID g)
+    {
         currGroupID = g;
         // TODO figure out how this is going to be communicated to the physics
         // engine?
     }
 
-    public GroupID getGroupID() {
+
+    public GroupID getGroupID ()
+    {
         return currGroupID;
     }
 
-    public void removeChild(NodeSprite child) {
-        if (children == null) {
+
+    public void removeChild (NodeSprite child)
+    {
+        if (children == null)
+        {
             // do nothing
-        } else if (!children.contains(child)) {
-            for (NodeSprite c : children) {
+        }
+        else if (!children.contains(child))
+        {
+            for (NodeSprite c : children)
+            {
                 c.removeChild(child);
             }
         }
@@ -144,37 +183,59 @@ public class NodeSprite extends SpriteTemplate {
 
     }
 
-    public boolean hasProperty(String name) {
-        if (myPointer.hasProperty(name)) {
+
+    public boolean hasProperty (String name)
+    {
+        if (myPointer.hasProperty(name))
+        {
             return true;
         }
         return super.hasProperty(name);
     }
 
-    public PropertyObject getProperty(String name) {
+
+    public PropertyObject getProperty (String name)
+    {
         PropertyObject o = myPointer.getProperty(name);
-        if (o == null) {
+        if (o == null)
+        {
             return super.getProperty(name);
         }
         return o;
     }
 
-    public void setMass(double mass) {
+
+    public void setMass (double mass)
+    {
         myPointer.setMass(mass);
     }
 
-    public double getMass() {
+
+    public double getMass ()
+    {
         return myPointer.getMass();
     }
-    public FighterBody getMyPointer() {
+
+
+    public void rotate (double dTheta)
+    {
+        this.mutableTheta += dTheta;
+    }
+
+    public FighterBody getMyPointer ()
+    {
         return myPointer;
     }
 
-    public ArrayList<NodeSprite> getChildren() {
+
+    public ArrayList<NodeSprite> getChildren ()
+    {
         return this.children;
     }
 
-    public String getName() {
+
+    public String getName ()
+    {
         return this.myName;
     }
 
@@ -188,7 +249,8 @@ public class NodeSprite extends SpriteTemplate {
     /* IMAGE MANIPULATION */
     public void flip(boolean flipped) {
         this.flipped = flipped;
-        for (NodeSprite child : children) {
+        for (NodeSprite child : children)
+        {
             child.flip(flipped);
         }
     }
@@ -209,47 +271,61 @@ public class NodeSprite extends SpriteTemplate {
         this.mutableTheta = expTheta;
     }
 
-
-    public Integer roundTheta(double theta) {
+    public Integer roundTheta (double theta)
+    {
         Integer n = 0;
         n = (int) Math.round(theta);
         return n;
     }
 
-    public void draw(double x, double y, double theta) {
+
+    public void draw (double x, double y, double theta)
+    {
         this.setX(x);
         this.setY(y);
         Integer roundedTheta = roundTheta(theta);
 
-        if (this.flipped == true) {
-            if (this.Parent != null) {
+        if (this.flipped == true)
+        {
+            if (this.Parent != null)
+            {
                 // coordinate flipped sprite images
-                double dxFromCenter = (this.Parent.getX() + this.Parent
-                        .getWidth() / 2) - x;
-                if (dxFromCenter > 0) {
-                    this.setX((this.Parent.getX() + this.Parent.getWidth() / 2)
-                            + dxFromCenter);
+                double dxFromCenter =
+                    (this.Parent.getX() + this.Parent.getWidth() / 2) - x;
+                if (dxFromCenter > 0)
+                {
+                    this.setX((this.Parent.getX() + this.Parent.getWidth() / 2) +
+                              dxFromCenter);
                 }
-                if (dxFromCenter < 0) {
+                if (dxFromCenter < 0)
+                {
 
-                    this.setX((this.Parent.getX() + this.Parent.getWidth() / 2)
-                            - dxFromCenter);
+                    this.setX((this.Parent.getX() + this.Parent.getWidth() / 2) -
+                              dxFromCenter);
                 }
             }
 
-            if (myFlippedImgs.containsKey(roundedTheta)) {
+            if (myFlippedImgs.containsKey(roundedTheta))
+            {
                 this.setImage(myFlippedImgs.get(roundedTheta));
-            } else {
+            }
+            else
+            {
                 this.myCurrImage = GraphicsTest.rotate(this.myOrigImage, theta);
                 this.myCurrImage = GraphicsTest.horizFlip(this.myCurrImage);
                 this.setImage(this.myCurrImage);
                 myFlippedImgs.put(roundTheta(theta), this.myCurrImage);
             }
-        } else {
+        }
+        else
+        {
 
-            if (myPreGenImgs.containsKey(roundedTheta)) {
+            if (myPreGenImgs.containsKey(roundedTheta))
+            {
                 this.setImage(myPreGenImgs.get(roundedTheta));
-            } else {
+            }
+            else
+            {
                 this.myCurrImage = GraphicsTest.rotate(this.myOrigImage, theta);
                 this.setImage(this.myCurrImage);
                 myPreGenImgs.put(roundTheta(theta), this.myCurrImage);
@@ -257,24 +333,34 @@ public class NodeSprite extends SpriteTemplate {
         }
     }
 
-    public void render(Graphics2D pen, double baseX, double baseY, int baseTheta) {
+
+    public void render (Graphics2D pen,
+                        double baseX,
+                        double baseY,
+                        int baseTheta)
+    {
         super.render(pen);
 
-        double dx = Math.cos(Math.toRadians(baseTheta)) * this.dx
-                - Math.sin(Math.toRadians(baseTheta)) * this.dy;
-        double dy = Math.sin(Math.toRadians(baseTheta)) * this.dx
-                + Math.cos(Math.toRadians(baseTheta)) * this.dy;
+        double dx =
+            Math.cos(Math.toRadians(baseTheta)) * this.dx -
+                    Math.sin(Math.toRadians(baseTheta)) * this.dy;
+        double dy =
+            Math.sin(Math.toRadians(baseTheta)) * this.dx +
+                    Math.cos(Math.toRadians(baseTheta)) * this.dy;
 
-        if (this.flipped) {
+        if (this.flipped)
+        {
             dx = -dx;
         }
         draw((baseX + dx), (baseY + dy), this.mutableTheta + baseTheta);
 
-        for (NodeSprite limb : this.children) {
-            limb.render(pen, (baseX + dx), (baseY + dy),
-                    (int) (this.mutableTheta + baseTheta));
+        for (NodeSprite limb : this.children)
+        {
+            limb.render(pen,
+                        (baseX + dx),
+                        (baseY + dy),
+                        (int) (this.mutableTheta + baseTheta));
         }
     }
-
 
 }

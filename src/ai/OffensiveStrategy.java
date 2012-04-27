@@ -1,9 +1,8 @@
 package ai;
 
-import npsprite.FighterBody;
 import game.CombatInstance;
+import npsprite.FighterBody;
 import action.AdvancedFollowAction;
-import action.FollowAction;
 import action.Goal;
 import action.WeaponAction;
 
@@ -39,7 +38,8 @@ public class OffensiveStrategy extends Strategy
 
         public FollowGoal (FighterBody me, FighterBody enemy, CombatInstance ci)
         {
-            super(new AdvancedFollowAction(me, enemy, ci ,myPhysicsEngine), 10000);
+            super(new AdvancedFollowAction(me, enemy, ci, myPhysicsEngine),
+                  10000);
             myFighter = me;
             myEnemy = enemy;
         }
@@ -54,7 +54,7 @@ public class OffensiveStrategy extends Strategy
         }
 
     }
-    
+
     private class AttackGoal extends Goal
     {
         FighterBody myFighter;
@@ -63,18 +63,16 @@ public class OffensiveStrategy extends Strategy
 
         public AttackGoal (FighterBody me, FighterBody enemy, CombatInstance ci)
         {
-            super(new WeaponAction(me, 0, ci), 10000);
+            super(new WeaponAction(me, "weapon0", ci), 10000);
             myFighter = me;
             myEnemy = enemy;
         }
 
 
         @Override
-        protected
-        void updateGoalState ()
+        protected void updateGoalState ()
         {
-            if(this.repeatedAction.isDone(0))
-                done = true;
+            if (this.repeatedAction.isDone(0)) done = true;
         }
 
     }

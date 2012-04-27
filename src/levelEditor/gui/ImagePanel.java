@@ -11,20 +11,29 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
+
 @SuppressWarnings("serial")
-public class ImagePanel extends JPanel {
+public class ImagePanel extends JPanel
+{
 
     private BufferedImage myImage;
 
-    public ImagePanel(String imagePath) {
-        try {
+
+    public ImagePanel (String imagePath)
+    {
+        try
+        {
             myImage = ImageIO.read(new File(imagePath));
-        } catch (IOException e) {
+        }
+        catch (IOException e)
+        {
             e.printStackTrace();
         }
     }
 
-    public void paintComponent(Graphics g) {
+
+    public void paintComponent (Graphics g)
+    {
         g.drawImage(myImage, 0, 0, null);
     }
 

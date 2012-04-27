@@ -1,8 +1,5 @@
 package SpriteTree;
 
-import npsprite.FighterBody;
-import npsprite.NodeSprite;
-
 public class Motion {
 	//be able to decrement the time, updat() method, with elapsedtime, subtract from time
 	//boolean update(long elapsedTime) time-=elaspedtime; return if time ==0;
@@ -14,12 +11,12 @@ public class Motion {
 	private long time;
 	private long defaultTime;
 	private boolean active;
-	private NodeSprite myLimb;
+	private LimbNode myLimb;
 	private double myExpAngle;
 
 
 	
-	public Motion(String name, double expAngle, FighterBody tree, long time){
+	public Motion(String name, double expAngle, BodyTree tree, long time){
 		
 		this.name = name;
 		
@@ -31,12 +28,6 @@ public class Motion {
 		
 		//add rotated angle to current theta, assume already rotated
 		//so the next motion performed on the same limb would calculate the rotated dtheta
-
-		
-//		System.out.println("name is " + name);
-//		System.out.println(tree.getMap().get(name));
-//		System.out.println("exp angle is "+ expAngle);
-//		
 		tree.getMap().get(name).setTheta(expAngle);
 
 		active = true;
@@ -49,7 +40,6 @@ public class Motion {
 			double currAngle = myLimb.getTheta();
 
 			this.dTheta = (myExpAngle-currAngle)/(double)time;
-			System.out.println(this.dTheta);
 			this.myLimb.rotate(dTheta*Math.min(elapsedTime, time));			
 			this.time -=elapsedTime;
 		
@@ -84,4 +74,3 @@ public class Motion {
 		return this.time;
 	}
 }
-
