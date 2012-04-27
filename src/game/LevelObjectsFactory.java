@@ -28,6 +28,7 @@ import org.jdom.xpath.XPath;
 import sprite.HealthDisplay;
 import PhysicsEngine.PhysicsEngine;
 import action.MotionAction;
+import action.WeaponAction;
 import ai.AIAgent;
 import ai.BasicAIAgent;
 import ai.BasicStrategyAgent;
@@ -134,6 +135,7 @@ public class LevelObjectsFactory {
 
 //        body.setDefaultSpeed(Double.parseDouble(e.getChildText("speed"))); //TODO
         ai.setRoot(body);
+        ai.setDefaultSpeed(1.5);
         return ai;
     }
 
@@ -146,16 +148,19 @@ public class LevelObjectsFactory {
 
 //        body.setDefaultSpeed(Double.parseDouble(e.getChildText("speed"))); //TODO
         ai.setRoot(body);
+
         return ai;
     }
 
     private void mapFighter(int playerIndex, FighterBody s) {
         InputHandler h = c.getMyHandler();
         int[] map = InputHandler.defaultMapping(playerIndex);
-        h.addKey(map[0], MotionAction.UP(s, myPhysicsEngine));
-        h.addKey(map[1], MotionAction.DOWN(s, myPhysicsEngine));
-        h.addKey(map[2], MotionAction.LEFT(s, myPhysicsEngine));
-        h.addKey(map[3], MotionAction.RIGHT(s, myPhysicsEngine));
+        h.addKey(map[0], MotionAction.UP(s,myPhysicsEngine));
+        h.addKey(map[1], MotionAction.DOWN(s,myPhysicsEngine));
+        h.addKey(map[2], MotionAction.LEFT(s,myPhysicsEngine));
+        h.addKey(map[3], MotionAction.RIGHT(s,myPhysicsEngine));
+        h.addKey(map[4], new WeaponAction(s, 0,c));
+        h.addKey(map[5], new WeaponAction(s, 1,c));
     }
 
     public ArrayList<PlatformBlock> createPlatforms() throws JDOMException {

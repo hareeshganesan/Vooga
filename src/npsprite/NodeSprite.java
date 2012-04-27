@@ -59,7 +59,7 @@ public class NodeSprite extends SpriteTemplate{
 
     public Point2D getCurrentLocation ()
     {
-        return new Point2D.Double(getX() + moveBy.getX(), getY() +
+        return new Point2D.Double(this.getX() + moveBy.getX(), this.getY() +
                                                           moveBy.getY());
     }
 

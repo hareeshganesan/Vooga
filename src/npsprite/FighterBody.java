@@ -2,9 +2,12 @@ package npsprite;
 
 import java.awt.Graphics2D;
 import java.awt.geom.Point2D;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import action.Action;
+import action.ActionTimer;
 
 import SpriteTree.Animation;
 import SpriteTree.LimbNode;
@@ -23,12 +26,12 @@ import sprite.HealthDisplay;
 //limbs come with damage - see limbsprite
 //TODO: subclass of spritetemplate?
 public class FighterBody extends SpriteTemplate {
-
     private String myName;
     private HealthProperty myHealth; // for ease in access
     private DirectionProperty myDirection;
     private StatusProperty myStatus; // for stuff like jumping, blocking
 
+    private ArrayList<ActionTimer> myTimers;
     private HealthDisplay myDisplay;
     LimbSprite root; // root must be a limb
     
@@ -46,6 +49,9 @@ public class FighterBody extends SpriteTemplate {
         myHealth = new HealthProperty(100);
         myDirection = new DirectionProperty(DIR.RIGHT);
         myStatus = new StatusProperty(SpriteValues.STATUS.NORM);
+
+        myTimers = new ArrayList<ActionTimer>();
+        myTimers.add(new ActionTimer(500));
 
         super.addProperty(HealthProperty.NAME, myHealth);
         super.addProperty(DirectionProperty.NAME, myDirection);
@@ -187,11 +193,19 @@ public class FighterBody extends SpriteTemplate {
     }
 
     public void update(long elapsedTime) {
+        if(this.getCollisionStatus().getStandOnSth()){
+            myTimers.get(0).makeAvailable();
+        }
         root.update(elapsedTime);
         if (getHealth() <= 0) {
             root.setActive(false); // dead, have game check for this for end of
                                    // level
         }
+        if (moveBy.getX() != 0 || moveBy.getY() != 0) {
+            move(moveBy.getX(), moveBy.getY());
+        }
+        moveBy.setLocation(0, 0); // moveBy only work for one time then set to
+                                    // zero
 
         myDisplay.update(elapsedTime, (int) getHealth());
         super.update(elapsedTime);
@@ -225,4 +239,9 @@ public class FighterBody extends SpriteTemplate {
         }
         return (int) width;
     }
+    public ActionTimer getMyTimer (int index)
+    {
+        return myTimers.get(index);
+    }
+    
 }

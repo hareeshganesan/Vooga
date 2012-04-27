@@ -31,29 +31,39 @@ public class ReactionStop extends Reaction {
 			PhysicsEngine physicsEngine) {
 		CollisionStatus status1 = spriteOne.getCollisionStatus();
 		CollisionStatus status2 = spriteTwo.getCollisionStatus();
-		double horizontalIncrementOne = myStopPositionXOne;
-		double verticalIncrementOne = myStopPositionYOne;
-		double horizontalIncrementTwo = myStopPositionXTwo;
-		double verticalIncrementTwo = myStopPositionYTwo;
-		if (status1.getLeft() && status2.getRight()) {
-			horizontalIncrementOne = myStopPositionXOne + myDistance * FACTOR;
-			horizontalIncrementTwo = myStopPositionXTwo - myDistance * FACTOR;
-		} else if (status1.getRight() && status2.getLeft()) {
-			horizontalIncrementOne = myStopPositionXOne - myDistance * FACTOR;
-			horizontalIncrementTwo = myStopPositionXTwo + myDistance * FACTOR;
-		}
-		if (status1.getUp() && status2.getDown()) {
-			verticalIncrementOne = myStopPositionYOne + myDistance * FACTOR;
-			verticalIncrementTwo = myStopPositionYTwo - myDistance * FACTOR;
-		} else if (status1.getDown() && status2.getUp()) {
-			verticalIncrementOne = myStopPositionYOne - myDistance * FACTOR;
-			verticalIncrementTwo = myStopPositionYTwo + myDistance * FACTOR;
-		}
+		initializeIncrement();
+		setHorizontalIncrement(status1, status2);
+		setVerticalIncrement(status1, status2);
+		setNextLocationIncrement(spriteOne, spriteTwo, physicsEngine);
+	}
 
-		physicsEngine.setNextLocationIncrement(spriteOne,
-				horizontalIncrementOne, verticalIncrementOne);
-		physicsEngine.setNextLocationIncrement(spriteTwo,
-				horizontalIncrementTwo, verticalIncrementTwo);
+	private void initializeIncrement() {
+		dx1 = myStopPositionXOne;
+		dy1 = myStopPositionYOne;
+		dx2 = myStopPositionXTwo;
+		dy2 = myStopPositionYTwo;
+	}
+
+	private void setHorizontalIncrement(CollisionStatus status1,
+			CollisionStatus status2) {
+		if (status1.getLeft() && status2.getRight()) {
+			dx1 = myStopPositionXOne + myDistance * FACTOR;
+			dx2 = myStopPositionXTwo - myDistance * FACTOR;
+		} else if (status1.getRight() && status2.getLeft()) {
+			dx1 = myStopPositionXOne - myDistance * FACTOR;
+			dx2 = myStopPositionXTwo + myDistance * FACTOR;
+		}
+	}
+
+	private void setVerticalIncrement(CollisionStatus status1,
+			CollisionStatus status2) {
+		if (status1.getUp() && status2.getDown()) {
+			dy1 = myStopPositionYOne + myDistance * FACTOR;
+			dy2 = myStopPositionYTwo - myDistance * FACTOR;
+		} else if (status1.getDown() && status2.getUp()) {
+			dy1 = myStopPositionYOne - myDistance * FACTOR;
+			dy2 = myStopPositionYTwo + myDistance * FACTOR;
+		}
 	}
 
 	/**

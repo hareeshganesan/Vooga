@@ -65,8 +65,7 @@ public class FightPhysicsEngine extends PhysicsEngine {
 	 * set the collision standing status
 	 */
 	private void setCollisionStatus(SpriteTemplate sprite, double dy) {
-		sprite.getCollisionStatus().setStandOnSth(
-				isOutDown(sprite, dy) || sprite.getCollisionStatus().getDown());
+		sprite.getCollisionStatus().setStandOnGound(isOutDown(sprite, dy));
 	}
 
 	/**

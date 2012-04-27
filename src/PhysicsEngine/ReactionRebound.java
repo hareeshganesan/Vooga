@@ -44,26 +44,25 @@ public class ReactionRebound extends Reaction {
 	private void rebound(SpriteTemplate fighterSprite, SpriteTemplate block,
 			PhysicsEngine physicsEngine) {
 		Point2D moveBy = fighterSprite.getMoveBy();
-		double horizontalIncrement = moveBy.getX();
-		double verticalIncrement = moveBy.getY();
+		double dx = moveBy.getX();
+		double dy = moveBy.getY();
 
 		if (!reboundUp && fighterSprite.getCollisionStatus().getDown()) {
-			verticalIncrement = Math.min(verticalIncrement, STOP);
+			dy = Math.min(dy, STOP);
 		} else if (!reboundDown && fighterSprite.getCollisionStatus().getUp()) {
-			verticalIncrement = Math.max(verticalIncrement, STOP);
+			dy = Math.max(dy, STOP);
 		} else if (!reboundRight
 				&& fighterSprite.getCollisionStatus().getLeft()) {
-			horizontalIncrement = Math.max(horizontalIncrement, STOP);
+			dx = Math.max(dx, STOP);
 		} else if (!reboundLeft
 				&& fighterSprite.getCollisionStatus().getRight()) {
-			horizontalIncrement = Math.min(horizontalIncrement, STOP);
+			dx = Math.min(dx, STOP);
 		} else {
-			horizontalIncrement = -moveBy.getX() * reboundFactor;
-			verticalIncrement = -moveBy.getY() * reboundFactor;
+			dx = -moveBy.getX() * reboundFactor;
+			dy = -moveBy.getY() * reboundFactor;
 		}
 
-		physicsEngine.setNextLocationIncrement(fighterSprite,
-				horizontalIncrement, verticalIncrement);
+		physicsEngine.setNextLocationIncrement(fighterSprite, dx, dy);
 	}
 
 	/**

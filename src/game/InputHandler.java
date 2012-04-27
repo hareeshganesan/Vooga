@@ -31,7 +31,6 @@ public class InputHandler
      */
     public void update (long elapsedTime, GameEngine engine)
     {
-        if (engine.keyDown(KeyEvent.VK_Q)) System.out.println("hello");
         for (Integer key : key_mapping.keySet())
             if (engine.keyDown(key.intValue())) {
 //                System.out.println(key);
@@ -50,17 +49,23 @@ public class InputHandler
      */
     public static int[] defaultMapping (int i)
     {
-        int[][] playermappings = new int[2][4];
+        int[][] playermappings = new int[2][6];
 
         playermappings[0][0] = KeyEvent.VK_UP;
         playermappings[0][1] = KeyEvent.VK_DOWN;
         playermappings[0][2] = KeyEvent.VK_LEFT;
         playermappings[0][3] = KeyEvent.VK_RIGHT;
-
+        playermappings[0][4] = KeyEvent.VK_N;
+        playermappings[0][5] = KeyEvent.VK_M;
+        
+        
         playermappings[1][0] = KeyEvent.VK_W;
         playermappings[1][1] = KeyEvent.VK_S;
         playermappings[1][2] = KeyEvent.VK_A;
         playermappings[1][3] = KeyEvent.VK_D;
+        playermappings[1][4] = KeyEvent.VK_C;
+        playermappings[1][5] = KeyEvent.VK_V;
+        
 
         return playermappings[i];
 

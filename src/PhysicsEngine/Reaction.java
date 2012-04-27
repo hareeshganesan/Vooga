@@ -10,6 +10,11 @@ import npsprite.SpriteTemplate;
  */
 public abstract class Reaction {
 
+	protected double dx1;
+	protected double dy1;
+	protected double dx2;
+	protected double dy2;
+
 	/**
 	 * do the reaction between these two sprites
 	 * 
@@ -22,4 +27,13 @@ public abstract class Reaction {
 	 */
 	public abstract void act(SpriteTemplate spriteOne,
 			SpriteTemplate spriteTwo, PhysicsEngine physicsEngine);
+
+	/**
+	 * set location increment
+	 */
+	protected void setNextLocationIncrement(SpriteTemplate spriteOne,
+			SpriteTemplate spriteTwo, PhysicsEngine physicsEngine) {
+		physicsEngine.setNextLocationIncrement(spriteOne, dx1, dy1);
+		physicsEngine.setNextLocationIncrement(spriteTwo, dx2, dy2);
+	}
 }

@@ -17,7 +17,7 @@ import events.CollisionEvent;
 public class SpriteTemplate extends Sprite implements Cloneable{
     
     //distance moved=default speed*elapsedTime
-    double defaultSpeed = 0.2;
+    double defaultSpeed = 0.3;
     double myMass=200;
     
     private HashMap<String,PropertyObject> myProperties = new HashMap<String,PropertyObject>();
