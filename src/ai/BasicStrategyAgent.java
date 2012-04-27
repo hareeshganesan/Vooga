@@ -56,7 +56,7 @@ public class BasicStrategyAgent extends AIAgent
         {
             strat = selectRandomStrategy();
             strat.initializeGoals();
-            System.out.println(strat.getClass().getName());
+            //System.out.println(strat.getClass().getName());
         }
         return strat.generateAction(myLevel, this);
 

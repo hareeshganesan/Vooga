@@ -15,19 +15,26 @@ import javax.swing.JScrollPane;
 @SuppressWarnings("serial")
 public class BackgroundPane extends JFrame {
 
-	Image image;
+	private static final String DEFAULT_BACKGROUND = "src/resources/title.png";
+	
+	private Image image;
 
-	// im = default image
+	
+	public BackgroundPane () {
+		this(DEFAULT_BACKGROUND);
+	}
+
+	public BackgroundPane (String path) {
+		this(Toolkit.getDefaultToolkit().getImage(path));	
+		System.out.println(image != null);
+	}
+
+	
 	public BackgroundPane (Image im) {
 		image = im;
 	}
 
-	public BackgroundPane (String path) {
-
-		image = Toolkit.getDefaultToolkit().getImage(path);
-		
-	}
-
+	
 	public JComponent showImage () {
 		
 		JScrollPane pane = new JScrollPane();
@@ -40,16 +47,17 @@ public class BackgroundPane extends JFrame {
 	}
 
 
-	public void setBackground (String filepath) {
-
-	}
-
 	public void setBackground (Image im) {
-		image = (BufferedImage) im;
+		image = im;
+		
 		showImage();
 	}
 
-	public void setBackground (File file) {
-
+	
+	public static void main (String[] args) {
+		JFrame frame = new JFrame();
+		BackgroundPane bg = new BackgroundPane("");
+		frame.add(bg.showImage());
+		frame.setVisible(true);
 	}
 }

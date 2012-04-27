@@ -4,8 +4,7 @@ import java.util.ArrayList;
 import npsprite.SpriteTemplate;
 
 /**
- * Not implemented yet. Would like to deal with the collision between two
- * sprites from different group
+ * The Collision between two bodyFighter with different GroupID
  * 
  * @author Donghe
  */
