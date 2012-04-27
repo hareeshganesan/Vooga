@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
-import sprite.HealthDisplay;
 
 import npsprite.FighterBody;
 import npsprite.NodeSprite;
@@ -62,7 +61,7 @@ public class FrameWorkLoader {
 		HashMap<Long, Motion> sequence = new HashMap<Long, Motion>();
 		int health = Integer.valueOf(root.getHealthProperty());
 		FighterBody fighterbody = new FighterBody(torso, root.getName(),
-				new HealthDisplay(0, 0, health));
+				new npsprite.HealthDisplay(0, 0, health));
 
 //		for (MyComponent m : list) {
 //			long startTime = Long.valueOf(m.getProperties().get("startTime"));

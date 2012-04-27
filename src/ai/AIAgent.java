@@ -2,10 +2,9 @@ package ai;
 
 import PhysicsEngine.PhysicsEngine;
 import npsprite.FighterBody;
+import npsprite.HealthDisplay;
 import npsprite.NodeSprite;
 import game.CombatInstance;
-//import sprite.FighterSprite;
-import sprite.HealthDisplay;
 
 
 

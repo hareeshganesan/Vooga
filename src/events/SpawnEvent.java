@@ -8,6 +8,15 @@ import npsprite.properties.SpawnsProperty;
 
 public class SpawnEvent extends CollisionEvent {
 
+    private static SpawnEvent he;
+    protected SpawnEvent(){}
+    
+    public static SpawnEvent getInstanceOf(){
+        if (he==null){
+            he=new SpawnEvent();
+        }
+        return he;
+    }
     @Override
     public void performAction(SpriteTemplate me, SpriteTemplate o) {
         if (me.hasProperty(SpawnsProperty.NAME)) {

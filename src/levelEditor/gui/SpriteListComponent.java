@@ -3,11 +3,14 @@ package levelEditor.gui;
 import java.awt.Color;
 import java.awt.Font;
 
+import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.MatteBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import levelEditor.mvc.Controller;
 
@@ -15,32 +18,51 @@ import levelEditor.mvc.Controller;
  * @author Peggy Li
  */
 
-@SuppressWarnings("unused")
-public class SpriteListComponent {
+@SuppressWarnings({ "unused", "serial" })
+public class SpriteListComponent extends JComponent {
 
+	
 	private Controller myController;
 	
 	private String[] myNames;
+
+	private JList spriteList;
+
+	private String currentSpriteType;
 	
 	public SpriteListComponent (Controller c) {
 		myController = c;
+		myNames = myController.getClassNamesArray();
 		
-		//myNames = null;
+		spriteList = new JList(myNames);
+		spriteList.addListSelectionListener(new ListSelectionListener() {
+
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				currentSpriteType = (String) spriteList.getSelectedValue();
+				
+			}
+
+		});
+		
 		
 	}
 	
-	public JComponent create() {
-		JList list = new JList(myNames);
+	public JScrollPane getScrollable () {
+		JScrollPane scroll = new JScrollPane();
+		scroll.getViewport().setView(spriteList);
 		
-		JScrollPane scroll = new JScrollPane(list);
-		scroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.
-				HORIZONTAL_SCROLLBAR_NEVER);
-		scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.
-				VERTICAL_SCROLLBAR_AS_NEEDED);
-		scroll.setSize(100, 100);
-		
+		scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 		return scroll;
 	}
+	
+	/**
+	 * Return name of sprite class from list currently selected by cursor
+	 */
+	public String getSelectedType () {
+		return currentSpriteType;
+	}
+
 
 }
 	

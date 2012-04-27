@@ -8,9 +8,10 @@ import npsprite.SpriteTemplate;
  */
 public abstract class CollisionEvent
 {
-    public CollisionEvent ()
+    protected CollisionEvent ()
     {}
 
     public abstract void performAction (SpriteTemplate me, SpriteTemplate o);
+
 
 }
