@@ -2,6 +2,7 @@ package ai;
 
 import npsprite.FighterBody;
 import game.CombatInstance;
+import action.AdvancedFollowAction;
 import action.FollowAction;
 
 
@@ -24,7 +25,7 @@ public class OffensiveStrategy extends Strategy
     @Override
     public void initializeGoals ()
     {
-        goals.add(new FollowGoal(myFighter, c.getFighters().get(0)));
+        goals.add(new FollowGoal(myFighter, c.getFighters().get(0), this.c));
 
     }
 
@@ -34,9 +35,9 @@ public class OffensiveStrategy extends Strategy
         FighterBody myEnemy;
 
 
-        public FollowGoal (FighterBody me, FighterBody enemy)
+        public FollowGoal (FighterBody me, FighterBody enemy, CombatInstance ci)
         {
-            super(new FollowAction(me, enemy,myPhysicsEngine), 10000);
+            super(new AdvancedFollowAction(me, enemy, ci ,myPhysicsEngine), 10000);
             myFighter = me;
             myEnemy = enemy;
         }

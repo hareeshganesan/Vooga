@@ -22,6 +22,7 @@ import sprite.HealthDisplay;
 //import sprite.PlatformBlock;
 import PhysicsEngine.PhysicsEngine;
 import action.MotionAction;
+import action.WeaponAction;
 import ai.AIAgent;
 import ai.BasicAIAgent;
 import ai.BasicStrategyAgent;
@@ -111,6 +112,7 @@ public class LevelObjectsFactory
         BasicAIAgent ai = new BasicAIAgent("ai1main",body, new HealthDisplay(50,50, c.getWidth()/2 -30),0,c);
         
         ai.setRoot(body);
+        ai.setDefaultSpeed(1.5);
         return ai;
     }
     
@@ -121,6 +123,7 @@ public class LevelObjectsFactory
         BasicStrategyAgent ai = new SituationalStrategyAgent("ai2main",body, new HealthDisplay(50,50, c.getWidth()/2 -30),0,c);
 
         ai.setRoot(body);
+
         return ai;
     }
 
@@ -132,6 +135,8 @@ public class LevelObjectsFactory
         h.addKey(map[1], MotionAction.DOWN(s,myPhysicsEngine));
         h.addKey(map[2], MotionAction.LEFT(s,myPhysicsEngine));
         h.addKey(map[3], MotionAction.RIGHT(s,myPhysicsEngine));
+        h.addKey(map[4], new WeaponAction(s, 0));
+        h.addKey(map[5], new WeaponAction(s, 1));
     }
 
 
