@@ -31,7 +31,6 @@ public class InputHandler
      */
     public void update (long elapsedTime, GameEngine engine)
     {
-        if (engine.keyDown(KeyEvent.VK_Q)) System.out.println("hello");
         for (Integer key : key_mapping.keySet())
             if (engine.keyDown(key.intValue())) {
 //                System.out.println(key);

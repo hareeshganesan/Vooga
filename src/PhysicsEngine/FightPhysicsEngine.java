@@ -14,7 +14,7 @@ import action.MotionAction;
 public class FightPhysicsEngine extends PhysicsEngine {
 
 	private double myBackgroundFactor = 1.0;
-	private double myOutBoundDistance = 10;
+	private double myOutBoundDistance = 1;
 	private double mySpeedFactor = 0.5;
 
 	public FightPhysicsEngine(GameEngine gameEngine) {
@@ -37,6 +37,8 @@ public class FightPhysicsEngine extends PhysicsEngine {
 	public void setNextLocationIncrement(SpriteTemplate sprite, double dx,
 			double dy) {
 
+//        System.out.println("fightbefore"+dx+","+dy);
+        
 		double finalX = dx * myBackgroundFactor;
 		double finalY = dy * myBackgroundFactor;
 
@@ -49,6 +51,7 @@ public class FightPhysicsEngine extends PhysicsEngine {
 		if (isOutDown(sprite, dy)) {
 			finalY = myBoundDown - sprite.getY() - sprite.getHeight();
 		}
+//		System.out.println("fight"+finalX+","+finalY);
 		sprite.setNextLocationIncrement(new Point2D.Double(finalX, finalY));
 
 		// for debug
@@ -62,8 +65,7 @@ public class FightPhysicsEngine extends PhysicsEngine {
 	 * set the collision standing status
 	 */
 	private void setCollisionStatus(SpriteTemplate sprite, double dy) {
-		sprite.getCollisionStatus().setStandOnSth(
-				isOutDown(sprite, dy) || sprite.getCollisionStatus().getDown());
+		sprite.getCollisionStatus().setStandOnGound(isOutDown(sprite, dy));
 	}
 
 	/**

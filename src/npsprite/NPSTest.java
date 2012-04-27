@@ -53,7 +53,8 @@ public class NPSTest extends Game {
         power.addCollisionEvent(GroupID.PLAYER_1, pevent);
         torso.addCollisionEvent(GroupID.UNCATEGORIZED, tevent);
         myTree = new FighterBody(torso, "fighter", new HealthDisplay(10, 20, 200));
-        ((HealthProperty) myTree.getHealthProperty()).addHealth(-25);
+        System.out.println(myTree.hasProperty(HealthProperty.NAME));
+        ((HealthProperty) myTree.getProperty(HealthProperty.NAME)).addHealth(-25);
     }
 
 

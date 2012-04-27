@@ -73,6 +73,7 @@ public class Animation {
 				if (entry.getKey() <= myCurrTime) {// key is the start time of the motion
 
 					myActiveMotions.add(entry.getValue()); // make the motion active
+				
 					mySequence.remove(entry.getKey());
 				}
 				
@@ -90,8 +91,7 @@ public class Animation {
 				else{
 				motion.update(elapsedTime);
 			
-				myMap.get(motion.getName()).rotate(motion.getDTheta());
-
+				
 				}
 				
 			}

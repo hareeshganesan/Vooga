@@ -2,6 +2,7 @@ package game;
 
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -14,34 +15,26 @@ import npsprite.GroupID;
 import npsprite.NodeSprite;
 import npsprite.PlatformBlock;
 import npsprite.SpriteTemplate;
-import org.jdom.JDOMException;
 import npsprite.SpriteGroupTemplate;
+import org.jdom.JDOMException;
 import camera.Camera;
 import camera.CameraBackground;
 import camera.CameraUtility;
 import events.HealthEvent;
-import PhysicsEngine.Collision;
-import PhysicsEngine.CollisionKind;
-import PhysicsEngine.CollisionKindEnemy;
-import PhysicsEngine.CollisionKindFriends;
-import PhysicsEngine.CollisionKindNeutral;
-import PhysicsEngine.FightPhysicsEngine;
-import PhysicsEngine.PhysicsEngine;
-import PhysicsEngine.ReactionMomentumConservation;
-import PhysicsEngine.ReactionPush;
-import PhysicsEngine.ReactionRebound;
+import PhysicsEngine.*;
 import action.MotionAction;
 import action.QuitAction;
 import ai.AIAgent;
 import camera.*;
 
 public class CombatInstance extends GameState {
+
 	private String DEFAULT_IMAGE = "resources/title.png";
 
 	// Engines
 	MainGame myEngine;
 	InputHandler myHandler;
-	Camera camera;
+	//Camera camera;
 	CameraUtility cameraUtility;
 	private PhysicsEngine myPhysicsEngine;
 
@@ -51,6 +44,7 @@ public class CombatInstance extends GameState {
 	ArrayList<FighterBody> playerSprites;
 	ArrayList<PlatformBlock> platform;
 	ArrayList<SpriteTemplate> spawns;
+    ArrayList<SpriteTemplate> nonplayers;
 	// ArrayList<SpriteTemplate> powerups;
 
 	// Collision
@@ -64,7 +58,7 @@ public class CombatInstance extends GameState {
 		super(engine);
 		myEngine = engine;
 		myHandler = new InputHandler();
-		camera = new FloatingCamera();
+		//camera = new FloatingCamera();
 		cameraUtility = new CameraUtility();
 		myPhysicsEngine = new FightPhysicsEngine(myEngine);
 	}
@@ -100,8 +94,8 @@ public class CombatInstance extends GameState {
 		// TODO: MAKE IT SO DIFFERENT FIGHTERS CAN HAVE DIFFERENT DISPLAYS?
 		try {
 			playerSprites = lof.createNPFighters();
-			platform = lof.createNPBlocks();
-			// powerups=lof.createPowerUps();
+			platform = lof.createPlatforms();
+			nonplayers=lof.createNPSprites();
 		} catch (JDOMException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -122,10 +116,10 @@ public class CombatInstance extends GameState {
 		// blocks or collision between two sprites from the same team. 3. a
 		// physicsEngine which we need to set collision reaction
 
-		groupSprite = new SpriteGroupTemplate("team");
+		groupSprite = new SpriteGroupTemplate();
 		groupSprite.addPlatformBlockArray(platform);
 		groupSprite.addFighterSpriteArray(playerSprites);
-		// groupSprite.addSpriteArray(powerups);
+		 groupSprite.addSpriteArray(nonplayers);
 
 		ArrayList<CollisionKind> CollisionkindList = new ArrayList<CollisionKind>();
 		CollisionkindList.add(new CollisionKindFriends(
@@ -154,29 +148,36 @@ public class CombatInstance extends GameState {
 
 	@Override
 	public void render(Graphics2D pen) {
-		camera.render(pen, bg);
+		//camera.render(pen, bg);
 		// bg.render(pen, camera, camera.getX(), camera.getY(), camera.getX(),
 		// camera.getY(), camera.getHeight(), camera.getWidth());
 		// bg.render(pen);
 
 		bg.render(pen);
 		for (FighterBody sprite : playerSprites)
-			cs.render(pen, sprite, camera);
-		// sprite.render(pen);
+			//cs.render(pen, sprite, camera);
+		    sprite.render(pen);
 		for (PlatformBlock pb : platform) {
-			cs.render(pen, pb, camera);
-			// pb.render(pen);
+			//cs.render(pen, pb, camera);
+		    pb.render(pen);
+		    pen.drawRect((int) pb.getX()+pb.getWidth()/2-2, (int) pb.getY()+pb.getHeight()/2-2, 4,4);
+		    pen.draw(new Rectangle2D.Double(pb.getX(),pb.getY(),pb.getWidth(), pb.getHeight()));
 		}
-		// for (SpriteTemplate p : powerups) {
-		// p.render(pen);
-		// }
+		 for (SpriteTemplate p : nonplayers) {
+		 p.render(pen);
+		 }
+//		FighterBody ai = playerSprites.get(2);
+//		FighterBody user = playerSprites.get(0);
+//        
+//		pen.drawLine((int)ai.getX(), (int)ai.getY(), (int) user.getX(), (int) user.getY());
+//        pen.drawLine((int) ai.getX()+ai.getWidth(), (int)ai.getY()+ai.getHeight(), (int) user.getX()+user.getWidth(), (int) user.getY()+user.getHeight());
 
 	}
 
 	@Override
 	public void update(long elapsedTime) {
 		myHandler.update(elapsedTime, myEngine);
-		camera.update(playerSprites, bg);
+		//camera.update(playerSprites, bg);
 		myHandler.update(elapsedTime, myEngine);
 		bg.update(elapsedTime);
 
@@ -188,7 +189,7 @@ public class CombatInstance extends GameState {
 		}
 
 		for (FighterBody sprite : playerSprites) {
-			MotionAction.Gravity(sprite, 0.3, myPhysicsEngine).performAction(
+			MotionAction.Gravity(sprite, 0.6, myPhysicsEngine).performAction(
 					elapsedTime);
 		}
 
@@ -202,9 +203,9 @@ public class CombatInstance extends GameState {
 		for (PlatformBlock pb : platform)
 			pb.update(elapsedTime);
 
-		// for (SpriteTemplate sprite : powerups) {
-		// sprite.update(elapsedTime);
-		// }
+		 for (SpriteTemplate sprite : nonplayers) {
+		 sprite.update(elapsedTime);
+		 }
 	}
 
 	private void printCollision(FighterBody sprite) {
@@ -258,4 +259,12 @@ public class CombatInstance extends GameState {
 	public PhysicsEngine getPhysicsEngine() {
 		return myPhysicsEngine;
 	}
+
+    public ArrayList<SpriteTemplate> getObstacles ()
+    {
+        ArrayList<SpriteTemplate> obstacles = new ArrayList<SpriteTemplate>();
+        obstacles.addAll(platform);
+        //obstacles.addAll(playerSprites);
+        return obstacles;
+    }
 }
