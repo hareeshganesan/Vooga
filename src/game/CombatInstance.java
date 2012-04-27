@@ -90,7 +90,6 @@ public class CombatInstance extends GameState
             platform = lof.createPlatforms();
             nonplayers = lof.createNPSprites();
         } catch (JDOMException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         String back = lof.getBackground();

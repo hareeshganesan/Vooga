@@ -12,7 +12,6 @@ import npsprite.properties.DamageProperty;
 import npsprite.properties.PropertyObject;
 
 //The sprite for things that can overlap and own other sprites
-//less specific than limbs, attach whatever you want to them
 public class NodeSprite extends SpriteTemplate {
 
     protected String myName; // please make sure each name is distinct
@@ -53,7 +52,6 @@ public class NodeSprite extends SpriteTemplate {
         this.addProperty(DamageProperty.NAME, new DamageProperty(damage
                 * damageMultiplier));
         currGroupID = myID;
-
     }
 
     /**
@@ -102,7 +100,6 @@ public class NodeSprite extends SpriteTemplate {
     /*          */
     /* TREE AREA */
     /*          */
-
     protected void setParent(NodeSprite parent) {
         Parent = parent;
         if (Parent == null) {
@@ -169,6 +166,32 @@ public class NodeSprite extends SpriteTemplate {
     public double getMass() {
         return myPointer.getMass();
     }
+    public FighterBody getMyPointer() {
+        return myPointer;
+    }
+
+    public ArrayList<NodeSprite> getChildren() {
+        return this.children;
+    }
+
+    public String getName() {
+        return this.myName;
+    }
+
+    public void setActive(boolean flag) {
+        super.setActive(flag);
+        for (NodeSprite n : children) {
+            n.setActive(flag);
+        }
+    }
+
+    /* IMAGE MANIPULATION */
+    public void flip(boolean flipped) {
+        this.flipped = flipped;
+        for (NodeSprite child : children) {
+            child.flip(flipped);
+        }
+    }
 
     public void rotate(int dTheta) {
         this.mutableTheta += dTheta;
@@ -186,24 +209,6 @@ public class NodeSprite extends SpriteTemplate {
         this.mutableTheta = expTheta;
     }
 
-    public FighterBody getMyPointer() {
-        return myPointer;
-    }
-
-    public ArrayList<NodeSprite> getChildren() {
-        return this.children;
-    }
-
-    public String getName() {
-        return this.myName;
-    }
-
-    public void flip(boolean flipped) {
-        this.flipped = flipped;
-        for (NodeSprite child : children) {
-            child.flip(flipped);
-        }
-    }
 
     public Integer roundTheta(double theta) {
         Integer n = 0;
@@ -271,11 +276,5 @@ public class NodeSprite extends SpriteTemplate {
         }
     }
 
-    public void setActive(boolean flag) {
-        super.setActive(flag);
-        for (NodeSprite n : children) {
-            n.setActive(flag);
-        }
-    }
 
 }

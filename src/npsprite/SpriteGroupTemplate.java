@@ -118,11 +118,7 @@ public class SpriteGroupTemplate {
 		return mySpriteGroup;
 	}
 
-	//TODO: figure out how to make more defaulted for nodesprites too
 	public void addSpriteArray(ArrayList<SpriteTemplate> team) {
-//		for (SpriteTemplate s : group) {
-//			mySpriteGroup.add(s);
-//		}
 		mySpriteGroup.add(team);
 	}
 	
@@ -131,9 +127,6 @@ public class SpriteGroupTemplate {
 	 */
 	public void addFighterSpriteArray(ArrayList<FighterBody> group) {
 		for (FighterBody s : group) {
-//		    for (NodeSprite n:s.getBodyParts()){
-//	            mySpriteGroup.add(n);
-//		    }
 			// only add body as a whole, check all limb collisions in the collision class
 			addSpriteInNewTeam(s);
 		}
@@ -146,9 +139,4 @@ public class SpriteGroupTemplate {
 		}
 		mySpriteGroup.add(newTeam);
 	}
-	
-//	public void addSpriteGroup(SpriteGroupTemplate group){
-//		ArrayList<SpriteTemplate> spriteGroup = group.getSpriteArray();
-//		mySpriteGroup.addAll(spriteGroup);
-//	}
-}
+	}

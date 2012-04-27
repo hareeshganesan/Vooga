@@ -418,16 +418,6 @@ public class Sprite implements java.io.Serializable
             this.oldY = this.y;
             this.y += dy;
         }
-
-        // if (dx != 0) {
-        // oldX = x;
-        // x += dx;
-        // }
-        //
-        // if (dy != 0) {
-        // oldY = y;
-        // y += dy;
-        // }
     }
 
 
