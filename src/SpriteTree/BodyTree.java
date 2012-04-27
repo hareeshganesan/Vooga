@@ -12,7 +12,7 @@ import javax.swing.JFrame;
 public class BodyTree {
 	private LimbNode root;
 	private HashMap<String,LimbNode> map ;
-	
+	private boolean flipped =false;
 	
 	
 	public BodyTree (LimbNode root){
@@ -32,6 +32,43 @@ public class BodyTree {
 		}
 	}
 	
+	public void attach(String parentName, LimbNode childNode){
+		LimbNode parent = map.get(parentName);
+		parent.addChild(childNode);
+		map.put(childNode.getName(), childNode);
+	}
+	
+	public void flip(boolean flipped){
+		root.flip(flipped);
+		this.flipped = flipped;
+	}
+	
+	
+	public boolean isFlipped(){
+		return this.flipped;
+	}
+	
+	
+	public void detach(String removeNode){
+		try{
+		LimbNode node = map.get(removeNode);
+		
+		if(node.getChildren().size()!=0){
+			for(LimbNode child:node.getChildren()){
+				map.remove(child.getName());
+			}
+		}
+		LimbNode parent = node.getParent();
+		parent.removeChild(node);
+		
+		
+		map.remove(removeNode);
+		}catch(NullPointerException e){
+			throw new NullPointerException("You have already removed limb: " + removeNode);
+		}
+	}
+	
+	
 	public HashMap<String, LimbNode> getMap(){
 		return map;
 	}
@@ -44,11 +81,25 @@ public class BodyTree {
 		root.render(pen, root.getX(),root.getY(),0);
 	}
 	
-	public void move(Graphics2D pen, double moveX, double moveY){
-		root.render(pen, root.getX()+moveX,root.getY()+moveY,0);
+	public void move(double moveX, double moveY){
+		root.setX(root.getX() + moveX);		
+		root.setY(root.getY() + moveY);
 	}
 	
 	public LimbNode getRoot(){
 		return root;
+	}
+	
+	public String print(LimbNode currentNode){
+		String tree = currentNode.getName();
+		if(currentNode.getChildren().size() == 0){
+			return currentNode.getName();
+		}
+		for(LimbNode child: currentNode.getChildren()){
+			tree +=print(child);
+			tree += "--";
+		}
+		return tree;
+		
 	}
 }

@@ -1,15 +1,14 @@
 package npsprite;
 
 import java.awt.image.BufferedImage;
-import npsprite.SpriteID.GroupID;
 
-
+@SuppressWarnings("serial")
 public class PlatformBlock extends SpriteTemplate
 {
 
-    public PlatformBlock (BufferedImage b)
+    public PlatformBlock (BufferedImage b,GroupID g)
     {
-        super(b, null);
+        super(b, g);
     }
     
     public void update(long elapsedTime){

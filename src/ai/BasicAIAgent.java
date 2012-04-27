@@ -3,7 +3,7 @@ package ai;
 import game.CombatInstance;
 import java.util.List;
 import npsprite.FighterBody;
-import npsprite.LimbSprite;
+import npsprite.NodeSprite;
 import sprite.HealthDisplay;
 import action.FollowAction;
 
@@ -16,7 +16,7 @@ import action.FollowAction;
 @SuppressWarnings("serial")
 public class BasicAIAgent extends AIAgent {
 
-	public BasicAIAgent(String name, LimbSprite root, HealthDisplay display,
+	public BasicAIAgent(String name, NodeSprite root, HealthDisplay display,
 			int groupID, CombatInstance c) {
 		super(name, root, display, groupID, c);
 	}

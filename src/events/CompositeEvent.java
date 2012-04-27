@@ -5,54 +5,36 @@ import java.util.ArrayList;
 import npsprite.GroupID;
 import npsprite.SpriteTemplate;
 
-/**
- * Deprecated for now, may be back in different form later on
- * @author Wendy
- *
- */
-@Deprecated 
-public class CompositeEvent {
-    private GroupID groupID; //the groupID you want to match against
+public class CompositeEvent extends CollisionEvent{
+
     private ArrayList<CollisionEvent> events;
 
-
-    public CompositeEvent (SpriteTemplate o)
-    {
-        groupID = o.getGroupID();
+    public CompositeEvent() {
         events = new ArrayList<CollisionEvent>();
     }
 
-
-    public CompositeEvent (SpriteTemplate o, ArrayList<CollisionEvent> events)
-    {
-        groupID = o.getGroupID();
+    public CompositeEvent(SpriteTemplate o, ArrayList<CollisionEvent> events) {
         this.events = events;
     }
 
-
-    public void addEvent (CollisionEvent e)
-    {
+    public void addEvent(CollisionEvent e) {
+        if (e==null){return;}
         events.add(e);
     }
 
-
-    public void addAll (ArrayList<CollisionEvent> e)
-    {
+    public void addAll(ArrayList<CollisionEvent> e) {
+        if (e==null){return;}
         events.addAll(e);
     }
 
-
-    public void performActions (SpriteTemplate me, SpriteTemplate o)
-    {
-        for (CollisionEvent e : events)
-        {
+    @Override
+    public void performAction(SpriteTemplate me, SpriteTemplate o) {
+        for (CollisionEvent e : events) {
             e.performAction(me, o);
         }
     }
 
-
-    public GroupID getGroupID ()
-    {
-        return groupID;
+    public static String getName() {
+        return "composite";
     }
 }

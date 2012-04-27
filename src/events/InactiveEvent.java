@@ -7,8 +7,11 @@ public class InactiveEvent extends CollisionEvent
 {
     @Override
     public void performAction(SpriteTemplate me, SpriteTemplate o) {
-        System.out.println("inactivating: "+me);
+//        System.out.println("inactivating: "+me);
         me.setActive(false);
     }
 
+    public static String getName(){
+        return "inactive";
+    }
 }
