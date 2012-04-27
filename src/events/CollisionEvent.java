@@ -13,4 +13,5 @@ public abstract class CollisionEvent
 
     public abstract void performAction (SpriteTemplate me, SpriteTemplate o);
 
+
 }

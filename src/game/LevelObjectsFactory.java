@@ -20,7 +20,6 @@ import org.jdom.input.SAXBuilder;
 import org.jdom.xpath.XPath;
 
 
-import sprite.HealthDisplay;
 import PhysicsEngine.PhysicsEngine;
 import action.MotionAction;
 import action.WeaponAction;
@@ -39,6 +38,18 @@ public class LevelObjectsFactory {
     // TODO: SAVE LISTS OF ALL PROPERTYOBJECT SUBCLASSES AND COLLISIONEVENT
     // SUBCLASSES WHEN THIS CLASS IS LOADED - REFLECTION?
 
+//    private static HashMap<String,CollisionEvent> myCollisions;
+//    
+//    static{
+//        myCollisions=new HashMap<String,CollisionEvent>();
+//        myCollisions.put(ActivateTimerEvent.getName(), ActivateTimerEvent.getInstanceOf());
+//        myCollisions.put(CompositeEvent.getName(),CompositeEvent.getInstanceOf());
+//        myCollisions.put(GravityEvent.getName(), GravityEvent.getInstanceOf());
+//        myCollisions.put(HealthEvent.getName(), HealthEvent.getInstanceOf());
+//        myCollisions.put(InactiveEvent.getName(), InactiveEvent.getInstanceOf());
+//        myCollisions.put(SpawnEvent.getName(), SpawnEvent.getInstanceOf());
+//    }
+    
     public LevelObjectsFactory(CombatInstance ci) {
         c = ci;
         myPhysicsEngine = c.getPhysicsEngine();
@@ -215,7 +226,18 @@ public class LevelObjectsFactory {
                 System.out.println("creating spawner");
                 s.addProperty(SpawnsProperty.NAME,createSpawnsProp(e));
             }
+            p=e.getChildText(TimerProperty.NAME);
+            if (p!=null){
+                s.addProperty(TimerProperty.NAME,createTimerProp(e));
+            }
         }
+    }
+
+    private PropertyObject createTimerProp(Element e) {
+        Element nexte=e.getChild(TimerProperty.NAME);
+        int ms=Integer.parseInt(nexte.getText().trim());
+        CollisionEvent ce=getCollision((Element) nexte.getChild("collision").getChildren().get(0));
+        return new TimerProperty(ce, ms);
     }
 
     private PropertyObject createSpawnsProp(Element e) {
@@ -249,26 +271,28 @@ public class LevelObjectsFactory {
         for (Object d:coll){
             Element e=(Element) d;
             for (Object c:e.getChildren(HealthEvent.getName())){
-//                System.out.println("creating health collision");
                 String p=((Element) c).getText();
 //                allEvents.put(GroupID.getIdFromString(p), new HealthEvent());
                 allEvents.put(GroupID.getIdFromString(p),HealthEvent.getInstanceOf());
             }
             for (Object c:e.getChildren(InactiveEvent.getName())){
-//                System.out.println("creating inactive collision");
                 String p=((Element) c).getText();
 //                allEvents.put(GroupID.getIdFromString(p), new InactiveEvent());
                 allEvents.put(GroupID.getIdFromString(p), InactiveEvent.getInstanceOf());
             }
             for (Object c:e.getChildren(SpawnEvent.getName())){
-//                System.out.println("creating spawn collision");
                 String p=((Element) c).getText();
 //                allEvents.put(GroupID.getIdFromString(p), new SpawnEvent());
                 allEvents.put(GroupID.getIdFromString(p), SpawnEvent.getInstanceOf());
             }
+            for (Object c:e.getChildren(GravityEvent.getName())){
+                String p=((Element) c).getText();
+//                allEvents.put(GroupID.getIdFromString(p), new SpawnEvent());
+                allEvents.put(GroupID.getIdFromString(p), GravityEvent.getInstanceOf());
+            }
+            
             for (Object c:e.getChildren(CompositeEvent.getName())){
               String p=((Element) c).getText();
-              System.out.println("creating composite collision "+GroupID.getIdFromString(p));
               CompositeEvent ce=new CompositeEvent();
               for (Object o:((Element) c).getChildren()){ //i wish this could be done with recursion
                   ce.addEvent(getCollision((Element) o));
@@ -279,20 +303,28 @@ public class LevelObjectsFactory {
         return allEvents;
     }
 
+    /**
+     * 
+     * @param o the element that is the specific collision tag
+     */
     private CollisionEvent getCollision(Element o) {
         if (o.getName().equals(HealthEvent.getName())){
 //            return new HealthEvent();
             return HealthEvent.getInstanceOf();
         }
         if (o.getName().equals(InactiveEvent.getName())){
-            System.out.println("creating inactive event");
 //            return new InactiveEvent();
             return InactiveEvent.getInstanceOf();
         }
         if (o.getName().equals(SpawnEvent.getName())){
-            System.out.println("creating spawn event");
 //            return new SpawnEvent();
             return SpawnEvent.getInstanceOf();
+        }
+        if (o.getName().equals(ActivateTimerEvent.getName())){
+            return ActivateTimerEvent.getInstanceOf();
+        }
+        if (o.getName().equals(GravityEvent.getName())){
+            return GravityEvent.getInstanceOf();
         }
         return null;
     }

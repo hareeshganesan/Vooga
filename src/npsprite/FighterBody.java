@@ -20,7 +20,6 @@ import npsprite.properties.HealthProperty;
 import npsprite.properties.SpawnsProperty;
 import npsprite.properties.StatusProperty;
 
-import sprite.HealthDisplay;
 
 //THIS IS A POINTER TO THE TOP OF THE TREE THAT REPRESENTS A PLAYER - has no width/height
 public class FighterBody extends SpriteTemplate {

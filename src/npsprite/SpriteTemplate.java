@@ -167,7 +167,7 @@ public class SpriteTemplate extends Sprite implements Cloneable{
         	for (PropertyObject p:myProperties.values()){
         	    CollisionEvent c=p.update(elapsedTime);
         	    if (c!=null){
-        	        c.performAction(this, null);
+        	        c.performAction(this, null); //BE VERY, VERY CAREFUL - maybe TODO put more safety restrictions
         	    }
         	}
         	if (moveBy.getX() != 0 || moveBy.getY() != 0) {
