@@ -5,7 +5,6 @@ import npsprite.FighterBody;
 import npsprite.HealthDisplay;
 import npsprite.NodeSprite;
 import game.CombatInstance;
-//import sprite.FighterSprite;
 
 
 

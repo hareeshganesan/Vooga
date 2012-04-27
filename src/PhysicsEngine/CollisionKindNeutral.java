@@ -23,7 +23,7 @@ public class CollisionKindNeutral extends CollisionKind {
 
 	@Override
 	public boolean isThisKind(SpriteTemplate spriteOne, SpriteTemplate spriteTwo) {
-		return (isPlatformBlock(spriteOne) || isPlatformBlock(spriteTwo) ||
+		return (isPlatformBlock(spriteOne) || isPlatformBlock(spriteTwo) || 
 		        isOtherSprite(spriteOne) || isOtherSprite(spriteTwo));
 	}
 }

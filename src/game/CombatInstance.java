@@ -39,8 +39,6 @@ public class CombatInstance extends GameState
     private PhysicsEngine myPhysicsEngine;
 
     // Sprites
-    // ArrayList<FighterSprite> playerSprites;
-    // ArrayList<PlatformBlock> platform;
     ArrayList<FighterBody> playerSprites;
     ArrayList<PlatformBlock> platform;
     ArrayList<SpriteTemplate> spawns;
@@ -86,14 +84,6 @@ public class CombatInstance extends GameState
                 e.printStackTrace();
             }
         }
-
-        // TODO: REMOVE HARDCODING LATER
-        // GameFont font = fontManager.getFont(getImage("resources/font.png"));
-        // BufferedImage HPimage = getImage("resources/frame.png");
-        // HealthDisplay display = new HealthDisplay(returnVal, returnVal,
-        // returnVal);
-        //
-        // TODO: MAKE IT SO DIFFERENT FIGHTERS CAN HAVE DIFFERENT DISPLAYS?
 
         try {
             playerSprites = lof.createNPFighters();
@@ -141,9 +131,6 @@ public class CombatInstance extends GameState
     @Override
     public void render(Graphics2D pen) {
 //        camera.render(pen, bg);
-        // bg.render(pen, camera, camera.getX(), camera.getY(), camera.getX(),
-        // camera.getY(), camera.getHeight(), camera.getWidth());
-        // bg.render(pen);
 
         bg.render(pen);
         for (FighterBody sprite : playerSprites)
@@ -152,9 +139,6 @@ public class CombatInstance extends GameState
         for (PlatformBlock pb : platform) {
 //            cs.render(pen, pb, camera);
             pb.render(pen);
-            //pen.drawRect((int) pb.getX()+pb.getWidth()/2-2, (int) pb.getY()+pb.getHeight()/2-2, 4,4);
-            //pen.draw(new Rectangle2D.Double(pb.getX(),pb.getY(),pb.getWidth(), pb.getHeight()));
-
         }
 
         for (SpriteTemplate p : nonplayers) {
@@ -210,7 +194,7 @@ public class CombatInstance extends GameState
             pb.update(elapsedTime);
 
          for (SpriteTemplate sprite : nonplayers) {
-         sprite.update(elapsedTime);
+             sprite.update(elapsedTime);
          }
     }
 
