@@ -8,19 +8,21 @@ import java.util.ArrayList;
 import java.util.HashSet;
 
 @SuppressWarnings("rawtypes")
-public class SuperclassFilter extends AbstractFilter {
+public class SuperclassFilter {
 	
-	HashSet<Class> myClasses;
-	
-	public SuperclassFilter (HashSet<Class> classes) {
-		myClasses = classes;
-	}
+	public SuperclassFilter () { }
 
 
-	@Override
-	public <T> ArrayList<Class<T>> applyFilter() {
-		// TODO Auto-generated method stub
-		return null;
+	public <T> ArrayList<Class<T>> applyFilter(HashSet<Class> classes, Class superclass) {
+		
+		ArrayList<Class<T>> filteredClasses = new ArrayList<Class<T>>();
+		for (Class<T> c : classes) {
+			if (c.isAssignableFrom(superclass)) {
+				filteredClasses.add(c);
+			}
+		}
+		
+		return filteredClasses;
 	}
 	
 	

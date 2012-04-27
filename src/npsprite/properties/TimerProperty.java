@@ -25,19 +25,26 @@ public class TimerProperty extends PropertyObject{
         return this;
     }
     public void isActive(boolean flag){
-        isActive=flag;
-        if (isActive){ time=new Timer(millisec); }
-        else { time=null; }
+        if (isActive!=flag){ 
+            isActive = flag;
+            if (isActive) {
+                time = new Timer(millisec);
+            } else {
+                time = null;
+            }
+        }
     }
 
     @Override
     public double getValue() {
-        return 0;
+        return millisec;
     }
 
     public CollisionEvent update(long elapsedTime){
         if (isActive){
             if (time.action(elapsedTime)){
+                time=null;
+                isActive=false;
                 return event;
             }
         }

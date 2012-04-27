@@ -8,12 +8,11 @@ import java.util.Collections;
 import java.util.HashMap;
 
 import events.CollisionEvent;
+import events.HealthEvent;
 import action.Action;
 import action.ActionTimer;
 
 import SpriteTree.Animation;
-import SpriteTree.LimbNode;
-
 import npsprite.SpriteValues.DIR;
 import npsprite.SpriteValues.STATUS;
 import npsprite.properties.DirectionProperty;
@@ -21,12 +20,8 @@ import npsprite.properties.HealthProperty;
 import npsprite.properties.SpawnsProperty;
 import npsprite.properties.StatusProperty;
 
-import sprite.HealthDisplay;
 
 //THIS IS A POINTER TO THE TOP OF THE TREE THAT REPRESENTS A PLAYER - has no width/height
-//it comes with health, direction, and status properties predefined - no need to add
-//limbs come with damage - see limbsprite
-//TODO: subclass of spritetemplate?
 public class FighterBody extends SpriteTemplate {
     private String myName;
     private HealthProperty myHealth; // for ease in access
@@ -63,6 +58,9 @@ public class FighterBody extends SpriteTemplate {
 
         myMap = new HashMap<String, NodeSprite>();
         createMap(this.root);
+    }
+    public String getName(){
+        return myName;
     }
 
     public void setAnimations(HashMap<String,Animation>moves){
@@ -118,11 +116,7 @@ public class FighterBody extends SpriteTemplate {
     public double getHealth() {
         return myHealth.getValue();
     }
-
-    public double getHealthMultiplier() {
-        return myStatus.getValue();
-    }
-
+    
     /* Wrapped for input handler */
     public Point2D getCurrentLocation() {
         return root.getCurrentLocation();
@@ -212,12 +206,13 @@ public class FighterBody extends SpriteTemplate {
         myDisplay.update(elapsedTime, (int) getHealth());
         super.update(elapsedTime);
     }
-    public String print(LimbNode currentNode){
+    
+    public String print(NodeSprite currentNode){
         String tree = currentNode.getName();
         if(currentNode.getChildren().size() == 0){
             return currentNode.getName();
         }
-        for(LimbNode child: currentNode.getChildren()){
+        for(NodeSprite child: currentNode.getChildren()){
             tree +=print(child);
             tree += "--";
         }
@@ -246,9 +241,4 @@ public class FighterBody extends SpriteTemplate {
         return myTimers.get(index);
     }
 
-    public String getName ()
-    {
-        return myName;
-    }
-    
 }

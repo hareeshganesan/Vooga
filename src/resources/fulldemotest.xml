@@ -2,7 +2,7 @@
 <Fighter>
 <name>player 1</name>
 <id>PLAYER_1</id>
-<health>500</health>
+<health>100</health>
 <limb>
 <name>torso</name>
 <img>resources/bodyParts/torso.png</img>
@@ -35,7 +35,7 @@
 <Fighter>
 <name>player 2</name>
 <id>PLAYER_2</id>
-<health>500</health>
+<health>100</health>
 <limb>
 <name>torso</name>
 <img>resources/bodyParts/circle.png</img>
@@ -66,6 +66,7 @@
 </limb>
 </Fighter>
 
+<!-- regular platforms -->
 <Block>
 <img>resources/block.png</img>
 <id>PLATFORM</id>
@@ -87,23 +88,45 @@
 <y>475</y>
 </Block>
 
-<Block>
+<!-- A falling platform block -->
+<Sprite>
 <img>resources/block.png</img>
 <id>PLATFORM</id>
 <x>250</x>
 <y>450</y>
-</Block>
+<collision>
+<gravity>PLAYER_1</gravity>
+<gravity>PLAYER_2</gravity>
+</collision>
+</Sprite>
 
+<!-- Damaging sprite that disappears after 2 seconds after being collided with -->
 <Sprite>
 <img>resources/flame_border.png</img>
 <id>POWER_UP</id>
 <x>400</x>
 <y>500</y>
 <property>
+<timer>2000
+<collision>
+<inactive>UNCATEGORIZED</inactive>
+</collision>
+</timer>
 <damage>-1</damage>
 </property>
+<collision>
+<composite>PLAYER_1
+<activetimer>1</activetimer>
+<health>2</health>
+</composite>
+<composite>PLAYER_2
+<activetimer>1</activetimer>
+<health>2</health>
+</composite>
+</collision>
 </Sprite>
 
+<!-- A sprite that spawns health packs -->
 <Sprite>
 <img>resources/flameb_border.png</img>
 <id>POWER_UP</id>

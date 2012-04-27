@@ -1,12 +1,8 @@
 package npsprite.properties;
 
 import java.awt.geom.Point2D;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
-import com.golden.gamedev.Game;
-import com.golden.gamedev.object.SpriteGroup;
 
 import npsprite.SpriteTemplate;
 import game.CombatInstance;

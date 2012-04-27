@@ -1,13 +1,17 @@
 package levelEditor.mvc;
 
-import java.awt.BorderLayout;
 import java.awt.Dimension;
+
+import javax.swing.BoxLayout;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
+import levelEditor.gui.AIEditor;
 import levelEditor.gui.BackgroundImage;
 import levelEditor.gui.LevelNameComponent;
 import levelEditor.gui.SaveLevelComponent;
+import levelEditor.gui.SpriteEditor;
 
 
 /**
@@ -18,7 +22,7 @@ import levelEditor.gui.SaveLevelComponent;
 @SuppressWarnings({"serial"})
 public class View extends JFrame {
 
-	private static final Dimension SIZE = new Dimension(600, 600);
+	private static final Dimension SIZE = new Dimension(600, 640);
 	
 	private Controller myController;
 	
@@ -27,22 +31,21 @@ public class View extends JFrame {
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		// NORTH
-		add (new LevelNameComponent(myController), BorderLayout.NORTH);
+		setSize(200, 400);
 		
-		// SOUTH
-		add (new SaveLevelComponent(myController).create(), BorderLayout.SOUTH);
+		BoxLayout l = new BoxLayout(getContentPane(), BoxLayout.PAGE_AXIS);
+		this.setLayout(l);
+
+		add (new LevelNameComponent(myController));
 		
-		// WEST
-		// add (new SpriteListComponent(myController).create(), BorderLayout.WEST);
+		add (new BackgroundImage());
 		
-		// EAST
-		//add (new AIEditor(), BorderLayout.EAST);
+		add (new SpriteEditor(myController));
 		
-		// CENTER
-		// add (new BackgroundImage("src/resources/flame.png"), BorderLayout.CENTER);
-		add (new BackgroundImage(), BorderLayout.CENTER);
+		add (new AIEditor(myController));
 		
+		add (new JLabel("Note: Please save level name before clicking Save!"));
+		add (new SaveLevelComponent(myController).create());
 		
 		setSize(SIZE);
 		

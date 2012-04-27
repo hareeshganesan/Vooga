@@ -26,7 +26,7 @@ public class WeaponAction implements Action
                 if(myFighter.getCurrentLocation().distance(f.getCurrentLocation())<75){
                     System.out.println("effective weapon");
                     //f.addCollisionEvent(myFighter.getGroupID(), new HealthEvent(f, myFighter));
-                    (new HealthEvent()).performAction(f, myFighter);
+                    (HealthEvent.getInstanceOf()).performAction(f, myFighter);
                 }
             }
         }

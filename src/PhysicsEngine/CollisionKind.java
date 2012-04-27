@@ -1,9 +1,7 @@
 package PhysicsEngine;
 
 import java.util.ArrayList;
-import npsprite.FighterBody;
 import npsprite.GroupID;
-import npsprite.PlatformBlock;
 import npsprite.SpriteTemplate;
 
 /**
@@ -104,7 +102,6 @@ public abstract class CollisionKind {
 	 */
 	protected boolean isPlatformBlock(SpriteTemplate sprite) {
 	    return GroupID.isPlatform(sprite.getGroupID());
-//		return sprite.getClass().equals(PlatformBlock.class);
 	}
 	protected boolean isOtherSprite(SpriteTemplate sprite){
 	    return GroupID.isOther(sprite.getGroupID());
@@ -115,6 +112,5 @@ public abstract class CollisionKind {
 	 */
 	protected boolean belongFighterBody(SpriteTemplate sprite) {
 	    return GroupID.isFighter(sprite.getGroupID());
-//		return FighterBody.class.isAssignableFrom(sprite.getClass());
 	}
 }

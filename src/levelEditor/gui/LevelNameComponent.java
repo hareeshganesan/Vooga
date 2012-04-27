@@ -17,10 +17,8 @@ import levelEditor.mvc.Controller;
 @SuppressWarnings("serial")
 public class LevelNameComponent extends JPanel {
 
-	private static final String PROPERTY = "name";
 	
 	// default values for text and size of text field box
-	private static final String DEFAULT_NAME = "My level";
     private static final int BOX_WIDTH = 25;
     
     private String lastNameEntry;
@@ -31,10 +29,11 @@ public class LevelNameComponent extends JPanel {
 
     public LevelNameComponent(Controller c) {
         myController = c;
+        lastNameEntry = "";
         
         add (new JLabel("Level Name: "), BorderLayout.WEST);
         
-        levelNameTextField = new JTextField(DEFAULT_NAME, BOX_WIDTH);
+        levelNameTextField = new JTextField(BOX_WIDTH);
         add(levelNameTextField);
         
         saveNameButton = new JButton("Save Level Name");
@@ -50,11 +49,12 @@ public class LevelNameComponent extends JPanel {
     		String name = levelNameTextField.getText();
     		
     		// do not repeat if name hasn't changed
-    		if (!name.equals(lastNameEntry)) {
+    		if (!name.equals(lastNameEntry) && !(name.trim().length() == 0)) {
     			lastNameEntry = name;
-    			myController.setProperty(PROPERTY, name);
+    			myController.setName(name);
     		}
     	}
+    
     }
 
 }

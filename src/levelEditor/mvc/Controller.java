@@ -38,13 +38,34 @@ public class Controller {
 
 
 	public String[] getClassNamesArray () {
-		return null;
+		return myModel.getClassNames();
 	}
+	
+	
+	public void setName (String name) {
+		System.out.println("Controller name");
+		myModel.setLevelName(name);
+	}
+	
+	
+	public void addSprite (SpriteEditable se) {
+	
+		myModel.addSprite(se);
+	}
+	
+	
+	public void addAI (SpriteEditable ai) {
+		myModel.addAI(ai);
+	}
+	
+	
 	
 	
 	public void setProperty (String property, String value) {
 		System.out.printf("Set %s to %s \n", property, value);
 	}
+	
+	
 	
 
 	public void displayMessageToUser (String message) {
@@ -52,6 +73,9 @@ public class Controller {
 	}
 
 
+	
+	
+	
 	public boolean levelNameAvailable (String name) {
 		return myModel.verifyNameAvailable(name);
 	}

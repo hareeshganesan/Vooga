@@ -154,6 +154,7 @@ public class CombatInstance extends GameState
             //pb.render(pen);
             //pen.drawRect((int) pb.getX()+pb.getWidth()/2-2, (int) pb.getY()+pb.getHeight()/2-2, 4,4);
             //pen.draw(new Rectangle2D.Double(pb.getX(),pb.getY(),pb.getWidth(), pb.getHeight()));
+
         }
 
         for (SpriteTemplate p : nonplayers) {

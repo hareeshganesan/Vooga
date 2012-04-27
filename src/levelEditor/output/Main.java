@@ -1,5 +1,8 @@
 package levelEditor.output;
 
+import ai.AIAgent;
+import ai.BasicAIAgent;
+
 /**
  * @author Peggy Li (pl59)
  */
@@ -12,11 +15,7 @@ public class Main {
 		obj.setLevelName("random");
 		obj.setBackgoundImage("src/block.png");
 		
-		/*
-		AIAgent ai = new BasicAIAgent("LE", new HealthDisplay(10, 20, 30), 2, 
-				new CombatInstance(new MainGame()));
-		obj.setAI(ai);
-		*/
+		
 		
 		XMLWriter xml = new XMLWriter(obj);
 		xml.save();
