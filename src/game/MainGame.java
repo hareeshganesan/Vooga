@@ -61,7 +61,6 @@ public class MainGame extends GameEngine
 
     public static void main (String[] args)
     {
-        //OpenGLGameLoader game = new OpenGLGameLoader();
         GameLoader game = new GameLoader();
         game.setup(new MainGame(), new Dimension(544, 544), false);
         game.start();
