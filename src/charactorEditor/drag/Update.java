@@ -1,5 +1,6 @@
 package charactorEditor.drag;
 
- public interface Update{
-	abstract void update();
+public interface Update
+{
+    abstract void update ();
 }

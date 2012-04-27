@@ -9,7 +9,8 @@ abstract public class GameState extends GameObject
     GameState nextState;
     GameState lastState;
     InputHandler myHandler;
-    
+
+
     public GameState (GameEngine arg0)
     {
         super(arg0);

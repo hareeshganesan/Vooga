@@ -1,5 +1,6 @@
 package levelEditor.loader;
 
-public interface PropertyExtractor {
+public interface PropertyExtractor
+{
 
 }

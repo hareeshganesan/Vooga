@@ -8,7 +8,8 @@ import npsprite.FighterBody;
 public class FixedCamera extends Camera
 {
     @Override
-    public void update (ArrayList<FighterBody> playerSprites,CameraBackground bg)
+    public void update (ArrayList<FighterBody> playerSprites,
+                        CameraBackground bg)
     {
         super.update(playerSprites, bg);
     }

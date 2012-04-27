@@ -1,11 +1,10 @@
 package ai;
 
-import PhysicsEngine.PhysicsEngine;
+import game.CombatInstance;
 import npsprite.FighterBody;
 import npsprite.HealthDisplay;
 import npsprite.NodeSprite;
-import game.CombatInstance;
-
+import PhysicsEngine.PhysicsEngine;
 
 
 /**
@@ -22,7 +21,8 @@ public abstract class AIAgent extends FighterBody
     protected PhysicsEngine myPhysicsEngine;
 
 
-    public AIAgent (String name,NodeSprite root,
+    public AIAgent (String name,
+                    NodeSprite root,
                     HealthDisplay display,
                     int groupID,
                     CombatInstance c)

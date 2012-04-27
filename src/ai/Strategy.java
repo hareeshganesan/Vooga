@@ -16,7 +16,7 @@ abstract class Strategy
     private boolean done;
     protected CombatInstance c;
     protected FighterBody myFighter;
-    protected PhysicsEngine myPhysicsEngine; 
+    protected PhysicsEngine myPhysicsEngine;
 
 
     public Strategy (FighterBody ai, CombatInstance ci)

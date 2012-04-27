@@ -2,15 +2,21 @@ package ai;
 
 import java.util.TreeMap;
 
+
 public abstract class Situation
 {
-    protected TreeMap<Double, Strategy> strategies = new TreeMap<Double, Strategy>();
+    protected TreeMap<Double, Strategy> strategies =
+        new TreeMap<Double, Strategy>();
 
-    public Situation(){
-        strategies = new TreeMap<Double,Strategy>();
+
+    public Situation ()
+    {
+        strategies = new TreeMap<Double, Strategy>();
     }
-    
-    public abstract boolean isOccurring();
+
+
+    public abstract boolean isOccurring ();
+
 
     public Strategy selectRandomStrategy ()
     {
