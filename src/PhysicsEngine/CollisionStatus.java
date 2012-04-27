@@ -11,7 +11,7 @@ public class CollisionStatus {
 	private boolean myRightStatus;
 	private boolean myUpStatus;
 	private boolean myDownStatus;
-	private boolean myStandOnSth = false;
+	private boolean myStandOnGound = false;
 
 	public CollisionStatus() {
 		setDefault();
@@ -85,14 +85,14 @@ public class CollisionStatus {
 	 * some other sprite
 	 */
 	public boolean getStandOnSth() {
-		return myStandOnSth || myDownStatus;
+		return myStandOnGound || myDownStatus;
 	}
 
 	/**
 	 * set the standing status
 	 */
-	public void setStandOnSth(boolean b) {
-		myStandOnSth = b;
+	public void setStandOnGound(boolean b) {
+		myStandOnGound = b;
 	}
 
 	/**
