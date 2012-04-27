@@ -2,6 +2,7 @@ package charactorEditor.Model;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,6 +13,7 @@ import sprite.HealthDisplay;
 import npsprite.FighterBody;
 import npsprite.NodeSprite;
 
+import SpriteTree.Animation;
 import SpriteTree.GraphicsTest;
 import SpriteTree.LimbNode;
 import SpriteTree.Motion;
@@ -22,7 +24,7 @@ import com.google.gson.reflect.TypeToken;
 public class FrameWorkLoader {
 	Model myModel = Model.Instance();
 
-	public static NodeSprite load(String file) throws FileNotFoundException {
+	public static FighterBody load(String file) throws FileNotFoundException {
 		Gson gson3 = new Gson();
 		Scanner scanner3 = new Scanner(new File(file));
 		String wholeFile3 = scanner3.useDelimiter("\\A").next();
@@ -53,26 +55,47 @@ public class FrameWorkLoader {
 		for (MyComponent m : list)
 			if (m.isRoot())
 				root = m;
-		NodeSprite torso = buildNodeSpriteTree(root, null);
+		
+		
+		NodeSprite torso = buildNodeSpriteTree(root, "0",null);
 
 		HashMap<Long, Motion> sequence = new HashMap<Long, Motion>();
 		int health = Integer.valueOf(root.getHealthProperty());
 		FighterBody fighterbody = new FighterBody(torso, root.getName(),
 				new HealthDisplay(0, 0, health));
 
-		for (MyComponent m : list) {
-			long startTime = Long.valueOf(m.getProperties().get("startTime"));
-			double myExpAngle = Double.valueOf(m.getProperties().get(
-					"myExpAngle"));
-			long time = Long.valueOf(m.getProperties().get("time"));
-			sequence.put(startTime, new Motion(m.getText(), myExpAngle, fighterbody,
-					time));
-			
+//		for (MyComponent m : list) {
+//			long startTime = Long.valueOf(m.getProperties().get("startTime"));
+//			double myExpAngle = Double.valueOf(m.getProperties().get(
+//					"myExpAngle"));
+//			long time = Long.valueOf(m.getProperties().get("time"));
+//			sequence.put(startTime, new Motion(m.getText(), myExpAngle,
+//					fighterbody, time));
+//		}
+		
+		long startTime = Long.valueOf(root.getProperties().get("startTime"));
+		double myExpAngle = Double.valueOf(root.getProperties().get(
+				"myExpAngle"));
+		long time = Long.valueOf(root.getProperties().get("time"));
+		sequence.put(startTime, new Motion(root.getText(), myExpAngle,
+				fighterbody, time));
+		
+		Animation animation = new Animation(sequence, fighterbody);
+		try {
+			Writer.write(animation, "forhelena.json");
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
-
+		HashMap<String, Animation> samap = new HashMap<String, Animation>();
+		samap.put("weapon1", animation);
+		fighterbody.setAnimations(samap);
+		return fighterbody;
 	}
 
-	public static NodeSprite buildNodeSpriteTree(MyComponent root,
+	
+	
+	//--------------------------------------------------------------
+	public static NodeSprite buildNodeSpriteTree(MyComponent root,String indicator,
 			NodeSprite toReturn) {
 
 		if (root.getParent() == null) {
@@ -83,8 +106,9 @@ public class FrameWorkLoader {
 					GroupID.getIdFromString(root.getProperties().get("GroupID")),
 					(double) root.getBorderX(), (double) root.getBorderY(),
 					damage);
+			if(indicator=="0")
+				return toReturn;
 		}
-
 		for (MyComponent m : root.getChildern()) {
 			double dx = m.getBorderX() - root.getBorderX();
 			double dy = m.getBorderY() - root.getBorderY();
@@ -98,7 +122,7 @@ public class FrameWorkLoader {
 			toReturn.addChild(child);
 		}
 		for (int i = 0; i < root.getChildern().size(); i++)
-			buildNodeSpriteTree(root.getChildern().get(i), toReturn
+			buildNodeSpriteTree(root.getChildern().get(i),"1", toReturn
 					.getChildren().get(i));
 		return toReturn;
 	}
