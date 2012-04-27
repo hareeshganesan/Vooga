@@ -1,7 +1,7 @@
 package events;
 
 import npsprite.GroupID;
-import npsprite.LimbSprite;
+import npsprite.NodeSprite;
 import npsprite.SpriteTemplate;
 import npsprite.properties.DamageProperty;
 import npsprite.properties.HealthProperty;

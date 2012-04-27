@@ -10,6 +10,9 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.util.HashMap;
+
+import levelEditor.mvc.SpriteEditable;
 
 import org.jdom.Document;
 import org.jdom.Element;
@@ -35,14 +38,16 @@ public class XMLWriter {
 		System.out.println("Now writing to XML...");
 
 		Document doc = new Document();
+		System.out.println(myLevelObject.getLevelName());
 		Element root = new Element(myLevelObject.getLevelName());
 		doc.setRootElement(root);
 		
 		myRoot = root;
 
 		saveLevelInfo();
-		//saveAI();
-		//saveSprites();
+		System.out.println("level saved");
+		saveAI();
+		saveSprites();
 
 		writeToXML(doc);
 		System.out.printf("Finished saving to %s.xml\n" , myLevelObject.getLevelName());
@@ -64,6 +69,10 @@ public class XMLWriter {
 	}
 
 	private void saveLevelInfo() {
+		Element name = new Element("level");
+		name.addContent(myLevelObject.getLevelName());
+		myRoot.addContent(name);
+		
 		Element bg = new Element("background");
 		bg.addContent(myLevelObject.getBackgroundImage());
 		myRoot.addContent(bg);
@@ -75,28 +84,28 @@ public class XMLWriter {
 	 * 	after requisite changes are implemented in AIAgent
 	 */
 	private void saveAI() {
-		AIAgent agent = myLevelObject.getAI();
+		SpriteEditable agent = myLevelObject.getAI();
+		
+		if (agent == null)	return;
+		
+		HashMap<String, String> map = agent.getPropertyMap();
 		
 		Element ai = new Element("ai");
-		
-		Element health = new Element("health");
-		health.addContent(Double.toString(agent.getHealth()));
-		ai.addContent(health);
 		
 		Element location = new Element("location");
 		
 		Element x = new Element("x");
-		x.addContent(Double.toString(agent.getX()));
+		x.addContent(map.get("x"));
 		location.addContent(x);
 		
 		Element y = new Element("y");
-		y.addContent(Double.toString(agent.getY()));
+		y.addContent(map.get("y"));
 		location.addContent(y);
 		
 		ai.addContent(location);
 		
 		Element speed = new Element("speed");
-		speed.addContent(Double.toString(agent.getSpeed()));
+		speed.addContent(map.get("speed"));
 		ai.addContent(speed);
 		
 		myRoot.addContent(ai);
@@ -104,20 +113,30 @@ public class XMLWriter {
 	}
 
 	private void saveSprites() {
-		for (Sprite s : myLevelObject.getSprites()) {
+		for (SpriteEditable s : myLevelObject.getSprites()) {
 			saveSprite(s);
 		}
 	}
 
-	private void saveSprite (Sprite s) {
+	private void saveSprite (SpriteEditable s) {
 		
-		String name = s.getClass().getSimpleName();
-		Element elt = new Element(name);
+		HashMap<String, String> properties = s.getPropertyMap();
 		
-		Class c = s.getClass();
-		Field[] fields = c.getFields();
-		for (Field f : fields) {
-			System.out.println(f.toGenericString());
+		Element sprite = new Element("type");
+		
+		for (String key : properties.keySet()) {
+			if (!key.equals("type")) {
+				
+				Element elt = new Element(key);
+				String val = "" + properties.get(key);
+				elt.addContent(val);
+				
+				sprite.addContent(elt);
+			}
 		}
+		
+		myRoot.addContent(sprite);
 	}
+	
+	
 }
