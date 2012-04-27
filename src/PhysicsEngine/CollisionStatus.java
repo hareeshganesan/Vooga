@@ -85,7 +85,7 @@ public class CollisionStatus {
 	 * some other sprite
 	 */
 	public boolean getStandOnSth() {
-		return myStandOnSth;
+		return myStandOnSth || myDownStatus;
 	}
 
 	/**

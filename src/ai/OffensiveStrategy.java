@@ -4,6 +4,7 @@ import npsprite.FighterBody;
 import game.CombatInstance;
 import action.AdvancedFollowAction;
 import action.FollowAction;
+import action.WeaponAction;
 
 
 /**
@@ -26,7 +27,7 @@ public class OffensiveStrategy extends Strategy
     public void initializeGoals ()
     {
         goals.add(new FollowGoal(myFighter, c.getFighters().get(0), this.c));
-
+        goals.add(new AttackGoal(myFighter, c.getFighters().get(0), this.c));
     }
 
     private class FollowGoal extends Goal
@@ -47,8 +48,31 @@ public class OffensiveStrategy extends Strategy
         void updateGoalState ()
         {
             if (myFighter.getCurrentLocation()
-                         .distance(myEnemy.getCurrentLocation()) < 70) done =
+                         .distance(myEnemy.getCurrentLocation()) < 75) done =
                 true;
+        }
+
+    }
+    
+    private class AttackGoal extends Goal
+    {
+        FighterBody myFighter;
+        FighterBody myEnemy;
+
+
+        public AttackGoal (FighterBody me, FighterBody enemy, CombatInstance ci)
+        {
+            super(new WeaponAction(me, 0, ci), 10000);
+            myFighter = me;
+            myEnemy = enemy;
+        }
+
+
+        @Override
+        void updateGoalState ()
+        {
+            if(this.repeatedAction.isDone(0))
+                done = true;
         }
 
     }

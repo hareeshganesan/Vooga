@@ -40,14 +40,14 @@ public class AdvancedFollowAction implements Action
     public void performAction (long elapsedTime)
     {
         Point2D dest = myEnemy.getCurrentLocation();        
-        double increment = 10;
+        double increment = 4;
         AffineTransform a;
 
-        while(isPathCollision(dest) && increment<181){
+        while(isPathCollision(dest) && increment<360){
             a = AffineTransform.getRotateInstance(Math.toRadians(increment), myFighter.getX(), myFighter.getY());
             dest = a.transform(dest, dest);
             fixPoint(dest);
-            System.out.println(increment+" "+dest.toString());
+            Point2D diff = new Point2D.Double(dest.getX()-myFighter.getX(), dest.getY()-myFighter.getY());
             if(!isPathCollision(dest))
                 break;
             else{
@@ -87,11 +87,13 @@ public class AdvancedFollowAction implements Action
     public boolean isPathCollision(Point2D dest){
         ArrayList<SpriteTemplate> objects = myLevel.getObstacles();
         Line2D line = new Line2D.Double(myFighter.getCurrentLocation(), dest);
-        for(SpriteTemplate s : objects)
-            if(line.intersects(new Rectangle2D.Double(s.getX(),s.getY(),s.getWidth(), s.getHeight()))){
+        Line2D line2 = new Line2D.Double(myFighter.getX()+myFighter.getWidth(), myFighter.getY()+myFighter.getHeight(), dest.getX()+myEnemy.getWidth(), dest.getY()+myEnemy.getHeight());
+        for(SpriteTemplate s : objects){
+            Rectangle2D spriteBox = new Rectangle2D.Double(s.getX(),s.getY(),s.getWidth(), s.getHeight());
+            if(line.intersects(spriteBox) || line2.intersects(spriteBox)){
                 return true;
             }
-        System.out.println("clear");
+        }
         return false;
     }
     

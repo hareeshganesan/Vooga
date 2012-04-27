@@ -2,6 +2,7 @@ package game;
 
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -41,7 +42,7 @@ public class CombatInstance extends GameState {
 	// Engines
 	MainGame myEngine;
 	InputHandler myHandler;
-	Camera camera;
+	//Camera camera;
 	CameraUtility cameraUtility;
 	private PhysicsEngine myPhysicsEngine;
 
@@ -64,7 +65,7 @@ public class CombatInstance extends GameState {
 		super(engine);
 		myEngine = engine;
 		myHandler = new InputHandler();
-		camera = new FloatingCamera();
+		//camera = new FloatingCamera();
 		cameraUtility = new CameraUtility();
 		myPhysicsEngine = new FightPhysicsEngine(myEngine);
 	}
@@ -154,29 +155,36 @@ public class CombatInstance extends GameState {
 
 	@Override
 	public void render(Graphics2D pen) {
-		camera.render(pen, bg);
+		//camera.render(pen, bg);
 		// bg.render(pen, camera, camera.getX(), camera.getY(), camera.getX(),
 		// camera.getY(), camera.getHeight(), camera.getWidth());
 		// bg.render(pen);
 
 		bg.render(pen);
 		for (FighterBody sprite : playerSprites)
-			cs.render(pen, sprite, camera);
-		// sprite.render(pen);
+			//cs.render(pen, sprite, camera);
+		    sprite.render(pen);
 		for (PlatformBlock pb : platform) {
-			cs.render(pen, pb, camera);
-			// pb.render(pen);
+			//cs.render(pen, pb, camera);
+		    pb.render(pen);
+		    pen.drawRect((int) pb.getX()+pb.getWidth()/2-2, (int) pb.getY()+pb.getHeight()/2-2, 4,4);
+		    pen.draw(new Rectangle2D.Double(pb.getX(),pb.getY(),pb.getWidth(), pb.getHeight()));
 		}
 		// for (SpriteTemplate p : powerups) {
 		// p.render(pen);
 		// }
+//		FighterBody ai = playerSprites.get(2);
+//		FighterBody user = playerSprites.get(0);
+//        
+//		pen.drawLine((int)ai.getX(), (int)ai.getY(), (int) user.getX(), (int) user.getY());
+//        pen.drawLine((int) ai.getX()+ai.getWidth(), (int)ai.getY()+ai.getHeight(), (int) user.getX()+user.getWidth(), (int) user.getY()+user.getHeight());
 
 	}
 
 	@Override
 	public void update(long elapsedTime) {
 		myHandler.update(elapsedTime, myEngine);
-		camera.update(playerSprites, bg);
+		//camera.update(playerSprites, bg);
 		myHandler.update(elapsedTime, myEngine);
 		bg.update(elapsedTime);
 
@@ -188,14 +196,14 @@ public class CombatInstance extends GameState {
 		}
 
 		for (FighterBody sprite : playerSprites) {
-			MotionAction.Gravity(sprite, 0.3, myPhysicsEngine).performAction(
+			MotionAction.Gravity(sprite, 0.6, myPhysicsEngine).performAction(
 					elapsedTime);
 		}
 
 		myCollision.checkGroupCollision();
 
 		for (FighterBody sprite : playerSprites) {
-			printCollision(sprite);
+			//printCollision(sprite);
 			sprite.update(elapsedTime);
 		}
 
@@ -258,4 +266,12 @@ public class CombatInstance extends GameState {
 	public PhysicsEngine getPhysicsEngine() {
 		return myPhysicsEngine;
 	}
+
+    public ArrayList<SpriteTemplate> getObstacles ()
+    {
+        ArrayList<SpriteTemplate> obstacles = new ArrayList<SpriteTemplate>();
+        obstacles.addAll(platform);
+        //obstacles.addAll(playerSprites);
+        return obstacles;
+    }
 }
