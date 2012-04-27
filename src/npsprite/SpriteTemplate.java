@@ -10,6 +10,7 @@ import PhysicsEngine.CollisionStatus;
 
 import npsprite.properties.PropertyObject;
 import events.CollisionEvent;
+import events.HealthEvent;
 
 
 // all sprites in fighting game extend this template. 
@@ -33,6 +34,7 @@ public class SpriteTemplate extends Sprite implements Cloneable{
     {
         super();
         myID=g;
+        myCollisions.put(GroupID.PLATFORM, HealthEvent.getInstanceOf());
     }
     public SpriteTemplate(BufferedImage b, GroupID g) {
         super(b);
@@ -137,7 +139,7 @@ public class SpriteTemplate extends Sprite implements Cloneable{
         }else{
             moveBy=nextLocation;
         }
-//        System.out.println("setting loc"+moveBy.getX()+","+moveBy.getY());
+//            System.out.println("setting loc"+moveBy.getX()+","+moveBy.getY());
     }
     public Point2D getCurrentLocation() {
         return new Point2D.Double(getX() + moveBy.getX(), getY()
@@ -165,7 +167,7 @@ public class SpriteTemplate extends Sprite implements Cloneable{
         	for (PropertyObject p:myProperties.values()){
         	    CollisionEvent c=p.update(elapsedTime);
         	    if (c!=null){
-        	        c.performAction(this, null);
+        	        c.performAction(this, null); //BE VERY, VERY CAREFUL - maybe TODO put more safety restrictions
         	    }
         	}
         	if (moveBy.getX() != 0 || moveBy.getY() != 0) {

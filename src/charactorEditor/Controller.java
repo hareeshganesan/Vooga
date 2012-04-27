@@ -267,18 +267,23 @@ public class Controller implements MouseListener, MouseMotionListener,
 	public MyComponent getNextFocusComponent() {
 		return myMainPaneModel.getNextFocusComponent();
 	}
-
-	public LimbNode getLimbNodeTree() {
-		ArrayList<MyComponent> list = myModel.getComponentList();
-		// HashMap<String,MyComponent> map=new HashMap<String,MyComponent>();
-		// for(MyComponent m:list)
-		// map.put(m.getText(), m);
-		//
-		MyComponent root = null;
-		for (MyComponent m : list)
-			if (m.isRoot())
-				root = m;
-    return myModel.buildLimbNodeTree(root, null);
-	}
+    public void setFighterName(String s){
+    	myModel.setFigherName(s);
+    }
+    public void setHealth(String s){
+    	myModel.setHealth(s);
+    }
+//	public LimbNode getLimbNodeTree() {
+//		ArrayList<MyComponent> list = myModel.getComponentList();
+//		// HashMap<String,MyComponent> map=new HashMap<String,MyComponent>();
+//		// for(MyComponent m:list)
+//		// map.put(m.getText(), m);
+//		//
+//		MyComponent root = null;
+//		for (MyComponent m : list)
+//			if (m.isRoot())
+//				root = m;
+//    return myModel.buildLimbNodeTree(root, null);
+//	}
 
 }

@@ -37,4 +37,11 @@ public class CompositeEvent extends CollisionEvent{
     public static String getName() {
         return "composite";
     }
+
+    //THIS IS NOT A SINGLETON, NO TIME TO FIX
+    public static CollisionEvent getInstanceOf() {
+        return new CompositeEvent();
+    }
+    
+
 }

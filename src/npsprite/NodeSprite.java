@@ -22,8 +22,6 @@ public class NodeSprite extends SpriteTemplate {
 
     private Point2D moveBy;
 
-    public boolean isLimb = false;
-
     protected boolean flipped = false;
 
     protected double dx = 0;

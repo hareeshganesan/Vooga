@@ -26,7 +26,7 @@ public class Title extends GameState
 
     public void initResources ()
     {
-        title = getImage("resources/title.png", false);
+        title = getImage("resources/titlepage.png", false);
 
         font = fontManager.getFont(new Font("Serif", Font.BOLD, 20));
     }

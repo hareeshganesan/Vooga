@@ -3,10 +3,11 @@ package ai;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
+import npsprite.HealthDisplay;
 import npsprite.NodeSprite;
 import SpriteTree.LimbNode;
 import game.CombatInstance;
-import sprite.HealthDisplay;
 
 
 public class SituationalStrategyAgent extends BasicStrategyAgent

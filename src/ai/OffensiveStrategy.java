@@ -4,6 +4,7 @@ import npsprite.FighterBody;
 import game.CombatInstance;
 import action.AdvancedFollowAction;
 import action.FollowAction;
+import action.Goal;
 import action.WeaponAction;
 
 
@@ -45,7 +46,7 @@ public class OffensiveStrategy extends Strategy
 
 
         @Override
-        void updateGoalState ()
+        protected void updateGoalState ()
         {
             if (myFighter.getCurrentLocation()
                          .distance(myEnemy.getCurrentLocation()) < 75) done =
@@ -69,6 +70,7 @@ public class OffensiveStrategy extends Strategy
 
 
         @Override
+        protected
         void updateGoalState ()
         {
             if(this.repeatedAction.isDone(0))

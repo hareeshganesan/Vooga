@@ -10,16 +10,19 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.PriorityQueue;
 
+import npsprite.FighterBody;
+import npsprite.NodeSprite;
+
 public class Animation {
 	private ArrayList<Motion> myActiveMotions;
 	private HashMap<Long, Motion> mySequence; // long => start time of animation
 	private HashMap<Long, Motion> myDefaultSequence;
 	private long myCurrTime;
-	private HashMap<String, LimbNode> myMap;
+	private HashMap<String,NodeSprite> myMap;
 	private boolean isActive;
 	private boolean isRepeating;
 
-	public Animation(HashMap<Long, Motion> allMotions, BodyTree tree) {
+	public Animation(HashMap<Long, Motion> allMotions, FighterBody tree) {
 		this.myCurrTime = 0;
 		this.myMap = tree.getMap();
 		this.mySequence = allMotions;
@@ -27,7 +30,7 @@ public class Animation {
 		this.myDefaultSequence.putAll(allMotions);
 		
 		this.myActiveMotions = new ArrayList<Motion>();
-
+		this.isActive = false;
 		isRepeating = true; // default, action only performed once, but for testing purposes, set to true
 
 	}
@@ -104,3 +107,4 @@ public class Animation {
 		return this.myCurrTime;
 	}
 }
+

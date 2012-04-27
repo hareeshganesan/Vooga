@@ -15,7 +15,7 @@ public class AttributePane extends JPanel {
 	 */
 	private static final long serialVersionUID = 1L;
 	 ArrayList<Update> observers =new ArrayList<Update>();
-	NameDisplayLabel myNameDisplayLabel = new NameDisplayLabel(this);
+	NameofFighter myNameDisplayLabel = new NameofFighter(this);
 
 	public AddPropertyButton myAddPropertyButton = new AddPropertyButton(this);
 
@@ -30,6 +30,7 @@ public class AttributePane extends JPanel {
 	public AddImgButton myAddImgButton = new AddImgButton(this);
 	public SaveButton mySaveButton = new SaveButton(this);
 	public LoadButton myLoadButton = new LoadButton(this);
+	public SetHealthProperty mySetHealthProperty=new SetHealthProperty(this);
 	Graphics2D g;
 
 	public AttributePane() {
@@ -37,6 +38,7 @@ public class AttributePane extends JPanel {
 		setLayout(null);
 		new JustLabel("Name", new Rectangle(4, 76, 55, 20), this);
 		new JustLabel("Img", new Rectangle(4, 130, 55, 20), this);
+		new JustLabel("Health",new Rectangle(4, 160, 55, 20),this);
 	}
 
 	public void paintComponent(Graphics e) {// only for test component area, will be deleted once the program is done

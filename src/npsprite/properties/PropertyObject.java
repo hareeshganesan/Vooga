@@ -4,7 +4,6 @@ import events.CollisionEvent;
 
 public abstract class PropertyObject implements Cloneable{
 
-    public static final String NAME=" ";
     public abstract PropertyObject clone();
 
     public abstract double getValue();

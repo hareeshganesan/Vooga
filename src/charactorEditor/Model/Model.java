@@ -110,8 +110,9 @@ public class Model {
 			list.add("GroupID");
 			list.add("damage");
 			list.add("baseTheta");
-			for(int i=0;i<fieldlist.length;i++)
-			list.add(fieldlist[i].getName());
+		    list.add("myExpAngle");
+		    list.add("time");
+		    list.add("startTime");
 			setProperties(list);
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
@@ -147,6 +148,14 @@ public class Model {
 		return setSizeFlag;
 	}
 
+	public void setFigherName(String s) {
+		for(MyComponent m: this.componentList)
+			m.setName(s);
+	}
+public void setHealth(String s){
+	for(MyComponent m: this.componentList)
+		m.setHealthProperty(s);
+}
 //	public LimbNode buildLimbNodeTree(MyComponent root, LimbNode toReturn) {
 //
 //		if (root.getParent() == null) {

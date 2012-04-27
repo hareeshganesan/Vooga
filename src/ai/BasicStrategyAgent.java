@@ -2,8 +2,9 @@ package ai;
 
 import game.CombatInstance;
 import java.util.TreeMap;
+
+import npsprite.HealthDisplay;
 import npsprite.NodeSprite;
-import sprite.HealthDisplay;
 import action.Action;
 
 

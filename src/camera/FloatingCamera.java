@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import npsprite.FighterBody;
 
+@SuppressWarnings("serial")
 public class FloatingCamera extends Camera{
     
     public FloatingCamera() {
@@ -19,6 +20,7 @@ public class FloatingCamera extends Camera{
                        this.getHeight(),
                        this.getWidth());
         super.update(playerSprites, bg);
+        
     }
 
 
