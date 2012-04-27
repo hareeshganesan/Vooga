@@ -20,39 +20,36 @@ public class ReactionPunch extends Reaction {
 	@Override
 	public void act(SpriteTemplate spriteOne, SpriteTemplate spriteTwo,
 			PhysicsEngine physicsEngine) {
-		double horizontalIncrementOne = spriteOne.getMoveBy().getX();
-		double verticalIncrementOne = spriteOne.getMoveBy().getY();
-		double horizontalIncrementTwo = spriteTwo.getMoveBy().getX();
-		double verticalIncrementTwo = spriteTwo.getMoveBy().getY();
+		dx1 = spriteOne.getMoveBy().getX();
+		dy1 = spriteOne.getMoveBy().getY();
+		dx2 = spriteTwo.getMoveBy().getX();
+		dy2 = spriteTwo.getMoveBy().getY();
 		CollisionStatus status1 = spriteOne.getCollisionStatus();
 		CollisionStatus status2 = spriteTwo.getCollisionStatus();
 
 		if (status1.getRight() && status2.getLeft()) {
 			if (spriteOne.getMoveBy().getX() == STOP)
-				horizontalIncrementOne = getLeft(spriteOne);
+				dx1 = getLeft(spriteOne);
 			if (spriteTwo.getMoveBy().getX() == STOP)
-				horizontalIncrementTwo = getRight(spriteTwo);
+				dx2 = getRight(spriteTwo);
 		} else if (status1.getLeft() && status2.getRight()) {
 			if (spriteOne.getMoveBy().getX() == STOP)
-				horizontalIncrementOne = getRight(spriteOne);
+				dx1 = getRight(spriteOne);
 			if (spriteTwo.getMoveBy().getX() == STOP)
-				horizontalIncrementTwo = getLeft(spriteTwo);
+				dx2 = getLeft(spriteTwo);
 		}
 		if (status1.getDown() && status2.getUp()) {
 			if (spriteOne.getMoveBy().getY() == STOP)
-				verticalIncrementOne = getDown(spriteOne);
+				dy1 = getDown(spriteOne);
 			if (spriteTwo.getMoveBy().getY() == STOP)
-				verticalIncrementTwo = getUp(spriteTwo);
+				dy2 = getUp(spriteTwo);
 		} else if (status1.getUp() && status2.getDown()) {
 			if (spriteOne.getMoveBy().getY() == STOP)
-				verticalIncrementOne = getUp(spriteOne);
+				dy1 = getUp(spriteOne);
 			if (spriteTwo.getMoveBy().getY() == STOP)
-				verticalIncrementTwo = getDown(spriteTwo);
+				dy2 = getDown(spriteTwo);
 		}
-		physicsEngine.setNextLocationIncrement(spriteOne,
-				horizontalIncrementOne, verticalIncrementOne);
-		physicsEngine.setNextLocationIncrement(spriteTwo,
-				horizontalIncrementTwo, verticalIncrementTwo);
+		setNextLocationIncrement(spriteOne, spriteTwo, physicsEngine);
 	}
 
 	/**
