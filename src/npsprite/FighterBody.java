@@ -23,6 +23,7 @@ import npsprite.properties.StatusProperty;
 
 //THIS IS A POINTER TO THE TOP OF THE TREE THAT REPRESENTS A PLAYER - has no width/height
 public class FighterBody extends SpriteTemplate {
+
     private String myName;
     private HealthProperty myHealth; // for ease in access
     private DirectionProperty myDirection;
@@ -240,5 +241,6 @@ public class FighterBody extends SpriteTemplate {
     {
         return myTimers.get(index);
     }
+
 
 }

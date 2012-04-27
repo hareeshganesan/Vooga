@@ -22,8 +22,8 @@ public class MyComponent {
 	private String parentForFile;
 	private ArrayList<MyComponent> children = new ArrayList<MyComponent>();
 	private ArrayList<String> childrenForFile = new ArrayList<String>();
-	private String fighterName;
-	private String healthProperty;
+	private String fighterName=null;
+	private String healthProperty=null;
 	
 	
 
@@ -39,6 +39,8 @@ public class MyComponent {
 		this.parentForFile = m.getParentForFile();
 		this.childrenForFile = m.getChildrenForFile();
 		this.children = m.getChildern();
+		this.fighterName=m.getName();
+		this.healthProperty=m.getHealthProperty();
 	}
 
 	public MyComponent(Point2D.Double p, int theSort) {
@@ -249,7 +251,7 @@ public class MyComponent {
 		return healthProperty;
 	}
 	public void setHealthProperty(String d){
-		healthProperty=d;
+		this.healthProperty=d;
 	}
 
 	public ArrayList<String> getChildrenForFile() {
