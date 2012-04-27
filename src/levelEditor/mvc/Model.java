@@ -65,11 +65,11 @@ public class Model {
 	public <T> String[] getClassNames () {
 		SpriteClassLoader loader = new SpriteClassLoader();
 		loader.load();
-		//HashSet<Class> allClasses = loader.getClasses();
-	
 		
-		//SuperclassFilter filter = new SuperclassFilter();
-		//ArrayList<Class<T>> sprites = filter.applyFilter(allClasses, null);
+		
+		HashSet<Class> allClasses = loader.getClasses();
+		SuperclassFilter filter = new SuperclassFilter();
+		ArrayList<Class<T>> sprites = filter.applyFilter(allClasses, null);
 		
 		return loader.getSpriteClassNames();
 	}
