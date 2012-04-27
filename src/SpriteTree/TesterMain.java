@@ -39,8 +39,8 @@ public class TesterMain extends Game {
 		BufferedImage imgRL = GraphicsTest.loadImage("src/resources/bodyParts/limb.png");
 		
 
-		BufferedImage imgLRL = GraphicsTest.loadImage("src/resources/bodyParts/nLimb.png");
-		BufferedImage imgLLL = GraphicsTest.loadImage("src/resources/bodyParts/nLimb.png");
+		BufferedImage imgLRL = GraphicsTest.loadImage("src/resources/bodyParts/limb.png");
+		BufferedImage imgLLL = GraphicsTest.loadImage("src/resources/bodyParts/limb.png"); //nlimb
 
 		
 //		LimbNode torso = new LimbNode("torso",imgT, this.getWidth()/2, this.getHeight()/2);
@@ -71,17 +71,17 @@ public class TesterMain extends Game {
 		
 
 		
-		Motion m1 = new Motion("RightLeg", -800, myTree, 400);
-		Motion m2 = new Motion("LRightLeg", 900, myTree, 400);
-		Motion m3 = new Motion("LRightLeg", myTree.getMap().get("LRightLeg").getDefaultTheta(), myTree, 400);
-		Motion m4 = new Motion("RightLeg", myTree.getMap().get("RightLeg").getDefaultTheta(), myTree, 400);
-		Motion m5 = new Motion("LRightLeg", 0, myTree, 400);
+		Motion m1 = new Motion("RightLeg", -80, myTree, 500);
+		Motion m2 = new Motion("LRightLeg", 90, myTree, 500);
+		Motion m3 = new Motion("LRightLeg", myTree.getMap().get("LRightLeg").getDefaultTheta(), myTree, 500);
+		Motion m4 = new Motion("RightLeg", myTree.getMap().get("RightLeg").getDefaultTheta(), myTree, 500);
+		Motion m5 = new Motion("LRightLeg", 0, myTree, 100);
 		
-		Motion m6 = new Motion("LeftLeg", -800, myTree, 400);
-		Motion m7 = new Motion("LLeftLeg", 900, myTree, 400);
-		Motion m8 = new Motion("LLeftLeg", myTree.getMap().get("LRightLeg").getDefaultTheta(), myTree, 400);
-		Motion m9 = new Motion("LeftLeg", myTree.getMap().get("LeftLeg").getDefaultTheta(), myTree, 400);
-		Motion m10 = new Motion("LLeftLeg", 0, myTree, 400);
+		Motion m6 = new Motion("LeftLeg", -80, myTree, 500);
+		Motion m7 = new Motion("LLeftLeg", 90, myTree, 500);
+		Motion m8 = new Motion("LLeftLeg", myTree.getMap().get("LRightLeg").getDefaultTheta(), myTree, 500);
+		Motion m9 = new Motion("LeftLeg", myTree.getMap().get("LeftLeg").getDefaultTheta(), myTree, 500);
+		Motion m10 = new Motion("LLeftLeg", 0, myTree, 500);
 		
 		
 		HashMap<Long, Motion> sequence = new HashMap<Long, Motion>();

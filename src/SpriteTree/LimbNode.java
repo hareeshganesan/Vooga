@@ -90,7 +90,6 @@ public class LimbNode extends Sprite{
 
 	public void render(Graphics2D pen,double baseX, double baseY, double baseTheta){
 		
-		
 		super.render(pen);
 		
 		double dx =Math.cos(Math.toRadians(baseTheta)) * this.dx - Math.sin(Math.toRadians(baseTheta)) * this.dy;

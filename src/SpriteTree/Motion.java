@@ -11,20 +11,18 @@ public class Motion {
 	private long time;
 	private long defaultTime;
 	private boolean active;
-	//test only
-//	private double currAngle;
-//	private double expAngle;
-//	private int timesRevived = 0;
-	//
-	
+	private LimbNode myLimb;
+	private double myExpAngle;
+
+
 	
 	public Motion(String name, double expAngle, BodyTree tree, long time){
 		
 		this.name = name;
 		
-		double currAngle = tree.getMap().get(name).getTheta();
+		myLimb = tree.getMap().get(name);
+		myExpAngle = expAngle;
 
-		this.dTheta = (expAngle-currAngle)/(double)time;
 		this.time = time;
 		this.defaultTime = time;
 		
@@ -36,8 +34,15 @@ public class Motion {
 	}
 	
 	public void update(long elapsedTime){
-		if(this.time >=0){
-		this.time -=elapsedTime;
+
+		
+		if(this.time >0){
+			double currAngle = myLimb.getTheta();
+
+			this.dTheta = (myExpAngle-currAngle)/(double)time;
+			this.myLimb.rotate(dTheta*Math.min(elapsedTime, time));
+
+			this.time -=elapsedTime;
 		
 		}
 		else{
@@ -53,16 +58,6 @@ public class Motion {
 	}
 	
 	public void reActivate(){
-//		timesRevived +=1;
-//		
-//		System.out.println();
-//		System.out.println("this is my " + timesRevived + "th life" );
-//		System.out.println("my name is " + name);
-//		System.out.println("my currAngle is "+ currAngle);
-//		System.out.println("my expectedAngle is " + expAngle);
-//		System.out.println("my dtheta is " + dTheta);
-//		System.out.println();
-//		
 		this.time = this.defaultTime;
 		active = true;
 		

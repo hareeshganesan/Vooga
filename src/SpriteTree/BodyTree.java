@@ -45,7 +45,10 @@ public class BodyTree {
 	}
 	
 	public void move(Graphics2D pen, double moveX, double moveY){
-		root.render(pen, root.getX()+moveX,root.getY()+moveY,0);
+		//root.render(pen, root.getX()+moveX,root.getY()+moveY,0);
+		root.setX(root.getX() + moveX);
+		
+		root.setY(root.getY() + moveY);
 	}
 	
 	public LimbNode getRoot(){
